@@ -8,5 +8,6 @@ mydbaasmonitor-agent/build/
 mydbaasmonitor-agent/.settings/
 mydbaasmonitor-agent/.classpath
 mydbaasmonitor-agent/.project
+.metadata/
 
 
