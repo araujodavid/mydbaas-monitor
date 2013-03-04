@@ -1,0 +1,76 @@
+<project>
+	<groupId>br.com.arida.ufc</groupId>
+	<artifactId>mybdaasmonitor</artifactId>
+	<version>1.0.0</version>
+	<name>MyDBaaSMonitor</name>
+
+	<description>A framework for monitoring Database-as-a-Service (DBaaS)</description>
+	<url>http://www.mydbaasmonitor.com</url>
+
+	<members>
+		<member>
+			<id>araujodavid</id>
+			<name>David Araújo</name>
+			<email>araujodavid@lia.ufc.br</email>
+			<site>http://araujodavid.com</site>
+			<organization>ARiDa</organization>
+			<organizationUrl>http://www.arida.ufc.br</organizationUrl>
+			<roles>
+				<role>developer</role>
+				<role>research</role>
+			</roles>
+			<timezone>-3</timezone>
+		</member>
+		<member>
+			<id>flaviosousa</id>
+			<name>Flávio R. C. Sousa</name>
+			<email>flaviocsousa@gmail.com</email>
+			<organization>ARiDa</organization>
+			<organizationUrl>http://www.arida.ufc.br</organizationUrl>
+			<roles>
+				<role>research</role>
+			</roles>
+			<timezone>-3</timezone>
+		</member>
+		<member>
+			<id>joseantonio</id>
+			<name>José Antônio F. de Macêdo</name>
+			<email>jose.macedo@lia.ufc.br</email>
+			<organization>ARiDa</organization>
+			<organizationUrl>http://www.arida.ufc.br</organizationUrl>
+			<roles>
+				<role>research</role>
+				<role>advisor</role>
+			</roles>
+			<timezone>-3</timezone>
+		</member>
+	</members>
+
+	<organization>
+		<name>Federal University of Ceará</name>
+		<url>http://www.ufc.br</url>
+		<department>Graduate Program in Computer Science</department>
+		<url>http://www.mdcc.ufc.br/</url>
+		<group>Advanced Research in Database (ARiDa)</group>
+		<url>http://www.arida.ufc.br</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<distribution></distribution>
+			<name></name>
+			<url></url>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>http://github.com/araujodavid/mydbaasmonitor</url>
+		<connection>scm:git:git://github.com/araujodavid/mydbaasmonitor</connection>
+		<developerConnection>scm:git:git@github.com:araujodavid/mydbaasmonitor.git</developerConnection>
+	</scm>
+
+	<modules>
+		<module>mydbaasmonitor-core</module>
+		<module>mydbaasmonitor-agent</module>
+	</modules>
+</project>
