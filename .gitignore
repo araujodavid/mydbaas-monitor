@@ -1,5 +1,12 @@
-bin/
-build/
-.settings/
-.classpath
-.project
+mydbaasmonitor-core/bin/
+mydbaasmonitor-core/build/
+mydbaasmonitor-core/.settings/
+mydbaasmonitor-core/.classpath
+mydbaasmonitor-core/.project
+mydbaasmonitor-agent/bin/
+mydbaasmonitor-agent/build/
+mydbaasmonitor-agent/.settings/
+mydbaasmonitor-agent/.classpath
+mydbaasmonitor-agent/.project
+
+
