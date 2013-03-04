@@ -3,7 +3,9 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.entity;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.common.GenericResource;
 
 /**
+ * 
  * @author David Araújo
+ * @since March 4, 2013
  *
  */
 
