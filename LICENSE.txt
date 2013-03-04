@@ -1,3 +1,5 @@
 Copyright (c) 2013 MyDBaaSMonitor - www.mydbaasmonitor.com
 
 Group Advanced Research in Database (ARiDa) - www.arida.ufc.br
+
+All rights reserved.
