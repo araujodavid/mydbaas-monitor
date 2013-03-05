@@ -1,0 +1,22 @@
+ADDITIONAL INFORMATION:
+
+MyDBaaSMonitor includes some third-party open source components 
+in its distribution. The list below identifies the community or 
+organization and links to their appropriate license terms.
+
+The MyDBaaSMonitor team would like to thank all the communities 
+of the projects listed below for their contributions.
+
+----------------------------------------------------------
+Components under the Apache License 2.0:
+----------------------------------------------------------
+
+The following components are included without modification:
+
+- Hyperic SIGAR -
+Information: http://www.hyperic.com/products/sigar
+License: http://www.apache.org/licenses/LICENSE-2.0
+
+- VRaptor 3 -
+Information: http://www.caelum.com.br/opensource
+License: http://www.apache.org/licenses/LICENSE-2.0
