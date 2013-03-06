@@ -9,5 +9,10 @@ mydbaasmonitor-agent/.settings/
 mydbaasmonitor-agent/.classpath
 mydbaasmonitor-agent/.project
 mydbaasmonitor-agent/src/test/
+mydbaasmonitor-api/bin/
+mydbaasmonitor-api/build/
+mydbaasmonitor-api/.settings/
+mydbaasmonitor-api/.classpath
+mydbaasmonitor-api/.project
 .metadata/
 Servers/
