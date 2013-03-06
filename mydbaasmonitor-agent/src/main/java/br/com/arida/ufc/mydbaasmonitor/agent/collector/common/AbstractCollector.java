@@ -7,7 +7,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMet
 /**
  * 
  * @author Daivd Araújo
- * @version 1.1
+ * @version 1.2
  * @since March 5, 2013
  * 
  */
