@@ -5,8 +5,10 @@ A framework that provides an environment monitoring for database-as-a-service.
 
 ## Informations
 
-* Front-end developed using [Twitter Bootstrap](http://twitter.github.com/bootstrap/).
-* Back-end developed using [VRaptor Framework](http://vraptor.caelum.com.br/).
+* Front-end developed using [Twitter Bootstrap](http://twitter.github.com/bootstrap)
+* Back-end developed using [VRaptor Framework](http://vraptor.caelum.com.br)
+* API for monitoring system information and hardware, [Hyperic SIGAR API](http://www.hyperic.com/products/sigar)
+* [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html)
 
 ## Authors
 
