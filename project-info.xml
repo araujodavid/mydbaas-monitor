@@ -72,5 +72,6 @@
 	<modules>
 		<module>mydbaasmonitor-core</module>
 		<module>mydbaasmonitor-agent</module>
+		<module>mydbaasmonitor-api</module>
 	</modules>
 </project>
