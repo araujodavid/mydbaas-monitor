@@ -13,4 +13,10 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
 public class CpuCollector extends AbstractCollector {
 
 	//TODO!
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		super.run();
+	}
 }

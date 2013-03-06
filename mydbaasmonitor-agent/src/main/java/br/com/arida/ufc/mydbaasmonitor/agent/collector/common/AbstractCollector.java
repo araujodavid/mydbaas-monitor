@@ -1,5 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common;
 
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMetric;
+
 /**
  * 
  * @author Daivd Araújo
@@ -8,7 +10,7 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common;
  * 
  */
 
-public abstract class AbstractCollector extends Thread {
+public abstract class AbstractCollector<T extends AbstractMetric> extends Thread {
 
 	//TODO!
 }
