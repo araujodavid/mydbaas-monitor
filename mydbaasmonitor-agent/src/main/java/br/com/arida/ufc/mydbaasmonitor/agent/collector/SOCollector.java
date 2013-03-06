@@ -1,6 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.SOMetric;
 
 /**
  * 
@@ -10,7 +11,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
  * 
  */
 
-public class SOCollector extends AbstractCollector {
+public class SOCollector extends AbstractCollector<SOMetric> {
 
 	@Override
 	public void run() {

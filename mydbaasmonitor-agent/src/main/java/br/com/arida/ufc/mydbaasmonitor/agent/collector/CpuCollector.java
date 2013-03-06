@@ -1,6 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
 
 /**
  * 
@@ -10,7 +11,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
  * 
  */
 
-public class CpuCollector extends AbstractCollector {
+public class CpuCollector extends AbstractCollector<CpuMetric> {
 
 	@Override
 	public void run() {

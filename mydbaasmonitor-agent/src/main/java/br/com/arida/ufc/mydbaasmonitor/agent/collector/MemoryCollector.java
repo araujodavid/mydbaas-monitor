@@ -1,6 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
 
 /**
  * 
@@ -10,7 +11,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
  * 
  */
 
-public class MemoryCollector extends AbstractCollector {
+public class MemoryCollector extends AbstractCollector<MemoryMetric> {
 
 	@Override
 	public void run() {
