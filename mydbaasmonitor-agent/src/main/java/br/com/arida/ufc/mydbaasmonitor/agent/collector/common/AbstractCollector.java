@@ -1,5 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common;
 
+import java.util.TimerTask;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMetric;
 
 /**
@@ -10,7 +12,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMet
  * 
  */
 
-public abstract class AbstractCollector<T extends AbstractMetric> extends Thread {
+public abstract class AbstractCollector<T extends AbstractMetric> extends TimerTask {
 
 	//TODO!
 }

@@ -12,11 +12,9 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
 
 public class SOCollector extends AbstractCollector {
 
-	//TODO!
-	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		super.run();
+		// TODO Auto-generated method stub		
 	}
+	
 }
