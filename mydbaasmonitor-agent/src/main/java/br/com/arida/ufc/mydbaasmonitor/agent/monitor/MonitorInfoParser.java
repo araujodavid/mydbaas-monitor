@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity;
+package main.java.br.com.arida.ufc.mydbaasmonitor.agent.monitor;
 
 /**
  * 
