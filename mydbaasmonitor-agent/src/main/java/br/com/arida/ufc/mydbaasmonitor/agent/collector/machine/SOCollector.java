@@ -1,21 +1,30 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector;
+package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine;
 
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
+import org.hyperic.sigar.Sigar;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.SOMetric;
+
 
 /**
  * 
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 5, 2013
  * 
  */
 
-public class SOCollector extends AbstractCollector<SOMetric> {
+public class SOCollector extends AbstractMachineCollector<SOMetric>  {
+
+	@Override
+	public SOMetric loadMetric(Sigar sigar) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub		
-	}
-	
+		// TODO Auto-generated method stub
+		
+	}	
 }
