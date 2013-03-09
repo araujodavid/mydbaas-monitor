@@ -24,7 +24,7 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {		
-		result.include("listResources", machineRepository.list(true));
+		result.include("listResources", machineRepository.list(true));		
 	}
 
 }
