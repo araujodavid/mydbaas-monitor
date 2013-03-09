@@ -3,7 +3,6 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
 
@@ -34,7 +33,7 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub		
+		
 	}	
 
 }

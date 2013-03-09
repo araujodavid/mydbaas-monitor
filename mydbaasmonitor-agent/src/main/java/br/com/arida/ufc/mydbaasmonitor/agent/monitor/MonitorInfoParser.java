@@ -87,6 +87,6 @@ public class MonitorInfoParser {
 		this.identifier = Integer.valueOf(this.properties.getProperty("identifier"));
 		this.user = Integer.valueOf(this.properties.getProperty("user"));
 		this.geralURL = this.properties.getProperty("geral.url");
-		this.informationURL = this.properties.getProperty("geral.information.url");
+		this.informationURL = this.properties.getProperty("information.url");
 	}
 }
