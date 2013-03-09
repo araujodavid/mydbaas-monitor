@@ -1,13 +1,14 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.web.controller;
+package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Validator;
 
 /**
- * @author David Araújo
- * 
  * This controller is responsible for receiving the data sent by the monitoring agents via HTTP requests.
+ * @author David Araújo
+ * @version 1.0
+ * @since March 9, 2013
  *
  */
 

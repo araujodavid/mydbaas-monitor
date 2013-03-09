@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.web.controller;
+package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
 import java.util.Date;
 import java.util.List;
