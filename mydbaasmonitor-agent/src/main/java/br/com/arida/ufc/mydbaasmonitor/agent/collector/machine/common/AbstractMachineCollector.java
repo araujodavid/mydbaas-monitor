@@ -2,6 +2,8 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common
 
 import java.util.TimerTask;
 import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMetric;
 
 /**
@@ -14,5 +16,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMet
 
 public abstract class AbstractMachineCollector<T extends AbstractMetric> extends TimerTask {
 
-	public abstract T loadMetric(Sigar sigar);
+	//Method to load the entity metric values
+	public abstract T loadMetric(Sigar sigar) throws SigarException;	
+
 }
