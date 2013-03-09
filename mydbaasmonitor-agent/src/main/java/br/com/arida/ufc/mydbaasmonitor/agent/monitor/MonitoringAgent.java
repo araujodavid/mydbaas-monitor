@@ -4,7 +4,7 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.monitor;
  * 
  * Class that will initialize the monitoring processes.
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 6, 2013
  * 
  */
