@@ -28,5 +28,10 @@ public class MachineReceiverController {
 	public void memory() {
 		//TODO!
 	}
+	
+	@Post("")
+	public void disk() {
+		//TODO!
+	}
 
 }
