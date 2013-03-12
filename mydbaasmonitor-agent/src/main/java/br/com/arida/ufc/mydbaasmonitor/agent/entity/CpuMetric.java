@@ -70,7 +70,7 @@ public class CpuMetric extends AbstractMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("cpu.url"));
-		this.setCyclo(properties.getProperty("cpu.cycle"));
+		this.setUrl(properties.getProperty("geral.url")+properties.getProperty("cpu.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("cpu.cycle")));
 	}	
 }
