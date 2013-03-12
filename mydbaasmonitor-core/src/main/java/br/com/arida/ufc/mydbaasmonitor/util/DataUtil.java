@@ -16,7 +16,7 @@ public abstract class DataUtil {
 	           
 	        Date date = null;   
 	        try {   
-	            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");   
+	            DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss");   
 	            date = (java.util.Date)formatter.parse(data);   
 	        } catch (ParseException e) {               
 	            System.err.println(e.getMessage());
