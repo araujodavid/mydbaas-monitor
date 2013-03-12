@@ -23,7 +23,7 @@ The monitoring environment has four modules:
 
 + **Core**: responsible for managing the monitoring agents, knowledge base of metrics, API requests and the web management interface - `mydbaasmonitor-core` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-core).  
 + **Agent**: responsible for collecting metrics in the environment nodes and send to the server - `mydbaasmonitor-agent` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-agent).  
-+ **API**: set of routines and standards to use features of MyDBaaSMonitor to implement other softwares - `mydbaasmonitor-api` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-api).  
++ **API**: set of routines and standards to use features to implement other softwares - `mydbaasmonitor-api` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-api).  
 + **Common**: package of common classes between modules - `mydbaasmonitor-common` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-common).
 
 
