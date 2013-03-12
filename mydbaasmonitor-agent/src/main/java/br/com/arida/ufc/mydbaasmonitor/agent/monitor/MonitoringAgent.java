@@ -2,6 +2,11 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.monitor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Timer;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.CpuCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.MemoryCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
 
 /**
  * 
@@ -29,10 +34,20 @@ public class MonitoringAgent {
 		parser.loadProperties();
 		//
 		if (parser.getProperties().getProperty("cpu.url") != null && !parser.getProperties().getProperty("cpu.url").equals("")) {
-			//TODO!
+			CpuMetric cpuMetric = CpuMetric.getInstance();
+			cpuMetric.loadMetricProperties(parser.getProperties());
+			Timer cpuTimer = new Timer();
+			CpuCollector cpuCollector = new CpuCollector(parser.getIdentifier());
+			cpuTimer.scheduleAtFixedRate(cpuCollector, 0, 1*cpuMetric.getCyclo()*1000);
+			
 		}
+		//
 		if (parser.getProperties().getProperty("mem.url") != null && !parser.getProperties().getProperty("mem.url").equals("")) {
-			//TODO!
+			MemoryMetric memoryMetric = MemoryMetric.getInstance();
+			memoryMetric.loadMetricProperties(parser.getProperties());
+			Timer memoryTimer = new Timer();
+			MemoryCollector memoryCollector = new MemoryCollector(parser.getIdentifier());
+			memoryTimer.scheduleAtFixedRate(memoryCollector, 0, 1*memoryMetric.getCyclo()*1000);	
 		}
 		
 	}
