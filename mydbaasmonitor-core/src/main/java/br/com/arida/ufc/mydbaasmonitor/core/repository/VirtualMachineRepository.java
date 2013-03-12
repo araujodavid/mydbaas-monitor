@@ -160,6 +160,39 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		}
 	}//update()
 	
+	public boolean updateSystemInformation(VirtualMachine resource) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update virtual_machine " +
+					"set `so` = ?, `kernel_name` = ?, `kernel_version` = ?, `architecture` = ?, `memory` = ?, `swap` = ?, " +
+					"`cpu_cores` = ?, `cpu_sockets` = ?, `cores_sockets` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setString(1, resource.getOperatingSystem());
+			this.preparedStatement.setString(2, resource.getKernelName());
+			this.preparedStatement.setString(3, resource.getKernelVersion());
+			this.preparedStatement.setString(4, resource.getArchitecture());
+			this.preparedStatement.setLong(5, resource.getTotalMemory());
+			this.preparedStatement.setLong(6, resource.getTotalSwap());
+			this.preparedStatement.setInt(7, resource.getTotalCPUCores());
+			this.preparedStatement.setInt(8, resource.getTotalCPUSockets());
+			this.preparedStatement.setInt(9, resource.getTotalCoresPerSocket());
+			this.preparedStatement.setInt(10, resource.getId());
+			
+			this.preparedStatement.executeUpdate();
+			return true;
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+		return false;
+	}//updateSystemInformation()
+	
 	public void updatePassword(VirtualMachine resource) {
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
@@ -200,12 +233,17 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		virtualMachine.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
 		virtualMachine.setDescription(resultSet.getString("description"));
 		virtualMachine.setAlias(resultSet.getString("alias"));
-		virtualMachine.setMemory(resultSet.getString("ram"));
-		virtualMachine.setOperatingSystem(resultSet.getString("so"));
-		virtualMachine.setKernel(resultSet.getString("kernel"));
-		virtualMachine.setSwap(resultSet.getString("swap"));
-		virtualMachine.setCores(resultSet.getInt("cores"));
 		virtualMachine.setStatus(resultSet.getBoolean("status"));
+		virtualMachine.setKey(resultSet.getString("key"));
+		virtualMachine.setOperatingSystem(resultSet.getString("so"));
+		virtualMachine.setKernelName(resultSet.getString("kernel_name"));
+		virtualMachine.setKernelVersion(resultSet.getString("kernel_version"));
+		virtualMachine.setArchitecture(resultSet.getString("architecture"));
+		virtualMachine.setTotalMemory(resultSet.getLong("memory"));
+		virtualMachine.setTotalSwap(resultSet.getLong("swap"));
+		virtualMachine.setTotalCPUCores(resultSet.getInt("cpu_cores"));
+		virtualMachine.setTotalCPUSockets(resultSet.getInt("cpu_sockets"));
+		virtualMachine.setTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
 		
 		return virtualMachine;
 	}//getEntity()
