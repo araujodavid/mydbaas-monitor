@@ -12,14 +12,14 @@ import java.util.Properties;
 
 public abstract class AbstractMetric {
 
-	private String cyclo;
+	private int cyclo;
 	private String url;
 
-	public String getCyclo() {
+	public int getCyclo() {
 		return cyclo;
 	}
 
-	public void setCyclo(String cyclo) {
+	public void setCyclo(int cyclo) {
 		this.cyclo = cyclo;
 	}
 
