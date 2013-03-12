@@ -14,5 +14,10 @@ mydbaasmonitor-api/build/
 mydbaasmonitor-api/.settings/
 mydbaasmonitor-api/.classpath
 mydbaasmonitor-api/.project
+mydbaasmonitor-common/bin/
+mydbaasmonitor-common/build/
+mydbaasmonitor-common/.settings/
+mydbaasmonitor-common/.classpath
+mydbaasmonitor-common/.project
 .metadata/
 Servers/
