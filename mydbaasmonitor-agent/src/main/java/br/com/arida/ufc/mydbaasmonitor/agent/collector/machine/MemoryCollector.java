@@ -1,11 +1,23 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 
 /**
  * 
@@ -16,32 +28,77 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
  */
 
 public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
-
+	
+	private int machine;
+	
+	public MemoryCollector(int identifier) {
+		this.machine = identifier;
+	}
+	
     private static Long format(long value) {
         return new Long(value / 1024);
     }
 	
 	@Override
-	public MemoryMetric loadMetric(Sigar sigar) throws SigarException {
-		MemoryMetric memoryMetric = MemoryMetric.getInstance();
+	public void loadMetric(Sigar sigar) throws SigarException {
+		this.metric = MemoryMetric.getInstance();
 		Mem mem = sigar.getMem();
-		Swap swap = sigar.getSwap();
-		
-		memoryMetric.setSwapUsed(format(swap.getUsed()));
-		memoryMetric.setSwapFree(format(swap.getFree()));
-		memoryMetric.setMemoryUsed(format(mem.getUsed()));
-		memoryMetric.setMemoryFree(format(mem.getFree()));
-		memoryMetric.setMemoryUsedPercent(mem.getUsedPercent());
-		memoryMetric.setMemoryFreePercent(mem.getFreePercent());
-		memoryMetric.setBuffersCacheUsed(format(mem.getActualUsed()));
-		memoryMetric.setBuffersCacheFree(format(mem.getActualFree()));
-		
-		return memoryMetric;
+		Swap swap = sigar.getSwap();		
+		this.metric.setSwapUsed(format(swap.getUsed()));
+		this.metric.setSwapFree(format(swap.getFree()));
+		this.metric.setMemoryUsed(format(mem.getUsed()));
+		this.metric.setMemoryFree(format(mem.getFree()));
+		this.metric.setMemoryUsedPercent(mem.getUsedPercent());
+		this.metric.setMemoryFreePercent(mem.getFreePercent());
+		this.metric.setBuffersCacheUsed(format(mem.getActualUsed()));
+		this.metric.setBuffersCacheFree(format(mem.getActualFree()));
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		Sigar sigar = new Sigar();
+		try {
+			//Collecting metrics
+			this.loadMetric(sigar);
+		} catch (SigarException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Problem loading the Memory metric values (Sigar)");
+			e.printStackTrace();
+		}
+		
+		//Setting the parameters of the POST request
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("memory.machine", String.valueOf(machine)));
+		params.add(new BasicNameValuePair("memory.swapUsed", String.valueOf(this.metric.getSwapUsed())));
+		params.add(new BasicNameValuePair("memory.swapFree", String.valueOf(this.metric.getSwapFree())));
+		params.add(new BasicNameValuePair("memory.memoryUsed", String.valueOf(this.metric.getMemoryUsed())));
+		params.add(new BasicNameValuePair("memory.memoryFree", String.valueOf(this.metric.getMemoryFree())));
+		params.add(new BasicNameValuePair("memory.memoryUsedPercent", String.valueOf(this.metric.getMemoryUsedPercent())));
+		params.add(new BasicNameValuePair("memory.memoryFreePercent", String.valueOf(this.metric.getMemoryFreePercent())));
+		params.add(new BasicNameValuePair("memory.buffersCacheUsed", String.valueOf(this.metric.getBuffersCacheUsed())));
+		params.add(new BasicNameValuePair("memory.buffersCacheFree", String.valueOf(this.metric.getBuffersCacheFree())));
+		params.add(new BasicNameValuePair("memory.recordDate", DateUtil.formatDate(new Date())));
+		
+		HttpResponse response;
+		
+		try {
+			response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
+			System.out.println(response.getStatusLine());
+			if (response.getStatusLine().getStatusCode() != 201) {
+				System.out.println("Request error!");
+				EntityUtils.consume(response.getEntity());
+			}
+			EntityUtils.consume(response.getEntity());
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Release any native resources associated with this sigar instance
+		sigar.close();
 	}
 	
 }
