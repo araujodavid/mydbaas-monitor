@@ -20,24 +20,22 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.SOMetric;
 public class SOCollector extends AbstractMachineCollector<SOMetric>  {
 
 	@Override
-	public SOMetric loadMetric(Sigar sigar) throws SigarException {
-		SOMetric soMetric = SOMetric.getInstance();
+	public void loadMetric(Sigar sigar) throws SigarException {
+		this.metric = SOMetric.getInstance();
 		OperatingSystem sys = OperatingSystem.getInstance();
 		Mem mem = sigar.getMem();
 		Swap swap = sigar.getSwap();
 		CpuInfo cpuInfo = sigar.getCpuInfoList()[0];
 		
-		soMetric.setOperatingSystem(sys.getDescription());
-		soMetric.setKernelName(sys.getName());
-		soMetric.setKernelVersion(sys.getVersion());
-		soMetric.setArchitecture(sys.getArch());
-		soMetric.setTotalMemory(mem.getTotal());
-		soMetric.setTotalSwap(swap.getTotal());
-		soMetric.setTotalCPUCores(cpuInfo.getTotalCores());
-		soMetric.setTotalCPUSockets(cpuInfo.getTotalSockets());
-		soMetric.setTotalCoresPerSocket(cpuInfo.getCoresPerSocket());
-		
-		return soMetric;
+		this.metric.setOperatingSystem(sys.getDescription());
+		this.metric.setKernelName(sys.getName());
+		this.metric.setKernelVersion(sys.getVersion());
+		this.metric.setArchitecture(sys.getArch());
+		this.metric.setTotalMemory(mem.getTotal());
+		this.metric.setTotalSwap(swap.getTotal());
+		this.metric.setTotalCPUCores(cpuInfo.getTotalCores());
+		this.metric.setTotalCPUSockets(cpuInfo.getTotalSockets());
+		this.metric.setTotalCoresPerSocket(cpuInfo.getCoresPerSocket());
 	}
 
 	@Override
