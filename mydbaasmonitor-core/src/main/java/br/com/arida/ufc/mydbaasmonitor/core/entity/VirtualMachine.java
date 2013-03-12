@@ -13,16 +13,15 @@ public class VirtualMachine extends GenericResource {
 	
 	//key file if necessary for access
 	private String key;
-	//amount of memory
-	private String memory;
-	//type of operating system
 	private String operatingSystem;
-	//type of operating system kernel
-	private String kernel;
-	//amount of swap memory
-	private String swap;
-	//amount of cores
-	private Integer cores;
+	private String kernelName;
+	private String kernelVersion;
+	private String architecture;
+	private long totalMemory;
+	private long totalSwap;
+	private int totalCPUCores;
+	private int totalCPUSockets;
+	private int totalCoresPerSocket;
 	
 	public String getKey() {
 		return key;
@@ -30,14 +29,6 @@ public class VirtualMachine extends GenericResource {
 
 	public void setKey(String key) {
 		this.key = key;
-	}	
-	
-	public String getMemory() {
-		return memory;
-	}
-
-	public void setMemory(String memory) {
-		this.memory = memory;
 	}
 
 	public String getOperatingSystem() {
@@ -48,28 +39,68 @@ public class VirtualMachine extends GenericResource {
 		this.operatingSystem = operatingSystem;
 	}
 
-	public String getKernel() {
-		return kernel;
+	public String getKernelName() {
+		return kernelName;
 	}
 
-	public void setKernel(String kernel) {
-		this.kernel = kernel;
+	public void setKernelName(String kernelName) {
+		this.kernelName = kernelName;
 	}
 
-	public String getSwap() {
-		return swap;
+	public String getKernelVersion() {
+		return kernelVersion;
 	}
 
-	public void setSwap(String swap) {
-		this.swap = swap;
+	public void setKernelVersion(String kernelVersion) {
+		this.kernelVersion = kernelVersion;
 	}
 
-	public Integer getCores() {
-		return cores;
+	public String getArchitecture() {
+		return architecture;
 	}
 
-	public void setCores(Integer cores) {
-		this.cores = cores;
+	public void setArchitecture(String architecture) {
+		this.architecture = architecture;
+	}
+
+	public long getTotalMemory() {
+		return totalMemory;
+	}
+
+	public void setTotalMemory(long totalMemory) {
+		this.totalMemory = totalMemory;
+	}
+
+	public long getTotalSwap() {
+		return totalSwap;
+	}
+
+	public void setTotalSwap(long totalSwap) {
+		this.totalSwap = totalSwap;
+	}
+
+	public int getTotalCPUCores() {
+		return totalCPUCores;
+	}
+
+	public void setTotalCPUCores(int totalCPUCores) {
+		this.totalCPUCores = totalCPUCores;
+	}
+
+	public int getTotalCPUSockets() {
+		return totalCPUSockets;
+	}
+
+	public void setTotalCPUSockets(int totalCPUSockets) {
+		this.totalCPUSockets = totalCPUSockets;
+	}
+
+	public int getTotalCoresPerSocket() {
+		return totalCoresPerSocket;
+	}
+
+	public void setTotalCoresPerSocket(int totalCoresPerSocket) {
+		this.totalCoresPerSocket = totalCoresPerSocket;
 	}
 
 	@Override
