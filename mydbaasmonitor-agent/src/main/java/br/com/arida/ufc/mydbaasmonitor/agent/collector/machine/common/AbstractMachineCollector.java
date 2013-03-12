@@ -9,14 +9,16 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMet
 /**
  * 
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 8, 2013
  * 
  */
 
 public abstract class AbstractMachineCollector<T extends AbstractMetric> extends TimerTask {
 
+	protected T metric;
+	
 	//Method to load the entity metric values
-	public abstract T loadMetric(Sigar sigar) throws SigarException;	
+	public abstract void loadMetric(Sigar sigar) throws SigarException;	
 
 }
