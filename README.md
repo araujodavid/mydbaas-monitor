@@ -1,4 +1,4 @@
-#[MyDBaaSMonitor](https://github.com/araujodavid/mydbaasmonitor)
+#[MyDBaaSMonitor](http://github.com/araujodavid/mydbaasmonitor)
 --------------
 
 A framework that provides an environment monitoring for database-as-a-service.
@@ -16,6 +16,15 @@ A framework that provides an environment monitoring for database-as-a-service.
 
 + http://github.com/araujodavid
 + http://araujodavid.com
+
+## Modules
+
+The monitoring environment has four modules:
+
+* **Core**: responsible for managing the monitoring agents, API requests and the web management interface - [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-core).
+* **Agent**:
+* **API**:
+* **Common**:
 
 
 
