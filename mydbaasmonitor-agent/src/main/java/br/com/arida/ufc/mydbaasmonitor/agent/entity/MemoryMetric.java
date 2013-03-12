@@ -99,7 +99,8 @@ public class MemoryMetric extends AbstractMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		// TODO Auto-generated method stub		
+		this.setUrl(properties.getProperty("geral.url")+properties.getProperty("mem.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("mem.cycle")));		
 	}	
 	
 }
