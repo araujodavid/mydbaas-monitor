@@ -21,8 +21,8 @@ A framework that provides an environment monitoring for database-as-a-service.
 
 The monitoring environment has four modules:
 
-* **Core**: responsible for managing the monitoring agents, API requests and the web management interface - [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-core).
-* **Agent**:
+* **Core**: responsible for managing the monitoring agents, knowledge base of metrics, API requests and the web management interface - `mydbaasmonitor-core` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-core).
+* **Agent**: Responsible for collecting metrics in the environment nodes and send to the server - `mydbaasmonitor-agent` [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-agent).
 * **API**:
 * **Common**:
 
