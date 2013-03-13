@@ -29,8 +29,6 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 
 public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
 	
-	private int machine;
-	
 	public MemoryCollector(int identifier) {
 		this.machine = identifier;
 	}
