@@ -27,8 +27,6 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 
 public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 	
-	private int machine;
-	
 	public CpuCollector(int identifier) {
 		this.machine = identifier;
 	}
@@ -59,7 +57,7 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("cpu.machine", String.valueOf(machine)));
+		params.add(new BasicNameValuePair("cpu.machine", String.valueOf(this.machine)));
 		params.add(new BasicNameValuePair("cpu.cpuUser", String.valueOf(this.metric.getCpuUser())));
 		params.add(new BasicNameValuePair("cpu.cpuSystem", String.valueOf(this.metric.getCpuSystem())));
 		params.add(new BasicNameValuePair("cpu.cpuIdle", String.valueOf(this.metric.getCpuIdle())));
@@ -73,8 +71,8 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 		try {
 			response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
 			System.out.println(response.getStatusLine());
-			if (response.getStatusLine().getStatusCode() != 201) {
-				System.out.println("Request error!");
+			if (response.getStatusLine().getStatusCode() != 202) {
+				System.out.println("CPU request error!");
 				EntityUtils.consume(response.getEntity());
 			}
 			EntityUtils.consume(response.getEntity());
