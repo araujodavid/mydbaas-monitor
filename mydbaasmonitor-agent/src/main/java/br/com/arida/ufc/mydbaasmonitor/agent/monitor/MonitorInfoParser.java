@@ -23,8 +23,6 @@ public class MonitorInfoParser {
 	private Integer user;
 	//Geral URL
 	private String geralURL;
-	//URL to send the general system information
-	private String informationURL;
 	//Properties agent configuration file
 	private Properties properties;
 
@@ -54,14 +52,6 @@ public class MonitorInfoParser {
 	public void setUser(Integer user) {
 		this.user = user;
 	}
-
-	public String getInformationURL() {
-		return informationURL;
-	}
-
-	public void setInformationURL(String informationURL) {
-		this.informationURL = informationURL;
-	}
 	
 	public String getGeralURL() {
 		return geralURL;
@@ -87,6 +77,5 @@ public class MonitorInfoParser {
 		this.identifier = Integer.valueOf(this.properties.getProperty("identifier"));
 		this.user = Integer.valueOf(this.properties.getProperty("user"));
 		this.geralURL = this.properties.getProperty("geral.url");
-		this.informationURL = this.properties.getProperty("information.url");
 	}
 }
