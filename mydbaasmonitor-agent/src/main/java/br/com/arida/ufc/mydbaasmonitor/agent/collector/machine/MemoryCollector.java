@@ -84,8 +84,8 @@ public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
 		try {
 			response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
 			System.out.println(response.getStatusLine());
-			if (response.getStatusLine().getStatusCode() != 201) {
-				System.out.println("Request error!");
+			if (response.getStatusLine().getStatusCode() != 202) {
+				System.out.println("Memory request error!");
 				EntityUtils.consume(response.getEntity());
 			}
 			EntityUtils.consume(response.getEntity());
