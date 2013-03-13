@@ -10,7 +10,7 @@ A framework that provides an environment monitoring for database-as-a-service.
 * API for monitoring system information and hardware, [Hyperic SIGAR API](http://www.hyperic.com/products/sigar).
 * Client side HTTP transport library, [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html).
 
-## Authors
+## Team
 
 **David Araújo**
 
