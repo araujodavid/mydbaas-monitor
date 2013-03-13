@@ -55,6 +55,11 @@ public class MachineReceiverController {
 	@Post("machine/disk")
 	public void disk() {
 		//TODO!
-	}	
+	}
+	
+	@Post("machine/network")
+	public void network() {
+		
+	}
 
 }
