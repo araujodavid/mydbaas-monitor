@@ -17,7 +17,13 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMet
 public abstract class AbstractMachineCollector<T extends AbstractMetric> extends TimerTask {
 
 	protected T metric;
+	protected int machine;
 	
+	/**
+	 * Method that receives an instance of Sigar and makes the collection of a particular metric.
+	 * @param sigar - an instance of Sigar API 
+	 * @throws SigarException
+	 */
 	//Method to load the entity metric values
 	public abstract void loadMetric(Sigar sigar) throws SigarException;	
 
