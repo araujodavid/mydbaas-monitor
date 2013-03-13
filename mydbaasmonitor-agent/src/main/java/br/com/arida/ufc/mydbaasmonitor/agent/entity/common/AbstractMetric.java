@@ -31,6 +31,10 @@ public abstract class AbstractMetric {
 		this.url = url;
 	}
 	
+	/**
+	 * Method that takes a Properties object and loads settings for a particular metric.
+	 * @param properties
+	 */
 	public abstract void loadMetricProperties(Properties properties);
 	
 }
