@@ -20,7 +20,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 /**
  * 
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 13, 2013
  * 
  */

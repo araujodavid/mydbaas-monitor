@@ -1,15 +1,14 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common;
 
 import java.util.TimerTask;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.common.AbstractMetric;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.AbstractMetric;
 
 /**
  * 
  * @author Daivd Araújo
- * @version 2.0
+ * @version 2.5
  * @since March 8, 2013
  * 
  */
