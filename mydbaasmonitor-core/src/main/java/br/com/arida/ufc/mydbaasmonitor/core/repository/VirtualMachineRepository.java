@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.OperatingSystem;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
@@ -160,7 +162,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		}
 	}//update()
 	
-	public boolean updateSystemInformation(VirtualMachine resource) {
+	public boolean updateSystemInformation(OperatingSystem system, int machine) {
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
@@ -169,16 +171,16 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 					"`cpu_cores` = ?, `cpu_sockets` = ?, `cores_sockets` = ? " +
 					"where `id` = ?;");
 			
-			this.preparedStatement.setString(1, resource.getOperatingSystem());
-			this.preparedStatement.setString(2, resource.getKernelName());
-			this.preparedStatement.setString(3, resource.getKernelVersion());
-			this.preparedStatement.setString(4, resource.getArchitecture());
-			this.preparedStatement.setLong(5, resource.getTotalMemory());
-			this.preparedStatement.setLong(6, resource.getTotalSwap());
-			this.preparedStatement.setInt(7, resource.getTotalCPUCores());
-			this.preparedStatement.setInt(8, resource.getTotalCPUSockets());
-			this.preparedStatement.setInt(9, resource.getTotalCoresPerSocket());
-			this.preparedStatement.setInt(10, resource.getId());
+			this.preparedStatement.setString(1, system.getOperatingSystem());
+			this.preparedStatement.setString(2, system.getKernelName());
+			this.preparedStatement.setString(3, system.getKernelVersion());
+			this.preparedStatement.setString(4, system.getArchitecture());
+			this.preparedStatement.setLong(5, system.getTotalMemory());
+			this.preparedStatement.setLong(6, system.getTotalSwap());
+			this.preparedStatement.setInt(7, system.getTotalCPUCores());
+			this.preparedStatement.setInt(8, system.getTotalCPUSockets());
+			this.preparedStatement.setInt(9, system.getTotalCoresPerSocket());
+			this.preparedStatement.setInt(10, machine);
 			
 			this.preparedStatement.executeUpdate();
 			return true;
@@ -224,6 +226,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 	@Override
 	public VirtualMachine getEntity(ResultSet resultSet) throws SQLException {
 		VirtualMachine virtualMachine = new VirtualMachine();
+		OperatingSystem system = new OperatingSystem();
 		
 		virtualMachine.setId(resultSet.getInt("id"));
 		virtualMachine.setHost(resultSet.getString("host"));
@@ -235,15 +238,16 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		virtualMachine.setAlias(resultSet.getString("alias"));
 		virtualMachine.setStatus(resultSet.getBoolean("status"));
 		virtualMachine.setKey(resultSet.getString("key"));
-		virtualMachine.setOperatingSystem(resultSet.getString("so"));
-		virtualMachine.setKernelName(resultSet.getString("kernel_name"));
-		virtualMachine.setKernelVersion(resultSet.getString("kernel_version"));
-		virtualMachine.setArchitecture(resultSet.getString("architecture"));
-		virtualMachine.setTotalMemory(resultSet.getLong("memory"));
-		virtualMachine.setTotalSwap(resultSet.getLong("swap"));
-		virtualMachine.setTotalCPUCores(resultSet.getInt("cpu_cores"));
-		virtualMachine.setTotalCPUSockets(resultSet.getInt("cpu_sockets"));
-		virtualMachine.setTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
+		system.setOperatingSystem(resultSet.getString("so"));
+		system.setKernelName(resultSet.getString("kernel_name"));
+		system.setKernelVersion(resultSet.getString("kernel_version"));
+		system.setArchitecture(resultSet.getString("architecture"));
+		system.setTotalMemory(resultSet.getLong("memory"));
+		system.setTotalSwap(resultSet.getLong("swap"));
+		system.setTotalCPUCores(resultSet.getInt("cpu_cores"));
+		system.setTotalCPUSockets(resultSet.getInt("cpu_sockets"));
+		system.setTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
+		virtualMachine.setSystem(system);
 		
 		return virtualMachine;
 	}//getEntity()
