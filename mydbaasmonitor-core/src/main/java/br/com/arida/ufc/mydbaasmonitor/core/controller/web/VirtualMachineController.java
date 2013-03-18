@@ -16,6 +16,8 @@ import br.com.caelum.vraptor.validator.Validations;
 /**
  * Class that manages the methods that the front-end virtual machine accesses.
  * @author David Araújo
+ * @version 3.0
+ * @since March 18, 2013
  * Front-end: web/WEB-INF/jsp/virtualMachine
  */
 
@@ -96,7 +98,7 @@ public class VirtualMachineController {
 	 * @param virtualMachine - object sent by the form
 	 * @param confirmPassword - password confirmation for validation
 	 */
-	@Path("vms/update")
+	@Path("/vms/update")
 	public void update(final VirtualMachine virtualMachine){
 		if (virtualMachine.getStatus() == null) { 
 			virtualMachine.setStatus(false); 
@@ -118,7 +120,7 @@ public class VirtualMachineController {
 		.redirectTo(this).view(virtualMachine);
 	} //update()
 	
-	@Path("vms/machine/password")
+	@Path("/vms/machine/password")
 	public void passwordUpdate(final VirtualMachine virtualMachine, final String confirmPassword){
 		//Validations by vRaptor
 			validator.checking(new Validations() { {
