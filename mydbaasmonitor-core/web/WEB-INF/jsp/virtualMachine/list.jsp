@@ -16,15 +16,7 @@
       		}
     	</style>
     	
-    	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
-		
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
-		<script type="text/javascript">
-			$(function ()  
-				{ $("#teste").popover();  
-			}); 
-		</script>
+    	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">		
 
 		<title>MyDBaaSMonitor</title>
 	</head>
@@ -50,7 +42,7 @@
 	  				</c:if>
         		
         			<legend>
-        				<img src="/mydbaasmonitor/img/table.png"> List of Virtual Machines
+        				<img src="/mydbaasmonitor/img/table.png"> <strong>List of Virtual Machines</strong>
         			</legend>
         			
         			<div class="row-fluid">
@@ -102,5 +94,7 @@
 
 		</div><!--/.fluid-container-->	 	
 	  	
+	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>	  	
 	</body>
 </html>

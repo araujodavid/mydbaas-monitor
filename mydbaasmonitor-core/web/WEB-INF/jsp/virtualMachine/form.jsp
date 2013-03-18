@@ -20,7 +20,7 @@
 		<div class="container" style="margin-top:70px;">		
 			<form method="post" action="${pageContext.servletContext.contextPath}/vms/add">
 				<fieldset>
-						<legend>New Machine</legend>
+						<legend><strong>New Machine</strong></legend>
 						
 						<c:if test="${errors != null}">							
 							<c:forEach var="error" items="${errors}">

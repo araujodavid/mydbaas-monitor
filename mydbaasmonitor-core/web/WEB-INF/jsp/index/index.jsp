@@ -18,9 +18,6 @@
     	</style>
     	
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
-		
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 
 		<title>MyDBaaSMonitor</title>
 	</head>
@@ -32,7 +29,8 @@
     		<div class="row-fluid">
         		<div class="span3">
 					<div align="left" style="margin-bottom:10px;">
-        				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Machine</a>
+						<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/dbaas/new" title="To create a new DBaaS."><i class="icon-plus icon-white"></i> DBaaS</a>
+        				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title="To create a new virtual machine."><i class="icon-plus icon-white"></i> Machine</a>
         			</div>
 		            <div class="accordion" id="accordion2">
 						<div class="accordion-group">
@@ -97,5 +95,8 @@
 
 		</div><!--/.fluid-container-->	 	
 	  	
+	  	<!-- JS -->
+	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 	</body>
 </html>
