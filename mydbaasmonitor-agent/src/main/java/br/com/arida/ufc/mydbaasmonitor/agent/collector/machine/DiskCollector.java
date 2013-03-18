@@ -80,15 +80,15 @@ public class DiskCollector extends AbstractMachineCollector<DiskMetric> {
 		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("disk.machine", String.valueOf(this.machine)));
-		params.add(new BasicNameValuePair("disk.diskUsed", String.valueOf(this.metric.getDiskUsed())));
-		params.add(new BasicNameValuePair("disk.diskFree", String.valueOf(this.metric.getDiskFree())));
-		params.add(new BasicNameValuePair("disk.diskTotal", String.valueOf(this.metric.getDiskTotal())));		
-		params.add(new BasicNameValuePair("disk.diskReadBytes", String.valueOf(this.metric.getDiskReadBytes())));
-		params.add(new BasicNameValuePair("disk.diskWriteBytes", String.valueOf(this.metric.getDiskWriteBytes())));
-		params.add(new BasicNameValuePair("disk.diskReads", String.valueOf(this.metric.getDiskReads())));
-		params.add(new BasicNameValuePair("disk.diskWrites", String.valueOf(this.metric.getDiskWrites())));		
-		params.add(new BasicNameValuePair("disk.recordDate", DateUtil.formatDate(new Date())));
+		params.add(new BasicNameValuePair("machine", String.valueOf(this.machine)));
+		params.add(new BasicNameValuePair("metric.diskUsed", String.valueOf(this.metric.getDiskUsed())));
+		params.add(new BasicNameValuePair("metric.diskFree", String.valueOf(this.metric.getDiskFree())));
+		params.add(new BasicNameValuePair("metric.diskTotal", String.valueOf(this.metric.getDiskTotal())));		
+		params.add(new BasicNameValuePair("metric.diskReadBytes", String.valueOf(this.metric.getDiskReadBytes())));
+		params.add(new BasicNameValuePair("metric.diskWriteBytes", String.valueOf(this.metric.getDiskWriteBytes())));
+		params.add(new BasicNameValuePair("metric.diskReads", String.valueOf(this.metric.getDiskReads())));
+		params.add(new BasicNameValuePair("metric.diskWrites", String.valueOf(this.metric.getDiskWrites())));		
+		params.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(new Date())));
 		
 		HttpResponse response;
 		

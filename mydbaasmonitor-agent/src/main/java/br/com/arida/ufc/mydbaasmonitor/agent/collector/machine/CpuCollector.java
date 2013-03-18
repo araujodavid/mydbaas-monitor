@@ -57,14 +57,14 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("cpu.machine", String.valueOf(this.machine)));
-		params.add(new BasicNameValuePair("cpu.cpuUser", String.valueOf(this.metric.getCpuUser())));
-		params.add(new BasicNameValuePair("cpu.cpuSystem", String.valueOf(this.metric.getCpuSystem())));
-		params.add(new BasicNameValuePair("cpu.cpuIdle", String.valueOf(this.metric.getCpuIdle())));
-		params.add(new BasicNameValuePair("cpu.cpuNice", String.valueOf(this.metric.getCpuNice())));
-		params.add(new BasicNameValuePair("cpu.cpuWait", String.valueOf(this.metric.getCpuWait())));
-		params.add(new BasicNameValuePair("cpu.cpuCombined", String.valueOf(this.metric.getCpuCombined())));
-		params.add(new BasicNameValuePair("cpu.recordDate", DateUtil.formatDate(new Date())));
+		params.add(new BasicNameValuePair("machine", String.valueOf(this.machine)));
+		params.add(new BasicNameValuePair("metric.cpuUser", String.valueOf(this.metric.getCpuUser())));
+		params.add(new BasicNameValuePair("metric.cpuSystem", String.valueOf(this.metric.getCpuSystem())));
+		params.add(new BasicNameValuePair("metric.cpuIdle", String.valueOf(this.metric.getCpuIdle())));
+		params.add(new BasicNameValuePair("metric.cpuNice", String.valueOf(this.metric.getCpuNice())));
+		params.add(new BasicNameValuePair("metric.cpuWait", String.valueOf(this.metric.getCpuWait())));
+		params.add(new BasicNameValuePair("metric.cpuCombined", String.valueOf(this.metric.getCpuCombined())));
+		params.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(new Date())));
 		
 		HttpResponse response;
 		

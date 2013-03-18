@@ -64,16 +64,16 @@ public class SOCollector extends AbstractMachineCollector<SOMetric>  {
 		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("virtualMachine.id", String.valueOf(this.machine)));
-		params.add(new BasicNameValuePair("virtualMachine.operatingSystem", String.valueOf(this.metric.getOperatingSystem())));
-		params.add(new BasicNameValuePair("virtualMachine.kernelName", String.valueOf(this.metric.getKernelName())));
-		params.add(new BasicNameValuePair("virtualMachine.kernelVersion", String.valueOf(this.metric.getKernelVersion())));
-		params.add(new BasicNameValuePair("virtualMachine.architecture", String.valueOf(this.metric.getArchitecture())));
-		params.add(new BasicNameValuePair("virtualMachine.totalMemory", String.valueOf(this.metric.getTotalMemory())));
-		params.add(new BasicNameValuePair("virtualMachine.totalSwap", String.valueOf(this.metric.getTotalSwap())));
-		params.add(new BasicNameValuePair("virtualMachine.totalCPUCores", String.valueOf(this.metric.getTotalCPUCores())));
-		params.add(new BasicNameValuePair("virtualMachine.totalCPUSockets", String.valueOf(this.metric.getTotalCPUSockets())));
-		params.add(new BasicNameValuePair("virtualMachine.totalCoresPerSocket", String.valueOf(this.metric.getTotalCoresPerSocket())));
+		params.add(new BasicNameValuePair("machine", String.valueOf(this.machine)));
+		params.add(new BasicNameValuePair("metric.operatingSystem", String.valueOf(this.metric.getOperatingSystem())));
+		params.add(new BasicNameValuePair("metric.kernelName", String.valueOf(this.metric.getKernelName())));
+		params.add(new BasicNameValuePair("metric.kernelVersion", String.valueOf(this.metric.getKernelVersion())));
+		params.add(new BasicNameValuePair("metric.architecture", String.valueOf(this.metric.getArchitecture())));
+		params.add(new BasicNameValuePair("metric.totalMemory", String.valueOf(this.metric.getTotalMemory())));
+		params.add(new BasicNameValuePair("metric.totalSwap", String.valueOf(this.metric.getTotalSwap())));
+		params.add(new BasicNameValuePair("metric.totalCPUCores", String.valueOf(this.metric.getTotalCPUCores())));
+		params.add(new BasicNameValuePair("metric.totalCPUSockets", String.valueOf(this.metric.getTotalCPUSockets())));
+		params.add(new BasicNameValuePair("metric.totalCoresPerSocket", String.valueOf(this.metric.getTotalCoresPerSocket())));
 		
 		HttpResponse response;
 		

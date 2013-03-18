@@ -66,16 +66,16 @@ public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
 		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("memory.machine", String.valueOf(machine)));
-		params.add(new BasicNameValuePair("memory.swapUsed", String.valueOf(this.metric.getSwapUsed())));
-		params.add(new BasicNameValuePair("memory.swapFree", String.valueOf(this.metric.getSwapFree())));
-		params.add(new BasicNameValuePair("memory.memoryUsed", String.valueOf(this.metric.getMemoryUsed())));
-		params.add(new BasicNameValuePair("memory.memoryFree", String.valueOf(this.metric.getMemoryFree())));
-		params.add(new BasicNameValuePair("memory.memoryUsedPercent", String.valueOf(this.metric.getMemoryUsedPercent())));
-		params.add(new BasicNameValuePair("memory.memoryFreePercent", String.valueOf(this.metric.getMemoryFreePercent())));
-		params.add(new BasicNameValuePair("memory.buffersCacheUsed", String.valueOf(this.metric.getBuffersCacheUsed())));
-		params.add(new BasicNameValuePair("memory.buffersCacheFree", String.valueOf(this.metric.getBuffersCacheFree())));
-		params.add(new BasicNameValuePair("memory.recordDate", DateUtil.formatDate(new Date())));
+		params.add(new BasicNameValuePair("machine", String.valueOf(machine)));
+		params.add(new BasicNameValuePair("metric.swapUsed", String.valueOf(this.metric.getSwapUsed())));
+		params.add(new BasicNameValuePair("metric.swapFree", String.valueOf(this.metric.getSwapFree())));
+		params.add(new BasicNameValuePair("metric.memoryUsed", String.valueOf(this.metric.getMemoryUsed())));
+		params.add(new BasicNameValuePair("metric.memoryFree", String.valueOf(this.metric.getMemoryFree())));
+		params.add(new BasicNameValuePair("metric.memoryUsedPercent", String.valueOf(this.metric.getMemoryUsedPercent())));
+		params.add(new BasicNameValuePair("metric.memoryFreePercent", String.valueOf(this.metric.getMemoryFreePercent())));
+		params.add(new BasicNameValuePair("metric.buffersCacheUsed", String.valueOf(this.metric.getBuffersCacheUsed())));
+		params.add(new BasicNameValuePair("metric.buffersCacheFree", String.valueOf(this.metric.getBuffersCacheFree())));
+		params.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(new Date())));
 		
 		HttpResponse response;
 		
