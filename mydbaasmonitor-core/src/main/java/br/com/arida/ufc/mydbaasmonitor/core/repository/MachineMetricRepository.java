@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.metric.Cpu;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.metric.Memory;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -22,7 +22,7 @@ public class MachineMetricRepository {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
     
-	public boolean saveCpuMetric(Cpu cpu) {
+	public boolean saveCpuMetric(Cpu cpu, int machine, String recordDate) {
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
@@ -30,14 +30,14 @@ public class MachineMetricRepository {
 					"(`virtual_machine`, `cpu_user`, `cpu_system`, `cpu_nice`, `cpu_wait`, `cpu_idle`, `cpu_combined`, `record_date`) " +
 					"values (?, ?, ?, ?, ?, ?, ?, ?);");
 			
-			this.preparedStatement.setInt(1, cpu.getMachine());
+			this.preparedStatement.setInt(1, machine);
 			this.preparedStatement.setDouble(2, cpu.getCpuUser());
 			this.preparedStatement.setDouble(3, cpu.getCpuSystem());
 			this.preparedStatement.setDouble(4, cpu.getCpuNice());
 			this.preparedStatement.setDouble(5, cpu.getCpuWait());
 			this.preparedStatement.setDouble(6, cpu.getCpuIdle());
 			this.preparedStatement.setDouble(7, cpu.getCpuCombined());
-			this.preparedStatement.setString(8, cpu.getRecordDate());
+			this.preparedStatement.setString(8, recordDate);
 			
 			this.preparedStatement.executeUpdate();
 			return true;
@@ -52,7 +52,7 @@ public class MachineMetricRepository {
 		return false;
 	}//saveCpuMetric()
 	
-	public boolean saveMemoryMetric(Memory memory) {
+	public boolean saveMemoryMetric(Memory memory, int machine, String recordDate) {
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
@@ -60,7 +60,7 @@ public class MachineMetricRepository {
 					"(`virtual_machine`, `swap_used`, `swap_free`, `memory_used`, `memory_free`, `memory_used_percent`, `memory_free_percent`, `buffers_cache_used`, `buffers_cache_free`, `record_date`) " +
 					"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			
-			this.preparedStatement.setInt(1, memory.getMachine());
+			this.preparedStatement.setInt(1, machine);
 			this.preparedStatement.setLong(2, memory.getSwapUsed());
 			this.preparedStatement.setLong(3, memory.getSwapFree());
 			this.preparedStatement.setLong(4, memory.getMemoryUsed());
@@ -69,7 +69,7 @@ public class MachineMetricRepository {
 			this.preparedStatement.setDouble(7, memory.getMemoryFreePercent());
 			this.preparedStatement.setLong(8, memory.getBuffersCacheUsed());
 			this.preparedStatement.setLong(9, memory.getBuffersCacheFree());
-			this.preparedStatement.setString(10, memory.getRecordDate());
+			this.preparedStatement.setString(10, recordDate);
 			
 			this.preparedStatement.executeUpdate();
 			return true;
