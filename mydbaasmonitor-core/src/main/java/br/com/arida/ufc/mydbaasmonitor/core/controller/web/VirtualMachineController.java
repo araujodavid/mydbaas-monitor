@@ -76,7 +76,6 @@ public class VirtualMachineController {
 		//If some validation is triggered are sent error messages to page
 		validator.onErrorForwardTo(VirtualMachineController.class).form();
 		
-		//If everything is ok the object is sent to the ResourceManager and the user is redirected to the page that lists the registered resources
 		repository.save(virtualMachine);
 		result
 		.include("notice", i18n("machine.save.ok"))
@@ -113,7 +112,6 @@ public class VirtualMachineController {
 		//If some validation is triggered are sent error messages to page
 		validator.onErrorForwardTo(VirtualMachineController.class).edit(virtualMachine);
 		
-		//If everything is ok the object is sent to the ResourceManager and the user is redirected to the page that lists the registered resources
 		repository.update(virtualMachine);
 		result
 		.include("notice", i18n("machine.update.ok"))
