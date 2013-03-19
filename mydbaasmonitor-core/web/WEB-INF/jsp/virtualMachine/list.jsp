@@ -18,7 +18,7 @@
     	
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">		
 
-		<title>MyDBaaSMonitor</title>
+		<title>MyDBaaSMonitor - List of Machines</title>
 	</head>
 	<body>
 		

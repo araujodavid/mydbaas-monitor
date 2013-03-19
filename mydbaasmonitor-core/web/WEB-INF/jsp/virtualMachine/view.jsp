@@ -22,7 +22,7 @@
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 
-		<title>MyDBaaSMonitor</title>
+		<title>MyDBaaSMonitor - Machine: ${virtualMachine.alias}</title>
 	</head>
 	<body>
 		

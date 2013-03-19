@@ -7,14 +7,10 @@
 		<meta name="reply-to" content="araujodavid@lia.ufc.br"/>
 		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">
-		
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 
-		<title>MyDBaaSMonitor</title>
+		<title>MyDBaaSMonitor - New Machine</title>
 	</head>
-	<body>
-		
+	<body>		
 		<%@include file="/static/menu.jsp"%>
 		
 		<div class="container" style="margin-top:70px;">		
@@ -29,6 +25,17 @@
 									<strong>${error.category}!</strong> ${error.message}
 								</div>
 			  				</c:forEach>			  				
+		  				</c:if>
+		  				
+		  				<label class="text-info" for="dbaas">Environment DBaaS:</label>
+		  				<select id="dbaas" name="virtualMachine.environment.id" style="width:284px;">
+		  					<option value="0" selected="selected">Select one</option>
+		  					<c:forEach var="dbaas" items="${availableDBaaS}">
+								<option value="${dbaas.id}">${dbaas.alias}</option>
+			  				</c:forEach>
+		  				</select>
+		  				<c:if test="${availableDBaaS == null}">
+		  					<span class="help-block"><em><small>There is no registered environments. Create a new <a href="<c:url value="/dbaas/new" />">here</a>.</small></em></span>
 		  				</c:if>
 		  				
 		  				<label class="text-info" for="alias">Alias:</label>
@@ -67,13 +74,14 @@
 						<div class="form-actions">
 							<button type="submit" class="btn btn-success">Save</button>
 							<a class="btn btn-danger" href="${pageContext.servletContext.contextPath}/vms/list" onclick="return confirm('Are you sure want to cancel the registration?');">Cancel</a>
-						</div>
-					  	
+						</div>					  	
 	  			</fieldset>
 		 	</form>
 	 	</div> <!-- /container -->
 	 	
 	 	<%@include file="/static/footer.jsp"%>
 	 	
+	 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 	</body>
 </html>
