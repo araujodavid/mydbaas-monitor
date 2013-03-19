@@ -15,7 +15,10 @@ public class VirtualMachine extends GenericResource {
 	
 	//key file if necessary for access
 	private String key;
+	//information system and machine
 	private OperatingSystem system;
+	//enviroment
+	private DBaaS environment;
 	
 	public String getKey() {
 		return key;
@@ -31,6 +34,14 @@ public class VirtualMachine extends GenericResource {
 
 	public void setSystem(OperatingSystem system) {
 		this.system = system;
+	}
+	
+	public DBaaS getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(DBaaS environment) {
+		this.environment = environment;
 	}
 
 	@Override
