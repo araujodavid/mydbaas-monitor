@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
 import br.com.caelum.vraptor.Path;
@@ -25,11 +26,13 @@ import br.com.caelum.vraptor.validator.Validations;
 public class VirtualMachineController {
 	
 	private VirtualMachineRepository repository;
+	private DBaaSRepository dBaaSRepository;
 	private Result result;
 	private Validator validator;
 	
-	public VirtualMachineController(VirtualMachineRepository repository, Result result, Validator validator){
+	public VirtualMachineController(VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, Result result, Validator validator){
 		this.repository = repository;
+		this.dBaaSRepository = dBaaSRepository;
 		this.result = result;
 		this.validator = validator;
 	}
@@ -53,7 +56,10 @@ public class VirtualMachineController {
 	@Path("/vms/new")
 	public void form(){
 		//Includes the current date
-		this.result.include("current_date", DataUtil.converteDateParaString(new Date()));
+		//List available DBaaS
+		this.result
+		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("availableDBaaS", dBaaSRepository.all());
 	}
 	
 	/**
@@ -64,7 +70,8 @@ public class VirtualMachineController {
 	@Path("/vms/add")
 	public void add(final VirtualMachine virtualMachine, final String confirmPassword){
 		//Validations by vRaptor
-		validator.checking(new Validations() { {
+		validator.checking(new Validations() {{
+			that(!(virtualMachine.getEnvironment().getId() == 0), "Environment", "machine.environment.empty");
 			that(!(virtualMachine.getAlias() == null), "Alias", "machine.alias.empty");
 	        that(!(virtualMachine.getHost() == null), "Host", "machine.host.empty");
 	        that(!(virtualMachine.getUser() == null), "Username", "machine.username.empty");
