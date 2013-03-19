@@ -111,8 +111,8 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into virtual_machine " +
-					"(`host`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`) " +
-					"values (?, ?, ?, ?, now(), ?, ?, ?, true);");
+					"(`host`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`) " +
+					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?);");
 			
 			this.preparedStatement.setString(1, resource.getHost());
 			this.preparedStatement.setString(2, resource.getUser());
@@ -121,6 +121,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setString(5, resource.getKey());
 			this.preparedStatement.setString(6, resource.getDescription());
 			this.preparedStatement.setString(7, resource.getAlias());
+			this.preparedStatement.setInt(8, resource.getEnvironment().getId());
 			
 			this.preparedStatement.executeUpdate();
 		} 
