@@ -72,18 +72,28 @@ public class DBaaSController implements GenericController<DBaaS> {
 		.redirectTo(this).list();	
 	}
 
-	@Path("/dbaas/edit/{dbaas.id}")
+	@Path("/dbaas/edit/{entity.id}")
 	@Override
 	public DBaaS edit(DBaaS entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.find(entity.getId());
 	}
 
 	@Path("/dbaas/update")
 	@Override
-	public void update(DBaaS entity) {
-		// TODO Auto-generated method stub		
-	}
+	public void update(final DBaaS entity) {
+		//Validations by vRaptor
+		validator.checking(new Validations() { {
+			that(!(entity.getAlias() == null), "Alias", "dbaas.alias.empty");
+	        that(!(entity.getDescription() == null), "Description", "dbaas.description.empty");		        
+	    } });
+		//If some validation is triggered are sent error messages to page
+		validator.onErrorForwardTo(this).edit(entity);
+		
+		repository.update(entity);
+		result
+		.include("notice", i18n("dbaas.update.ok"))
+		.redirectTo(this).view(entity);
+	} //update()
 
 	@Path("/dbaas/view/{dbaas.id}")
 	@Override
