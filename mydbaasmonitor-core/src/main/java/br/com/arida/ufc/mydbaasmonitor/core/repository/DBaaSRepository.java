@@ -14,7 +14,7 @@ import br.com.caelum.vraptor.ioc.Component;
 
 /**
  * @author David Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 18, 2013 
  */
 
@@ -51,9 +51,27 @@ public class DBaaSRepository implements GenericRepository<DBaaS> {
 
 	@Override
 	public DBaaS find(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		DBaaS dBaaS = null;
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from dbaas where `id` = ?;");
+			
+			preparedStatement.setInt(1, id);
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				dBaaS = getEntity(resultSet);	
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return dBaaS;
+	} //find()
 
 	@Override
 	public void remove(DBaaS resource) {
@@ -85,8 +103,27 @@ public class DBaaSRepository implements GenericRepository<DBaaS> {
 
 	@Override
 	public void update(DBaaS resource) {
-		// TODO Auto-generated method stub		
-	}
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update dbaas " +
+					"set `alias` = ?, `description` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setString(1, resource.getAlias());
+			this.preparedStatement.setString(2, resource.getDescription());
+			this.preparedStatement.setInt(3, resource.getId());
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//update()
 
 	@Override
 	public DBaaS getEntity(ResultSet resultSet) throws SQLException {
