@@ -6,10 +6,7 @@
 		<meta name="author" content="David Araújo"/>
 		<meta name="reply-to" content="araujodavid@lia.ufc.br"/>
 		
-		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">
-		
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
+		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">		
 
 		<title>MyDBaaSMonitor - Edit Machine</title>
 	</head>
@@ -115,5 +112,7 @@
 	 	
 	 	<%@include file="/static/footer.jsp"%>
 	 	
+	 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 	</body>
 </html>
