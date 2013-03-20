@@ -17,9 +17,9 @@ import br.com.caelum.vraptor.validator.Validations;
 /**
  * Class that manages the methods that the front-end dbaas accesses.
  * @author David Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 18, 2013
- * Front-end: web/WEB-INF/jsp/dbaas
+ * Front-end: web/WEB-INF/jsp/dBaaS
  */
 
 @Resource
