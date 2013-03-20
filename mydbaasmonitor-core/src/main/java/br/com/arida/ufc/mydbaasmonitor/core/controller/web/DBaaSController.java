@@ -1,9 +1,9 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
 import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
-
 import java.util.Date;
 import java.util.List;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
@@ -23,17 +23,14 @@ import br.com.caelum.vraptor.validator.Validations;
  */
 
 @Resource
-public class DBaaSController implements GenericController<DBaaS> {
+public class DBaaSController extends AbstractController implements GenericController<DBaaS> {
 
 	private DBaaSRepository repository;
-	private Result result;
-	private Validator validator;
 	
-	public DBaaSController(DBaaSRepository repository, Result result, Validator validator) {
+	public DBaaSController(Result result, Validator validator, DBaaSRepository repository) {
+		super(result, validator);
 		this.repository = repository;
-		this.result = result;
-		this.validator = validator;
-	}
+	}	
 	
 	@Path("/dbaas")
 	@Override

@@ -3,8 +3,10 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 import java.util.Date;
 import java.util.List;
 import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
 import br.com.caelum.vraptor.Path;
@@ -23,18 +25,17 @@ import br.com.caelum.vraptor.validator.Validations;
  */
 
 @Resource
-public class VirtualMachineController {
-	
+public class VirtualMachineController extends AbstractController {
+
 	private VirtualMachineRepository repository;
 	private DBaaSRepository dBaaSRepository;
-	private Result result;
-	private Validator validator;
+	private DatabaseRepository databaseRepository;
 	
-	public VirtualMachineController(VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, Result result, Validator validator){
+	public VirtualMachineController(Result result, Validator validator, VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, DatabaseRepository databaseRepository) {
+		super(result, validator);
 		this.repository = repository;
 		this.dBaaSRepository = dBaaSRepository;
-		this.result = result;
-		this.validator = validator;
+		this.databaseRepository = databaseRepository;
 	}
 	
 	@Path("/vms")
@@ -156,7 +157,9 @@ public class VirtualMachineController {
 	public VirtualMachine view(VirtualMachine virtualMachine){		
 		virtualMachine = repository.find(virtualMachine.getId());
 		virtualMachine.setEnvironment(dBaaSRepository.find(virtualMachine.getEnvironment().getId()));
-		result.include("listResources", repository.all());
+		result
+		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("databaseList", databaseRepository.list(virtualMachine));
 		return virtualMachine;		
 	}
 	
