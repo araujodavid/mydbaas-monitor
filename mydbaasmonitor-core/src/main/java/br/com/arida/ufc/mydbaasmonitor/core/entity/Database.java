@@ -2,11 +2,10 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.entity;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.common.GenericResource;
 
-/**
- * 
+/** 
  * @author David Araújo
+ * @version 2.0
  * @since March 4, 2013
- *
  */
 
 public class Database extends GenericResource {

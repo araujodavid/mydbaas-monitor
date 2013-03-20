@@ -13,12 +13,22 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.common.GenericResou
 
 public class VirtualMachine extends GenericResource {
 	
+	//IP address of the resource
+	private String host;
 	//key file if necessary for access
 	private String key;
 	//information system and machine
 	private OperatingSystem system;
 	//enviroment
 	private DBaaS environment;
+	
+	public String getHost() {
+		return host;
+	}
+	
+	public void setHost(String host) {
+		this.host = host;
+	}
 	
 	public String getKey() {
 		return key;
