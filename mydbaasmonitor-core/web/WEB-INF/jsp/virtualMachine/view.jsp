@@ -30,27 +30,42 @@
         		<div class="span3">        		
         			<legend>
 						<div align="left" style="margin-bottom:10px;">
-							<a class="btn btn-inverse" href="#myNewDBaaS" data-toggle="modal" title="To create a new DBaaS."><i class="icon-plus icon-white"></i> Database</a>
+							<a class="btn btn-inverse" href="#myModalNewDatabase" data-toggle="modal" title="To create a new database."><i class="icon-plus icon-white"></i> Database</a>
 	        			</div>
         			</legend>
         			
         			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Databases:</strong> 
         		
 			            <div class="accordion" id="accordion2">
-  							<div class="accordion-group">
-    							<div class="accordion-heading">
-      								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-        								<i class="icon-list-alt" style="margin-right:6px;"></i>Databases
-     	 							</a>
-    							</div>
-    							<div id="collapseOne" class="accordion-body collapse in">
-    								<c:forEach items="${listResources}" var="resource">
+			            	<c:forEach items="${databaseList}" var="database">
+	  							<div class="accordion-group">
+	    							<div class="accordion-heading">
+	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${database.id}">
+	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${database.alias}
+	     	 							</a>
+	    							</div>
+	    							<div id="collapse${database.id}" class="accordion-body collapse">
     									<div class="accordion-inner">
-    										<a href="${pageContext.servletContext.contextPath}/vms/view/${ resource.id }"><i class="icon-tags"></i> ${ resource.alias }</a> [${ resource.host }]        									
-      									</div>
-    								</c:forEach>     								
-    							</div>
-  							</div>
+    										 <address style="margin-bottom:5px;">
+    										 	<strong>Username:</strong> <info class="muted">${database.user}</info><br>
+    										 	<strong>Port:</strong> <info class="muted">${database.port}</info><br>
+    										 	<strong>Type:</strong> <info class="muted">${database.type}</info><br>
+    										 	<strong>Record Date:</strong> <info class="muted">${database.recordDate}</info><br>
+							  					<strong>Description:</strong> <info class="muted">${database.description}</info><br>
+							  					<strong>Monitoring Status:</strong><br> 
+						                    	<c:choose>
+				     								<c:when test="${database.status == true}">
+				      									<span class="label label-success">Active</span>
+						        					</c:when>
+						        					<c:otherwise>
+				      									<span class="label label-important">Inactive</span>
+				      								</c:otherwise>
+				     							</c:choose>
+    										 </address>       									
+      									</div>   								
+	    							</div>
+	  							</div>
+  							</c:forEach>
 						</div>          			
         		</div><!--/span-->
         		
@@ -128,10 +143,54 @@
             		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
-    		
-    		<%@include file="/static/footer.jsp"%>
-
-		</div><!--/.fluid-container-->	 	
+		</div><!--/.fluid-container-->	
+		
+		<!-- Modal New Database -->
+ 		<form method="post" action="<c:url value="/database/add"/>" id="myModalNewDatabase" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 		<div class="modal-header">
+    			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    			<h3 id="myModalLabel"><img src="/mydbaasmonitor/img/new_database.png"> New Database</h3>
+  			</div>
+  			<div class="modal-body">	  				
+				<fieldset>			
+	  				<input name="entity.virtualMachine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  				
+	  				<label class="text-info" for="type">Database Type:</label>
+	  				<select id="type" name="entity.type" style="width:284px;">
+	  					<option value="select" selected="selected">Select one</option>
+						<option value="MySQL">MySQL</option>
+						<option value="PostgreSQL">PostgreSQL</option>
+	  				</select>
+	  				
+	  				<label class="text-info" for="alias">Alias:</label>
+					<input class="input-xlarge" name="entity.alias" id="alias" type="text" placeholder="To better identify the resource" />
+					<span class="help-block"><em><small>Example: Database Project X</small></em></span>
+					
+					<label class="text-info" for="user">User:</label>
+					<input name="entity.user" id="user" type="text" placeholder="Database username" />
+					
+					<label class="text-info" for="port">Port:</label>
+					<input class="input-small" name="entity.port" id="port" type="text" placeholder="e.g. 3604" />							
+					<span class="help-block"><em><small>Enter the database port.</small></em></span>
+					
+					<label class="text-info" for="password">Password:</label>
+					<input name="entity.password" id="password" type="password" /> <br>
+					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" />
+					
+					<label class="text-info" for="description">Description:</label>	  							
+ 					<textarea name="entity.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;"></textarea>
+					
+					<label class="text-info" for="recordDate">Record Date:</label>
+					<input class="input-small" name="entity.recordDate" id="recordDate" type="text" readonly="readonly" value="${current_date}" />			  	
+  				</fieldset>		 		
+  			</div>
+  			<div class="modal-footer">
+  				<button type="submit" class="btn btn-success">Save changes</button>
+  				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>    			
+  			</div>
+ 		</form>
+ 		
+ 		<%@include file="/static/footer.jsp"%>	
 	  	
 	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>

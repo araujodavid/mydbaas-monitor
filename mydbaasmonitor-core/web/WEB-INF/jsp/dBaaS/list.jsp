@@ -31,7 +31,7 @@
         		
         			<legend>
 						<div align="left" style="margin-bottom:10px;">
-							<a class="btn btn-inverse" href="" data-toggle="modal" title="To create a new DBaaS."><i class="icon-plus icon-white"></i> Database-as-a-Service</a>
+							<a class="btn btn-inverse" href="#myNewDBaaS" data-toggle="modal" title="To create a new DBaaS."><i class="icon-plus icon-white"></i> Database-as-a-Service</a>
 	        			</div>
         			</legend>
         			
