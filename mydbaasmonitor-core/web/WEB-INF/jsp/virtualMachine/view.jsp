@@ -18,9 +18,6 @@
     	</style>
     	
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
-		
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 
 		<title>MyDBaaSMonitor - Machine: ${virtualMachine.alias}</title>
 	</head>
@@ -30,12 +27,20 @@
 		
 		<div class="container-fluid">
     		<div class="row-fluid">
-        		<div class="span3">
+        		<div class="span3">        		
+        			<legend>
+						<div align="left" style="margin-bottom:10px;">
+							<a class="btn btn-inverse" href="#myNewDBaaS" data-toggle="modal" title="To create a new DBaaS."><i class="icon-plus icon-white"></i> Database</a>
+	        			</div>
+        			</legend>
+        			
+        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Databases:</strong> 
+        		
 			            <div class="accordion" id="accordion2">
   							<div class="accordion-group">
     							<div class="accordion-heading">
       								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-        								<i class="icon-tasks" style="margin-right:5px;"></i>Virtual Machines
+        								<i class="icon-list-alt" style="margin-right:6px;"></i>Databases
      	 							</a>
     							</div>
     							<div id="collapseOne" class="accordion-body collapse in">
@@ -45,18 +50,6 @@
       									</div>
     								</c:forEach>     								
     							</div>
-  							</div>
-  							<div class="accordion-group">
-    							<div class="accordion-heading">
-      								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-        								<i class="icon-list-alt" style="margin-right:6px;"></i>Databases
-      								</a>
-    							</div>
-    							<div id="collapseTwo" class="accordion-body collapse">
-								    <div class="accordion-inner">
-								    	TODO!
-									</div>
-   								</div>
   							</div>
 						</div>          			
         		</div><!--/span-->
@@ -72,7 +65,7 @@
         			<legend><img src="/mydbaasmonitor/img/display.png"> Virtual Machine Information</legend>
         			<div class="row-fluid">
 		                <div class="span4">
-		                    <address>
+		                    <address>		                    	
 		                    	<strong>Monitoring Status:</strong><br> 
 		                    	<c:choose>
      								<c:when test="${virtualMachine.status == true}">
@@ -81,22 +74,23 @@
 		        					<c:otherwise>
       									<span class="label label-important">Inactive</span>
       								</c:otherwise>
-     							</c:choose><br><br>
-		                    
-		  						<strong>Alias:</strong> <em class="text-info">${virtualMachine.alias}</em><br>
-							  	<strong>Host:</strong> <em class="text-info">${virtualMachine.host}</em><br>							  	
-							  	<strong>SSH Port:</strong> <em class="text-info">${virtualMachine.port}</em><br>
-							  	<strong>Username:</strong> <em class="text-info">${virtualMachine.user}</em><br>
-							  	<strong>Record Date:</strong> <em class="muted">${virtualMachine.recordDate}</em><br>
-							  	<strong>Description:</strong> <em class="muted">${virtualMachine.description}</em><br><br>
-							  	<a class="btn btn-success" href="${pageContext.servletContext.contextPath}/vms/edit/${virtualMachine.id}" title="This button updates the information to access the machine."><i class="icon-pencil"></i> Edit</a>
-							  	<a class="btn btn-warning" href="${pageContext.servletContext.contextPath}/vms/list" title="This button updates the information about the resources of the machine." onclick="return confirm('Are you sure want to update the information about the resources?');"><i class="icon-wrench"></i> Update</a>
-							  	<a class="btn btn-danger" href="${pageContext.servletContext.contextPath}/vms/list" title="This button deletes the registry of the machine." onclick="return confirm('Are you sure want to delete the record?');"><i class="icon-remove"></i> Delete</a>
+     							</c:choose><br><br>	                    
+		                    	
+		                    	<strong>Environment:</strong> <a href="<c:url value="/dbaas/view/${virtualMachine.environment.id}"/>" title="Link to view the machine environment.">${virtualMachine.environment.alias}</a><br>
+		  						<strong>Alias:</strong> <info class="muted">${virtualMachine.alias}</info><br>
+							  	<strong>Host:</strong> <info class="muted">${virtualMachine.host}</info><br>							  	
+							  	<strong>SSH Port:</strong> <info class="muted">${virtualMachine.port}</info><br>
+							  	<strong>Username:</strong> <info class="muted">${virtualMachine.user}</info><br>
+							  	<strong>Record Date:</strong> <info class="muted">${virtualMachine.recordDate}</info><br>
+							  	<strong>Description:</strong> <info class="muted">${virtualMachine.description}</info><br><br>
+							  	<a class="btn btn-success" href="<c:url value="/vms/edit/${virtualMachine.id}"/>" title="This button updates the information to access the machine."><i class="icon-pencil"></i> Edit</a>
+							  	<a class="btn btn-warning" href="<c:url value="/vms/list"/>" title="This button updates the information about the resources of the machine." onclick="return confirm('Are you sure want to update the information about the resources?');"><i class="icon-wrench"></i> Update</a>
+							  	<a class="btn btn-danger" href="<c:url value="/vms/list"/>" title="This button deletes the registry of the machine." onclick="return confirm('Are you sure want to delete the record?');"><i class="icon-remove"></i> Delete</a>
 							</address> 
 		                </div><!--/informationAccess-->
                 
 		                <div class="span4">
-		                	<div class="tabbable"> <!-- Only required for left/right tabs -->
+		                	<div class="tabbable">
 								<ul class="nav nav-tabs">
 									<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
 							    	<li><a href="#tab2" data-toggle="tab">CPU</a></li>
@@ -105,19 +99,23 @@
 							  	<div class="tab-content">
 							    	<div class="tab-pane active" id="tab1">
 							      		<address>
-					  						<strong>Operating System:</strong> <em class="">${virtualMachine.operatingSystem}</em><br>
-					  						<strong>Kernel:</strong> <em class="">${virtualMachine.kernel}</em><br>
-					  						<strong>Memory:</strong> <em class="">${virtualMachine.memory} GB</em><br>
-					  						<strong>Swap:</strong> <em class="">${virtualMachine.swap} GB</em><br>											
+					  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.system.operatingSystem}</info><br>
+					  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.system.architecture}</info><br>
+					  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.system.kernelName}</info><br>
+					  						<strong>Version:</strong> <info class="muted">${virtualMachine.system.kernelVersion}</info><br>
+					  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalMemory > 0}">${virtualMachine.system.totalMemory} GB</c:if></info><br>
+					  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalSwap > 0}">${virtualMachine.system.totalSwap} GB</c:if></info><br>											
 										</address> 
 							    	</div>
     								<div class="tab-pane" id="tab2">
       									<address>
-					  						<strong>Cores:</strong> <em class="">${virtualMachine.cores}</em>											
+					  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalCPUCores > 0}">${virtualMachine.system.totalCPUCores}</c:if></info><br>
+					  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalCPUSockets > 0}">${virtualMachine.system.totalCPUSockets}</c:if></info><br>
+					  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalCoresPerSocket > 0}">${virtualMachine.system.totalCoresPerSocket}</c:if></info><br>									
 										</address> 
     								</div>
     								<div class="tab-pane" id="tab3">
-      									<p>Howdy, I'm in Section 2.</p>
+      									
     								</div>
   								</div>
 							</div>
@@ -135,5 +133,7 @@
 
 		</div><!--/.fluid-container-->	 	
 	  	
+	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 	</body>
 </html>
