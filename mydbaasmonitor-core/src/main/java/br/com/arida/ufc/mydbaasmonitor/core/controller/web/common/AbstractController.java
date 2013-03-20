@@ -11,8 +11,8 @@ import br.com.caelum.vraptor.Validator;
 
 public abstract class AbstractController {
 
-	private Result result;
-	private Validator validator;
+	protected Result result;
+	protected Validator validator;
 	
 	public AbstractController(Result result, Validator validator) {
 		this.result = result;
