@@ -3,15 +3,13 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.common;
 /** 
  * 
  * @author David Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 4, 2013
  * 
  */
 
 public abstract class GenericResource extends AbstractEntity {
 
-	//IP address of the resource
-	private String host;
 	//port of access
 	private Integer port;
 	//user of access
@@ -24,14 +22,6 @@ public abstract class GenericResource extends AbstractEntity {
 	private String alias;
 	//resource status
 	private Boolean status;
-	
-	public String getHost() {
-		return host;
-	}
-	
-	public void setHost(String host) {
-		this.host = host;
-	}
 	
 	public Integer getPort() {
 		return port;
