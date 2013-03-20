@@ -96,6 +96,8 @@ public class VirtualMachineController {
 	 */
 	@Path("/vms/edit/{virtualMachine.id}")
 	public VirtualMachine edit(VirtualMachine virtualMachine){
+		//List available DBaaS
+		this.result.include("availableDBaaS", dBaaSRepository.all());
 		return repository.find(virtualMachine.getId());		
 	}
 	
@@ -151,9 +153,11 @@ public class VirtualMachineController {
 	 * @return a virtual machine object to be viewed
 	 */
 	@Path("/vms/view/{virtualMachine.id}")
-	public VirtualMachine view(VirtualMachine virtualMachine){
+	public VirtualMachine view(VirtualMachine virtualMachine){		
+		virtualMachine = repository.find(virtualMachine.getId());
+		virtualMachine.setEnvironment(dBaaSRepository.find(virtualMachine.getEnvironment().getId()));
 		result.include("listResources", repository.all());
-		return repository.find(virtualMachine.getId());		
+		return virtualMachine;		
 	}
 	
 	@Path("/vms/delete/{virtualMachine.id}")
