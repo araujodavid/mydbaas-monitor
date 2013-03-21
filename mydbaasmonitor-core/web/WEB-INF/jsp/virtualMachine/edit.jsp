@@ -18,7 +18,7 @@
 			<form method="post" action="${pageContext.servletContext.contextPath}/vms/update">
 				<fieldset>
 						<legend>
-							Editing Machine							
+							<strong>Editing Machine</strong>							
 						</legend>
 						
 						<c:if test="${errors != null}">							

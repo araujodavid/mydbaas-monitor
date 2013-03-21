@@ -42,25 +42,26 @@
 	    							<div class="accordion-heading">
 	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${database.id}">
 	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${database.alias}
-	     	 							</a>
+	     	 							</a>	     	 							
 	    							</div>
 	    							<div id="collapse${database.id}" class="accordion-body collapse">
     									<div class="accordion-inner">
     										 <address style="margin-bottom:5px;">
-    										 	<strong>Username:</strong> <info class="muted">${database.user}</info><br>
-    										 	<strong>Port:</strong> <info class="muted">${database.port}</info><br>
-    										 	<strong>Type:</strong> <info class="muted">${database.type}</info><br>
-    										 	<strong>Record Date:</strong> <info class="muted">${database.recordDate}</info><br>
-							  					<strong>Description:</strong> <info class="muted">${database.description}</info><br>
+    										 	<strong>Username:</strong> ${database.user}<br>
+    										 	<strong>Port:</strong> ${database.port}<br>
+    										 	<strong>Type:</strong> ${database.type}<br>
+    										 	<strong>Record Date:</strong> ${database.recordDate}<br>
+							  					<strong>Description:</strong> ${database.description}<br>
 							  					<strong>Monitoring Status:</strong><br> 
 						                    	<c:choose>
 				     								<c:when test="${database.status == true}">
-				      									<span class="label label-success">Active</span>
+				      									<span class="label label-success">Active</span><br><br>
 						        					</c:when>
 						        					<c:otherwise>
-				      									<span class="label label-important">Inactive</span>
+				      									<span class="label label-important">Inactive</span><br><br>
 				      								</c:otherwise>
 				     							</c:choose>
+				     							<a class="muted" href="<c:url value="/database/edit/${database.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>Edit</a>
     										 </address>       									
       									</div>   								
 	    							</div>

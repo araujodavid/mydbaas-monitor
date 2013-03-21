@@ -8,16 +8,18 @@
 		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">
 		
-		<title>MyDBaaSMonitor - New Database</title>
+		<title>MyDBaaSMonitor - Edit Database</title>
 	</head>
 	<body>
 		
 		<%@include file="/static/menu.jsp"%>
 
 		<div class="container" style="margin-top:70px;">		
-			<form method="post" action="<c:url value="/database/add"/>">
+			<form method="post" action="<c:url value="/database/update"/>">
 				<fieldset>
-					<legend><strong>New Database</strong></legend>
+					<legend>
+						<strong>Editing Database</strong>
+					</legend>
 					
 					<c:if test="${errors != null}">							
 						<c:forEach var="error" items="${errors}">
@@ -28,38 +30,36 @@
 		  				</c:forEach>			  				
 	  				</c:if>
 	  				
-	  				<input name="entity.virtualMachine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  				<input name="database.virtualMachine.id" id="id" type="hidden" value="${database.virtualMachine.id}" />
+	  				<input name="database.id" id="id" type="hidden" value="${database.id}" />
 	  				
 	  				<label class="text-info" for="type">Database Type:</label>
-	  				<select id="type" name="entity.type" style="width:284px;">
-						<option value="Mysql" <c:if test="${entity.type.equals('MySQL')}">selected="selected"</c:if>>MySQL</option>
-						<option value="PostgreSQL" <c:if test="${entity.type.equals('PostgreSQL')}">selected="selected"</c:if>>PostgreSQL</option>
+	  				<select id="type" name="database.type" style="width:284px;">
+						<option value="Mysql" <c:if test="${database.type.equals('MySQL')}">selected="selected"</c:if>>MySQL</option>
+						<option value="PostgreSQL" <c:if test="${database.type.equals('PostgreSQL')}">selected="selected"</c:if>>PostgreSQL</option>
 	  				</select>
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
-					<input class="input-xlarge" name="entity.alias" id="alias" type="text" value="${entity.alias}" placeholder="To better identify the resource" />
+					<input class="input-xlarge" name="database.alias" id="alias" type="text" value="${database.alias}" placeholder="To better identify the resource" />
 					<span class="help-block"><em><small>Example: Database Project X</small></em></span>
 					
 					<label class="text-info" for="user">User:</label>
-					<input name="entity.user" id="user" type="text" value="${entity.user}" placeholder="Database username" />
+					<input name="database.user" id="user" type="text" value="${database.user}" placeholder="Database username" />
 					
 					<label class="text-info" for="port">Port:</label>
-					<input class="input-small" name="entity.port" id="port" type="text" value="${entity.port}" placeholder="e.g. 3604" />							
+					<input class="input-small" name="database.port" id="port" type="text" value="${database.port}" placeholder="e.g. 3604" />							
 					<span class="help-block"><em><small>Enter the database port.</small></em></span>
 					
 					<label class="text-info" for="password">Password:</label>
-					<input name="entity.password" id="password" type="password" value="${entity.password}" /> <br>
-					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" />
+					<input name="database.password" id="password" type="text" value="${database.password}" /> <br>
+					<input name="confirmPassword" id="confirmPassword" type="text" placeholder="Confirm the password" />
 					
 					<label class="text-info" for="description">Description:</label>	  							
- 					<textarea name="entity.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;">${entity.description}</textarea>
-					
-					<label class="text-info" for="recordDate">Record Date:</label>
-					<input class="input-small" name="entity.recordDate" id="recordDate" type="text" readonly="readonly" value="${current_date}" />						
+ 					<textarea name="database.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;">${database.description}</textarea>					
 					
 					<div class="form-actions">
 						<button type="submit" class="btn btn-success">Save</button>
-						<a class="btn btn-danger" href="<c:url value="/database"/>" onclick="return confirm('Are you sure want to cancel the registration?');">Cancel</a>
+						<a class="btn btn-danger" href="<c:url value="/database"/>" onclick="return confirm('Are you sure want to cancel the update?');">Cancel</a>
 					</div>					  	
 	  			</fieldset>
 		 	</form>
