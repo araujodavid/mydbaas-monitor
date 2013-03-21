@@ -51,13 +51,13 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		return virtualMachinesList;
 	}//all()
 	
-	public List<VirtualMachine> list(boolean status) {
+	public List<VirtualMachine> getDBaaSMachines(DBaaS dBaaS) {
 		ArrayList<VirtualMachine> virtualMachinesList = new ArrayList<VirtualMachine>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
-			preparedStatement = connection.prepareStatement("select * from virtual_machine where `status` = ? order by `id`;");
+			preparedStatement = connection.prepareStatement("select * from virtual_machine where `dbaas` = ? order by `id`;");
 			
-			preparedStatement.setBoolean(1, status);
+			preparedStatement.setInt(1, dBaaS.getId());
 						
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
