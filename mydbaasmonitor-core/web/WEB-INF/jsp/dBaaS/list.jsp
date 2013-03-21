@@ -38,31 +38,24 @@
         			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>Environments:</strong>   
         			 			
 		            <div class="accordion" id="accordion2">
-						<div class="accordion-group">
-							<div class="accordion-heading">
-  								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-    								<i class="icon-globe" style="margin-right:5px;" title="List of active virtual machines."></i>DBaaS 1
- 	 							</a>
-							</div>
-							<div id="collapseOne" class="accordion-body collapse in">
-								<div class="accordion-inner">
-									<a href=""><i class="icon-tag"></i> VM 1</a>      									
-  								</div>							
-							</div>
-						</div>
-						
-						<div class="accordion-group">
-							<div class="accordion-heading">
-  								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-    								<i class="icon-globe" style="margin-right:5px;" title="List of active virtual machines."></i>DBaaS 2
- 	 							</a>
-							</div>
-							<div id="collapseTwo" class="accordion-body collapse in">
-								<div class="accordion-inner">
-									<a href=""><i class="icon-tag"></i> VM 1</a>      									
-  								</div>							
-							</div>
-						</div>						
+		            	<c:forEach items="${dBaaSList}" var="dbaas">
+		            		<c:if test="${!dbaas.machines.isEmpty()}">
+	  							<div class="accordion-group">
+	    							<div class="accordion-heading">
+	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbaas.id}">
+	        								<i class="icon-globe" style="margin-right:6px;"></i>${dbaas.alias}
+	     	 							</a>	     	 							
+	    							</div>
+	    							<div id="collapse${dbaas.id}" class="accordion-body collapse">
+	    								<c:forEach items="${dbaas.machines}" var="machine">
+		   									<div class="accordion-inner">
+		   										 <a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a>    									
+		     								</div>
+	     								</c:forEach>  								
+	    							</div>
+	  							</div>
+	  						</c:if>
+ 						</c:forEach>						
 					</div>
 					          			
         		</div><!--/span-->
@@ -75,23 +68,24 @@
 							${notice}
 						</div>		  				
 	  				</c:if>
+	  				
+	  				<legend>
+        				<img src="/mydbaasmonitor/img/fire.png"> <strong>Hot Environments</strong>
+        			</legend>
 	  				        		
 		            <div class="row-fluid">
-		                <div class="span4">
-		                    <h2>Heading</h2>
-		                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-		                    <p><a class="btn" href="#">View details &raquo;</a></p>
-		                </div><!--/span-->
-		                <div class="span4">
-		                    <h2>Heading</h2>
-		                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-		                    <p><a class="btn" href="#">View details &raquo;</a></p>
-		                </div><!--/span-->
-		                <div class="span4">
-		                    <h2>Heading</h2>
-		                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-		                    <p><a class="btn" href="#">View details &raquo;</a></p>
-		                </div><!--/span-->
+		            	
+		            	<c:forEach items="${highlightsDBaaS}" var="highlight">
+		            		<c:if test="${!highlight.machines.isEmpty()}">
+				                <div class="span4">
+				                    <h3 class="text-info">${highlight.alias}</h3>
+				                    <p>
+				                    	<strong>Amount of machines:</strong> ${highlight.machines.size()}
+				                    </p>
+				                    <p><a class="btn" href="<c:url value="/dbaas/view/${highlight.id}"/>">About &raquo;</a></p>
+				                </div><!--/span-->
+				        	</c:if>
+		                </c:forEach>
 		            </div><!--/row-->		            
 		            
 		            <div class="hero" style="margin-top:50px;">
@@ -109,7 +103,7 @@
 							    </tr>
   							</thead>
   							<tbody>
-  								<c:forEach items="${dBaaSList}" var="dbaas">
+  								<c:forEach items="${allDBaaS}" var="dbaas">
     								<tr>    								
 								      	<td>
 								      		<span class="badge badge-inverse">${dbaas.id}</span>
@@ -118,7 +112,7 @@
 								      	<td>${dbaas.recordDate}</td>
 								      	<td>${dbaas.description}</td>								      	
 								      	<td>
-											<a href="${pageContext.servletContext.contextPath}/dbaas/view/${dbaas.id}" title="Click here to view more detail of the DBaaS.">About</a>
+											<a href="<c:url value="/dbaas/view/${dbaas.id}"/>" title="Click here to view more detail of the DBaaS.">About</a>
 								      	</td>						
     								</tr>
     							</c:forEach>
