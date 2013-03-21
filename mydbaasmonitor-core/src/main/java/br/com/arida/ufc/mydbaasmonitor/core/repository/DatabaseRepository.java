@@ -59,9 +59,27 @@ public class DatabaseRepository implements GenericRepository<Database> {
 
 	@Override
 	public Database find(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Database database = null;
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from `database` where `id` = ?;");
+			
+			preparedStatement.setInt(1, id);
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				database = getEntity(resultSet);	
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return database;
+	} //find()
 
 	@Override
 	public void remove(Database entity) {
