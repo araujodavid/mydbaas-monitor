@@ -98,8 +98,32 @@ public class DatabaseRepository implements GenericRepository<Database> {
 
 	@Override
 	public void update(Database entity) {
-		// TODO Auto-generated method stub		
-	}
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update `database` " +
+					"set `username` = ?, `port` = ?, `password` = ?, `alias` = ?, `status` = ?, `type` = ?, `description` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setString(1, entity.getUser());
+			this.preparedStatement.setInt(2, entity.getPort());
+			this.preparedStatement.setString(3, entity.getPassword());
+			this.preparedStatement.setString(4, entity.getAlias());
+			this.preparedStatement.setBoolean(5, entity.getStatus());
+			this.preparedStatement.setString(6, entity.getType());
+			this.preparedStatement.setString(7, entity.getDescription());
+			this.preparedStatement.setInt(8, entity.getId());
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//update()		
 
 	@Override
 	public Database getEntity(ResultSet resultSet) throws SQLException {
