@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
 import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
-
 import java.util.Date;
 import java.util.List;
 import br.com.caelum.vraptor.Path;
@@ -19,7 +18,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
 /**
  * Class that manages the methods that the front-end databases accesses.
  * @author David Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 20, 2013
  * Front-end: web/WEB-INF/jsp/database
  */
@@ -34,11 +33,13 @@ public class DatabaseController extends AbstractController implements GenericCon
 		this.repository = repository;
 	}
 
+	@Path("/database")
 	@Override
 	public void redirect() {
 		// TODO Auto-generated method stub		
 	}
 
+	@Path("/database/list")
 	@Override
 	public List<Database> list() {
 		// TODO Auto-generated method stub
@@ -75,16 +76,38 @@ public class DatabaseController extends AbstractController implements GenericCon
 		.redirectTo(VirtualMachineController.class).view(entity.getVirtualMachine());
 	}// add()
 
+	@Path("/database/edit/{entity.id}")
 	@Override
 	public Database edit(Database entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.find(entity.getId());
 	}
 
-	@Override
-	public void update(Database entity) {
-		// TODO Auto-generated method stub		
-	}
+	@Path("/database/update")
+	public void update(final Database database, final String confirmPassword) {
+		if (database.getStatus() == null) { 
+			database.setStatus(false); 
+		}
+		//Validations by vRaptor
+		validator.checking(new Validations() { {
+			that(!(database.getVirtualMachine().getId() == 0), "Virtual Machine", "database.machine.empty");
+			that(!(database.getType().equals("select")), "Type", "database.type.empty");
+			that(!(database.getAlias() == null), "Alias", "database.alias.empty");
+	        that(!(database.getUser() == null), "Username", "database.username.empty");
+	        that(!(database.getPort() == null), "Port", "database.port.empty");
+	        that(!(database.getPassword() == null), "Password", "database.password.empty");
+	        that(!(confirmPassword == null), "Confirm Password", "database.confirm.empty");
+	        if (database.getPassword() != null || confirmPassword != null) {
+	        	that(database.getPassword().equals(confirmPassword), "Password", "database.password.not.checked");
+	        }		        
+	    } });
+		//If some validation is triggered are sent error messages to page
+		validator.onErrorForwardTo(this).edit(database);
+		
+		repository.update(database);
+		result
+		.include("notice", i18n("database.update.ok"))
+		.redirectTo(VirtualMachineController.class).view(database.getVirtualMachine());
+	} //update()		
 
 	@Override
 	public Database view(Database entity) {
@@ -97,6 +120,10 @@ public class DatabaseController extends AbstractController implements GenericCon
 		// TODO Auto-generated method stub		
 	}
 
+	/**
+	 * Methods inherited, but had to be rewritten!
+	 */
+	
 	@Override
 	public void add(Database entity) {
 		// TODO Auto-generated method stub		
@@ -104,6 +131,11 @@ public class DatabaseController extends AbstractController implements GenericCon
 	
 	@Override
 	public void form() {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void update(Database entity) {
 		// TODO Auto-generated method stub		
 	}
 
