@@ -1,12 +1,16 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
 import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.util.DBaaSComparator;
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -40,9 +44,32 @@ public class DBaaSController extends AbstractController implements GenericContro
 
 	@Path("/dbaas/list")
 	@Override
-	public List<DBaaS> list() {
-		this.result.include("current_date", DataUtil.converteDateParaString(new Date()));
-		return repository.all();
+	public List<DBaaS> list() {		
+		List<DBaaS> dBaaSList = repository.all();
+		List<DBaaS> highlightsDBaaS = new ArrayList<DBaaS>();
+		List<DBaaS> allDBaaS = new ArrayList<>(dBaaSList);
+		
+		//Sorts DBaaS by their amount of virtual machines registered
+		Collections.sort(dBaaSList, new DBaaSComparator());
+		Collections.reverse(dBaaSList);
+		
+		//Get the three main DBaaS
+		if (dBaaSList.size() >= 3) {
+			highlightsDBaaS.add(0, dBaaSList.get(0));
+			highlightsDBaaS.add(1, dBaaSList.get(1));
+			highlightsDBaaS.add(2, dBaaSList.get(2));
+		} else if (dBaaSList.size() == 2) {
+			highlightsDBaaS.add(0, dBaaSList.get(0));
+			highlightsDBaaS.add(1, dBaaSList.get(1));
+		} else {
+			highlightsDBaaS.add(0, dBaaSList.get(0));
+		}
+		
+		result
+		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("allDBaaS", allDBaaS)
+		.include("highlightsDBaaS", highlightsDBaaS);
+		return dBaaSList;
 	}
 
 	@Path("/dbaas/new")
