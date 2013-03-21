@@ -24,6 +24,7 @@ public class DBaaSRepository implements GenericRepository<DBaaS> {
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
+    private VirtualMachineRepository virtualMachineRepository;
 	
 	@Override
 	public List<DBaaS> all() {
@@ -127,11 +128,13 @@ public class DBaaSRepository implements GenericRepository<DBaaS> {
 
 	@Override
 	public DBaaS getEntity(ResultSet resultSet) throws SQLException {
+		this.virtualMachineRepository = new VirtualMachineRepository();
 		DBaaS dBaaS = new DBaaS();
 		dBaaS.setId(resultSet.getInt("id"));
 		dBaaS.setAlias(resultSet.getString("alias"));
 		dBaaS.setDescription(resultSet.getString("description"));
 		dBaaS.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
+		dBaaS.setMachines(this.virtualMachineRepository.getDBaaSMachines(dBaaS));
 		return dBaaS;
 	}//getEntity()
 
