@@ -12,6 +12,7 @@ The following tech is used:
 
 - [VRaptor Framework](http://vraptor.caelum.com.br) - used in implementing the core server to handle requests from agents, API and GUI.
 - [Twitter Bootstrap](http://twitter.github.com/bootstrap) - to develop the front-end.
+- [JSch](http://www.jcraft.com/jsch/) - to develop the management of virtual machines.
 
 ## Informations
 
