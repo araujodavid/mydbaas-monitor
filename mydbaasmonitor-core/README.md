@@ -3,7 +3,10 @@
 
 # Core Module
 
-This is the main module of the project. It is responsible for managing DBaaS environments, virtual machines, databases and monitoring agents. Controls and centralizes the information sent by the agents about the metrics collected creating a knowledge base over time. Manages requests received through the use of [MyDBaaSMonitor API](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-api). It also has a graphical interface for managing resources more easily, and allows the visualization of metrics via real-time graphics.
+This is the main module of the project. It is responsible for managing DBaaS environments, virtual machines, databases 
+and monitoring agents. Controls and centralizes the information sent by the agents about the metrics collected creating 
+a knowledge base over time. Manages requests received through the use of [MyDBaaSMonitorAPI](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-api). 
+It also has a graphical interface for managing resources more easily, and allows the visualization of metrics via real-time graphics.
 
 The following tech is used:
 
