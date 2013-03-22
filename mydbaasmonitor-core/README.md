@@ -1,22 +1,16 @@
 #[MyDBaaSMonitor](https://github.com/araujodavid/mydbaasmonitor)
 --------------
 
-A framework that provides an environment monitoring for database-as-a-service.
+# Core Module
+
+This is the main module of the project. It is responsible for managing DBaaS environments, virtual machines, databases and monitoring agents. Controls and centralizes the information sent by the agents about the metrics collected creating a knowledge base over time. Manages requests received through the use of [API](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-api). It also has a graphical interface for managing resources more easily, and allows the visualization of metrics via real-time graphics.
+
+The following tech is used:
+
+- [VRaptor Framework](http://vraptor.caelum.com.br) - used in implementing the core server to handle requests from agents, API and GUI.
 
 ## Informations
 
-* Front-end developed using [Twitter Bootstrap](http://twitter.github.com/bootstrap).
-* Back-end developed using [VRaptor Framework](http://vraptor.caelum.com.br).
-* API for monitoring system information and hardware, [Hyperic SIGAR API](http://www.hyperic.com/products/sigar).
-* Client side HTTP transport library, [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html).
-
-## Authors
-
-**David Araújo**
-
-+ http://github.com/araujodavid
-+ http://araujodavid.com
-
-
+## License
 
 *Federal University of Ceará - Brazil, ARiDa Research Group.*
