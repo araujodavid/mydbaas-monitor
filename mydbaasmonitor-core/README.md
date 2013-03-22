@@ -11,6 +11,7 @@ It also has a graphical interface for managing resources more easily, and allows
 The following tech is used:
 
 - [VRaptor Framework](http://vraptor.caelum.com.br) - used in implementing the core server to handle requests from agents, API and GUI.
+- [Twitter Bootstrap](http://twitter.github.com/bootstrap) - to develop the front-end.
 
 ## Informations
 
