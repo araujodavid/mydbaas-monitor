@@ -30,7 +30,7 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 	public CpuCollector(int identifier) {
 		this.machine = identifier;
 	}
-
+	
 	@Override
 	public void loadMetric(Sigar sigar) throws SigarException {
 		this.metric = CpuMetric.getInstance();
