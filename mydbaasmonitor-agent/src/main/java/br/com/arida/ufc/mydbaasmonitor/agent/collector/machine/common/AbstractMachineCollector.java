@@ -37,7 +37,7 @@ public abstract class AbstractMachineCollector<T extends AbstractMetric> extends
 	public abstract void loadMetric(Sigar sigar) throws SigarException;
 	
 	/**
-	 * Method to load the request parameters of the metric.
+	 * Method to load the HTTP request parameters of the metric.
 	 * @param recordDate - datetime when the metric was collected
 	 * @return a list of parameters and values ​​for the HTTP request
 	 * @throws InvocationTargetException 
