@@ -68,8 +68,11 @@ public abstract class AbstractMachineCollector<T extends AbstractMetric> extends
 		//Creates HTTP request parameters from the fields of the metric
 		for (Field field : fields) {
 			Method method;
+			//Checks if the field is identified as a measure
 			if (field.getName().toLowerCase().contains(extendedClazz.getSimpleName().toLowerCase())) {
+				//Gets the get method of the field
 				method = extendedClazz.getDeclaredMethod("get"+StringUtils.capitalize(field.getName()), null);
+				//Adds the field and its value in the parameter list
 				parameters.add(new BasicNameValuePair("metric."+field.getName(), String.valueOf(method.invoke(this.metric, null))));
 			}			
 		}		
