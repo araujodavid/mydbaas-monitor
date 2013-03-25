@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.common;
+package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common;
 
 /**
  * 

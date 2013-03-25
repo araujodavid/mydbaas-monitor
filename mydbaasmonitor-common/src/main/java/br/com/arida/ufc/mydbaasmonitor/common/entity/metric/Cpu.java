@@ -1,6 +1,6 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity;
+package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric;
 
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.common.AbstractMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
  * 
