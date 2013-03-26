@@ -14,7 +14,7 @@ import org.hyperic.sigar.OperatingSystem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.SOMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
@@ -26,14 +26,15 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
  * 
  */
 
-public class SOCollector extends AbstractMachineCollector<SOMetric>  {
+public class SOCollector extends AbstractCollector<SOMetric>  {
 
 	public SOCollector(int identifier) {
 		this.machine = identifier;
 	}
 	
 	@Override
-	public void loadMetric(Sigar sigar) throws SigarException {
+	public void loadMetric(Object[] args) throws SigarException {
+		Sigar sigar = (Sigar) args[0];
 		this.metric = SOMetric.getInstance();
 		OperatingSystem sys = OperatingSystem.getInstance();
 		Mem mem = sigar.getMem();
@@ -53,13 +54,12 @@ public class SOCollector extends AbstractMachineCollector<SOMetric>  {
 	@Override
 	public void run() {
 		Sigar sigar = new Sigar();
+		//Collecting metrics
 		try {
-			//Collecting metrics
-			this.loadMetric(sigar);
-		} catch (SigarException e) {
-			// TODO Auto-generated catch block
+			this.loadMetric(new Object[] {sigar});
+		} catch (SigarException e2) {
 			System.out.println("Problem loading the System metric values (Sigar)");
-			e.printStackTrace();
+			e2.printStackTrace();
 		}
 		
 		//Setting the parameters of the POST request
