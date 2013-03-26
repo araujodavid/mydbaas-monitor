@@ -12,7 +12,7 @@ import org.apache.http.util.EntityUtils;
 import org.hyperic.sigar.NetInterfaceStat;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.NetworkMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
@@ -20,19 +20,20 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 /**
  * 
  * @author Daivd Araújo
- * @version 2.0
+ * @version 3.0
  * @since March 13, 2013
  * 
  */
 
-public class NetworkCollector extends AbstractMachineCollector<NetworkMetric> {
+public class NetworkCollector extends AbstractCollector<NetworkMetric> {
 
 	public NetworkCollector(int identifier) {
 		this.machine = identifier;
 	}
 
 	@Override
-	public void loadMetric(Sigar sigar) throws SigarException {
+	public void loadMetric(Object[] args) throws SigarException {
+		Sigar sigar = (Sigar) args[0];
 		this.metric = NetworkMetric.getInstance();
 		long bytesReceived = 0;
 		long bytesSent = 0;
@@ -57,13 +58,12 @@ public class NetworkCollector extends AbstractMachineCollector<NetworkMetric> {
 	@Override
 	public void run() {
 		Sigar sigar = new Sigar();
+		//Collecting metrics
 		try {
-			//Collecting metrics
-			this.loadMetric(sigar);
-		} catch (SigarException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Problem loading the Net metric values (Sigar)");
-			e.printStackTrace();
+			this.loadMetric(new Object[] {sigar});
+		} catch (SigarException e2) {
+			System.out.println("Problem loading the Network metric values (Sigar)");
+			e2.printStackTrace();
 		}
 				
 		//Setting the parameters of the POST request
