@@ -11,7 +11,7 @@ import org.apache.http.util.EntityUtils;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
@@ -23,14 +23,15 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
  * 
  */
 
-public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
+public class CpuCollector extends AbstractCollector<CpuMetric> {
 	
 	public CpuCollector(int identifier) {
 		this.machine = identifier;
 	}
 	
 	@Override
-	public void loadMetric(Sigar sigar) throws SigarException {
+	public void loadMetric(Object[] args) throws SigarException {
+		Sigar sigar = (Sigar) args[0];
 		this.metric = CpuMetric.getInstance();
 		CpuPerc cpuPerc = sigar.getCpuPerc();		
 		this.metric.setCpuUser(cpuPerc.getUser());
@@ -38,19 +39,19 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 		this.metric.setCpuIdle(cpuPerc.getIdle());
 		this.metric.setCpuNice(cpuPerc.getNice());
 		this.metric.setCpuWait(cpuPerc.getWait());
-		this.metric.setCpuCombined(cpuPerc.getCombined());
+		this.metric.setCpuCombined(cpuPerc.getCombined());		
 	}
 
 	@Override
 	public void run() {
 		Sigar sigar = new Sigar();
+		//Collecting metrics
 		try {
-			//Collecting metrics
-			this.loadMetric(sigar);
-		} catch (SigarException e) {
+			this.loadMetric(new Object[] {sigar});
+		} catch (SigarException e2) {
 			System.out.println("Problem loading the CPU metric values (Sigar)");
-			e.printStackTrace();
-		}
+			e2.printStackTrace();
+		}		
 		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = null;
