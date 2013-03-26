@@ -1,13 +1,12 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Sigar;
@@ -15,7 +14,6 @@ import org.hyperic.sigar.SigarException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 
 /**
  * 
@@ -50,21 +48,30 @@ public class CpuCollector extends AbstractMachineCollector<CpuMetric> {
 			//Collecting metrics
 			this.loadMetric(sigar);
 		} catch (SigarException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Problem loading the CPU metric values (Sigar)");
 			e.printStackTrace();
 		}
 		
 		//Setting the parameters of the POST request
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("machine", String.valueOf(this.machine)));
-		params.add(new BasicNameValuePair("metric.cpuUser", String.valueOf(this.metric.getCpuUser())));
-		params.add(new BasicNameValuePair("metric.cpuSystem", String.valueOf(this.metric.getCpuSystem())));
-		params.add(new BasicNameValuePair("metric.cpuIdle", String.valueOf(this.metric.getCpuIdle())));
-		params.add(new BasicNameValuePair("metric.cpuNice", String.valueOf(this.metric.getCpuNice())));
-		params.add(new BasicNameValuePair("metric.cpuWait", String.valueOf(this.metric.getCpuWait())));
-		params.add(new BasicNameValuePair("metric.cpuCombined", String.valueOf(this.metric.getCpuCombined())));
-		params.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(new Date())));
+		List<NameValuePair> params = null;
+		try {
+			params = this.loadRequestParams(new Date());
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		HttpResponse response;
 		
