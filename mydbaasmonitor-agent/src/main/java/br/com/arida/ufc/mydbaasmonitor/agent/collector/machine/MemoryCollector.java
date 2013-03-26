@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -14,7 +13,7 @@ import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.common.AbstractMachineCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
@@ -22,12 +21,12 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 /**
  * 
  * @author Daivd Araújo
- * @version 2.0
+ * @version 3.0
  * @since March 5, 2013
  * 
  */
 
-public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
+public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 	
 	public MemoryCollector(int identifier) {
 		this.machine = identifier;
@@ -38,7 +37,8 @@ public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
     }
 	
 	@Override
-	public void loadMetric(Sigar sigar) throws SigarException {
+	public void loadMetric(Object[] args) throws SigarException {
+		Sigar sigar = (Sigar) args[0];
 		this.metric = MemoryMetric.getInstance();
 		Mem mem = sigar.getMem();
 		Swap swap = sigar.getSwap();		
@@ -55,13 +55,12 @@ public class MemoryCollector extends AbstractMachineCollector<MemoryMetric>  {
 	@Override
 	public void run() {
 		Sigar sigar = new Sigar();
+		//Collecting metrics
 		try {
-			//Collecting metrics
-			this.loadMetric(sigar);
-		} catch (SigarException e) {
-			// TODO Auto-generated catch block
+			this.loadMetric(new Object[] {sigar});
+		} catch (SigarException e2) {
 			System.out.println("Problem loading the Memory metric values (Sigar)");
-			e.printStackTrace();
+			e2.printStackTrace();
 		}
 		
 		//Setting the parameters of the POST request
