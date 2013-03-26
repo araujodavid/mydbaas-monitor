@@ -34,7 +34,7 @@ public abstract class AbstractMachineCollector<T extends AbstractMetric> extends
 	 * @param sigar - an instance of Sigar API 
 	 * @throws SigarException
 	 */
-	public abstract void loadMetric(Sigar sigar) throws SigarException;
+	public abstract void loadMetric(Sigar sigar) throws SigarException;	
 	
 	/**
 	 * Method to load the HTTP request parameters of the metric.
@@ -76,16 +76,15 @@ public abstract class AbstractMachineCollector<T extends AbstractMetric> extends
 				parameters.add(new BasicNameValuePair("metric."+field.getName(), String.valueOf(method.invoke(this.metric, null))));
 			}			
 		}		
-		
-		return parameters;		
+		return parameters;
 	}
 	
 	/**
 	 * Method to create the log if a metric is not sent to the server
-	 * @param recordDate
+	 * @param recordDate - datetime when the metric was collected
 	 */
 	public void logMetric(Date recordDate) {
-		//TODO
+		// TODO Auto-generated method stub		
 	}
 
 }
