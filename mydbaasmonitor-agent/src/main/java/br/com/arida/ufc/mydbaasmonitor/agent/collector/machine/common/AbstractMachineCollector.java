@@ -19,7 +19,7 @@ import com.sun.xml.internal.ws.util.StringUtils;
 /**
  * 
  * @author Daivd Araújo
- * @version 3.5
+ * @version 4.0
  * @since March 8, 2013
  * 
  */
@@ -78,6 +78,14 @@ public abstract class AbstractMachineCollector<T extends AbstractMetric> extends
 		}		
 		
 		return parameters;		
+	}
+	
+	/**
+	 * Method to create the log if a metric is not sent to the server
+	 * @param recordDate
+	 */
+	public void logMetric(Date recordDate) {
+		//TODO
 	}
 
 }
