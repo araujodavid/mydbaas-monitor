@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.OperatingSystem;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
@@ -163,7 +163,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		}
 	}//update()
 	
-	public boolean updateSystemInformation(OperatingSystem system, int machine) {
+	public boolean updateSystemInformation(Machine system, int machine) {
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
@@ -172,15 +172,15 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 					"`cpu_cores` = ?, `cpu_sockets` = ?, `cores_sockets` = ? " +
 					"where `id` = ?;");
 			
-			this.preparedStatement.setString(1, system.getOperatingSystem());
-			this.preparedStatement.setString(2, system.getKernelName());
-			this.preparedStatement.setString(3, system.getKernelVersion());
-			this.preparedStatement.setString(4, system.getArchitecture());
-			this.preparedStatement.setLong(5, system.getTotalMemory());
-			this.preparedStatement.setLong(6, system.getTotalSwap());
-			this.preparedStatement.setInt(7, system.getTotalCPUCores());
-			this.preparedStatement.setInt(8, system.getTotalCPUSockets());
-			this.preparedStatement.setInt(9, system.getTotalCoresPerSocket());
+			this.preparedStatement.setString(1, system.getMachineOperatingSystem());
+			this.preparedStatement.setString(2, system.getMachineKernelName());
+			this.preparedStatement.setString(3, system.getMachineKernelVersion());
+			this.preparedStatement.setString(4, system.getMachineArchitecture());
+			this.preparedStatement.setLong(5, system.getMachineTotalMemory());
+			this.preparedStatement.setLong(6, system.getMachineTotalSwap());
+			this.preparedStatement.setInt(7, system.getMachineTotalCPUCores());
+			this.preparedStatement.setInt(8, system.getMachineTotalCPUSockets());
+			this.preparedStatement.setInt(9, system.getMachineTotalCoresPerSocket());
 			this.preparedStatement.setInt(10, machine);
 			
 			this.preparedStatement.executeUpdate();
@@ -227,7 +227,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 	@Override
 	public VirtualMachine getEntity(ResultSet resultSet) throws SQLException {
 		VirtualMachine virtualMachine = new VirtualMachine();
-		OperatingSystem system = new OperatingSystem();
+		Machine machine = new Machine();
 		DBaaS environment = new DBaaS();
 		
 		virtualMachine.setId(resultSet.getInt("id"));
@@ -240,17 +240,17 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		virtualMachine.setAlias(resultSet.getString("alias"));
 		virtualMachine.setStatus(resultSet.getBoolean("status"));
 		virtualMachine.setKey(resultSet.getString("key"));
-		system.setOperatingSystem(resultSet.getString("so"));
-		system.setKernelName(resultSet.getString("kernel_name"));
-		system.setKernelVersion(resultSet.getString("kernel_version"));
-		system.setArchitecture(resultSet.getString("architecture"));
-		system.setTotalMemory(resultSet.getLong("memory"));
-		system.setTotalSwap(resultSet.getLong("swap"));
-		system.setTotalCPUCores(resultSet.getInt("cpu_cores"));
-		system.setTotalCPUSockets(resultSet.getInt("cpu_sockets"));
-		system.setTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
+		machine.setMachineOperatingSystem(resultSet.getString("so"));
+		machine.setMachineKernelName(resultSet.getString("kernel_name"));
+		machine.setMachineKernelVersion(resultSet.getString("kernel_version"));
+		machine.setMachineArchitecture(resultSet.getString("architecture"));
+		machine.setMachineTotalMemory(resultSet.getLong("memory"));
+		machine.setMachineTotalSwap(resultSet.getLong("swap"));
+		machine.setMachineTotalCPUCores(resultSet.getInt("cpu_cores"));
+		machine.setMachineTotalCPUSockets(resultSet.getInt("cpu_sockets"));
+		machine.setMachineTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
 		environment.setId(resultSet.getInt("dbaas"));
-		virtualMachine.setSystem(system);
+		virtualMachine.setSystem(machine);
 		virtualMachine.setEnvironment(environment);
 		
 		return virtualMachine;

@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.Cpu;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.Memory;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -61,14 +61,14 @@ public class MachineMetricRepository {
 					"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 			
 			this.preparedStatement.setInt(1, machine);
-			this.preparedStatement.setLong(2, memory.getSwapUsed());
-			this.preparedStatement.setLong(3, memory.getSwapFree());
+			this.preparedStatement.setLong(2, memory.getMemorySwapUsed());
+			this.preparedStatement.setLong(3, memory.getMemorySwapFree());
 			this.preparedStatement.setLong(4, memory.getMemoryUsed());
 			this.preparedStatement.setLong(5, memory.getMemoryFree());
 			this.preparedStatement.setDouble(6, memory.getMemoryUsedPercent());
 			this.preparedStatement.setDouble(7, memory.getMemoryFreePercent());
-			this.preparedStatement.setLong(8, memory.getBuffersCacheUsed());
-			this.preparedStatement.setLong(9, memory.getBuffersCacheFree());
+			this.preparedStatement.setLong(8, memory.getMemoryBuffersCacheUsed());
+			this.preparedStatement.setLong(9, memory.getMemoryBuffersCacheFree());
 			this.preparedStatement.setString(10, recordDate);
 			
 			this.preparedStatement.executeUpdate();
