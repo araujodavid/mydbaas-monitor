@@ -1,13 +1,12 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
@@ -16,7 +15,6 @@ import org.hyperic.sigar.SigarException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.DiskMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 
 /**
  * 
@@ -29,9 +27,9 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 public class DiskCollector extends AbstractCollector<DiskMetric> {
 
 	public DiskCollector(int identifier) {
-		this.machine = identifier;
+		super(identifier);
 	}
-	
+
 	@Override
 	public void loadMetric(Object[] args) throws SigarException {
 		Sigar sigar = (Sigar) args[0];
@@ -78,16 +76,25 @@ public class DiskCollector extends AbstractCollector<DiskMetric> {
 		}	
 		
 		//Setting the parameters of the POST request
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("machine", String.valueOf(this.machine)));
-		params.add(new BasicNameValuePair("metric.diskUsed", String.valueOf(this.metric.getDiskUsed())));
-		params.add(new BasicNameValuePair("metric.diskFree", String.valueOf(this.metric.getDiskFree())));
-		params.add(new BasicNameValuePair("metric.diskTotal", String.valueOf(this.metric.getDiskTotal())));		
-		params.add(new BasicNameValuePair("metric.diskReadBytes", String.valueOf(this.metric.getDiskReadBytes())));
-		params.add(new BasicNameValuePair("metric.diskWriteBytes", String.valueOf(this.metric.getDiskWriteBytes())));
-		params.add(new BasicNameValuePair("metric.diskReads", String.valueOf(this.metric.getDiskReads())));
-		params.add(new BasicNameValuePair("metric.diskWrites", String.valueOf(this.metric.getDiskWrites())));		
-		params.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(new Date())));
+		List<NameValuePair> params = null;
+		try {
+			params = this.loadRequestParams(new Date());
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		HttpResponse response;
 		

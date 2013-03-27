@@ -8,49 +8,47 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
-import org.hyperic.sigar.NetInterfaceStat;
+import org.hyperic.sigar.CpuInfo;
+import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.OperatingSystem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.hyperic.sigar.Swap;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.NetworkMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**
  * 
  * @author Daivd Araújo
  * @version 3.0
- * @since March 13, 2013
+ * @since March 5, 2013
  * 
  */
 
-public class NetworkCollector extends AbstractCollector<NetworkMetric> {
+public class MachineCollector extends AbstractCollector<MachineMetric>  {
 
-	public NetworkCollector(int identifier) {
+	public MachineCollector(int identifier) {
 		super(identifier);
 	}
 
 	@Override
 	public void loadMetric(Object[] args) throws SigarException {
 		Sigar sigar = (Sigar) args[0];
-		this.metric = NetworkMetric.getInstance();
-		long bytesReceived = 0;
-		long bytesSent = 0;
-		long packetsSent = 0;
-		long packetsReceived = 0;
-		String[] netInterfacesList = sigar.getNetInterfaceList();
-		
-		for (String netInterface : netInterfacesList) {
-			NetInterfaceStat netInterfaceStat = sigar.getNetInterfaceStat(netInterface);
-			bytesReceived = bytesReceived + netInterfaceStat.getRxBytes();
-			packetsReceived = packetsReceived + netInterfaceStat.getRxPackets();
-			bytesSent = bytesSent + netInterfaceStat.getTxBytes();
-			packetsSent = packetsSent + netInterfaceStat.getTxPackets();
-		}
-		
-		this.metric.setNetworkBytesSent(bytesSent);
-		this.metric.setNetworkBytesReceived(bytesReceived);
-		this.metric.setNetworkPacketsSent(packetsSent);
-		this.metric.setNetworkPacketsReceived(packetsReceived);
+		this.metric = MachineMetric.getInstance();
+		OperatingSystem sys = OperatingSystem.getInstance();
+		Mem mem = sigar.getMem();
+		Swap swap = sigar.getSwap();
+		CpuInfo cpuInfo = sigar.getCpuInfoList()[0];		
+		this.metric.setMachineOperatingSystem(sys.getDescription());
+		this.metric.setMachineKernelName(sys.getName());
+		this.metric.setMachineKernelVersion(sys.getVersion());
+		this.metric.setMachineArchitecture(sys.getArch());
+		this.metric.setMachineTotalMemory(mem.getTotal());
+		this.metric.setMachineTotalSwap(swap.getTotal());
+		this.metric.setMachineTotalCPUCores(cpuInfo.getTotalCores());
+		this.metric.setMachineTotalCPUSockets(cpuInfo.getTotalSockets());
+		this.metric.setMachineTotalCoresPerSocket(cpuInfo.getCoresPerSocket());
 	}
 
 	@Override
@@ -60,10 +58,10 @@ public class NetworkCollector extends AbstractCollector<NetworkMetric> {
 		try {
 			this.loadMetric(new Object[] {sigar});
 		} catch (SigarException e2) {
-			System.out.println("Problem loading the Network metric values (Sigar)");
+			System.out.println("Problem loading the System metric values (Sigar)");
 			e2.printStackTrace();
 		}
-				
+		
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = null;
 		try {
@@ -91,7 +89,7 @@ public class NetworkCollector extends AbstractCollector<NetworkMetric> {
 			response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
 			System.out.println(response.getStatusLine());
 			if (response.getStatusLine().getStatusCode() != 202) {
-				System.out.println("Net request error!");
+				System.out.println("System request error!");
 				EntityUtils.consume(response.getEntity());
 			}
 			EntityUtils.consume(response.getEntity());
@@ -105,5 +103,5 @@ public class NetworkCollector extends AbstractCollector<NetworkMetric> {
 		
 		//Release any native resources associated with this sigar instance
 		sigar.close();		
-	}
+	}	
 }

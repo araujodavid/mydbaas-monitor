@@ -24,11 +24,12 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
  */
 
 public class CpuCollector extends AbstractCollector<CpuMetric> {
+		
 	
 	public CpuCollector(int identifier) {
-		this.machine = identifier;
+		super(identifier);
 	}
-	
+
 	@Override
 	public void loadMetric(Object[] args) throws SigarException {
 		Sigar sigar = (Sigar) args[0];
