@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.util.Timer;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.CpuCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.DiskCollector;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.MachineCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.MemoryCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.NetworkCollector;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.SOCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.DiskMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.NetworkMetric;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.SOMetric;
 
 /**
  * 
@@ -40,10 +40,10 @@ public class MonitoringAgent {
 		parser.loadProperties();
 		
 		//Collects information about the system and physical resources
-		SOMetric soMetric = SOMetric.getInstance();
-		soMetric.loadMetricProperties(parser.getProperties());		
-		SOCollector soCollector = new SOCollector(parser.getIdentifier());
-		soCollector.run();
+		MachineMetric machineMetric = MachineMetric.getInstance();
+		machineMetric.loadMetricProperties(parser.getProperties());		
+		MachineCollector machineCollector = new MachineCollector(parser.getIdentifier());
+		machineCollector.run();
 		
 		//Monitoring CPU
 		if (parser.getProperties().getProperty("cpu.url") != null && !parser.getProperties().getProperty("cpu.url").equals("")) {
