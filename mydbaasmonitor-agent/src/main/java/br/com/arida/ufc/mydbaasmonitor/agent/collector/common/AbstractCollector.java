@@ -12,12 +12,12 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import com.sun.xml.internal.ws.util.StringUtils;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.common.AbstractMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
  * 
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 25, 2013
  * 
  */
@@ -25,6 +25,15 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 
 	protected T metric;
 	protected int machine;
+	
+	
+	/**
+	 * Default constructor for classes heiresses.
+	 * @param identifier - unique machine code
+	 */
+	public AbstractCollector(int identifier) {
+		machine = identifier;
+	}
 	
 	/**
 	 * Method that receives a parameter list and makes the collection of a particular metric.
