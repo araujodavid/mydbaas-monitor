@@ -5,47 +5,47 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
 /**
  * 
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since March 13, 2013
  * 
  */
 
 public class Network extends AbstractMetric {
 
-	private long netBytesSent;
-	private long netBytesReceived;
-	private long netPacketsSent;
-	private long netPacketsReceived;
+	private long networkBytesSent;
+	private long networkBytesReceived;
+	private long networkPacketsSent;
+	private long networkPacketsReceived;
 	
-	public long getNetBytesSent() {
-		return netBytesSent;
-	}
-
-	public void setNetBytesSent(long netBytesSent) {
-		this.netBytesSent = netBytesSent;
-	}
-
-	public long getNetBytesReceived() {
-		return netBytesReceived;
-	}
-
-	public void setNetBytesReceived(long netBytesReceived) {
-		this.netBytesReceived = netBytesReceived;
+	public long getNetworkBytesSent() {
+		return networkBytesSent;
 	}
 	
-	public long getNetPacketsSent() {
-		return netPacketsSent;
+	public void setNetworkBytesSent(long networkBytesSent) {
+		this.networkBytesSent = networkBytesSent;
 	}
-
-	public void setNetPacketsSent(long netPacketsSent) {
-		this.netPacketsSent = netPacketsSent;
+	
+	public long getNetworkBytesReceived() {
+		return networkBytesReceived;
 	}
-
-	public long getNetPacketsReceived() {
-		return netPacketsReceived;
+	
+	public void setNetworkBytesReceived(long networkBytesReceived) {
+		this.networkBytesReceived = networkBytesReceived;
 	}
-
-	public void setNetPacketsReceived(long netPacketsReceived) {
-		this.netPacketsReceived = netPacketsReceived;
+	
+	public long getNetworkPacketsSent() {
+		return networkPacketsSent;
 	}
+	
+	public void setNetworkPacketsSent(long networkPacketsSent) {
+		this.networkPacketsSent = networkPacketsSent;
+	}
+	
+	public long getNetworkPacketsReceived() {
+		return networkPacketsReceived;
+	}
+	
+	public void setNetworkPacketsReceived(long networkPacketsReceived) {
+		this.networkPacketsReceived = networkPacketsReceived;
+	}	
 }
