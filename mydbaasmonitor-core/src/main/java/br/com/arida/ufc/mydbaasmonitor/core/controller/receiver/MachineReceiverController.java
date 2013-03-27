@@ -1,8 +1,8 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.Cpu;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.Memory;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.OperatingSystem;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Machine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MachineMetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import br.com.caelum.vraptor.Post;
@@ -37,7 +37,7 @@ public class MachineReceiverController {
 	 * @param machine - machine identifier where the metric was collected
 	 */
 	@Post("machine/info")
-	public void information(OperatingSystem metric, int machine) {
+	public void information(Machine metric, int machine) {
 		if (machineRepository.updateSystemInformation(metric, machine)) {
 			status.accepted();
 		}
