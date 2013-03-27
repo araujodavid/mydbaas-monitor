@@ -9,13 +9,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import com.sun.xml.internal.ws.util.StringUtils;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
