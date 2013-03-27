@@ -1,6 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.entity;
 
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.OperatingSystem;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.common.GenericResource;
 
 /**
@@ -18,7 +18,7 @@ public class VirtualMachine extends GenericResource {
 	//key file if necessary for access
 	private String key;
 	//information system and machine
-	private OperatingSystem system;
+	private Machine machine;
 	//enviroment
 	private DBaaS environment;
 	
@@ -38,12 +38,12 @@ public class VirtualMachine extends GenericResource {
 		this.key = key;
 	}		
 	
-	public OperatingSystem getSystem() {
-		return system;
+	public Machine getSystem() {
+		return machine;
 	}
 
-	public void setSystem(OperatingSystem system) {
-		this.system = system;
+	public void setSystem(Machine machine) {
+		this.machine = machine;
 	}
 	
 	public DBaaS getEnvironment() {
