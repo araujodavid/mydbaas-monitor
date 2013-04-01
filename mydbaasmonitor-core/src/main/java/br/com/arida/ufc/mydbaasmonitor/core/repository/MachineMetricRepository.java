@@ -83,4 +83,16 @@ public class MachineMetricRepository {
         }
 		return false;
 	}//saveMemoryMetric()
+	
+	/**
+	 * 
+	 * @param metric
+	 * @param machine
+	 * @param recordDate
+	 * @return
+	 */
+	public boolean saveMetric(Object metric, int machine, String recordDate) {
+		//TODO
+		return true;
+	}
 }
