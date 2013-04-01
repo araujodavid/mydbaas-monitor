@@ -82,17 +82,6 @@ public class MachineMetricRepository {
             try { connection.close(); } catch(Exception e) { }
         }
 		return false;
-	}//saveMemoryMetric()
+	}//saveMemoryMetric()	
 	
-	/**
-	 * 
-	 * @param metric
-	 * @param machine
-	 * @param recordDate
-	 * @return
-	 */
-	public boolean saveMetric(Object metric, int machine, String recordDate) {
-		//TODO
-		return true;
-	}
 }
