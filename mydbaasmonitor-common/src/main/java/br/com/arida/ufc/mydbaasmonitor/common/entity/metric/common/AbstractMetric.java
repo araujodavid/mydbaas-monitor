@@ -28,4 +28,8 @@ public abstract class AbstractMetric {
 	public void setUrl(String url) {
 		this.url = url;
 	}	
+	
+	@Override
+	public abstract String toString();
+	
 }
