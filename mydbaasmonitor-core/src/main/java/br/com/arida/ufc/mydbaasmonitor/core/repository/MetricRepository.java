@@ -8,7 +8,7 @@ import br.com.caelum.vraptor.ioc.Component;
 
 /**
  * @author David Araújo
- * @version 1.0
+ * @version 2.0
  * @since April 1, 2013 
  */
 
@@ -49,4 +49,15 @@ public class MetricRepository {
 		
 		return fields;
 	}//getMetricFields()
+	
+	/**
+	 * Method for mounting SQL table creation
+	 * @param metricName
+	 * @param fields
+	 * @return a SQL ready
+	 */
+	public String makeCreateTableSQL(String metricName, List<Field> fields) {
+		//TODO
+		return null;
+	}
 }
