@@ -47,5 +47,10 @@ public class Network extends AbstractMetric {
 	
 	public void setNetworkPacketsReceived(long networkPacketsReceived) {
 		this.networkPacketsReceived = networkPacketsReceived;
+	}
+
+	@Override
+	public String toString() {
+		return "machine";
 	}	
 }

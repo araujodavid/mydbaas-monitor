@@ -55,4 +55,9 @@ public class Cpu extends AbstractMetric {
 	public void setCpuCombined(double cpuCombined) {
 		this.cpuCombined = cpuCombined;
 	}
+	
+	@Override
+	public String toString() {
+		return "machine";
+	}
 }

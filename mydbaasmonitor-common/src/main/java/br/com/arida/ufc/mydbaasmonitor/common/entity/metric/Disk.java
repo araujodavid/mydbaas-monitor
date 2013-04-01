@@ -75,4 +75,9 @@ public class Disk extends AbstractMetric {
 	public void setDiskWrites(long diskWrites) {
 		this.diskWrites = diskWrites;
 	}
+
+	@Override
+	public String toString() {
+		return "machine";
+	}
 }

@@ -83,5 +83,10 @@ public class Memory extends AbstractMetric {
 	
 	public void setMemoryBuffersCacheFree(long memoryBuffersCacheFree) {
 		this.memoryBuffersCacheFree = memoryBuffersCacheFree;
+	}
+
+	@Override
+	public String toString() {
+		return "machine";
 	}	
 }

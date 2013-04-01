@@ -92,5 +92,10 @@ public class Machine extends AbstractMetric {
 	
 	public void setMachineTotalCoresPerSocket(int machineTotalCoresPerSocket) {
 		this.machineTotalCoresPerSocket = machineTotalCoresPerSocket;
+	}
+
+	@Override
+	public String toString() {
+		return "machine";
 	}	
 }
