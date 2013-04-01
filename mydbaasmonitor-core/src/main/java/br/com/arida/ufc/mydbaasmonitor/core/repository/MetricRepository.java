@@ -37,4 +37,9 @@ public class MetricRepository {
 	public boolean createMetricTable(Object metric) {
 		return true;
 	}
+	
+	
+	public List<Field> getMetricFields(Object metric) {		
+		return null;
+	}
 }
