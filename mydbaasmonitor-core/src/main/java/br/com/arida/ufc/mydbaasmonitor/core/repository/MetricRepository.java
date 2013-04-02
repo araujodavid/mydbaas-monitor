@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
@@ -56,8 +58,29 @@ public class MetricRepository {
 	 * @param fields
 	 * @return a SQL ready
 	 */
-	public String makeCreateTableSQL(String metricName, List<Field> fields) {
-		//TODO
-		return null;
+	public String makeCreateTableSQL(Object metric, List<Field> fields) {
+		String clazzName = metric.getClass().getSimpleName().toLowerCase();
+		StringBuilder sql = new StringBuilder();
+		sql.append("create table `"+clazzName+"_metric` (\n")
+		   .append("`id` int(11) NOT NULL AUTO_INCREMENT,\n")
+		   .append("`record_date` datetime NOT NULL,\n");
+		
+		for (Field field : fields) {
+			sql.append("`"+field.getName().toLowerCase()+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
+		}
+		
+		if (metric.toString().equals("machine")) {
+			sql.append("`virtual_machine` int(11) NOT NULL,\n")
+			   .append("PRIMARY KEY (`id`),\n")
+			   .append("KEY `fk_"+clazzName+"_metric_idx` (`virtual_machine`),\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`virtual_machine`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+		} else {
+			sql.append("`database` int(11) NOT NULL,\n")
+			   .append("PRIMARY KEY (`id`),\n")
+			   .append("KEY `fk_"+clazzName+"_metric_idx` (`database`),\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+		}
+		sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8");
+		return sql.toString();
 	}
 }
