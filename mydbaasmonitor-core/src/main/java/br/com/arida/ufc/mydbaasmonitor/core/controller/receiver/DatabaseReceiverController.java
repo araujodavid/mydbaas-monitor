@@ -1,6 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.view.DefaultStatus;
 
@@ -12,6 +13,7 @@ import br.com.caelum.vraptor.view.DefaultStatus;
  */
 
 @Resource
+@Path("/database")
 public class DatabaseReceiverController extends AbstractReceiver {
 
 	/**
