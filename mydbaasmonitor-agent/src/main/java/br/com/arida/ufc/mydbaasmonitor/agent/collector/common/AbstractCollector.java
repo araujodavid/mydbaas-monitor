@@ -28,7 +28,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
 public abstract class AbstractCollector<T extends AbstractMetric> extends TimerTask {
 
 	protected T metric;
-	protected int machine;
+	protected int identifier;
 	
 	
 	/**
@@ -36,7 +36,7 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 	 * @param identifier - unique machine code
 	 */
 	public AbstractCollector(int identifier) {
-		machine = identifier;
+		this.identifier = identifier;
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 		fields.addAll(Arrays.asList(extendedClazz.getDeclaredFields()));
 		
 		//Adds the machine identifier that belongs to the metric
-		parameters.add(new BasicNameValuePair("machine", String.valueOf(this.machine)));
+		parameters.add(new BasicNameValuePair("identifier", String.valueOf(this.identifier)));
 		//Adds the datetime when the metric was collected
 		parameters.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(recordDate)));		
 		
