@@ -6,6 +6,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MachineMetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.view.DefaultStatus;
@@ -18,6 +19,7 @@ import br.com.caelum.vraptor.view.DefaultStatus;
  */
 
 @Resource
+@Path("/machine")
 public class MachineReceiverController extends AbstractReceiver {
 	
 	private MachineMetricRepository metricRepository;
@@ -40,9 +42,9 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param metric - object relative to a metric
 	 * @param machine - machine identifier where the metric was collected
 	 */
-	@Post("machine/info")
-	public void information(Machine metric, int machine) {
-		if (machineRepository.updateSystemInformation(metric, machine)) {
+	@Post("/info")
+	public void information(Machine metric, int identifier) {
+		if (machineRepository.updateSystemInformation(metric, identifier)) {
 			status.accepted();
 		}
 	}
@@ -59,9 +61,9 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param machine - machine identifier where the metric was collected
 	 * @param recordDate - date when it was collected
 	 */
-	@Post("machine/cpu")
-	public void cpu(Cpu metric, int machine, String recordDate) {
-		if (metricRepository.saveCpuMetric(metric, machine, recordDate)) {
+	@Post("/cpu")
+	public void cpu(Cpu metric, int identifier, String recordDate) {
+		if (metricRepository.saveCpuMetric(metric, identifier, recordDate)) {
 			status.accepted();
 		}		
 	}
@@ -72,19 +74,19 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param machine - machine identifier where the metric was collected
 	 * @param recordDate - date when it was collected
 	 */
-	@Post("machine/memory")
-	public void memory(Memory metric, int machine, String recordDate) {
-		if (metricRepository.saveMemoryMetric(metric, machine, recordDate)) {
+	@Post("/memory")
+	public void memory(Memory metric, int identifier, String recordDate) {
+		if (metricRepository.saveMemoryMetric(metric, identifier, recordDate)) {
 			status.accepted();
 		}
 	}
 	
-	@Post("machine/disk")
+	@Post("/disk")
 	public void disk() {
 		//TODO!
 	}
 	
-	@Post("machine/network")
+	@Post("/network")
 	public void network() {
 		
 	}
