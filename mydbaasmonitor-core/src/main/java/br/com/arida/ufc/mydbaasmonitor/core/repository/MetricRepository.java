@@ -69,16 +69,14 @@ public class MetricRepository {
 			sql.append("`"+field.getName().toLowerCase()+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
 		}
 		
-		if (metric.toString().equals("machine")) {
-			sql.append("`virtual_machine` int(11) NOT NULL,\n")
-			   .append("PRIMARY KEY (`id`),\n")
-			   .append("KEY `fk_"+clazzName+"_metric_idx` (`virtual_machine`),\n")
-			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`virtual_machine`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+		sql.append("`identifier` int(11) NOT NULL,\n")
+		   .append("PRIMARY KEY (`id`),\n")
+		   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n");
+		
+		if (metric.toString().equals("machine")) {			
+			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
-			sql.append("`database` int(11) NOT NULL,\n")
-			   .append("PRIMARY KEY (`id`),\n")
-			   .append("KEY `fk_"+clazzName+"_metric_idx` (`database`),\n")
-			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`identifier`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		}
 		sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8");
 		return sql.toString();
