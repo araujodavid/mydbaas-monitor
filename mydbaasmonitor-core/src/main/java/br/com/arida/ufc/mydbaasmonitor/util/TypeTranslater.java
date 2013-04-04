@@ -18,7 +18,7 @@ public class TypeTranslater {
 		
 		switch (typeClass.getSimpleName()) {
 			case "String":
-				sqlType = "VARCHAR";
+				sqlType = "text";
 				break;
 			case "double":
 			case "Double":
