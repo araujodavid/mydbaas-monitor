@@ -24,7 +24,8 @@ public class MetricRepository {
 	 * @param recordDate
 	 * @return true if the metric is saved
 	 */
-	public boolean saveMetric(Object metric, int machine, String recordDate) {		
+	public boolean saveMetric(Object metric, int machine, String recordDate) {
+		List<Field> fields = this.getMetricFields(metric);
 		return true;
 	}//saveMetric()
 	
@@ -34,6 +35,8 @@ public class MetricRepository {
 	 * @return true if the table is created
 	 */
 	public boolean createMetricTable(Object metric) {
+		List<Field> fields = this.getMetricFields(metric);
+		String tableSQL = this.makeCreateTableSQL(metric, fields);
 		return true;
 	}//createMetricTable()
 	
