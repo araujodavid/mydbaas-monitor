@@ -1,6 +1,9 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.repository;
 
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,10 @@ import br.com.caelum.vraptor.ioc.Component;
 
 @Component
 public class MetricRepository {
+	
+	private Connection connection = null;
+    private PreparedStatement preparedStatement = null;
+    private ResultSet resultSet = null;
 
 	/**
 	 * Method to save a metric in the database
@@ -26,6 +33,7 @@ public class MetricRepository {
 	 */
 	public boolean saveMetric(Object metric, int machine, String recordDate) {
 		List<Field> fields = this.getMetricFields(metric);
+		Class<?> clazz = metric.getClass();	
 		return true;
 	}//saveMetric()
 	
