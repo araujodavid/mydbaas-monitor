@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Machine;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 
 public class Main {
 
@@ -20,9 +22,9 @@ public class Main {
 		//Gets fields from the class
 		fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
 		
-		for (Field field : fields) {
-			System.out.println(field.getType().getSimpleName());
-		}
+		MetricRepository metricRepository = new MetricRepository();
+		
+		System.out.println(metricRepository.makeCreateTableSQL(cpu, fields));
 
 	}
 

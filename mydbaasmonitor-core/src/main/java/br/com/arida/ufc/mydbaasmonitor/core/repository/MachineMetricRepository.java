@@ -4,8 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Cpu;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Memory;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import br.com.caelum.vraptor.ioc.Component;
 

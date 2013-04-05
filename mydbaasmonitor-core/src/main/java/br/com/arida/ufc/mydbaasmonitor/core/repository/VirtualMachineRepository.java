@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Machine;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;

@@ -1,8 +1,8 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Cpu;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Machine;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Memory;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MachineMetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
