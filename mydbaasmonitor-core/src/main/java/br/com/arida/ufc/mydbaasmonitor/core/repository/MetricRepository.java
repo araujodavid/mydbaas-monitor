@@ -76,7 +76,9 @@ public class MetricRepository {
 		   .append("`record_date` datetime NOT NULL,\n");
 		
 		for (Field field : fields) {
-			sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
+			if (field.getName().toLowerCase().contains(clazzName)) {
+				sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
+			}			
 		}
 		
 		sql.append("`identifier` int(11) NOT NULL,\n")
@@ -101,6 +103,8 @@ public class MetricRepository {
 	public String makeInsertSQL(Object metric, List<Field> fields) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
 		StringBuilder sql = new StringBuilder();
+		sql.append("insert into `"+clazzName+"_metric` (\n");
+		
 		return sql.toString();
 	}
 	
