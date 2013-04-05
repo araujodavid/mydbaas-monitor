@@ -2,7 +2,7 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity;
 
 import java.util.Properties;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.Memory;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Memory;
 
 /**
  * 
