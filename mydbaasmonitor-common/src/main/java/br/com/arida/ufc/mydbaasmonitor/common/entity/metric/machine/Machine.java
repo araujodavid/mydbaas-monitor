@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric;
+package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
