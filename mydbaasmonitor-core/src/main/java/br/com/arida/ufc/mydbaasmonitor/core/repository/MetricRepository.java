@@ -105,6 +105,12 @@ public class MetricRepository {
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into `"+clazzName+"_metric` (\n");
 		
+		for (Field field : fields) {
+			if (field.getName().toLowerCase().contains(clazzName)) {
+				
+			}
+		}
+		
 		return sql.toString();
 	}
 	
