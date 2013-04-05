@@ -66,7 +66,7 @@ public class MetricRepository {
 	 * Method for mounting SQL table creation
 	 * @param metricName
 	 * @param fields
-	 * @return a SQL ready
+	 * @return a create table SQL ready
 	 */
 	public String makeCreateTableSQL(Object metric, List<Field> fields) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
@@ -89,6 +89,18 @@ public class MetricRepository {
 			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`identifier`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		}
 		sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8");
+		return sql.toString();
+	}
+	
+	/**
+	 * Method for mounting SQL insertion
+	 * @param metricName
+	 * @param fields
+	 * @return a insert SQL ready
+	 */
+	public String makeInsertSQL(Object metric, List<Field> fields) {
+		String clazzName = metric.getClass().getSimpleName().toLowerCase();
+		StringBuilder sql = new StringBuilder();
 		return sql.toString();
 	}
 	
