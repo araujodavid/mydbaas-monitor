@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -33,8 +32,8 @@ public class MetricRepository {
 	 */
 	public boolean saveMetric(Object metric, int machine, String recordDate) {
 		List<Field> fields = this.getMetricFields(metric);
-		Class<?> clazz = metric.getClass();	
-		return true;
+		String className = metric.getClass().getSimpleName().toLowerCase();
+		return false;
 	}//saveMetric()
 	
 	/**
@@ -77,7 +76,7 @@ public class MetricRepository {
 		   .append("`record_date` datetime NOT NULL,\n");
 		
 		for (Field field : fields) {
-			sql.append("`"+field.getName().toLowerCase()+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
+			sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
 		}
 		
 		sql.append("`identifier` int(11) NOT NULL,\n")
@@ -92,4 +91,5 @@ public class MetricRepository {
 		sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8");
 		return sql.toString();
 	}
+	
 }
