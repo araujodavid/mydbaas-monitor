@@ -9,4 +9,14 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.util;
  */
 public class DatabaseConnection {
 
+	private static DatabaseConnection uniqueInstance;
+	
+	private DatabaseConnection() {}
+
+	public static DatabaseConnection getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new DatabaseConnection();
+	    }
+	    return uniqueInstance;
+	}
 }
