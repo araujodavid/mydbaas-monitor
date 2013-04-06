@@ -19,5 +19,10 @@ mydbaasmonitor-common/build/
 mydbaasmonitor-common/.settings/
 mydbaasmonitor-common/.classpath
 mydbaasmonitor-common/.project
+mydbaasmonitor-jdbc/bin/
+mydbaasmonitor-jdbc/build/
+mydbaasmonitor-jdbc/.settings/
+mydbaasmonitor-jdbc/.classpath
+mydbaasmonitor-jdbc/.project
 .metadata/
 Servers/
