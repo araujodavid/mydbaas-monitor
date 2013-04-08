@@ -74,17 +74,17 @@ public class MetricRepository {
 		sql.append("create table `"+clazzName+"_metric` (\n")
 		   .append("`id` int(11) NOT NULL AUTO_INCREMENT,\n")
 		   .append("`record_date` datetime NOT NULL,\n");
-		
+		//
 		for (Field field : fields) {
 			if (field.getName().toLowerCase().contains(clazzName)) {
 				sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
 			}			
 		}
-		
+		//
 		sql.append("`identifier` int(11) NOT NULL,\n")
 		   .append("PRIMARY KEY (`id`),\n")
 		   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n");
-		
+		//
 		if (metric.toString().equals("machine")) {			
 			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
@@ -102,16 +102,28 @@ public class MetricRepository {
 	 */
 	public String makeInsertSQL(Object metric, List<Field> fields) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
-		StringBuilder sql = new StringBuilder();
-		sql.append("insert into `"+clazzName+"_metric` (\n");
-		
+		//
+		StringBuilder insert = new StringBuilder();		
+		insert.append("insert into `"+clazzName+"_metric` (\n");
+		//
+		StringBuilder values = new StringBuilder();
+		values.append("values (\n");
+		//
 		for (Field field : fields) {
 			if (field.getName().toLowerCase().contains(clazzName)) {
-				
+				//TODO
 			}
 		}
+		//
+		insert.append("`identifier`,\n")
+		      .append("`record_date`)\n");
+		//
+		values.append("?,\n")
+	          .append("?);");
+		//
+		insert.append(values);
 		
-		return sql.toString();
+		return insert.toString();
 	}
 	
 }
