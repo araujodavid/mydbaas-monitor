@@ -24,7 +24,9 @@ public class Main {
 		
 		MetricRepository metricRepository = new MetricRepository();
 		
-		System.out.println(metricRepository.makeCreateTableSQL(cpu, fields));
+		//System.out.println(metricRepository.makeCreateTableSQL(cpu, fields));
+		
+		System.out.println(metricRepository.makeInsertSQL(cpu, fields));
 
 	}
 

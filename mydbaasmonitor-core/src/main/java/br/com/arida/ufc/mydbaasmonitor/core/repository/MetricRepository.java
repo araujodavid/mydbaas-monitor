@@ -102,25 +102,25 @@ public class MetricRepository {
 	 */
 	public String makeInsertSQL(Object metric, List<Field> fields) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
-		//
+		//Create the first part of the query
 		StringBuilder insert = new StringBuilder();		
-		insert.append("insert into `"+clazzName+"_metric` (\n");
-		//
+		insert.append("insert into `"+clazzName+"_metric` (");
+		//Create the second part of the query
 		StringBuilder values = new StringBuilder();
-		values.append("values (\n");
-		//
+		values.append("values (");
+		//For each field of the metric is added a field and a parameter in the query
 		for (Field field : fields) {
 			if (field.getName().toLowerCase().contains(clazzName)) {
-				//TODO
+				insert.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"`, ");
+				values.append("?, ");
 			}
 		}
-		//
-		insert.append("`identifier`,\n")
+		//Adds the end of the query
+		insert.append("`identifier`, ")
 		      .append("`record_date`)\n");
-		//
-		values.append("?,\n")
+		values.append("?, ")
 	          .append("?);");
-		//
+		//Concat first and second part
 		insert.append(values);
 		
 		return insert.toString();
