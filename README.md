@@ -36,6 +36,9 @@ The monitoring environment has four modules:
 `mydbaasmonitor-common`
 + **Common**: package of common classes between modules - [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-common).
 
+`mydbaasmonitor-jdbc`
++ **JDBC**: extends JDBC of the PostgreSQL and MySQL, adding functionality monitoring metrics that require interception of workloads sent to the database. - [details](http://github.com/araujodavid/mydbaasmonitor/tree/master/mydbaasmonitor-jdbc).
+
 ## License
 
 *Federal University of Ceará - Brazil, ARiDa Research Group.*
