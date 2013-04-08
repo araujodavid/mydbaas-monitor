@@ -71,20 +71,21 @@ public class MetricRepository {
 	public String makeCreateTableSQL(Object metric, List<Field> fields) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
 		StringBuilder sql = new StringBuilder();
+		//Initiates the formation of query
 		sql.append("create table `"+clazzName+"_metric` (\n")
 		   .append("`id` int(11) NOT NULL AUTO_INCREMENT,\n")
 		   .append("`record_date` datetime NOT NULL,\n");
-		//
+		//For each field of the metric is verified its type and converted to SQL type
 		for (Field field : fields) {
 			if (field.getName().toLowerCase().contains(clazzName)) {
 				sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
 			}			
 		}
-		//
+		//Adds the field identifier and primary key
 		sql.append("`identifier` int(11) NOT NULL,\n")
 		   .append("PRIMARY KEY (`id`),\n")
 		   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n");
-		//
+		//Identifies the metric is tied to a machine or database
 		if (metric.toString().equals("machine")) {			
 			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
