@@ -30,6 +30,9 @@ public class TypeTranslater {
 			case "Integer":
 				sqlType = "integer";
 				break;
+			case "long":
+				sqlType = "bigint";
+				break;
 		}
 		
 		return sqlType;		
