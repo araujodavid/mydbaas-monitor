@@ -1,6 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.repository;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,14 +35,16 @@ public class MetricRepository {
 	 * @param recordDate
 	 * @return true if the metric is saved
 	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
 	 */
-	public boolean saveMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException {
+	public boolean saveMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		List<Field> fields = this.getMetricFields(metric);
 		Class<?> clazz = metric.getClass();	
 		
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
-			this.preparedStatement = this.connection.prepareStatement("");
+			this.preparedStatement = this.connection.prepareStatement(this.makeInsertSQL(metric, fields));
 			
 			//Gets the metric values ​​and configures the SQL query
 			int count = 1;
@@ -49,7 +52,7 @@ public class MetricRepository {
 				Method method;
 				if (field.getName().toLowerCase().contains(clazz.getSimpleName().toLowerCase())) {
 					method = clazz.getDeclaredMethod("get"+StringUtils.capitalize(field.getName()), null);
-					//TODO
+					this.preparedStatement.setObject(count, method.invoke(metric, null));
 				}
 				count++;
 			}			
@@ -78,6 +81,7 @@ public class MetricRepository {
 	public boolean createMetricTable(Object metric) {
 		List<Field> fields = this.getMetricFields(metric);
 		String tableSQL = this.makeCreateTableSQL(metric, fields);
+		//TODO
 		return true;
 	}//createMetricTable()
 	
