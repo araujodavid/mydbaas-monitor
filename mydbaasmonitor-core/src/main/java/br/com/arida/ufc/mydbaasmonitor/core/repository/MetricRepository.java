@@ -1,18 +1,22 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.repository;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.sun.xml.internal.ws.util.StringUtils;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
  * @author David Araújo
- * @version 2.0
+ * @version 3.0
  * @since April 1, 2013 
  */
 
@@ -29,10 +33,40 @@ public class MetricRepository {
 	 * @param machine
 	 * @param recordDate
 	 * @return true if the metric is saved
+	 * @throws NoSuchMethodException 
 	 */
-	public boolean saveMetric(Object metric, int machine, String recordDate) {
+	public boolean saveMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException {
 		List<Field> fields = this.getMetricFields(metric);
-		String className = metric.getClass().getSimpleName().toLowerCase();
+		Class<?> clazz = metric.getClass();	
+		
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement("");
+			
+			//Gets the metric values ​​and configures the SQL query
+			int count = 1;
+			for (Field field : fields) {
+				Method method;
+				if (field.getName().toLowerCase().contains(clazz.getSimpleName().toLowerCase())) {
+					method = clazz.getDeclaredMethod("get"+StringUtils.capitalize(field.getName()), null);
+					//TODO
+				}
+				count++;
+			}			
+			//Setting the identifier and record date
+			this.preparedStatement.setObject(count+1, identifier);
+			this.preparedStatement.setObject(count+2, recordDate);
+			
+			this.preparedStatement.executeUpdate();
+			return true;
+		} 
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+        }		
 		return false;
 	}//saveMetric()
 	
