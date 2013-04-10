@@ -11,15 +11,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.sun.xml.internal.ws.util.StringUtils;
-
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
  * @author David Araújo
- * @version 3.0
+ * @version 4.0
  * @since April 1, 2013 
  */
 
@@ -29,6 +27,11 @@ public class MetricRepository {
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
+    private List<String> tables = null;
+    
+    public MetricRepository() {
+    	this.tables = this.getTables();
+    }
 
 	/**
 	 * Method to save a metric in the database
@@ -168,19 +171,31 @@ public class MetricRepository {
 	}
 	
 	/**
-	 * Method that checks if there is the table of a given metric.
+	 * Method that checks if there is the table of a given metric.	
 	 * @param metric - given metric object
 	 * @return whether the table exists or not
 	 */
 	public boolean checkTable(Object metric) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
+		if (this.tables.contains(clazzName)) {
+			return true;
+		}
+		return false;
+	}//checkTable()
+	
+	/**
+	 * Method to return all tables in the database.
+	 * @return the list of tables
+	 */
+	public List<String> getTables() {
+		List<String> tables = new ArrayList<String>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
-			preparedStatement = connection.prepareStatement("");
+			preparedStatement = connection.prepareStatement("select table_name from information_schema.tables where table_schema = database();");
 						
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
-				//TODO
+				tables.add(resultSet.getString("table_name"));
 			}
 		}
 		catch(SQLException se) {se.printStackTrace();}
@@ -189,7 +204,7 @@ public class MetricRepository {
             try { resultSet.close(); } catch(Exception e) {}
             try { preparedStatement.close(); } catch(Exception e) {}
             try { connection.close(); } catch(Exception e) {}
-        }		
-		return false;
-	}//checkTable()
+        }
+		return tables;		
+	}//getTables()
 }
