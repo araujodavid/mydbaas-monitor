@@ -171,6 +171,7 @@ public class MetricRepository {
 	 * @return whether the table exists or not
 	 */
 	public boolean checkTable(Object metric) {
+		String clazzName = metric.getClass().getSimpleName().toLowerCase();
 		//TODO
 		return true;
 	}
