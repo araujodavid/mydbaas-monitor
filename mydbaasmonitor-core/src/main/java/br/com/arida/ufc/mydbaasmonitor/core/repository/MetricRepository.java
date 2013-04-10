@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.sun.xml.internal.ws.util.StringUtils;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
@@ -172,7 +174,22 @@ public class MetricRepository {
 	 */
 	public boolean checkTable(Object metric) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
-		//TODO
-		return true;
-	}
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("");
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				//TODO
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }		
+		return false;
+	}//checkTable()
 }
