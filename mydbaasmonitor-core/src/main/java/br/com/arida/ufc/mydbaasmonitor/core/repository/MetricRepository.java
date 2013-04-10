@@ -102,7 +102,7 @@ public class MetricRepository {
 	
 	/**
 	 * Method for mounting SQL table creation
-	 * @param metricName
+	 * @param metric - given metric object
 	 * @param fields
 	 * @return a create table SQL ready
 	 */
@@ -135,7 +135,7 @@ public class MetricRepository {
 	
 	/**
 	 * Method for mounting SQL insertion
-	 * @param metricName
+	 * @param metric - given metric object
 	 * @param fields
 	 * @return a insert SQL ready
 	 */
@@ -165,4 +165,13 @@ public class MetricRepository {
 		return insert.toString();
 	}
 	
+	/**
+	 * Method that checks if there is the table of a given metric.
+	 * @param metric - given metric object
+	 * @return whether the table exists or not
+	 */
+	public boolean checkTable(Object metric) {
+		//TODO
+		return true;
+	}
 }
