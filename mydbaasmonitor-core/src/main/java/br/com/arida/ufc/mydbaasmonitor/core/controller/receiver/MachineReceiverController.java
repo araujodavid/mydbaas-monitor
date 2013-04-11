@@ -1,12 +1,10 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import java.lang.reflect.InvocationTargetException;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MachineMetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import br.com.caelum.vraptor.Path;
@@ -17,7 +15,7 @@ import br.com.caelum.vraptor.view.DefaultStatus;
 /**
  * Class that handles requests sent by the monitoring agents about machine.
  * @author Daivd Araújo
- * @version 3.0
+ * @version 4.0
  * @since March 10, 2013 
  */
 
@@ -25,8 +23,6 @@ import br.com.caelum.vraptor.view.DefaultStatus;
 @Path("/machine")
 public class MachineReceiverController extends AbstractReceiver {
 	
-	private MachineMetricRepository metricRepository;
-	private MetricRepository repository;
 	private VirtualMachineRepository machineRepository;
 	
 	/**
@@ -35,10 +31,8 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param metricRepository
 	 * @param machineRepository
 	 */
-	public MachineReceiverController(DefaultStatus status, MachineMetricRepository metricRepository, MetricRepository repository, VirtualMachineRepository machineRepository) {
-		super(status);
-		this.metricRepository = metricRepository;
-		this.repository = repository;
+	public MachineReceiverController(DefaultStatus status, MetricRepository repository, VirtualMachineRepository machineRepository) {
+		super(status, repository);
 		this.machineRepository = machineRepository;
 	}
 
@@ -92,8 +86,19 @@ public class MachineReceiverController extends AbstractReceiver {
 	 */
 	@Post("/memory")
 	public void memory(Memory metric, int identifier, String recordDate) {
-		if (metricRepository.saveMemoryMetric(metric, identifier, recordDate)) {
-			status.accepted();
+		try {
+			if (repository.saveMetric(metric, identifier, recordDate)) {
+				status.accepted();
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -104,7 +109,7 @@ public class MachineReceiverController extends AbstractReceiver {
 	
 	@Post("/network")
 	public void network() {
-		
+		//TODO!
 	}
 
 }
