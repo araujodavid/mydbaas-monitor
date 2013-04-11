@@ -31,6 +31,9 @@ public class MetricRepository {
     
     public MetricRepository() {
     	this.tables = this.getTables();
+    	for (String table : tables) {
+			System.out.println(table);
+		}
     }
 
 	/**
@@ -45,14 +48,22 @@ public class MetricRepository {
 	 */
 	public boolean saveMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		if (this.checkTable(metric)) {
-			this.insertMetric(metric, identifier, recordDate);			
+			return this.insertMetric(metric, identifier, recordDate);			
 		} else {
-			this.createMetricTable(metric);
-			this.insertMetric(metric, identifier, recordDate);
+			if (this.createMetricTable(metric)) {
+				return this.insertMetric(metric, identifier, recordDate);
+			}			
 		}
 		return false;
 	}//saveMetric()
 	
+	/**
+	 * Method to save a metric in the database
+	 * @param metric
+	 * @param identifier
+	 * @param recordDate
+	 * @return true if the metric is saved
+	 */
 	private boolean insertMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		List<Field> fields = this.getMetricFields(metric);
 		Class<?> clazz = metric.getClass();	
@@ -72,8 +83,8 @@ public class MetricRepository {
 				count++;
 			}			
 			//Setting the identifier and record date
-			this.preparedStatement.setObject(count+1, identifier);
-			this.preparedStatement.setObject(count+2, recordDate);
+			this.preparedStatement.setObject(count, identifier);
+			this.preparedStatement.setObject(count+1, recordDate);
 			
 			this.preparedStatement.executeUpdate();
 			return true;
@@ -201,8 +212,10 @@ public class MetricRepository {
 	 */
 	public boolean checkTable(Object metric) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
-		if (this.tables.contains(clazzName)) {
-			return true;
+		for (String table : this.tables) {
+			if (table.equals(clazzName+"_metric")) {
+				return true;
+			}
 		}
 		return false;
 	}//checkTable()
