@@ -31,9 +31,6 @@ public class MetricRepository {
     
     public MetricRepository() {
     	this.tables = this.getTables();
-    	for (String table : tables) {
-			System.out.println(table);
-		}
     }
 
 	/**
