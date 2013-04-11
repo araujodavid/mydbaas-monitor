@@ -44,6 +44,16 @@ public class MetricRepository {
 	 * @throws IllegalAccessException 
 	 */
 	public boolean saveMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		if (this.checkTable(metric)) {
+			this.insertMetric(metric, identifier, recordDate);			
+		} else {
+			this.createMetricTable(metric);
+			this.insertMetric(metric, identifier, recordDate);
+		}
+		return false;
+	}//saveMetric()
+	
+	private boolean insertMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		List<Field> fields = this.getMetricFields(metric);
 		Class<?> clazz = metric.getClass();	
 		
@@ -76,7 +86,7 @@ public class MetricRepository {
             try { connection.close(); } catch(Exception e) { }
         }		
 		return false;
-	}//saveMetric()
+	}//insertMetric()
 	
 	/**
 	 * Method to create a table in the database for a given metric
@@ -86,8 +96,22 @@ public class MetricRepository {
 	public boolean createMetricTable(Object metric) {
 		List<Field> fields = this.getMetricFields(metric);
 		String tableSQL = this.makeCreateTableSQL(metric, fields);
-		//TODO
-		return true;
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement(tableSQL);
+						
+			this.preparedStatement.executeUpdate();
+			this.tables.add(metric.getClass().getSimpleName().toLowerCase()+"_metric");
+			return true;
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return false;
 	}//createMetricTable()
 	
 	/**
