@@ -89,7 +89,9 @@ public class MonitoringAgent {
 	 */
 	public List<String> getEnabledMetrics(Properties properties) {
 		List<String> enabledMetrics = new ArrayList<String>();
-		//TODO
+		for (Object metric : properties.keySet()) {
+			//TODO
+		}
 		return enabledMetrics;
 	}
 
