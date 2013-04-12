@@ -90,7 +90,9 @@ public class MonitoringAgent {
 	public List<String> getEnabledMetrics(Properties properties) {
 		List<String> enabledMetrics = new ArrayList<String>();
 		for (Object metric : properties.keySet()) {
-			//TODO
+			if ((metric.toString().contains(".url")) && (!properties.getProperty(metric.toString()).equals(""))) {
+				//TODO
+			}
 		}
 		return enabledMetrics;
 	}
