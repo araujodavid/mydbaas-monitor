@@ -22,7 +22,7 @@ public class MonitorInfoParser {
 	//User owns the resource
 	private Integer user;
 	//Geral URL
-	private String geralURL;
+	private String server;
 	//Properties agent configuration file
 	private Properties properties;
 
@@ -53,12 +53,12 @@ public class MonitorInfoParser {
 		this.user = user;
 	}
 	
-	public String getGeralURL() {
-		return geralURL;
+	public String getServer() {
+		return server;
 	}
 
-	public void setGeralURL(String geralURL) {
-		this.geralURL = geralURL;
+	public void setServer(String server) {
+		this.server = server;
 	}
 
 	public Properties getProperties() {
@@ -76,6 +76,6 @@ public class MonitorInfoParser {
 	public void loadProperties() {
 		this.identifier = Integer.valueOf(this.properties.getProperty("identifier"));
 		this.user = Integer.valueOf(this.properties.getProperty("user"));
-		this.geralURL = this.properties.getProperty("geral.url");
+		this.server = this.properties.getProperty("server");
 	}
 }
