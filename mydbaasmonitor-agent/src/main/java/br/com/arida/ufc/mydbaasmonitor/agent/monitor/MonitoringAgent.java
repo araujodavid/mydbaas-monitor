@@ -82,6 +82,11 @@ public class MonitoringAgent {
 		}		
 	}
 	
+	/**
+	 * Method to check the metrics enabled in the config file
+	 * @param properties
+	 * @return a list with the names of the classes of metrics enabled
+	 */
 	public List<String> getEnabledMetrics(Properties properties) {
 		List<String> enabledMetrics = new ArrayList<String>();
 		//TODO
