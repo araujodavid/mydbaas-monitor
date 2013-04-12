@@ -27,7 +27,7 @@ public class NetworkMetric extends Network implements LoadMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("geral.url")+properties.getProperty("net.url"));
+		this.setUrl(properties.getProperty("server")+properties.getProperty("net.url"));
 		this.setCyclo(Integer.parseInt(properties.getProperty("net.cycle")));		
 	}
 

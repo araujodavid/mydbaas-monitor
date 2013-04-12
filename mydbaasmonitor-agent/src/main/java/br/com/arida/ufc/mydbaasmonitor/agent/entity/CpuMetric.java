@@ -27,7 +27,7 @@ public class CpuMetric extends Cpu implements LoadMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("geral.url")+properties.getProperty("cpu.url"));
+		this.setUrl(properties.getProperty("server")+properties.getProperty("cpu.url"));
 		this.setCyclo(Integer.parseInt(properties.getProperty("cpu.cycle")));
 	}	
 }

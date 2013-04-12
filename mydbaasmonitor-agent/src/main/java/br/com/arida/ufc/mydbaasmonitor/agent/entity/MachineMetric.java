@@ -27,7 +27,7 @@ public class MachineMetric extends Machine implements LoadMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("geral.url")+properties.getProperty("information.url"));		
+		this.setUrl(properties.getProperty("server")+properties.getProperty("about"));		
 	}	
 	
 }

@@ -27,7 +27,7 @@ public class DiskMetric extends Disk implements LoadMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("geral.url")+properties.getProperty("disk.url"));
+		this.setUrl(properties.getProperty("server")+properties.getProperty("disk.url"));
 		this.setCyclo(Integer.parseInt(properties.getProperty("disk.cycle")));		
 	}
 
