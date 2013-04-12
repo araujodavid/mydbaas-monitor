@@ -2,6 +2,9 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.monitor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 import java.util.Timer;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.CpuCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.DiskCollector;
@@ -76,7 +79,13 @@ public class MonitoringAgent {
 			Timer diskTimer = new Timer();
 			DiskCollector diskCollector = new DiskCollector(parser.getIdentifier());
 			diskTimer.scheduleAtFixedRate(diskCollector, 0, 1*diskMetric.getCyclo()*1000);	
-		}
+		}		
+	}
+	
+	public List<String> getEnabledMetrics(Properties properties) {
+		List<String> enabledMetrics = new ArrayList<String>();
+		//TODO
+		return enabledMetrics;
 	}
 
 }
