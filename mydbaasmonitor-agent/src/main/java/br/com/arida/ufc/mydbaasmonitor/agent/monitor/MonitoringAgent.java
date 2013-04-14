@@ -95,6 +95,7 @@ public class MonitoringAgent {
 		for (Object metric : properties.keySet()) {
 			if ((metric.toString().contains(".url")) && (!properties.getProperty(metric.toString()).equals(""))) {
 				String metricName = StringUtils.capitalize(metric.toString().replace(".url", "")).concat("Metric");
+				enabledMetrics.add(metricName);
 			}
 		}
 		return enabledMetrics;
