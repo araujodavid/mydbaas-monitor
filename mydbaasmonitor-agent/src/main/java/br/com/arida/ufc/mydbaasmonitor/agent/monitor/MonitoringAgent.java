@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
+
+import com.sun.xml.internal.ws.util.StringUtils;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.CpuCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.DiskCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.MachineCollector;
@@ -91,7 +94,7 @@ public class MonitoringAgent {
 		List<String> enabledMetrics = new ArrayList<String>();
 		for (Object metric : properties.keySet()) {
 			if ((metric.toString().contains(".url")) && (!properties.getProperty(metric.toString()).equals(""))) {
-				//TODO
+				String metricName = StringUtils.capitalize(metric.toString().replace(".url", "")).concat("Metric");
 			}
 		}
 		return enabledMetrics;
