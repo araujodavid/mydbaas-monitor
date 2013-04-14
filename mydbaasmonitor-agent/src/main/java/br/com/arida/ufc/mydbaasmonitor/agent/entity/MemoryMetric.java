@@ -27,8 +27,8 @@ public class MemoryMetric extends Memory implements LoadMetric {
 
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("server")+properties.getProperty("mem.url"));
-		this.setCyclo(Integer.parseInt(properties.getProperty("mem.cycle")));		
+		this.setUrl(properties.getProperty("server")+properties.getProperty("memory.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("memory.cycle")));		
 	}	
 	
 }
