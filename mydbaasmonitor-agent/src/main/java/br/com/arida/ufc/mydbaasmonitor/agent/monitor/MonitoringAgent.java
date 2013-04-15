@@ -53,7 +53,11 @@ public class MonitoringAgent {
 	}//getEnabledMetrics()
 	
 	public void startCollectors(List<Object> enabledMetrics) {
-		//TODO
+		for (Object object : enabledMetrics) {
+			//For each metric do:
+			//TODO - create timer
+			//TODO - create a collector metric
+		}		
 	}
 
 	public static void main(String[] args) {
