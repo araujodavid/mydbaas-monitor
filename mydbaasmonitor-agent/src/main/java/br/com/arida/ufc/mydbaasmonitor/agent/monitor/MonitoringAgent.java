@@ -2,6 +2,8 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.monitor;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -22,6 +24,35 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
  */
 
 public class MonitoringAgent {
+	
+	/**
+	 * Method to check the metrics enabled in the config file
+	 * @param properties
+	 * @return a list with the objects of the metrics enabled
+	 * @throws ClassNotFoundException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 */
+	public List<Object> getEnabledMetrics(Properties properties) throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		List<Object> enabledMetrics = new ArrayList<Object>();
+		for (Object metric : properties.keySet()) {
+			if ((metric.toString().contains(".url")) && (!properties.getProperty(metric.toString()).equals(""))) {
+				String metricName = StringUtils.capitalize(metric.toString().replace(".url", "")).concat("Metric");
+				Class<?> metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity."+metricName);
+				Method getInstance = metricClass.getDeclaredMethod("getInstance", null);				
+				Object objectMetric = getInstance.invoke(null, null);
+				Method loadMetricProperties = metricClass.getDeclaredMethod("loadMetricProperties", Properties.class);
+				loadMetricProperties.invoke(objectMetric, new Object[] {properties});
+				enabledMetrics.add(objectMetric);
+			}
+		}
+		return enabledMetrics;
+	}//getEnabledMetrics()
+	
+
 
 	public static void main(String[] args) {
 		MonitorInfoParser parser = MonitorInfoParser.getInstance();
@@ -41,7 +72,7 @@ public class MonitoringAgent {
 		MachineMetric machineMetric = MachineMetric.getInstance();
 		machineMetric.loadMetricProperties(parser.getProperties());		
 		MachineCollector machineCollector = new MachineCollector(parser.getIdentifier());
-		machineCollector.run();
+		machineCollector.run();		
 		
 		//Monitoring CPU
 		if (parser.getProperties().getProperty("cpu.url") != null && !parser.getProperties().getProperty("cpu.url").equals("")) {
@@ -53,22 +84,6 @@ public class MonitoringAgent {
 		}
 		
 		//TODO - Criar o loop que vai instânciar com collectors de forma automática com base no método getEnabledMetrics
+		
 	}
-	
-	/**
-	 * Method to check the metrics enabled in the config file
-	 * @param properties
-	 * @return a list with the names of the classes of metrics enabled
-	 */
-	public List<String> getEnabledMetrics(Properties properties) {
-		List<String> enabledMetrics = new ArrayList<String>();
-		for (Object metric : properties.keySet()) {
-			if ((metric.toString().contains(".url")) && (!properties.getProperty(metric.toString()).equals(""))) {
-				String metricName = StringUtils.capitalize(metric.toString().replace(".url", "")).concat("Metric");
-				enabledMetrics.add(metricName);
-			}
-		}
-		return enabledMetrics;
-	}
-
 }
