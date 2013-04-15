@@ -52,7 +52,9 @@ public class MonitoringAgent {
 		return enabledMetrics;
 	}//getEnabledMetrics()
 	
-
+	public void startCollectors(List<Object> enabledMetrics) {
+		//TODO
+	}
 
 	public static void main(String[] args) {
 		MonitorInfoParser parser = MonitorInfoParser.getInstance();
