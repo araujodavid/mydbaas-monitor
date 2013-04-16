@@ -105,7 +105,7 @@ public class MonitoringAgent {
 		//Loads the general information of the monitoring agent
 		parser.loadProperties();
 		
-		//
+		//Create a MonitoringAgent object
 		MonitoringAgent agent = new MonitoringAgent();
 				
 		//Collects information about the system and physical resources
