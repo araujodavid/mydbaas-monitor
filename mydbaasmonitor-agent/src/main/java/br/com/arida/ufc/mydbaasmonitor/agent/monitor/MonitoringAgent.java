@@ -115,9 +115,9 @@ public class MonitoringAgent {
 		machineCollector.run();
 		
 		try {
-			//
+			//Get enabled metric in the conf file
 			List<Object>  enabledMetrics = agent.getEnabledMetrics(parser.getProperties());
-			//
+			//Create the collectos
 			agent.startCollectors(enabledMetrics, parser.getIdentifier());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
