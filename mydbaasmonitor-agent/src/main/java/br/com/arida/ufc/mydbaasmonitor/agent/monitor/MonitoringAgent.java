@@ -105,22 +105,50 @@ public class MonitoringAgent {
 		//Loads the general information of the monitoring agent
 		parser.loadProperties();
 		
+		//
+		MonitoringAgent agent = new MonitoringAgent();
+				
 		//Collects information about the system and physical resources
 		MachineMetric machineMetric = MachineMetric.getInstance();
 		machineMetric.loadMetricProperties(parser.getProperties());		
 		MachineCollector machineCollector = new MachineCollector(parser.getIdentifier());
-		machineCollector.run();		
+		machineCollector.run();
 		
-		//Monitoring CPU
-		if (parser.getProperties().getProperty("cpu.url") != null && !parser.getProperties().getProperty("cpu.url").equals("")) {
-			CpuMetric cpuMetric = CpuMetric.getInstance();
-			cpuMetric.loadMetricProperties(parser.getProperties());
-			Timer cpuTimer = new Timer();
-			CpuCollector cpuCollector = new CpuCollector(parser.getIdentifier());
-			cpuTimer.scheduleAtFixedRate(cpuCollector, 0, 1*cpuMetric.getCyclo()*1000);
-		}
+		try {
+			//
+			List<Object>  enabledMetrics = agent.getEnabledMetrics(parser.getProperties());
+			//
+			agent.startCollectors(enabledMetrics, parser.getIdentifier());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		
-		//TODO - Criar o loop que vai instânciar com collectors de forma automática com base no método getEnabledMetrics
-		
+//		//Monitoring CPU
+//		if (parser.getProperties().getProperty("cpu.url") != null && !parser.getProperties().getProperty("cpu.url").equals("")) {
+//			CpuMetric cpuMetric = CpuMetric.getInstance();
+//			cpuMetric.loadMetricProperties(parser.getProperties());
+//			Timer cpuTimer = new Timer();
+//			CpuCollector cpuCollector = new CpuCollector(parser.getIdentifier());
+//			cpuTimer.scheduleAtFixedRate(cpuCollector, 0, 1*cpuMetric.getCyclo()*1000);
+//		}		
 	}
 }
