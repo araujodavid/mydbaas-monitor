@@ -96,5 +96,4 @@ public class CpuCollector extends AbstractCollector<CpuMetric> {
 		//Release any native resources associated with this sigar instance
 		sigar.close();
 	}	
-
 }

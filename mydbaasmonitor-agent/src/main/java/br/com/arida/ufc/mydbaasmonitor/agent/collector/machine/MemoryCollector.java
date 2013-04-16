@@ -102,6 +102,5 @@ public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 		
 		//Release any native resources associated with this sigar instance
 		sigar.close();
-	}
-	
+	}	
 }
