@@ -57,24 +57,36 @@ public class MonitoringAgent {
 		return enabledMetrics;
 	}//getEnabledMetrics()
 	
+	/**
+	 * Method for instantiating the collectors of metrics enabled
+	 * @param enabledMetrics - list with the objects of the enabled metrics
+	 * @param identifier - resource id
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 */
 	public void startCollectors(List<Object> enabledMetrics, int identifier) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException {
 		this.timers = new ArrayList<Timer>();
 		this.collectors = new ArrayList<Object>();
 		for (Object object : enabledMetrics) {
-			//
+			//Gets the value of the metric collection cycle
 			Method getCyclo = object.getClass().getSuperclass().getSuperclass().getDeclaredMethod("getCyclo");
 			int cyclo = (int) getCyclo.invoke(object, null);
-			//
+			//Based on the metric object is created its collector
 			String collectorName = StringUtils.capitalize(object.getClass().getSimpleName().replace("Metric", "")).concat("Collector");
 			Class<?> collectorClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector."+object.toString()+"."+collectorName);
 			Constructor constructor = collectorClass.getConstructors()[0];
 			Object objectCollector = constructor.newInstance(new Object[] {identifier});
-			//
+			//The collector is scheduled and initiated
 			Timer timer = new Timer();			
 			timer.scheduleAtFixedRate((TimerTask) objectCollector, 0, 1*cyclo*1000);
-			//
+			//Save the timer
 			this.timers.add(timer);
-			//
+			//Save the collector
 			this.collectors.add(objectCollector);
 		}		
 	}
