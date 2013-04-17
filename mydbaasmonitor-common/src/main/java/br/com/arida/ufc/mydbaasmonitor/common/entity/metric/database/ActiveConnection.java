@@ -11,8 +11,18 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
  */
 public class ActiveConnection extends AbstractMetric {
 
+	private int activeConnectionAmount;
+	
+	public int getActiveConnectionAmount() {
+		return activeConnectionAmount;
+	}
+	
+	public void setActiveConnectionAmount(int activeConnectionAmount) {
+		this.activeConnectionAmount = activeConnectionAmount;
+	}
+
 	@Override
 	public String toString() {
-		return "machine";
+		return "database";
 	}
 }
