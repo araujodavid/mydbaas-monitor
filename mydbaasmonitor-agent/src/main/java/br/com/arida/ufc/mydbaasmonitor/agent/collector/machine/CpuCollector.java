@@ -17,7 +17,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**
  * 
- * @author Daivd Araújo
+ * @author David Araújo
  * @version 3.0
  * @since March 5, 2013
  * 
