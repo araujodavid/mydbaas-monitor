@@ -2,8 +2,10 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import java.lang.reflect.InvocationTargetException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Disk;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Memory;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Network;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
@@ -102,14 +104,52 @@ public class MachineReceiverController extends AbstractReceiver {
 		}
 	}
 	
+	/**
+	 * Method that receives collections of Disk.
+	 * @param metric - object relative to a metric
+	 * @param machine - machine identifier where the metric was collected
+	 * @param recordDate - date when it was collected
+	 */
 	@Post("/disk")
-	public void disk() {
-		//TODO!
+	public void disk(Disk metric, int identifier, String recordDate) {
+		try {
+			if (repository.saveMetric(metric, identifier, recordDate)) {
+				status.accepted();
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * Method that receives collections of Network.
+	 * @param metric - object relative to a metric
+	 * @param machine - machine identifier where the metric was collected
+	 * @param recordDate - date when it was collected
+	 */
 	@Post("/network")
-	public void network() {
-		//TODO!
+	public void network(Network metric, int identifier, String recordDate) {
+		try {
+			if (repository.saveMetric(metric, identifier, recordDate)) {
+				status.accepted();
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
