@@ -1,5 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database;
 
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
+
 /**
  * 
  * @author David Araújo - @araujodavid
@@ -7,7 +9,10 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database;
  * @since April 17, 2013
  *
  */
-public class ActiveConnection {
+public class ActiveConnection extends AbstractMetric {
 
-	//TODO
+	@Override
+	public String toString() {
+		return "machine";
+	}
 }
