@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import com.google.gson.Gson;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 
 /**
