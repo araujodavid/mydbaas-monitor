@@ -13,6 +13,7 @@ import java.util.TimerTask;
 import com.sun.xml.internal.ws.util.StringUtils;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.MachineCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DatabaseConnection;
 
 /**
  * 
@@ -105,6 +106,10 @@ public class MonitoringAgent {
 		
 		//Create a MonitoringAgent object
 		MonitoringAgent agent = new MonitoringAgent();
+		
+		//Creates and starts managing access to databases
+		DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+		databaseConnection.loadDBMSProperties(parser.getProperties());
 				
 		//Collects information about the system and physical resources
 		MachineMetric machineMetric = MachineMetric.getInstance();
