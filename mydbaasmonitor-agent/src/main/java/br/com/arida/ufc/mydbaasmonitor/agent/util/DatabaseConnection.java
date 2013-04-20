@@ -16,10 +16,10 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
  */
 public class DatabaseConnection {
 	
-	private final String MySQL_DRIVER = "";
-	private final String PostgreSQL_DRIVER = "";
-	private final String MySQL_URL = "";
-	private final String PostgreSQL_URL = "";
+	private final String MySQL_DRIVER = "com.mysql.jdbc.Driver";
+	private final String PostgreSQL_DRIVER = "org.postgresql.Driver";
+	private final String MySQL_URL = "jdbc:mysql://";
+	private final String PostgreSQL_URL = "jdbc:postgresql://";
 
 	private static DatabaseConnection uniqueInstance;
 	private List<DBMS> dbmsList;
