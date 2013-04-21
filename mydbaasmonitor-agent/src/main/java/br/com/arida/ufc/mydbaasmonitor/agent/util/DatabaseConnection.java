@@ -64,6 +64,10 @@ public class DatabaseConnection {
 		return connection;
 	}
 	
+	/**
+	 * Method that carries the information about the DBMS and its databases
+	 * @param properties
+	 */
 	public void loadDBMSProperties(Properties properties) {
 		this.dbmsList = new ArrayList<DBMS>();
 		for (Object dbmsPropertie : properties.keySet()) {
