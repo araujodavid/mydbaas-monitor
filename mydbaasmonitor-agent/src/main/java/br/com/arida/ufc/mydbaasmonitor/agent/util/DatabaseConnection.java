@@ -38,7 +38,7 @@ public class DatabaseConnection {
 		return null;
 	}
 	
-	private Connection connect() {
+	private Connection connect(String host, int port, String username, String password) {
 		//TODO
 		return null;
 	}
