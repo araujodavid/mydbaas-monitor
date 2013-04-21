@@ -33,9 +33,8 @@ public class DatabaseConnection {
 	    return uniqueInstance;
 	}
 	
-	public Connection getConnection(String database) {
-		//TODO
-		return null;
+	public Connection getConnection(String database) {		
+		return this.connect(null, 0, null, null);
 	}
 	
 	private Connection connect(String host, int port, String username, String password) {
