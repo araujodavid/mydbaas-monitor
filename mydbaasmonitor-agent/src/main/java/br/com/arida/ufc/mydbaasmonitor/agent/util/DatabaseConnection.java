@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import com.google.gson.Gson;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 
 /**
  * Class that manages the connection to databases
@@ -34,8 +35,23 @@ public class DatabaseConnection {
 	    return uniqueInstance;
 	}
 	
-	public Connection getConnection(String database) {		
-		return null;
+	/**
+	 * Method that receives the code from a database and returns a connection
+	 * @param databaseId
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public Connection getConnection(int databaseId) throws ClassNotFoundException, SQLException {
+		Connection connection = null;
+		for (DBMS dbms : dbmsList) {			
+			for (Database database : dbms.getDatabases()) {
+				if (database.getId() == databaseId) {
+					connection = this.connect(dbms.getType(), dbms.getPort(), database.getName(), dbms.getUser(), dbms.getPassword());
+				}
+			}
+		}
+		return connection;
 	}
 	
 	/**
@@ -49,9 +65,9 @@ public class DatabaseConnection {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	private Connection connect(String dbmsName, int port, String database, String username, String password) throws ClassNotFoundException, SQLException {
+	private Connection connect(String dbmsType, int port, String database, String username, String password) throws ClassNotFoundException, SQLException {
 		Connection connection = null;
-		switch (dbmsName) {
+		switch (dbmsType) {
 		case "MySQL":
 			Class.forName(MySQL_DRIVER);
 			connection = DriverManager.getConnection(MySQL_URL+":"+port+"/"+database, username, password);
