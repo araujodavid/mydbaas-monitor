@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity;
+package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.machine;
 
 import java.util.Properties;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
