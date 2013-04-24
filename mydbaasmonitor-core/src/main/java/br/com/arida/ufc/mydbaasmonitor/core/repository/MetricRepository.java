@@ -43,12 +43,12 @@ public class MetricRepository {
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-	public boolean saveMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	public boolean saveMetric(Object metric, int identifier, String recordDate, int dbms, int database) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		if (this.checkTable(metric)) {
-			return this.insertMetric(metric, identifier, recordDate);			
+			return this.insertMetric(metric, identifier, recordDate, dbms, database);			
 		} else {
 			if (this.createMetricTable(metric)) {
-				return this.insertMetric(metric, identifier, recordDate);
+				return this.insertMetric(metric, identifier, recordDate, dbms, database);
 			}			
 		}
 		return false;
@@ -61,13 +61,13 @@ public class MetricRepository {
 	 * @param recordDate
 	 * @return true if the metric is saved
 	 */
-	private boolean insertMetric(Object metric, int identifier, String recordDate) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	private boolean insertMetric(Object metric, int identifier, String recordDate, int dbms, int database) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		List<Field> fields = this.getMetricFields(metric);
 		Class<?> clazz = metric.getClass();	
 		
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
-			this.preparedStatement = this.connection.prepareStatement(this.makeInsertSQL(metric, fields));
+			this.preparedStatement = this.connection.prepareStatement(this.makeInsertSQL(metric, fields, dbms, database));
 			
 			//Gets the metric values ​​and configures the SQL query
 			int count = 1;
@@ -80,7 +80,13 @@ public class MetricRepository {
 				count++;
 			}			
 			//Setting the identifier and record date
-			this.preparedStatement.setObject(count, identifier);
+			if (dbms != 0) {
+				this.preparedStatement.setObject(count, dbms);
+			} else if (database != 0) {
+				this.preparedStatement.setObject(count, database);
+			} else {
+				this.preparedStatement.setObject(count, identifier);
+			}			
 			this.preparedStatement.setObject(count+1, recordDate);
 			
 			this.preparedStatement.executeUpdate();
@@ -155,16 +161,20 @@ public class MetricRepository {
 			if (field.getName().toLowerCase().contains(clazzName)) {
 				sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
 			}			
-		}
-		//Adds the field identifier and primary key
-		sql.append("`identifier` int(11) NOT NULL,\n")
-		   .append("PRIMARY KEY (`id`),\n")
-		   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n");
+		}				
 		//Identifies the metric is tied to a machine or database
-		if (metric.toString().equals("machine")) {			
-			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+		if (metric.toString().equals("machine")) {
+			//Add the identifier of the resource and primary key
+			sql.append("`identifier` int(11) NOT NULL,\n")
+			   .append("PRIMARY KEY (`id`),\n")
+			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
-			sql.append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`identifier`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+			sql.append("`dbms` int(11) NOT NULL,\n")
+			   .append("`database` int(11) NOT NULL,\n")
+			   .append("PRIMARY KEY (`id`),\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_dbms` FOREIGN KEY (`dbms`) REFERENCES `dbms` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n");
 		}
 		sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8");
 		return sql.toString();
@@ -176,7 +186,7 @@ public class MetricRepository {
 	 * @param fields
 	 * @return a insert SQL ready
 	 */
-	public String makeInsertSQL(Object metric, List<Field> fields) {
+	public String makeInsertSQL(Object metric, List<Field> fields, int dbms, int database) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
 		//Create the first part of the query
 		StringBuilder insert = new StringBuilder();		
@@ -192,8 +202,14 @@ public class MetricRepository {
 			}
 		}
 		//Adds the end of the query
-		insert.append("`identifier`, ")
-		      .append("`record_date`)\n");
+		if (dbms != 0) {
+			insert.append("`dbms`, ");
+		} else if (database != 0) {
+			insert.append("`database`, ");
+		} else {
+			insert.append("`identifier`, ");
+		}		
+		insert.append("`record_date`)\n");
 		values.append("?, ")
 	          .append("?);");
 		//Concat first and second part
