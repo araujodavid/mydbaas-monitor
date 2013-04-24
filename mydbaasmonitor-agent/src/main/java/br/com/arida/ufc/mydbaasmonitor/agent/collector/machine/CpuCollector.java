@@ -57,7 +57,7 @@ public class CpuCollector extends AbstractCollector<CpuMetric> {
 		//Setting the parameters of the POST request
 		List<NameValuePair> params = null;
 		try {
-			params = this.loadRequestParams(new Date());
+			params = this.loadRequestParams(new Date(), 0, 0);
 		} catch (IllegalAccessException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
