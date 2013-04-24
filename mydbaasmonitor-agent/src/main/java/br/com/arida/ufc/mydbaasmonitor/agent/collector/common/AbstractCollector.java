@@ -57,7 +57,7 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 	 * @throws SecurityException 
 	 * @throws NoSuchMethodException 
 	 */
-	public List<NameValuePair> loadRequestParams(Date recordDate) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public List<NameValuePair> loadRequestParams(Date recordDate, int idDBMS, int idDatabase) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		List<Field> fields = new ArrayList<Field>();
 		
@@ -72,7 +72,14 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 		fields.addAll(Arrays.asList(extendedClazz.getDeclaredFields()));
 		
 		//Adds the machine identifier that belongs to the metric
-		parameters.add(new BasicNameValuePair("identifier", String.valueOf(this.identifier)));
+		if (idDBMS != 0) {
+			parameters.add(new BasicNameValuePair("dbms", String.valueOf(idDBMS)));
+		} else if (idDatabase != 0) {
+			parameters.add(new BasicNameValuePair("database", String.valueOf(idDatabase)));
+		} else {
+			parameters.add(new BasicNameValuePair("identifier", String.valueOf(this.identifier)));
+		}
+		
 		//Adds the datetime when the metric was collected
 		parameters.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(recordDate)));		
 		
