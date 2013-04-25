@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.database;
+package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity;
 
 import java.util.Properties;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
@@ -13,7 +13,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.A
  */
 public class ActiveConnectionMetric extends ActiveConnection implements LoadMetric {
 
-	private static ActiveConnectionMetric uniqueInstance;
+	private static ActiveConnectionMetric uniqueInstance;	
 	
 	private ActiveConnectionMetric() {}
 
@@ -26,8 +26,10 @@ public class ActiveConnectionMetric extends ActiveConnection implements LoadMetr
 	
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		this.setUrl(properties.getProperty("server")+properties.getProperty("cpu.url"));
-		this.setCyclo(Integer.parseInt(properties.getProperty("cpu.cycle")));		
+		this.setUrl(properties.getProperty("server")+properties.getProperty("activeConnection.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("activeConnection.cycle")));
+		this.setEnabledDBMSs(properties.getProperty("activeConnection.dbms"));
+		this.setEnabledDatabases(properties.getProperty("activeConnection.databases"));
 	}
 
 }
