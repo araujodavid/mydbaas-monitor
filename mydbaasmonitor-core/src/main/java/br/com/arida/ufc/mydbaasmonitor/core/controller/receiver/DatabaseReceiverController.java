@@ -10,7 +10,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.view.DefaultStatus;
 
 /**
- * Class that handles requests sent by the monitoring agents about database.
+ * Class that handles requests sent by the monitoring agents about DBMSs and Databases.
  * @author Daivd Araújo
  * @version 2.0
  * @since March 10, 2013
