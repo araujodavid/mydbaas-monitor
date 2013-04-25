@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import com.sun.xml.internal.ws.util.StringUtils;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.machine.MachineCollector;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.machine.MachineMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DatabaseConnection;
 
 /**
@@ -72,8 +72,13 @@ public class MonitoringAgent {
 		this.timers = new ArrayList<Timer>();
 		this.collectors = new ArrayList<Object>();
 		for (Object object : enabledMetrics) {
+			Method getCyclo = null;
 			//Gets the value of the metric collection cycle
-			Method getCyclo = object.getClass().getSuperclass().getSuperclass().getDeclaredMethod("getCyclo");
+			if (object.toString().equals("database")) {
+				getCyclo = object.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredMethod("getCyclo");
+			} else {
+				getCyclo = object.getClass().getSuperclass().getSuperclass().getDeclaredMethod("getCyclo");
+			}			
 			int cyclo = (int) getCyclo.invoke(object, null);
 			//Based on the metric object is created its collector
 			String collectorName = StringUtils.capitalize(object.getClass().getSimpleName().replace("Metric", "")).concat("Collector");
@@ -93,7 +98,7 @@ public class MonitoringAgent {
 	public static void main(String[] args) {
 		MonitorInfoParser parser = MonitorInfoParser.getInstance();
 		try {
-			parser.loadContextFile("/home/david/Workspace MyDBaaSMonitor/mydbaasmonitor-agent/src/resources/context.conf");
+			parser.loadContextFile("/home/david/Workspace MyDBaaSMonitor/mydbaasmonitor-agent/src/resources/test.conf");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
