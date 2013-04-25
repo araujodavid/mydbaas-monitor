@@ -170,11 +170,11 @@ public class MetricRepository {
 			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
-			sql.append("`dbms` int(11) NOT NULL,\n")
-			   .append("`database` int(11) NOT NULL,\n")
+			sql.append("`dbms` int(11) DEFAULT NULL,\n")
+			   .append("`database` int(11) DEFAULT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_dbms` FOREIGN KEY (`dbms`) REFERENCES `dbms` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n")
-			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n");
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		}
 		sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8");
 		return sql.toString();
