@@ -2,9 +2,12 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import com.google.gson.Gson;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
@@ -36,23 +39,44 @@ public class DatabaseConnection {
 	}
 	
 	/**
-	 * Method that receives the code from a database and returns a connection
+	 * Method to create a connection from code of the DBMS/Database
+	 * @param dbmsId
 	 * @param databaseId
-	 * @return
+	 * @return an object array with database type and an open connection
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public Connection getConnection(int databaseId) throws ClassNotFoundException, SQLException {
-		Connection connection = null;
-		for (DBMS dbms : dbmsList) {			
-			for (Database database : dbms.getDatabases()) {
-				if (database.getId() == databaseId) {
-					connection = this.connect(dbms.getType(), dbms.getPort(), database.getName(), dbms.getUser(), dbms.getPassword());
+	public Object[] getConnection(Integer dbmsId, Integer databaseId) throws ClassNotFoundException, SQLException {
+		//firt index is the DBMS type
+		//second index is the connection
+		Object[] params = new Object[3];
+		//Check if the metric is DBMS level or database level
+		if (dbmsId != null) {
+			for (DBMS dbms : this.dbmsList) {
+				if (dbms.getId() == dbmsId) {
+					String databaseDefault = null;
+					if (dbms.getType().equals("MySQL")) {
+						databaseDefault = "mysql";
+					} else {
+						databaseDefault = "postgres";
+					}
+					params[0] = dbms.getType();
+					params[1] = this.connect(dbms.getType(), dbms.getPort(), databaseDefault, dbms.getUser(), dbms.getPassword());
+				}
+			}
+		} else if (databaseId != null) {
+			for (DBMS dbms : this.dbmsList) {			
+				for (Database database : dbms.getDatabases()) {
+					if (database.getId() == databaseId) {
+						params[0] = dbms.getType();
+						params[1] = this.connect(dbms.getType(), dbms.getPort(), database.getName(), dbms.getUser(), dbms.getPassword());
+						params[2] = database.getName();
+					}
 				}
 			}
 		}
-		return connection;
-	}
+		return params;
+	}	
 	
 	/**
 	 * Method to create a connection to a particular database
@@ -92,6 +116,21 @@ public class DatabaseConnection {
 				this.dbmsList.add(gson.fromJson(properties.getProperty(dbmsPropertie.toString()), DBMS.class));
 			}
 		}
+	}
+	
+	public ResultSet executeSQL(Connection connection, String sql, Map<Integer, Object> params) throws SQLException {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;		
+		
+		preparedStatement = connection.prepareStatement(sql);
+		
+		if ((params != null) && (!params.isEmpty())) {
+			for (Map.Entry<Integer, Object> item : params.entrySet()) {
+				preparedStatement.setObject(item.getKey(), item.getValue());
+			}
+		}		
+		resultSet = preparedStatement.executeQuery();
+		return resultSet;
 	}
 
 	public List<DBMS> getDBMSs() {
