@@ -13,7 +13,7 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.machine.MemoryMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**

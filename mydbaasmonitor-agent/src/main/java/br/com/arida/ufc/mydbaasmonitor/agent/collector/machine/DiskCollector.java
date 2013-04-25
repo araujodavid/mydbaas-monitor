@@ -13,7 +13,7 @@ import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.machine.DiskMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.DiskMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**

@@ -12,7 +12,7 @@ import org.hyperic.sigar.NetInterfaceStat;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.machine.NetworkMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.NetworkMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**
