@@ -65,7 +65,7 @@ public class MachineReceiverController extends AbstractReceiver {
 	@Post("/cpu")
 	public void cpu(Cpu metric, int identifier, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate)) {
+			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -89,7 +89,7 @@ public class MachineReceiverController extends AbstractReceiver {
 	@Post("/memory")
 	public void memory(Memory metric, int identifier, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate)) {
+			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -113,7 +113,7 @@ public class MachineReceiverController extends AbstractReceiver {
 	@Post("/disk")
 	public void disk(Disk metric, int identifier, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate)) {
+			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -137,7 +137,7 @@ public class MachineReceiverController extends AbstractReceiver {
 	@Post("/network")
 	public void network(Network metric, int identifier, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate)) {
+			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
