@@ -162,14 +162,21 @@ public class MetricRepository {
 				sql.append("`"+field.getName().toLowerCase().replaceAll(clazzName, "")+"` "+TypeTranslater.getSQLType(field.getType())+" DEFAULT NULL,\n");
 			}			
 		}				
-		//Identifies the metric is tied to a machine or database
+		//Identifies the metric is tied to a machine or database or host
 		if (metric.toString().equals("machine")) {
 			//Add the identifier of the resource and primary key
 			sql.append("`identifier` int(11) NOT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
 			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+		} else if (metric.toString().equals("host")) {
+			//Add the identifier of the resource and primary key
+			sql.append("`identifier` int(11) NOT NULL,\n")
+			   .append("PRIMARY KEY (`id`),\n")
+			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_host` FOREIGN KEY (`identifier`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
+			//Add the identifier of the resource and primary key
 			sql.append("`dbms` int(11) DEFAULT NULL,\n")
 			   .append("`database` int(11) DEFAULT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
