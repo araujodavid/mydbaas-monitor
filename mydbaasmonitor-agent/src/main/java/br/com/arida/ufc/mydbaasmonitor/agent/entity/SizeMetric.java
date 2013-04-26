@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity;
 
 import java.util.Properties;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.Size;
 
@@ -14,9 +13,20 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.S
  */
 public class SizeMetric extends Size implements LoadMetric {
 
+	private static SizeMetric uniqueInstance;
+	
+	private SizeMetric() {}
+
+	public static SizeMetric getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new SizeMetric();
+	    }
+	    return uniqueInstance;
+	}
+	
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 }
