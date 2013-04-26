@@ -7,7 +7,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.S
 /**
  * 
  * @author Daivd Araújo - @araujodavid
- * @version 1.0
+ * @version 2.0
  * @since April 26, 2013
  * 
  */
@@ -26,7 +26,10 @@ public class SizeMetric extends Size implements LoadMetric {
 	
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		// TODO Auto-generated method stub
+		this.setUrl(properties.getProperty("server")+properties.getProperty("size.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("size.cycle")));
+		this.setEnabledDBMSs(properties.getProperty("size.dbms"));
+		this.setEnabledDatabases(properties.getProperty("size.databases"));
 	}
 
 }
