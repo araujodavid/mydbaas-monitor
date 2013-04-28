@@ -18,6 +18,15 @@ public class MyDBaaSMonitorClient {
 	public MyDBaaSMonitorClient(String serverUrl) {
 		this.serverUrl = serverUrl;
 	}
+	
+	/**
+	 * Method to check server connection
+	 * @return true if exitir, otherwise false
+	 */
+	public boolean hasConnection() {
+		//TODO
+		return false;
+	}
 
 	//Getters and Setters
 	
