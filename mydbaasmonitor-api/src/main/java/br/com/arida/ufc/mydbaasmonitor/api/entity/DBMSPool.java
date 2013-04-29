@@ -11,4 +11,16 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 
 public class DBMSPool extends AbstractPool<DBMS> {
 
+	@Override
+	public boolean save(DBMS resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(DBMS resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

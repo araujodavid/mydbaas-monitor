@@ -10,4 +10,16 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
  */
 public class DBaaSPool extends AbstractPool<DBaaS> {
 
+	@Override
+	public boolean save(DBaaS resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(DBaaS resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

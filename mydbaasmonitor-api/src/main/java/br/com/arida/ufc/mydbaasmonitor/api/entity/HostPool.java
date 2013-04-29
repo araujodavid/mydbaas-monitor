@@ -11,4 +11,16 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 
 public class HostPool extends AbstractPool<Host> {
 
+	@Override
+	public boolean save(Host resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(Host resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

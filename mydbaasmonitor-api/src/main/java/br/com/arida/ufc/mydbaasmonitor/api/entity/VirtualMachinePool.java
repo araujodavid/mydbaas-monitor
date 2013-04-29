@@ -11,4 +11,16 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualM
 
 public class VirtualMachinePool extends AbstractPool<VirtualMachine> {
 
+	@Override
+	public boolean save(VirtualMachine resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(VirtualMachine resource) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
