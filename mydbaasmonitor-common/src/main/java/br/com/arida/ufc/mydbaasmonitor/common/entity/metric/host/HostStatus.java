@@ -11,10 +11,28 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
  */
 public class HostStatus extends AbstractMetric {
 
-	private double hostStatusFreeMemory;
+	private double hostStatusUsedCpu;
+	private double hostStatusUsedMemory;
+	private double hostStatusFreeMemory;	
 	private int hostStatusInactiveDomains;
 	private int hostStatusActiveDomains;
 	
+	public double getHostStatusUsedCpu() {
+		return hostStatusUsedCpu;
+	}
+
+	public void setHostStatusUsedCpu(double hostStatusUsedCpu) {
+		this.hostStatusUsedCpu = hostStatusUsedCpu;
+	}
+
+	public double getHostStatusUsedMemory() {
+		return hostStatusUsedMemory;
+	}
+
+	public void setHostStatusUsedMemory(double hostStatusUsedMemory) {
+		this.hostStatusUsedMemory = hostStatusUsedMemory;
+	}
+
 	public double getHostStatusFreeMemory() {
 		return hostStatusFreeMemory;
 	}
