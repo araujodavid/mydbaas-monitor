@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.common;
 
 import java.util.List;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.AbstractEntity;
 
 /**
@@ -21,5 +20,9 @@ public abstract class AbstractPool<T extends AbstractEntity> {
 	public void setPool(List<T> pool) {
 		this.pool = pool;
 	}
+	
+	public abstract boolean save(T resource);
+	
+	public abstract boolean update(T resource);
 	
 }
