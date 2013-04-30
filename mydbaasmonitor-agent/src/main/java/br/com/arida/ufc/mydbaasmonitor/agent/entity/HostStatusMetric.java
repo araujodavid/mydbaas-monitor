@@ -13,6 +13,17 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host.HostS
  */
 public class HostStatusMetric extends HostStatus implements LoadMetric {
 
+	private static HostStatusMetric uniqueInstance;	
+	
+	private HostStatusMetric() {}
+
+	public static HostStatusMetric getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new HostStatusMetric();
+	    }
+	    return uniqueInstance;
+	}
+	
 	@Override
 	public void loadMetricProperties(Properties properties) {
 		// TODO Auto-generated method stub		
