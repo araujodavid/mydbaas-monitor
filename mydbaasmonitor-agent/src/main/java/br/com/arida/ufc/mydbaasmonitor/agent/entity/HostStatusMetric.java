@@ -26,7 +26,8 @@ public class HostStatusMetric extends HostStatus implements LoadMetric {
 	
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		// TODO Auto-generated method stub		
+		this.setUrl(properties.getProperty("server")+properties.getProperty("hostStatus.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("hostStatus.cycle")));
 	}
 
 }

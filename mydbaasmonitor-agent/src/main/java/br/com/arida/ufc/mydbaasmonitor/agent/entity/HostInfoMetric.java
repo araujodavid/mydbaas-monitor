@@ -26,7 +26,8 @@ public class HostInfoMetric extends HostInfo implements LoadMetric {
 	
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		// TODO Auto-generated method stub		
+		this.setUrl(properties.getProperty("server")+properties.getProperty("hostInfo.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("hostInfo.cycle")));		
 	}
 
 }
