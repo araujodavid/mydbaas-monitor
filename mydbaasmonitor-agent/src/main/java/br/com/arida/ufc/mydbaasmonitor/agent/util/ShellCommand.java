@@ -2,6 +2,7 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 /**
  * 
@@ -52,7 +53,6 @@ public class ShellCommand {
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
             //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
             String string = stdInput.readLine();
-            System.out.println(string);
             return Double.parseDouble(string);
         } catch (Exception ex) {
             return result;
@@ -72,8 +72,49 @@ public class ShellCommand {
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
             //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
             String string = stdInput.readLine();
-            System.out.println(string);
             return Double.parseDouble(string);
+        } catch (Exception ex) {
+            return result;
+        }
+    }
+    
+    public static double getPostgreSQLMemPercentage() {
+        double result = 0;
+        ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "top -b -n1 -u postgres | awk 'NR>7 { sum += $10; } END { print sum; }'"});
+        try {
+            Process p = process.start();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String string = stdInput.readLine();
+            return Double.parseDouble(string);
+        } catch (Exception ex) {
+            return result;
+        }
+    }
+    
+    public static double getPostgreSQLCpuPercentage() {
+        double result = 0;
+        ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "top -b -n1 -u postgres | awk 'NR>7 { sum += $9; } END { print sum; }'"});
+        try {
+            Process p = process.start();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String string = stdInput.readLine();
+            return Double.parseDouble(string);
+        } catch (Exception ex) {
+            return result;
+        }
+    }
+    
+    public static String[] getPidsFromName(String processName) {
+    	String[] result = null;
+        ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "pidof "+processName});
+        try {
+            Process p = process.start();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String string = stdInput.readLine();
+            return string.split(Pattern.quote(" "));
         } catch (Exception ex) {
             return result;
         }
