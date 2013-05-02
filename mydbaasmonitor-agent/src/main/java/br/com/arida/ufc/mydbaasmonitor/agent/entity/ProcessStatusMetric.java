@@ -19,7 +19,9 @@ public class ProcessStatusMetric extends ProcessStatus implements LoadMetric {
 	
 	@Override
 	public void loadMetricProperties(Properties properties) {
-		// TODO Auto-generated method stub		
+		this.setUrl(properties.getProperty("server")+properties.getProperty("processStatus.url"));
+		this.setCyclo(Integer.parseInt(properties.getProperty("processStatus.cycle")));
+		this.setEnabledDBMSs(properties.getProperty("processStatus.dbms"));
 	}
 
 }
