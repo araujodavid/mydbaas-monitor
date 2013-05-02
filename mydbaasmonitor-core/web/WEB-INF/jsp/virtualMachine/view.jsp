@@ -140,6 +140,11 @@
 		            
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
+                		
+                		
+                		
+                		
+                		
             		</div><!--/dashboard-->
             		            		       
         		</div><!--/span-->       		

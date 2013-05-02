@@ -13,7 +13,6 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.CpuMetric;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**
  * 
@@ -78,7 +77,7 @@ public class CpuCollector extends AbstractCollector<CpuMetric> {
 		HttpResponse response;
 		
 		try {
-			response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
+			response = this.sendMetric(params);
 			System.out.println(response.getStatusLine());
 			if (response.getStatusLine().getStatusCode() != 202) {
 				System.out.println("CPU request error!");

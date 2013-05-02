@@ -13,7 +13,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.ActiveConnectionMetric;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DatabaseConnection;
 
 /**
@@ -114,7 +113,7 @@ public class ActiveConnectionCollector extends AbstractCollector<ActiveConnectio
 				}
 				
 				try {
-					response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
+					response = this.sendMetric(params);
 					System.out.println(response.getStatusLine());
 					if (response.getStatusLine().getStatusCode() != 202) {
 						System.out.println("Active connections request error!");
@@ -168,7 +167,7 @@ public class ActiveConnectionCollector extends AbstractCollector<ActiveConnectio
 				}
 				
 				try {
-					response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
+					response = this.sendMetric(params);
 					System.out.println(response.getStatusLine());
 					if (response.getStatusLine().getStatusCode() != 202) {
 						System.out.println("Active connections request error!");

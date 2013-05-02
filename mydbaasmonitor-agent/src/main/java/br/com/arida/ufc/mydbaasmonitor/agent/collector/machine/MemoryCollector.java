@@ -14,7 +14,6 @@ import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
-import main.java.br.com.arida.ufc.mydbaasmonitor.agent.server.SendResquest;
 
 /**
  * 
@@ -85,7 +84,7 @@ public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 		HttpResponse response;
 		
 		try {
-			response = SendResquest.postRequest(this.metric.getUrl(), params, "UTF-8");
+			response = this.sendMetric(params);
 			System.out.println(response.getStatusLine());
 			if (response.getStatusLine().getStatusCode() != 202) {
 				System.out.println("Memory request error!");
