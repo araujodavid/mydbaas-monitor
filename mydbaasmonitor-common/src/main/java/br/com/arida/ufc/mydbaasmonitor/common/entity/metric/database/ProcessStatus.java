@@ -5,29 +5,29 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
 /**
  * 
  * @author David Araújo - @araujodavid
- * @version 1.0
+ * @version 2.0
  * @since May 1, 2013
  *
  */
 public class ProcessStatus extends AbstractDatabaseMetric {
 
-	private double statusCpuPercent;
-	private double statusMemoryPercent;
+	private double processStatusCpu;
+	private double processStatusMemory;
 	
-	public double getStatusCpuPercent() {
-		return statusCpuPercent;
+	public double getProcessStatusCpu() {
+		return processStatusCpu;
 	}
 
-	public void setStatusCpuPercent(double statusCpuPercent) {
-		this.statusCpuPercent = statusCpuPercent;
+	public void setProcessStatusCpu(double processStatusCpu) {
+		this.processStatusCpu = processStatusCpu;
 	}
 
-	public double getStatusMemoryPercent() {
-		return statusMemoryPercent;
+	public double getProcessStatusMemory() {
+		return processStatusMemory;
 	}
 
-	public void setStatusMemoryPercent(double statusMemoryPercent) {
-		this.statusMemoryPercent = statusMemoryPercent;
+	public void setProcessStatusMemory(double processStatusMemory) {
+		this.processStatusMemory = processStatusMemory;
 	}
 
 	@Override
