@@ -9,7 +9,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
  * @since May 1, 2013
  *
  */
-public class Status extends AbstractDatabaseMetric {
+public class ProcessStatus extends AbstractDatabaseMetric {
 
 	private double statusCpuPercent;
 	private double statusMemoryPercent;
