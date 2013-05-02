@@ -113,9 +113,9 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public HttpResponse sendMetric(List<NameValuePair> parameters, String charsetEncoding) throws ClientProtocolException, IOException {
+	public HttpResponse sendMetric(List<NameValuePair> parameters) throws ClientProtocolException, IOException {
 		HttpResponse response;
-		response = SendResquest.postRequest(metric.getUrl(), parameters, charsetEncoding);
+		response = SendResquest.postRequest(metric.getUrl(), parameters, "UTF-8");
 		return response;		
 	}
 }
