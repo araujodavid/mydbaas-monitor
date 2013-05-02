@@ -9,6 +9,7 @@ A framework that provides an environment monitoring for database-as-a-service.
 * Back-end developed using [VRaptor Framework](http://vraptor.caelum.com.br).
 * SSH Protocol, [JSch](http://www.jcraft.com/jsch/).
 * API for monitoring system information and hardware, [Hyperic SIGAR API](http://www.hyperic.com/products/sigar).
+* A toolkit to interact with the  hypervision' virtualization capabilities, [Libvirt Virtualization API](http://http://libvirt.org).
 * HTTP client library, [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html).
 
 ## Team
