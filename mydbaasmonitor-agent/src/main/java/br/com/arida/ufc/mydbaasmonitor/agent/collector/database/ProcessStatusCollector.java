@@ -1,5 +1,10 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.database;
 
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.AbstractCollector;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.ProcessStatusMetric;
 
@@ -23,7 +28,16 @@ public class ProcessStatusCollector extends AbstractCollector<ProcessStatusMetri
 
 	@Override
 	public void run() {
-		this.metric = ProcessStatusMetric.getInstance();		
+		this.metric = ProcessStatusMetric.getInstance();
+		HttpResponse response;
+		List<NameValuePair> params = null;
+		
+		//Checking the DBMSs enabled for collection
+		if (this.metric.getDBMSs().length > 0) {
+			for (String dbms : this.metric.getDBMSs()) {
+				
+			}
+		}
 	}
 
 }
