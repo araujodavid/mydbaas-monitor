@@ -14,7 +14,6 @@ public class ProcessStatusCollector extends AbstractCollector<ProcessStatusMetri
 
 	public ProcessStatusCollector(int identifier) {
 		super(identifier);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
