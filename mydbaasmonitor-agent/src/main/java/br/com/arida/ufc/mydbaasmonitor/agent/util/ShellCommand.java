@@ -106,6 +106,34 @@ public class ShellCommand {
         }
     }
     
+    public static String[] getPostgreSQLStatus() {
+    	String[] result = new String[2];
+        ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "top -b -n1 -u postgres | awk 'NR>7 { cpu += $9; mem += $10; } END { print cpu\" \"mem; }'"});
+        try {
+            Process p = process.start();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String string = stdInput.readLine();
+            return string.split(Pattern.quote(" "));
+        } catch (Exception ex) {
+            return result;
+        }
+    }
+    
+    public static String[] getProcessStatus(long domainPid) {
+    	String[] result = new String[2];
+        ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "top -p "+domainPid+" -b -n1 | tail -n+8 | sort -nr -k9 | awk '{print $9\" \"$10}'"});
+        try {
+            Process p = process.start();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String string = stdInput.readLine();
+            return string.split(Pattern.quote(" "));
+        } catch (Exception ex) {
+            return result;
+        }
+    }
+    
     public static String[] getPidsFromName(String processName) {
     	String[] result = null;
         ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "pidof "+processName});
