@@ -23,7 +23,7 @@ public class ProcessStatusCollector extends AbstractCollector<ProcessStatusMetri
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub		
+		this.metric = ProcessStatusMetric.getInstance();		
 	}
 
 }
