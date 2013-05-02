@@ -15,8 +15,13 @@ A framework that provides an environment monitoring for database-as-a-service.
 
 **David Araújo**
 
-+ http://github.com/araujodavid
++ [@araujodavid](http://github.com/araujodavid)
 + http://araujodavid.com
+
+**Franzé Jr.**
+
++ [@franzejr](http://github.com/franzejr)
++ http://franzejr.com
 
 **José Antônio F. de Macêdo**
 
