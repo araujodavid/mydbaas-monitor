@@ -41,11 +41,11 @@ public class ShellCommand {
     }
     
     /**
-     * Method given a domain pid is returned your cpu usage
+     * Method given a process pid is returned your cpu usage
      * @param domainPid
      * @return
      */
-    public static double getDomainCpuPercentage(long domainPid) {
+    public static double getProcessCpuPercentage(long domainPid) {
         double result = 0;
         ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "top -p "+domainPid+" -b -n1 | tail -n+8 | sort -nr -k9 | awk '{print $9}'"});
         try {
@@ -60,11 +60,11 @@ public class ShellCommand {
     }
     
     /**
-     * Method given a domain pid is returned your memory usage
+     * Method given a process pid is returned your memory usage
      * @param domainPid
      * @return
      */
-    public static double getDomainMemPercentage(long domainPid) {
+    public static double getProcessMemPercentage(long domainPid) {
         double result = 0;
         ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "top -p "+domainPid+" -b -n1 | tail -n+8 | sort -nr -k9 | awk '{print $10}'"});
         try {
@@ -119,4 +119,6 @@ public class ShellCommand {
             return result;
         }
     }
+    
+    
 }
