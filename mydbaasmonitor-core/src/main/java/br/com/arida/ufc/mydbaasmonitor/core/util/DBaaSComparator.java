@@ -1,4 +1,4 @@
-package main.java.br.com.arida.ufc.mydbaasmonitor.util;
+package main.java.br.com.arida.ufc.mydbaasmonitor.core.util;
 
 import java.util.Comparator;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
