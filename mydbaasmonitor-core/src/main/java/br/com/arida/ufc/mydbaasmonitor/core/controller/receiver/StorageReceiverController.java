@@ -2,6 +2,8 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import java.lang.reflect.InvocationTargetException;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.ActiveConnection;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.ProcessStatus;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.Size;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import br.com.caelum.vraptor.Path;
@@ -31,6 +33,42 @@ public class StorageReceiverController extends AbstractReceiver {
 
 	@Post("/activeconnections")
 	public void activeConnections(ActiveConnection metric, int dbms, int database, String recordDate) {
+		try {
+			if (repository.saveMetric(metric, 0, recordDate, dbms, database)) {
+				status.accepted();
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	@Post("/size")
+	public void size(Size metric, int dbms, int database, String recordDate) {
+		try {
+			if (repository.saveMetric(metric, 0, recordDate, dbms, database)) {
+				status.accepted();
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	@Post("/processstatus")
+	public void processStatus(ProcessStatus metric, int dbms, int database, String recordDate) {
 		try {
 			if (repository.saveMetric(metric, 0, recordDate, dbms, database)) {
 				status.accepted();

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.sun.xml.internal.ws.util.StringUtils;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
-import main.java.br.com.arida.ufc.mydbaasmonitor.util.TypeTranslater;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**

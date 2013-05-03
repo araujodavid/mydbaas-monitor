@@ -2,13 +2,13 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
 import java.util.Date;
 import java.util.List;
-import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
+import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
-import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;

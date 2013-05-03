@@ -1,6 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
-import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
+import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
 import java.util.Date;
 import java.util.List;
 import br.com.caelum.vraptor.Path;
@@ -13,7 +13,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.Gene
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
-import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 
 /**
  * Class that manages the methods that the front-end databases accesses.

@@ -9,7 +9,7 @@ import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
-import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**

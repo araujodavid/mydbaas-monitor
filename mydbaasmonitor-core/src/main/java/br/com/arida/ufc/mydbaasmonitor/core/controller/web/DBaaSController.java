@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
-import static main.java.br.com.arida.ufc.mydbaasmonitor.util.Utils.i18n;
-
+import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -10,8 +9,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.Abst
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
-import main.java.br.com.arida.ufc.mydbaasmonitor.util.DBaaSComparator;
-import main.java.br.com.arida.ufc.mydbaasmonitor.util.DataUtil;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DBaaSComparator;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
