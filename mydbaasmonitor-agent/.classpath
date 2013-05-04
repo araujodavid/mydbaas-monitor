@@ -16,5 +16,8 @@
 	<classpathentry kind="lib" path="lib/jna-3.2.7.jar"/>
 	<classpathentry kind="lib" path="lib/libvirt-0.4.2.jar"/>
 	<classpathentry kind="lib" path="lib/sigar.jar"/>
+	<classpathentry kind="lib" path="lib/reflections-0.9.9-RC1-uberjar.jar"/>
+	<classpathentry kind="lib" path="lib/google-collections-0.8.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.7.ga.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
