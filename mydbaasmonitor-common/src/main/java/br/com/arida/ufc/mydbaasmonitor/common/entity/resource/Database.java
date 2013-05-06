@@ -5,13 +5,24 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.A
 /** 
  * 
  * @author David Araújo - @araujodavid
- * @version 1.0
+ * @version 2.0
  * @since April 18, 2013
  * 
  */
 public class Database extends AbstractEntity {
 
+	//DBMS
+	private DBMS dbms;
+	//schema name
 	private String name;	
+
+	public DBMS getDbms() {
+		return dbms;
+	}
+
+	public void setDbms(DBMS dbms) {
+		this.dbms = dbms;
+	}
 
 	public String getName() {
 		return name;
