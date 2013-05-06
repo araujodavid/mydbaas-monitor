@@ -110,9 +110,9 @@ public class DatabaseConnection {
 	 */
 	public void loadDBMSProperties(Properties properties) {
 		this.dbmsList = new ArrayList<DBMS>();
+		Gson gson = new Gson();
 		for (Object dbmsPropertie : properties.keySet()) {
-			if (dbmsPropertie.toString().contains("dbms.")) {
-				Gson gson = new Gson();
+			if (dbmsPropertie.toString().contains("dbms.")) {				
 				this.dbmsList.add(gson.fromJson(properties.getProperty(dbmsPropertie.toString()), DBMS.class));
 			}
 		}
