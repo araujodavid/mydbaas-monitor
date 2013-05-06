@@ -1,9 +1,16 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractDatabaseMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
+import org.reflections.Reflections;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.view.Results;
 
 /**
  * Class that handles requests sent by the API module.
@@ -29,7 +36,20 @@ public class PoolController {
 	 */
 	@Post("/metrics")
 	public void poolMetric(String metricsType) {
-		//TODO
+		Reflections reflections = new Reflections("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric."+metricsType);
+		List<String> metricsName = new ArrayList<String>();
+		if (metricsType.equals("database")) {			
+		    Set<Class<? extends AbstractDatabaseMetric>> classes = reflections.getSubTypesOf(AbstractDatabaseMetric.class);
+		    for (Class<? extends AbstractDatabaseMetric> clazz : classes) {
+				metricsName.add(clazz.getSimpleName());
+			}
+		} else {
+		    Set<Class<? extends AbstractMetric>> classes = reflections.getSubTypesOf(AbstractMetric.class);
+		    for (Class<? extends AbstractMetric> clazz : classes) {
+				metricsName.add(clazz.getSimpleName());
+			}
+		}
+		result.use(Results.json()).withoutRoot().from(metricsName).serialize();
 	}
 	
 	/**
