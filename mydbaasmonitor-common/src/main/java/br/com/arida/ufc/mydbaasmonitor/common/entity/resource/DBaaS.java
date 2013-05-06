@@ -5,13 +5,15 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.A
 
 /** 
  * 
- * @author David Araújo
- * @version 2.0
+ * @author David Araújo - @araujodavid
+ * @version 3.0
  * @since March 4, 2013
  * 
  */
 public class DBaaS extends AbstractEntity {
 
+	//list of hosts
+	private List<Host> hosts;
 	//list of virtual machines
 	private List<VirtualMachine> machines;
 	
@@ -23,6 +25,14 @@ public class DBaaS extends AbstractEntity {
 		this.machines = machines;
 	}
 	
+	public List<Host> getHosts() {
+		return hosts;
+	}
+
+	public void setHosts(List<Host> hosts) {
+		this.hosts = hosts;
+	}
+
 	@Override
 	public String toString() {
 		return "dbaas";
