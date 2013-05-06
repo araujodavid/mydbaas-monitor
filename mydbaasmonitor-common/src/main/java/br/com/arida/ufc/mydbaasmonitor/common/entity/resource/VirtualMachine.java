@@ -7,7 +7,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.G
 
 /**
  * 
- * @author David Araújo
+ * @author David Araújo - @araujodavid
  * @version 3.0
  * @since March 4, 2013
  *
