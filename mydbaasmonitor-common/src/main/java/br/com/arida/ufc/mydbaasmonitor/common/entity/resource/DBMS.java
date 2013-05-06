@@ -6,16 +6,26 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.G
 /** 
  * 
  * @author David Araújo - @araujodavid
- * @version 1.0
+ * @version 2.0
  * @since April 17, 2013
  * 
  */
 public class DBMS extends GenericResource {
 
+	//virtual machine
+	private VirtualMachine machine;
 	//identify the type of DBMS
 	private String type;
 	//databases list
 	private List<Database> databases;
+
+	public VirtualMachine getMachine() {
+		return machine;
+	}
+
+	public void setMachine(VirtualMachine machine) {
+		this.machine = machine;
+	}
 
 	public String getType() {
 		return type;
