@@ -1,5 +1,11 @@
 package test;
 
+import java.util.Set;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractDatabaseMetric;
+
+import org.reflections.Reflections;
+
 public class MainTest {
 
 	/**
@@ -16,6 +22,14 @@ public class MainTest {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+		Reflections reflections = new Reflections("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database");
+
+	    Set<Class<? extends AbstractDatabaseMetric>> subTypes = reflections.getSubTypesOf(AbstractDatabaseMetric.class);
+	    
+	    for (Class<? extends AbstractDatabaseMetric> class1 : subTypes) {
+			System.out.println(class1.getSimpleName());
+		}
 	}
 
 }
