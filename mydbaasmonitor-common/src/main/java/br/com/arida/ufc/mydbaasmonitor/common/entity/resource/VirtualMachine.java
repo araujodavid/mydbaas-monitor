@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource;
 
 import java.util.List;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.GenericResource;
 
