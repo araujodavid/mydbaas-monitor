@@ -1,0 +1,58 @@
+CREATE TABLE `dbaas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` text NOT NULL,
+  `record_date` datetime NOT NULL,
+  `alias` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `virtual_machine` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `port` int(11) NOT NULL,
+  `password` varchar(75) DEFAULT NULL,
+  `record_date` datetime NOT NULL,
+  `alias` varchar(45) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `description` text,
+  `so` varchar(100) DEFAULT NULL,
+  `kernel_name` varchar(60) DEFAULT NULL,
+  `kernel_version` varchar(50) DEFAULT NULL,
+  `architecture` varchar(10) DEFAULT NULL,
+  `memory` float DEFAULT NULL COMMENT 'Total system memory',
+  `swap` float DEFAULT NULL COMMENT 'Total swap memory',
+  `cpu_cores` int(11) DEFAULT NULL COMMENT 'Total CPU cores',
+  `cpu_sockets` int(11) DEFAULT NULL COMMENT 'Total CPU sockets',
+  `cores_sockets` int(11) DEFAULT NULL COMMENT 'Total cores per socket',
+  `key` varchar(60) DEFAULT NULL,
+  `dbaas` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `host_UNIQUE` (`host`),
+  KEY `fk_virtual_machine_1_idx` (`dbaas`),
+  CONSTRAINT `fk_virtual_machine_dbaas` FOREIGN KEY (`dbaas`) REFERENCES `dbaas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `dbms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alias` varchar(45) NOT NULL,
+  `record_date` datetime NOT NULL,
+  `description` text,
+  `host` varchar(100) DEFAULT NULL,
+  `port` int(11) DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(75) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `virtual_machine` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_dbms_machine_idx` (`virtual_machine`),
+  CONSTRAINT `fk_dbms_machine` FOREIGN KEY (`virtual_machine`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+
+
+
+
+
