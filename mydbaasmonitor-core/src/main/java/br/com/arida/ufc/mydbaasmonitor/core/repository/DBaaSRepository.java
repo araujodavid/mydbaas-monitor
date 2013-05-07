@@ -6,15 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
- * @author David Araújo
- * @version 2.0
+ * @author David Araújo - @araujodavid
+ * @version 3.0
  * @since March 18, 2013 
  */
 

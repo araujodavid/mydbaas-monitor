@@ -7,16 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
- * @author David Araújo
- * @version 2.0
+ * @author David Araújo - @araujodavid
+ * @version 3.0
  * @since February 27, 2013 
  */
 
@@ -102,8 +102,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 
 	@Override
 	public void remove(VirtualMachine resource) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}//remove()
 
 	@Override
@@ -220,7 +219,6 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 	
 	/**
 	 * Method to convert a ResultSet object in an VirtualMachine object.
-	 * @author David Araújo
 	 * @param resultSet
 	 * @return virtualMachine
 	 */
