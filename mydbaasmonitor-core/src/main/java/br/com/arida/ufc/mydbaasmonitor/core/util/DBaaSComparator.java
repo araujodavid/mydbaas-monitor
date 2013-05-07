@@ -1,12 +1,12 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.util;
 
 import java.util.Comparator;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 
 /**
  * Class to compare a DBaaS.
- * @author David Araújo
- * @version 1.0
+ * @author David Araújo - @araujodavid
+ * @version 2.0
  * @since March 21, 2013
  * 
  */
