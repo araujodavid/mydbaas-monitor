@@ -8,17 +8,17 @@
 		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">
 		
-		<title>MyDBaaSMonitor - Edit Database</title>
+		<title>MyDBaaSMonitor - Edit DBMS</title>
 	</head>
 	<body>
 		
 		<%@include file="/static/menu.jsp"%>
 
 		<div class="container" style="margin-top:70px;">		
-			<form method="post" action="<c:url value="/database/update"/>">
+			<form method="post" action="<c:url value="/dbms/update"/>">
 				<fieldset>
 					<legend>
-						<strong>Editing Database</strong>
+						<strong>Editing DBMS</strong>
 					</legend>
 					
 					<c:if test="${errors != null}">							
@@ -30,32 +30,32 @@
 		  				</c:forEach>			  				
 	  				</c:if>
 	  				
-	  				<input name="database.virtualMachine.id" id="id" type="hidden" value="${database.virtualMachine.id}" />
-	  				<input name="database.id" id="id" type="hidden" value="${database.id}" />
+	  				<input name="dbms.machine.id" id="id" type="hidden" value="${dbms.machine.id}" />
+	  				<input name="dbms.id" id="id" type="hidden" value="${dbms.id}" />
 	  				
 	  				<label class="text-info" for="type">Database Type:</label>
-	  				<select id="type" name="database.type" style="width:284px;">
-						<option value="Mysql" <c:if test="${database.type.equals('MySQL')}">selected="selected"</c:if>>MySQL</option>
-						<option value="PostgreSQL" <c:if test="${database.type.equals('PostgreSQL')}">selected="selected"</c:if>>PostgreSQL</option>
+	  				<select id="type" name="dbms.type" style="width:284px;">
+						<option value="Mysql" <c:if test="${dbms.type.equals('MySQL')}">selected="selected"</c:if>>MySQL</option>
+						<option value="PostgreSQL" <c:if test="${dbms.type.equals('PostgreSQL')}">selected="selected"</c:if>>PostgreSQL</option>
 	  				</select>
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
-					<input class="input-xlarge" name="database.alias" id="alias" type="text" value="${database.alias}" placeholder="To better identify the resource" />
-					<span class="help-block"><em><small>Example: Database Project X</small></em></span>
+					<input class="input-xlarge" name="dbms.alias" id="alias" type="text" value="${dbms.alias}" placeholder="To better identify the resource" />
+					<span class="help-block"><em><small>Example: DBMS Project X</small></em></span>
 					
 					<label class="text-info" for="user">User:</label>
-					<input name="database.user" id="user" type="text" value="${database.user}" placeholder="Database username" />
+					<input name="dbms.user" id="user" type="text" value="${dbms.user}" placeholder="DBMS username" />
 					
 					<label class="text-info" for="port">Port:</label>
-					<input class="input-small" name="database.port" id="port" type="text" value="${database.port}" placeholder="e.g. 3604" />							
-					<span class="help-block"><em><small>Enter the database port.</small></em></span>
+					<input class="input-small" name="dbms.port" id="port" type="text" value="${dbms.port}" placeholder="e.g. 3604" />							
+					<span class="help-block"><em><small>Enter the DBMS port.</small></em></span>
 					
 					<label class="text-info" for="password">Password:</label>
-					<input name="database.password" id="password" type="text" value="${database.password}" /> <br>
+					<input name="dbms.password" id="password" type="text" value="${dbms.password}" /> <br>
 					<input name="confirmPassword" id="confirmPassword" type="text" placeholder="Confirm the password" />
 					
 					<label class="text-info" for="description">Description:</label>	  							
- 					<textarea name="database.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;">${database.description}</textarea>					
+ 					<textarea name="dbms.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;">${dbms.description}</textarea>					
 					
 					<div class="form-actions">
 						<button type="submit" class="btn btn-success">Save</button>

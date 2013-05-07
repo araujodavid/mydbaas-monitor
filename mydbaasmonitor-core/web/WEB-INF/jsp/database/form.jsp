@@ -15,9 +15,9 @@
 		<%@include file="/static/menu.jsp"%>
 
 		<div class="container" style="margin-top:70px;">		
-			<form method="post" action="<c:url value="/database/add"/>">
+			<form method="post" action="<c:url value="/dbms/add"/>">
 				<fieldset>
-					<legend><strong>New Database</strong></legend>
+					<legend><strong>New DBMS</strong></legend>
 					
 					<c:if test="${errors != null}">							
 						<c:forEach var="error" items="${errors}">
@@ -28,9 +28,9 @@
 		  				</c:forEach>			  				
 	  				</c:if>
 	  				
-	  				<input name="entity.virtualMachine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  				<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
 	  				
-	  				<label class="text-info" for="type">Database Type:</label>
+	  				<label class="text-info" for="type">DBMS Type:</label>
 	  				<select id="type" name="entity.type" style="width:284px;">
 						<option value="Mysql" <c:if test="${entity.type.equals('MySQL')}">selected="selected"</c:if>>MySQL</option>
 						<option value="PostgreSQL" <c:if test="${entity.type.equals('PostgreSQL')}">selected="selected"</c:if>>PostgreSQL</option>
@@ -38,7 +38,7 @@
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
 					<input class="input-xlarge" name="entity.alias" id="alias" type="text" value="${entity.alias}" placeholder="To better identify the resource" />
-					<span class="help-block"><em><small>Example: Database Project X</small></em></span>
+					<span class="help-block"><em><small>Example: DBMS Project X</small></em></span>
 					
 					<label class="text-info" for="user">User:</label>
 					<input name="entity.user" id="user" type="text" value="${entity.user}" placeholder="Database username" />
@@ -59,7 +59,7 @@
 					
 					<div class="form-actions">
 						<button type="submit" class="btn btn-success">Save</button>
-						<a class="btn btn-danger" href="<c:url value="/database"/>" onclick="return confirm('Are you sure want to cancel the registration?');">Cancel</a>
+						<a class="btn btn-danger" href="<c:url value="/dbms"/>" onclick="return confirm('Are you sure want to cancel the registration?');">Cancel</a>
 					</div>					  	
 	  			</fieldset>
 		 	</form>
