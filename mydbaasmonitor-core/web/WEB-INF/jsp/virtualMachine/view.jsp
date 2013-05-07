@@ -30,38 +30,38 @@
         		<div class="span3">        		
         			<legend>
 						<div align="left" style="margin-bottom:10px;">
-							<a class="btn btn-inverse" href="#myModalNewDatabase" data-toggle="modal" title="To create a new database."><i class="icon-plus icon-white"></i> Database</a>
+							<a class="btn btn-inverse" href="#myModalNewDBMS" data-toggle="modal" title="To create a new DBMS."><i class="icon-plus icon-white"></i> DBMS</a>
 	        			</div>
         			</legend>
         			
-        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Databases:</strong> 
+        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Database Management Systems:</strong> 
         		
 			            <div class="accordion" id="accordion2">
-			            	<c:forEach items="${databaseList}" var="database">
+			            	<c:forEach items="${virtualMachine.dbmsList}" var="dbms">
 	  							<div class="accordion-group">
 	    							<div class="accordion-heading">
-	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${database.id}">
-	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${database.alias}
+	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbms.id}">
+	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${dbms.alias}
 	     	 							</a>	     	 							
 	    							</div>
-	    							<div id="collapse${database.id}" class="accordion-body collapse">
+	    							<div id="collapse${dbms.id}" class="accordion-body collapse">
     									<div class="accordion-inner">
     										 <address style="margin-bottom:5px;">
-    										 	<strong>Username:</strong> ${database.user}<br>
-    										 	<strong>Port:</strong> ${database.port}<br>
-    										 	<strong>Type:</strong> ${database.type}<br>
-    										 	<strong>Record Date:</strong> ${database.recordDate}<br>
-							  					<strong>Description:</strong> ${database.description}<br>
+    										 	<strong>Username:</strong> ${dbms.user}<br>
+    										 	<strong>Port:</strong> ${dbms.port}<br>
+    										 	<strong>Type:</strong> ${dbms.type}<br>
+    										 	<strong>Record Date:</strong> ${dbms.recordDate}<br>
+							  					<strong>Description:</strong> ${dbms.description}<br>
 							  					<strong>Monitoring Status:</strong><br> 
 						                    	<c:choose>
-				     								<c:when test="${database.status == true}">
+				     								<c:when test="${dbms.status == true}">
 				      									<span class="label label-success">Active</span><br><br>
 						        					</c:when>
 						        					<c:otherwise>
 				      									<span class="label label-important">Inactive</span><br><br>
 				      								</c:otherwise>
 				     							</c:choose>
-				     							<a class="muted" href="<c:url value="/database/edit/${database.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>Edit</a>
+				     							<a class="muted" href="<c:url value="/dbms/edit/${dbms.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>Edit</a>
     										 </address>       									
       									</div>   								
 	    							</div>
@@ -115,19 +115,19 @@
 							  	<div class="tab-content">
 							    	<div class="tab-pane active" id="tab1">
 							      		<address>
-					  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.system.operatingSystem}</info><br>
-					  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.system.architecture}</info><br>
-					  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.system.kernelName}</info><br>
-					  						<strong>Version:</strong> <info class="muted">${virtualMachine.system.kernelVersion}</info><br>
-					  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalMemory > 0}">${virtualMachine.system.totalMemory} GB</c:if></info><br>
-					  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalSwap > 0}">${virtualMachine.system.totalSwap} GB</c:if></info><br>											
+					  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.system.machineOperatingSystem}</info><br>
+					  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.system.machineArchitecture}</info><br>
+					  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.system.machineKernelName}</info><br>
+					  						<strong>Version:</strong> <info class="muted">${virtualMachine.system.machineKernelVersion}</info><br>
+					  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalMemory > 0}">${virtualMachine.system.machineTotalMemory} GB</c:if></info><br>
+					  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalSwap > 0}">${virtualMachine.system.machineTotalSwap} GB</c:if></info><br>											
 										</address> 
 							    	</div>
     								<div class="tab-pane" id="tab2">
       									<address>
-					  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalCPUCores > 0}">${virtualMachine.system.totalCPUCores}</c:if></info><br>
-					  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalCPUSockets > 0}">${virtualMachine.system.totalCPUSockets}</c:if></info><br>
-					  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.system.totalCoresPerSocket > 0}">${virtualMachine.system.totalCoresPerSocket}</c:if></info><br>									
+					  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalCPUCores > 0}">${virtualMachine.system.machineTotalCPUCores}</c:if></info><br>
+					  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalCPUSockets > 0}">${virtualMachine.system.machineTotalCPUSockets}</c:if></info><br>
+					  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalCoresPerSocket > 0}">${virtualMachine.system.machineTotalCoresPerSocket}</c:if></info><br>									
 										</address> 
     								</div>
     								<div class="tab-pane" id="tab3">
@@ -151,17 +151,18 @@
     		</div><!--/row-->
 		</div><!--/.fluid-container-->	
 		
-		<!-- Modal New Database -->
- 		<form method="post" action="<c:url value="/database/add"/>" id="myModalNewDatabase" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- Modal New DBMS -->
+ 		<form method="post" action="<c:url value="/dbms/add"/>" id="myModalNewDBMS" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	 		<div class="modal-header">
     			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    			<h3 id="myModalLabel"><img src="/mydbaasmonitor/img/new_database.png"> New Database</h3>
+    			<h3 id="myModalLabel"><img src="/mydbaasmonitor/img/new_database.png"> New DBMS</h3>
   			</div>
   			<div class="modal-body">	  				
 				<fieldset>			
-	  				<input name="entity.virtualMachine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  				<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  				<input name="entity.host" id="host" type="hidden" value="${virtualMachine.host}" />
 	  				
-	  				<label class="text-info" for="type">Database Type:</label>
+	  				<label class="text-info" for="type">DBMS Type:</label>
 	  				<select id="type" name="entity.type" style="width:284px;">
 	  					<option value="select" selected="selected">Select one</option>
 						<option value="MySQL">MySQL</option>
@@ -170,14 +171,14 @@
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
 					<input class="input-xlarge" name="entity.alias" id="alias" type="text" placeholder="To better identify the resource" />
-					<span class="help-block"><em><small>Example: Database Project X</small></em></span>
+					<span class="help-block"><em><small>Example: DBMS Project X</small></em></span>
 					
 					<label class="text-info" for="user">User:</label>
 					<input name="entity.user" id="user" type="text" placeholder="Database username" />
 					
 					<label class="text-info" for="port">Port:</label>
 					<input class="input-small" name="entity.port" id="port" type="text" placeholder="e.g. 3604" />							
-					<span class="help-block"><em><small>Enter the database port.</small></em></span>
+					<span class="help-block"><em><small>Enter the DBMS port.</small></em></span>
 					
 					<label class="text-info" for="password">Password:</label>
 					<input name="entity.password" id="password" type="password" /> <br>
