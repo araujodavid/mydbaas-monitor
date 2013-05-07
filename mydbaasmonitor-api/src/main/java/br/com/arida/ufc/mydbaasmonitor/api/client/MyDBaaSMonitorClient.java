@@ -19,7 +19,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.api.util.SendResquest;
 /**
  * Class that handles the access information to the server.
  * @author Daivd Araújo - @araujodavid
- * @version 1.0
+ * @version 2.0
  * @since April 28, 2013
  */
 
@@ -68,28 +68,33 @@ public class MyDBaaSMonitorClient {
 	}
 	
 	public DBaaSPool getMyDBaaSs() {
+		DBaaSPool pool = new DBaaSPool();
 		//TODO
-		return null;
+		return pool;
 	}
 	
 	public HostPool getMyHosts() {
+		HostPool pool = new HostPool();
 		//TODO
-		return null;
+		return pool;
 	}
 	
 	public VirtualMachinePool getMyVirtualMachines() {
+		VirtualMachinePool pool = new VirtualMachinePool();
 		//TODO
-		return null;
+		return pool;
 	}
 	
 	public DBMSPool getMyDBMSs() {
+		DBMSPool pool = new DBMSPool();
 		//TODO
-		return null;
+		return pool;
 	}
 	
 	public DatabasePool getMyDatabases() {
+		DatabasePool pool = new DatabasePool();
 		//TODO
-		return null;		
+		return pool;		
 	}
 
 	//Getters and Setters
