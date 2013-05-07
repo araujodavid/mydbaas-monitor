@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.Path;
@@ -18,7 +18,7 @@ import br.com.caelum.vraptor.validator.Validations;
 
 /**
  * Class that manages the methods that the front-end virtual machine accesses.
- * @author David Araújo
+ * @author David Araújo - @araujodavid
  * @version 3.0
  * @since March 18, 2013
  * Front-end: web/WEB-INF/jsp/virtualMachine
@@ -29,13 +29,13 @@ public class VirtualMachineController extends AbstractController {
 
 	private VirtualMachineRepository repository;
 	private DBaaSRepository dBaaSRepository;
-	private DatabaseRepository databaseRepository;
+	private DBMSRepository dbmsRepository;
 	
-	public VirtualMachineController(Result result, Validator validator, VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, DatabaseRepository databaseRepository) {
+	public VirtualMachineController(Result result, Validator validator, VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, DBMSRepository dbmsRepository) {
 		super(result, validator);
 		this.repository = repository;
 		this.dBaaSRepository = dBaaSRepository;
-		this.databaseRepository = databaseRepository;
+		this.dbmsRepository = dbmsRepository;
 	}
 	
 	@Path("/vms")
@@ -157,9 +157,8 @@ public class VirtualMachineController extends AbstractController {
 	public VirtualMachine view(VirtualMachine virtualMachine){		
 		virtualMachine = repository.find(virtualMachine.getId());
 		virtualMachine.setEnvironment(dBaaSRepository.find(virtualMachine.getEnvironment().getId()));
-		result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
-		.include("databaseList", databaseRepository.list(virtualMachine));
+		virtualMachine.setDbmsList(dbmsRepository.list(virtualMachine));
+		result.include("current_date", DataUtil.converteDateParaString(new Date()));
 		return virtualMachine;		
 	}
 	

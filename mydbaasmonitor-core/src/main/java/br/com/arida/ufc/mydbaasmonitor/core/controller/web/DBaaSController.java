@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DBaaSComparator;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
@@ -19,8 +19,8 @@ import br.com.caelum.vraptor.validator.Validations;
 
 /**
  * Class that manages the methods that the front-end dbaas accesses.
- * @author David Araújo
- * @version 2.0
+ * @author David Araújo - @araujodavid
+ * @version 3.0
  * @since March 18, 2013
  * Front-end: web/WEB-INF/jsp/dBaaS
  */
@@ -53,16 +53,19 @@ public class DBaaSController extends AbstractController implements GenericContro
 		Collections.reverse(dBaaSList);
 		
 		//Get the three main DBaaS
-		if (dBaaSList.size() >= 3) {
-			highlightsDBaaS.add(0, dBaaSList.get(0));
-			highlightsDBaaS.add(1, dBaaSList.get(1));
-			highlightsDBaaS.add(2, dBaaSList.get(2));
-		} else if (dBaaSList.size() == 2) {
-			highlightsDBaaS.add(0, dBaaSList.get(0));
-			highlightsDBaaS.add(1, dBaaSList.get(1));
-		} else {
-			highlightsDBaaS.add(0, dBaaSList.get(0));
+		if (!dBaaSList.isEmpty()) {
+			if (dBaaSList.size() >= 3) {
+				highlightsDBaaS.add(0, dBaaSList.get(0));
+				highlightsDBaaS.add(1, dBaaSList.get(1));
+				highlightsDBaaS.add(2, dBaaSList.get(2));
+			} else if (dBaaSList.size() == 2) {
+				highlightsDBaaS.add(0, dBaaSList.get(0));
+				highlightsDBaaS.add(1, dBaaSList.get(1));
+			} else {
+				highlightsDBaaS.add(0, dBaaSList.get(0));
+			}
 		}
+		
 		
 		result
 		.include("current_date", DataUtil.converteDateParaString(new Date()))

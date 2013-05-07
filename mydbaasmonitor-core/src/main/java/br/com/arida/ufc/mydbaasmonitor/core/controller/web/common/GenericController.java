@@ -1,14 +1,14 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common;
 
 import java.util.List;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.common.AbstractEntity;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.AbstractEntity;
 
 /**
  * This interface is for a base Controller.
  * This interface uses generic parameters to create a Controller for a specific entity.
  * Basic methods for manipulating an object.
  * 
- * @author David Araújo
+ * @author David Araújo - @araujodavid
  * @version 1.0
  * @since March 18, 2013
  * 

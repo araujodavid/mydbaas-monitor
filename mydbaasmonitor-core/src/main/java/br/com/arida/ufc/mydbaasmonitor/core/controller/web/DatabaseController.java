@@ -8,17 +8,17 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.Database;
-import main.java.br.com.arida.ufc.mydbaasmonitor.core.entity.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 
 /**
  * Class that manages the methods that the front-end databases accesses.
- * @author David Araújo
- * @version 2.0
+ * @author David Araújo - @araujodavid
+ * @version 3.0
  * @since March 20, 2013
  * Front-end: web/WEB-INF/jsp/database
  */
@@ -55,25 +55,25 @@ public class DatabaseController extends AbstractController implements GenericCon
 	@Path("/database/add")
 	public void add(final Database entity, final String confirmPassword) {
 		//Validations by vRaptor
-		validator.checking(new Validations() {{
-			that(!(entity.getVirtualMachine().getId() == 0), "Virtual Machine", "database.machine.empty");
-			that(!(entity.getType().equals("select")), "Type", "database.type.empty");
-			that(!(entity.getAlias() == null), "Alias", "database.alias.empty");
-	        that(!(entity.getUser() == null), "Username", "database.username.empty");
-	        that(!(entity.getPort() == null), "Port", "database.port.empty");
-	        that(!(entity.getPassword() == null), "Password", "database.password.empty");
-	        that(!(confirmPassword == null), "Confirm Password", "database.confirm.empty");
-	        if (entity.getPassword() != null || confirmPassword != null) {
-	        	that(entity.getPassword().equals(confirmPassword), "Password", "database.password.not.checked");
-	        }	        	        
-	    } });
-		//If some validation is triggered are sent error messages to page
-		validator.onErrorForwardTo(this).form(entity.getVirtualMachine());
-		
-		repository.save(entity);
-		result
-		.include("notice", i18n("database.save.ok"))
-		.redirectTo(VirtualMachineController.class).view(entity.getVirtualMachine());
+//		validator.checking(new Validations() {{
+//			that(!(entity.getVirtualMachine().getId() == 0), "Virtual Machine", "database.machine.empty");
+//			that(!(entity.getType().equals("select")), "Type", "database.type.empty");
+//			that(!(entity.getAlias() == null), "Alias", "database.alias.empty");
+//	        that(!(entity.getUser() == null), "Username", "database.username.empty");
+//	        that(!(entity.getPort() == null), "Port", "database.port.empty");
+//	        that(!(entity.getPassword() == null), "Password", "database.password.empty");
+//	        that(!(confirmPassword == null), "Confirm Password", "database.confirm.empty");
+//	        if (entity.getPassword() != null || confirmPassword != null) {
+//	        	that(entity.getPassword().equals(confirmPassword), "Password", "database.password.not.checked");
+//	        }	        	        
+//	    } });
+//		//If some validation is triggered are sent error messages to page
+//		validator.onErrorForwardTo(this).form(entity.getVirtualMachine());
+//		
+//		repository.save(entity);
+//		result
+//		.include("notice", i18n("database.save.ok"))
+//		.redirectTo(VirtualMachineController.class).view(entity.getVirtualMachine());
 	}// add()
 
 	@Path("/database/edit/{entity.id}")
@@ -84,29 +84,29 @@ public class DatabaseController extends AbstractController implements GenericCon
 
 	@Path("/database/update")
 	public void update(final Database database, final String confirmPassword) {
-		if (database.getStatus() == null) { 
-			database.setStatus(false); 
-		}
-		//Validations by vRaptor
-		validator.checking(new Validations() { {
-			that(!(database.getVirtualMachine().getId() == 0), "Virtual Machine", "database.machine.empty");
-			that(!(database.getType().equals("select")), "Type", "database.type.empty");
-			that(!(database.getAlias() == null), "Alias", "database.alias.empty");
-	        that(!(database.getUser() == null), "Username", "database.username.empty");
-	        that(!(database.getPort() == null), "Port", "database.port.empty");
-	        that(!(database.getPassword() == null), "Password", "database.password.empty");
-	        that(!(confirmPassword == null), "Confirm Password", "database.confirm.empty");
-	        if (database.getPassword() != null || confirmPassword != null) {
-	        	that(database.getPassword().equals(confirmPassword), "Password", "database.password.not.checked");
-	        }		        
-	    } });
-		//If some validation is triggered are sent error messages to page
-		validator.onErrorForwardTo(this).edit(database);
-		
-		repository.update(database);
-		result
-		.include("notice", i18n("database.update.ok"))
-		.redirectTo(VirtualMachineController.class).view(database.getVirtualMachine());
+//		if (database.getStatus() == null) { 
+//			database.setStatus(false); 
+//		}
+//		//Validations by vRaptor
+//		validator.checking(new Validations() { {
+//			that(!(database.getVirtualMachine().getId() == 0), "Virtual Machine", "database.machine.empty");
+//			that(!(database.getType().equals("select")), "Type", "database.type.empty");
+//			that(!(database.getAlias() == null), "Alias", "database.alias.empty");
+//	        that(!(database.getUser() == null), "Username", "database.username.empty");
+//	        that(!(database.getPort() == null), "Port", "database.port.empty");
+//	        that(!(database.getPassword() == null), "Password", "database.password.empty");
+//	        that(!(confirmPassword == null), "Confirm Password", "database.confirm.empty");
+//	        if (database.getPassword() != null || confirmPassword != null) {
+//	        	that(database.getPassword().equals(confirmPassword), "Password", "database.password.not.checked");
+//	        }		        
+//	    } });
+//		//If some validation is triggered are sent error messages to page
+//		validator.onErrorForwardTo(this).edit(database);
+//		
+//		repository.update(database);
+//		result
+//		.include("notice", i18n("database.update.ok"))
+//		.redirectTo(VirtualMachineController.class).view(database.getVirtualMachine());
 	} //update()		
 
 	@Override
