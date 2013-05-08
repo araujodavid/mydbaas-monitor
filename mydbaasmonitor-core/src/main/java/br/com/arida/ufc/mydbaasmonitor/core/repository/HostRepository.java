@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import br.com.caelum.vraptor.ioc.Component;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 
 /**
@@ -24,13 +25,30 @@ public class HostRepository implements GenericRepository<Host> {
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    private VirtualMachineRepository virtualMachineRepository;
 
 	@Override
 	public List<Host> all() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<Host> hostList = new ArrayList<Host>();
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from `host` order by `id`;");
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Host host = getEntity(resultSet);
+				hostList.add(host);
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		
+		return hostList;
+	}//all()
 
 	@Override
 	public Host find(Integer id) {
@@ -56,11 +74,6 @@ public class HostRepository implements GenericRepository<Host> {
 		
 	}
 	
-	public List<VirtualMachine> getHostMachines(Host host) {
-		
-		return null;
-	}
-
 	@Override
 	public Host getEntity(ResultSet resultSet) throws SQLException {
 		Host host = new Host();
