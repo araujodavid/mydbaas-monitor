@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Set;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractDatabaseMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 
@@ -31,11 +33,13 @@ public class PoolController {
 	private Result result;
 	private DBaaSRepository dBaaSRepository;
 	private VirtualMachineRepository machineRepository;
+	private DBMSRepository dbmsRepository;
 	
-	public PoolController(Result result, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository) {
+	public PoolController(Result result, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository, DBMSRepository dbmsRepository) {
 		this.result = result;
 		this.dBaaSRepository = dBaaSRepository;
 		this.machineRepository = machineRepository;
+		this.dbmsRepository = dbmsRepository;
 	}
 	
 	@Post("/connection")
@@ -101,7 +105,11 @@ public class PoolController {
 	 */
 	@Post("/dbmss")
 	public void poolDBMS() {
-		//TODO
+		List<DBMS> pool = this.dbmsRepository.all();
+		result.use(Results.json()).from(pool, "pool")
+		.include("databases")
+		.include("machine")
+		.serialize();
 	}
 	
 	/**
