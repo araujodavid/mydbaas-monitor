@@ -34,9 +34,11 @@ public class SendResquest {
 	 */
 	public static HttpResponse postRequest(String url, List<NameValuePair> params) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
-		UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params, "UTF-8");
 		HttpPost httpPost = new HttpPost(url);
-		httpPost.setEntity(formEntity);		
+		if (params != null) {
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params, "UTF-8");		
+			httpPost.setEntity(formEntity);
+		}				
 		HttpResponse response = httpClient.execute(httpPost);
 		return response;
 	}
