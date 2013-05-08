@@ -81,15 +81,83 @@ public class HostRepository implements GenericRepository<Host> {
 
 	@Override
 	public void save(Host resource) {
-		// TODO Auto-generated method stub
-		
-	}
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"insert into host " +
+					"(`record_date`, `alias`, `description`, `host`, `port`, `username`, `password`, `status`, `dbaas`) " +
+					"values (now(), ?, ?, ?, ?, ?, ?, false, ?);");
+			
+			this.preparedStatement.setString(1, resource.getAlias());
+			this.preparedStatement.setString(2, resource.getDescription());
+			this.preparedStatement.setString(3, resource.getHost());
+			this.preparedStatement.setInt(4, resource.getPort());
+			this.preparedStatement.setString(5, resource.getUser());
+			this.preparedStatement.setString(6, resource.getPassword());
+			this.preparedStatement.setBoolean(7, resource.getStatus());
+			this.preparedStatement.setInt(8, resource.getEnvironment().getId());
+			
+			this.preparedStatement.executeUpdate();
+		} 
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+        }
+	}//save()
 
 	@Override
 	public void update(Host resource) {
-		// TODO Auto-generated method stub
-		
-	}
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update host " +
+					"set `alias` = ?, `description` = ?, `host` = ?, `port` = ?, `username` = ?, `status` = ?, `dbaas` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setString(1, resource.getAlias());
+			this.preparedStatement.setString(2, resource.getDescription());
+			this.preparedStatement.setString(3, resource.getHost());
+			this.preparedStatement.setInt(4, resource.getPort());
+			this.preparedStatement.setString(5, resource.getUser());			
+			this.preparedStatement.setBoolean(6, resource.getStatus());
+			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(8, resource.getId());
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//update()
+	
+	public void updatePassword(Host resource) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update host " +
+					"set `password` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setString(1, resource.getPassword());
+			this.preparedStatement.setInt(2, resource.getId());
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updatePassword()
 	
 	@Override
 	public Host getEntity(ResultSet resultSet) throws SQLException {
