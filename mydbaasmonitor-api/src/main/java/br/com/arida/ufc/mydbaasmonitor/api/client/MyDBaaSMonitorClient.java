@@ -68,8 +68,18 @@ public class MyDBaaSMonitorClient {
 	}
 	
 	public DBaaSPool getMyDBaaSs() {
-		DBaaSPool pool = new DBaaSPool();
-		//TODO
+		HttpResponse response;
+		String json = null;
+		try {
+			response = SendResquest.postRequest(this.serverUrl+"/pool/dbaas", null);
+			json = SendResquest.getJsonResult(response);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		Gson gson = new Gson();
+		DBaaSPool pool = gson.fromJson(json, DBaaSPool.class);
 		return pool;
 	}
 	
