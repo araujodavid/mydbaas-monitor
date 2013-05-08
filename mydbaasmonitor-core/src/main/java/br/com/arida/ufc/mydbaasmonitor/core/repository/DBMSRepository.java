@@ -25,6 +25,7 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
+    private DatabaseRepository databaseRepository;
 	
 	@Override
 	public List<DBMS> all() {
@@ -166,6 +167,7 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 
 	@Override
 	public DBMS getEntity(ResultSet resultSet) throws SQLException {
+		this.databaseRepository = new DatabaseRepository();
 		DBMS dbms = new DBMS();
 		VirtualMachine virtualMachine = new VirtualMachine();
 		dbms.setId(resultSet.getInt("id"));
@@ -180,6 +182,7 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 		dbms.setType(resultSet.getString("type"));
 		virtualMachine.setId(resultSet.getInt("virtual_machine"));
 		dbms.setMachine(virtualMachine);
+		dbms.setDatabases(this.databaseRepository.getDBMSDatabases(dbms));
 		return dbms;
 	}
 
