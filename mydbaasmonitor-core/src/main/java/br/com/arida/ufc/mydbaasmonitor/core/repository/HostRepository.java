@@ -46,15 +46,32 @@ public class HostRepository implements GenericRepository<Host> {
             try { preparedStatement.close(); } catch(Exception e) {}
             try { connection.close(); } catch(Exception e) {}
         }
-		
 		return hostList;
 	}//all()
 
 	@Override
 	public Host find(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Host host = null;
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from `host` where `id` = ?;");
+			
+			preparedStatement.setInt(1, id);
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				host = getEntity(resultSet);	
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return host;
+	}//find()
 
 	@Override
 	public void remove(Host resource) {
