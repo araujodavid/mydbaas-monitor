@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractDatabaseMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+
 import org.reflections.Reflections;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -24,9 +27,16 @@ import br.com.caelum.vraptor.view.Results;
 public class PoolController {
 	
 	private Result result;
+	private DBaaSRepository dBaaSRepository;
 	
-	public PoolController(Result result) {
+	public PoolController(Result result, DBaaSRepository dBaaSRepository) {
 		this.result = result;
+		this.dBaaSRepository = dBaaSRepository;
+	}
+	
+	@Post("/connection")
+	public void poolConnection() {
+		
 	}
 
 	/**
@@ -53,11 +63,21 @@ public class PoolController {
 	}
 	
 	/**
+	 * Method to query the list of DBaaS
+	 * @return a JSON of DBaaS
+	 */
+	@Post("/dbaas")
+	public void poolDBaaS() {
+		List<DBaaS> pool = this.dBaaSRepository.all();
+		result.use(Results.json()).from(pool, "pool").include("machines").serialize();
+	}
+	
+	/**
 	 * Method to query the list of Hosts
 	 * @return a JSON of Hosts
 	 */
 	@Post("/hosts")
-	public void poolHost() {
+	public void poolHost() {		
 		//TODO
 	}
 	
