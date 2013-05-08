@@ -90,8 +90,18 @@ public class MyDBaaSMonitorClient {
 	}
 	
 	public VirtualMachinePool getMyVirtualMachines() {
-		VirtualMachinePool pool = new VirtualMachinePool();
-		//TODO
+		HttpResponse response;
+		String json = null;
+		try {
+			response = SendResquest.postRequest(this.serverUrl+"/pool/machines", null);
+			json = SendResquest.getJsonResult(response);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		Gson gson = new Gson();
+		VirtualMachinePool pool = gson.fromJson(json, VirtualMachinePool.class);
 		return pool;
 	}
 	
