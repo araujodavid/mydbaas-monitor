@@ -6,7 +6,9 @@ import java.util.Set;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractDatabaseMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 
 import org.reflections.Reflections;
 import br.com.caelum.vraptor.Path;
@@ -28,10 +30,12 @@ public class PoolController {
 	
 	private Result result;
 	private DBaaSRepository dBaaSRepository;
+	private VirtualMachineRepository machineRepository;
 	
-	public PoolController(Result result, DBaaSRepository dBaaSRepository) {
+	public PoolController(Result result, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository) {
 		this.result = result;
 		this.dBaaSRepository = dBaaSRepository;
+		this.machineRepository = machineRepository;
 	}
 	
 	@Post("/connection")
@@ -87,7 +91,8 @@ public class PoolController {
 	 */
 	@Post("/machines")
 	public void poolVirtualMachine() {
-		//TODO
+		List<VirtualMachine> pool = this.machineRepository.all();
+		result.use(Results.json()).from(pool, "pool").include("machine").serialize();
 	}
 	
 	/**
