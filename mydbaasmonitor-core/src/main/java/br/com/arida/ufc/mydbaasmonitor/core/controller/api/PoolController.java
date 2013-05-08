@@ -7,11 +7,12 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
-
 import org.reflections.Reflections;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -34,12 +35,14 @@ public class PoolController {
 	private DBaaSRepository dBaaSRepository;
 	private VirtualMachineRepository machineRepository;
 	private DBMSRepository dbmsRepository;
+	private HostRepository hostRepository;
 	
-	public PoolController(Result result, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository, DBMSRepository dbmsRepository) {
+	public PoolController(Result result, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository, DBMSRepository dbmsRepository, HostRepository hostRepository) {
 		this.result = result;
 		this.dBaaSRepository = dBaaSRepository;
 		this.machineRepository = machineRepository;
 		this.dbmsRepository = dbmsRepository;
+		this.hostRepository = hostRepository;
 	}
 	
 	@Post("/connection")
@@ -77,7 +80,10 @@ public class PoolController {
 	@Post("/dbaas")
 	public void poolDBaaS() {
 		List<DBaaS> pool = this.dBaaSRepository.all();
-		result.use(Results.json()).from(pool, "pool").include("machines").serialize();
+		result
+		.use(Results.json())
+		.from(pool, "pool")
+		.serialize();
 	}
 	
 	/**
@@ -86,7 +92,12 @@ public class PoolController {
 	 */
 	@Post("/hosts")
 	public void poolHost() {		
-		//TODO
+		List<Host> pool = this.hostRepository.all();
+		result
+		.use(Results.json())
+		.from(pool, "pool")
+		.include("environment")
+		.serialize();
 	}
 	
 	/**
@@ -96,7 +107,12 @@ public class PoolController {
 	@Post("/machines")
 	public void poolVirtualMachine() {
 		List<VirtualMachine> pool = this.machineRepository.all();
-		result.use(Results.json()).from(pool, "pool").include("machine").serialize();
+		result
+		.use(Results.json())
+		.from(pool, "pool")
+		.include("machine")
+		.include("environment")
+		.serialize();
 	}
 	
 	/**
@@ -107,7 +123,6 @@ public class PoolController {
 	public void poolDBMS() {
 		List<DBMS> pool = this.dbmsRepository.all();
 		result.use(Results.json()).from(pool, "pool")
-		.include("databases")
 		.include("machine")
 		.serialize();
 	}
