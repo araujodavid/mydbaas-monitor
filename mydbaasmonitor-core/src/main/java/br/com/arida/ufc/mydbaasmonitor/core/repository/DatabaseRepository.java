@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
@@ -27,26 +30,56 @@ public class DatabaseRepository implements GenericRepository<Database> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public List<Database> getDBMSDatabases(DBMS dbms) {
+		ArrayList<Database> databases = new ArrayList<Database>();
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from `database` where `dbms` = ? order by `id`;");
+			
+			preparedStatement.setInt(1, dbms.getId());
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Database database = getEntity(resultSet);
+				databases.add(database);
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		
+		return databases;
+	}//getDBMSDatabases()
+	
 	@Override
 	public Database find(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
 	public void remove(Database resource) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void save(Database resource) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void update(Database resource) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public Database getEntity(ResultSet resultSet) throws SQLException {
 		// TODO Auto-generated method stub
