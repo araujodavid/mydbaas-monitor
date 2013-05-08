@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
@@ -74,7 +75,32 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
         }
 		
 		return virtualMachinesList;
-	} //list()
+	} //getDBaaSMachines()
+	
+	public List<VirtualMachine> getHostMachines(Host host) {
+		ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from `virtual_machine` where `host` = ? order by `id`;");
+			
+			preparedStatement.setInt(1, host.getId());
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				VirtualMachine virtualMachine = getEntity(resultSet);
+				machines.add(virtualMachine);
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		
+		return machines;
+	}//getHostMachines()
 
 	@Override
 	public VirtualMachine find(Integer id) {
@@ -226,8 +252,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 	public VirtualMachine getEntity(ResultSet resultSet) throws SQLException {
 		VirtualMachine virtualMachine = new VirtualMachine();
 		Machine machine = new Machine();
-		DBaaS environment = new DBaaS();
-		
+		DBaaS environment = new DBaaS();		
 		virtualMachine.setId(resultSet.getInt("id"));
 		virtualMachine.setHost(resultSet.getString("host"));
 		virtualMachine.setPort(resultSet.getInt("port"));
