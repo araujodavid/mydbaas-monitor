@@ -6,10 +6,25 @@ CREATE TABLE `dbaas` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
 
+CREATE TABLE `host` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `record_date` datetime NOT NULL,
+  `alias` varchar(45) NOT NULL,
+  `description` text,
+  `address` varchar(100) NOT NULL,
+  `port` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(75) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `dbaas` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_host_dbaas_idx` (`dbaas`),
+  CONSTRAINT `fk_host_dbaas` FOREIGN KEY (`dbaas`) REFERENCES `dbaas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 CREATE TABLE `virtual_machine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `host` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `port` int(11) NOT NULL,
   `password` varchar(75) DEFAULT NULL,
@@ -28,19 +43,21 @@ CREATE TABLE `virtual_machine` (
   `cores_sockets` int(11) DEFAULT NULL COMMENT 'Total cores per socket',
   `key` varchar(60) DEFAULT NULL,
   `dbaas` int(11) NOT NULL,
+  `host` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `host_UNIQUE` (`host`),
+  UNIQUE KEY `host_UNIQUE` (`address`),
   KEY `fk_virtual_machine_1_idx` (`dbaas`),
+  KEY `fk_virtual_machine_host_idx` (`host`),
+  CONSTRAINT `fk_virtual_machine_host` FOREIGN KEY (`host`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_virtual_machine_dbaas` FOREIGN KEY (`dbaas`) REFERENCES `dbaas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
-
 
 CREATE TABLE `dbms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alias` varchar(45) NOT NULL,
   `record_date` datetime NOT NULL,
   `description` text,
-  `host` varchar(100) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
   `port` int(11) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(75) NOT NULL,
@@ -51,8 +68,3 @@ CREATE TABLE `dbms` (
   KEY `fk_dbms_machine_idx` (`virtual_machine`),
   CONSTRAINT `fk_dbms_machine` FOREIGN KEY (`virtual_machine`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
-
-
-
-
-
