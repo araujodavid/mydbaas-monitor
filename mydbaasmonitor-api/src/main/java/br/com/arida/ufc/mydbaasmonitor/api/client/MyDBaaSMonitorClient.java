@@ -40,7 +40,17 @@ public class MyDBaaSMonitorClient {
 	 * @return true if exitir, otherwise false
 	 */
 	public boolean hasConnection() {
-		//TODO
+		HttpResponse response = null;
+		try {
+			response = SendResquest.postRequest(this.serverUrl+"/pool/connection", null);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (response.getStatusLine().getStatusCode() != 200) {
+			return true;
+		}
 		return false;
 	}
 	
