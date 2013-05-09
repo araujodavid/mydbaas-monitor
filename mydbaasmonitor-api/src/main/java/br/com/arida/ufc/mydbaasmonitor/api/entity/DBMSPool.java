@@ -1,7 +1,9 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.api.entity;
 
+import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.common.AbstractPool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 
 /**
  * @author Daivd Araújo - @araujodavid
@@ -21,6 +23,11 @@ public class DBMSPool extends AbstractPool<DBMS> {
 	public boolean update(DBMS resource) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public List<Database> getDatabases(int dbmsId) {
+		//TODO
+		return null;
 	}
 
 }

@@ -1,7 +1,9 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.api.entity;
 
+import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.common.AbstractPool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 
 /**
  * @author Daivd Araújo - @araujodavid
@@ -21,6 +23,11 @@ public class HostPool extends AbstractPool<Host> {
 	public boolean update(Host resource) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public List<VirtualMachine> getMachines(int hostId) {
+		//TODO
+		return null;
 	}
 
 }

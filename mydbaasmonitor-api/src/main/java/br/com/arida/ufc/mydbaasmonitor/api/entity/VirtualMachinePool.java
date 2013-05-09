@@ -1,6 +1,9 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.api.entity;
 
+import java.util.List;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.common.AbstractPool;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 
 /**
@@ -21,6 +24,11 @@ public class VirtualMachinePool extends AbstractPool<VirtualMachine> {
 	public boolean update(VirtualMachine resource) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public List<DBMS> getDBMSs(int virtualMachineId) {
+		//TODO
+		return null;
 	}
 
 }
