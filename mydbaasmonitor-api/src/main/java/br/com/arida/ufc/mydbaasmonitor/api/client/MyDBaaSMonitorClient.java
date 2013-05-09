@@ -22,7 +22,6 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.api.util.SendResquest;
  * @version 2.0
  * @since April 28, 2013
  */
-
 public class MyDBaaSMonitorClient {
 
 	private String serverUrl;
