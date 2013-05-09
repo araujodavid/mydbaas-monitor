@@ -15,7 +15,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 
 /**
  * @author David Araújo - @araujodavid
- * @version 2.0
+ * @version 3.0
  * @since May 8, 2013
  */
 
@@ -48,6 +48,31 @@ public class HostRepository implements GenericRepository<Host> {
         }
 		return hostList;
 	}//all()
+	
+	public List<Host> getDBaaSHosts(DBaaS dBaaS) {
+		ArrayList<Host> hostList = new ArrayList<Host>();
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select * from virtual_machine where `dbaas` = ? order by `id`;");
+			
+			preparedStatement.setInt(1, dBaaS.getId());
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Host host = getEntity(resultSet);
+				hostList.add(host);
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		
+		return hostList;
+	} //getDBaaSHosts()
 
 	@Override
 	public Host find(Integer id) {
