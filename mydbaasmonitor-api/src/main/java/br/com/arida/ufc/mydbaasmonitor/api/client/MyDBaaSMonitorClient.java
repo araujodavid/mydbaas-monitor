@@ -136,6 +136,11 @@ public class MyDBaaSMonitorClient {
 		//TODO
 		return pool;		
 	}
+	
+	public Object resourceLookupByID(int id, String resourceType) {
+		//TODO
+		return null;
+	}
 
 	//Getters and Setters
 	
