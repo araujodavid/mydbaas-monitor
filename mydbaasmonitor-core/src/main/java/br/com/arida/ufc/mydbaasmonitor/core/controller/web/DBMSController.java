@@ -118,7 +118,7 @@ public class DBMSController extends AbstractController implements GenericControl
 		
 		repository.update(dbms);
 		result
-		.include("notice", i18n("database.update.ok"))
+		.include("notice", i18n("dbms.update.ok"))
 		.redirectTo(VirtualMachineController.class).view(dbms.getMachine());
 	} //update()
 
