@@ -9,18 +9,18 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common;
  */
 public abstract class GenericResource extends AbstractEntity {
 
-	private String host;
+	private String address;
 	private Integer port;
 	private String user;
 	private String password;
 	private Boolean status;
 	
-	public String getHost() {
-		return host;
+	public String getAddress() {
+		return address;
 	}
 	
-	public void setHost(String host) {
-		this.host = host;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	public Integer getPort() {

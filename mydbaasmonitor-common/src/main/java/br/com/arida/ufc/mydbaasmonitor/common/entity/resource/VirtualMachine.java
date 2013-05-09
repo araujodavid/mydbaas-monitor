@@ -19,6 +19,8 @@ public class VirtualMachine extends GenericResource {
 	private Machine machine;
 	//enviroment
 	private DBaaS environment;
+	//host
+	private Host host;
 	//DBMSs list
 	private List<DBMS> dbmsList;
 	
@@ -46,6 +48,14 @@ public class VirtualMachine extends GenericResource {
 		this.environment = environment;
 	}
 		
+	public Host getHost() {
+		return host;
+	}
+
+	public void setHost(Host host) {
+		this.host = host;
+	}
+
 	public Machine getMachine() {
 		return machine;
 	}
