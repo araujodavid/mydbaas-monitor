@@ -25,7 +25,6 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    private DatabaseRepository databaseRepository;
 	
 	@Override
 	public List<DBMS> all() {
@@ -51,7 +50,7 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 		return dbmsList;
 	}//all()
 	
-	public List<DBMS> list(VirtualMachine virtualMachine) {
+	public List<DBMS> getMachineDBMSs(VirtualMachine virtualMachine) {
 		ArrayList<DBMS> dbmsList = new ArrayList<DBMS>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
@@ -111,12 +110,12 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into `dbms` " +
-					"(`alias`, `record_date`, `description`, `host`, `port`, `username`, `password`, `status`, `type`, `virtual_machine`) " +
+					"(`alias`, `record_date`, `description`, `address`, `port`, `username`, `password`, `status`, `type`, `virtual_machine`) " +
 					"values (?, now(), ?, ?, ?, ?, ?, false, ?, ?);");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
 			this.preparedStatement.setString(2, resource.getDescription());
-			this.preparedStatement.setString(3, resource.getHost());
+			this.preparedStatement.setString(3, resource.getAddress());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getUser());
 			this.preparedStatement.setString(6, resource.getPassword());
@@ -140,12 +139,12 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update `dbms` " +
-					"set `alias` = ?, `description` = ?, `host` = ?, `port` = ?, `username` = ?, `password` = ?, `status` = ?, `type` = ?, `virtual_machine` = ? " +
+					"set `alias` = ?, `description` = ?, `address` = ?, `port` = ?, `username` = ?, `password` = ?, `status` = ?, `type` = ?, `virtual_machine` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
 			this.preparedStatement.setString(2, resource.getDescription());
-			this.preparedStatement.setString(3, resource.getHost());
+			this.preparedStatement.setString(3, resource.getAddress());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getUser());
 			this.preparedStatement.setString(6, resource.getPassword());
@@ -167,14 +166,13 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 
 	@Override
 	public DBMS getEntity(ResultSet resultSet) throws SQLException {
-		this.databaseRepository = new DatabaseRepository();
 		DBMS dbms = new DBMS();
 		VirtualMachine virtualMachine = new VirtualMachine();
 		dbms.setId(resultSet.getInt("id"));
 		dbms.setAlias(resultSet.getString("alias"));
 		dbms.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
 		dbms.setDescription(resultSet.getString("description"));
-		dbms.setHost(resultSet.getString("host"));
+		dbms.setAddress(resultSet.getString("address"));
 		dbms.setPort(resultSet.getInt("port"));
 		dbms.setUser(resultSet.getString("username"));
 		dbms.setPassword(resultSet.getString("password"));
@@ -182,7 +180,6 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 		dbms.setType(resultSet.getString("type"));
 		virtualMachine.setId(resultSet.getInt("virtual_machine"));
 		dbms.setMachine(virtualMachine);
-		dbms.setDatabases(this.databaseRepository.getDBMSDatabases(dbms));
 		return dbms;
 	}
 

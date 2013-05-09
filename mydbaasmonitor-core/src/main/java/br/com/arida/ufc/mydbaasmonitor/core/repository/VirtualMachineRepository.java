@@ -137,10 +137,10 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into virtual_machine " +
-					"(`host`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`) " +
+					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`) " +
 					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?);");
 			
-			this.preparedStatement.setString(1, resource.getHost());
+			this.preparedStatement.setString(1, resource.getAddress());
 			this.preparedStatement.setString(2, resource.getUser());
 			this.preparedStatement.setInt(3, resource.getPort());
 			this.preparedStatement.setString(4, resource.getPassword());
@@ -166,11 +166,11 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update virtual_machine " +
-					"set `alias` = ?, `host` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ? " +
+					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
-			this.preparedStatement.setString(2, resource.getHost());
+			this.preparedStatement.setString(2, resource.getAddress());
 			this.preparedStatement.setString(3, resource.getUser());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getDescription());
@@ -254,7 +254,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		Machine machine = new Machine();
 		DBaaS environment = new DBaaS();		
 		virtualMachine.setId(resultSet.getInt("id"));
-		virtualMachine.setHost(resultSet.getString("host"));
+		virtualMachine.setAddress(resultSet.getString("address"));
 		virtualMachine.setPort(resultSet.getInt("port"));
 		virtualMachine.setUser(resultSet.getString("username"));
 		virtualMachine.setPassword(resultSet.getString("password"));

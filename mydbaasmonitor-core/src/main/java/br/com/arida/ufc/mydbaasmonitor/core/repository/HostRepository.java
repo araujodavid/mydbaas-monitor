@@ -110,12 +110,12 @@ public class HostRepository implements GenericRepository<Host> {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into host " +
-					"(`record_date`, `alias`, `description`, `host`, `port`, `username`, `password`, `status`, `dbaas`) " +
+					"(`record_date`, `alias`, `description`, `address`, `port`, `username`, `password`, `status`, `dbaas`) " +
 					"values (now(), ?, ?, ?, ?, ?, ?, false, ?);");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
 			this.preparedStatement.setString(2, resource.getDescription());
-			this.preparedStatement.setString(3, resource.getHost());
+			this.preparedStatement.setString(3, resource.getAddress());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getUser());
 			this.preparedStatement.setString(6, resource.getPassword());
@@ -139,12 +139,12 @@ public class HostRepository implements GenericRepository<Host> {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update host " +
-					"set `alias` = ?, `description` = ?, `host` = ?, `port` = ?, `username` = ?, `status` = ?, `dbaas` = ? " +
+					"set `alias` = ?, `description` = ?, `address` = ?, `port` = ?, `username` = ?, `status` = ?, `dbaas` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
 			this.preparedStatement.setString(2, resource.getDescription());
-			this.preparedStatement.setString(3, resource.getHost());
+			this.preparedStatement.setString(3, resource.getAddress());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getUser());			
 			this.preparedStatement.setBoolean(6, resource.getStatus());
@@ -192,7 +192,7 @@ public class HostRepository implements GenericRepository<Host> {
 		host.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
 		host.setAlias(resultSet.getString("alias"));
 		host.setDescription(resultSet.getString("description"));
-		host.setHost(resultSet.getString("host"));
+		host.setAddress(resultSet.getString("address"));
 		host.setPort(resultSet.getInt("port"));
 		host.setUser(resultSet.getString("username"));
 		host.setPassword(resultSet.getString("password"));
