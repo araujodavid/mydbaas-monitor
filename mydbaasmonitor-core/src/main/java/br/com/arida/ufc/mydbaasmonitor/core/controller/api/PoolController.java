@@ -7,10 +7,12 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.Abs
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import org.reflections.Reflections;
@@ -18,6 +20,7 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.view.DefaultStatus;
 import br.com.caelum.vraptor.view.Results;
 
 /**
@@ -32,22 +35,26 @@ import br.com.caelum.vraptor.view.Results;
 public class PoolController {
 	
 	private Result result;
+	private DefaultStatus status;
 	private DBaaSRepository dBaaSRepository;
 	private VirtualMachineRepository machineRepository;
 	private DBMSRepository dbmsRepository;
 	private HostRepository hostRepository;
+	private DatabaseRepository databaseRepository;
 	
-	public PoolController(Result result, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository, DBMSRepository dbmsRepository, HostRepository hostRepository) {
+	public PoolController(Result result, DefaultStatus status, DBaaSRepository dBaaSRepository, VirtualMachineRepository machineRepository, DBMSRepository dbmsRepository, HostRepository hostRepository, DatabaseRepository databaseRepository) {
 		this.result = result;
+		this.status = status;
 		this.dBaaSRepository = dBaaSRepository;
 		this.machineRepository = machineRepository;
 		this.dbmsRepository = dbmsRepository;
 		this.hostRepository = hostRepository;
+		this.databaseRepository = databaseRepository;
 	}
 	
 	@Post("/connection")
 	public void poolConnection() {
-		
+		status.ok();
 	}
 
 	/**
@@ -70,7 +77,11 @@ public class PoolController {
 				metricsName.add(clazz.getSimpleName());
 			}
 		}
-		result.use(Results.json()).withoutRoot().from(metricsName).serialize();
+		result
+		.use(Results.json())
+		.withoutRoot()
+		.from(metricsName)
+		.serialize();
 	}
 	
 	/**
@@ -122,7 +133,9 @@ public class PoolController {
 	@Post("/dbmss")
 	public void poolDBMS() {
 		List<DBMS> pool = this.dbmsRepository.all();
-		result.use(Results.json()).from(pool, "pool")
+		result
+		.use(Results.json())
+		.from(pool, "pool")
 		.include("machine")
 		.serialize();
 	}
@@ -133,7 +146,12 @@ public class PoolController {
 	 */
 	@Post("/databases")
 	public void poolDatabase() {
-		//TODO
+		List<Database> pool = this.databaseRepository.all();
+		result
+		.use(Results.json())
+		.from(pool, "pool")
+		.include("dbms")
+		.serialize();
 	}
 	
 }
