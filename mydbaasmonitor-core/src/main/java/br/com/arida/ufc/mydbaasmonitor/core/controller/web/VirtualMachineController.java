@@ -74,7 +74,7 @@ public class VirtualMachineController extends AbstractController {
 		validator.checking(new Validations() {{
 			that(!(virtualMachine.getEnvironment().getId() == 0), "Environment", "machine.environment.empty");
 			that(!(virtualMachine.getAlias() == null), "Alias", "machine.alias.empty");
-	        that(!(virtualMachine.getHost() == null), "Host", "machine.host.empty");
+	        that(!(virtualMachine.getAddress() == null), "Host", "machine.host.empty");
 	        that(!(virtualMachine.getUser() == null), "Username", "machine.username.empty");
 	        that(!(virtualMachine.getPort() == null), "Port", "machine.port.empty");
 	        if (virtualMachine.getPassword() != null || confirmPassword != null) {
@@ -115,7 +115,7 @@ public class VirtualMachineController extends AbstractController {
 		//Validations by vRaptor
 		validator.checking(new Validations() { {
 			that(!(virtualMachine.getAlias() == null), "Alias", "machine.alias.empty");
-	        that(!(virtualMachine.getHost() == null), "Host", "machine.host.empty");
+	        that(!(virtualMachine.getAddress() == null), "Host", "machine.host.empty");
 	        that(!(virtualMachine.getUser() == null), "Username", "machine.username.empty");
 	        that(!(virtualMachine.getPort() == null), "Port", "machine.port.empty");	        
 	    } });
@@ -157,7 +157,7 @@ public class VirtualMachineController extends AbstractController {
 	public VirtualMachine view(VirtualMachine virtualMachine){		
 		virtualMachine = repository.find(virtualMachine.getId());
 		virtualMachine.setEnvironment(dBaaSRepository.find(virtualMachine.getEnvironment().getId()));
-		virtualMachine.setDbmsList(dbmsRepository.list(virtualMachine));
+		virtualMachine.setDbmsList(dbmsRepository.getMachineDBMSs(virtualMachine));
 		result.include("current_date", DataUtil.converteDateParaString(new Date()));
 		return virtualMachine;		
 	}
