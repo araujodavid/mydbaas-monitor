@@ -141,7 +141,32 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                		
+                		<!-- Example row of columns -->
+				      <div class="row">
+				        <div class="span6">
+				          <h2>CPU % vS Time</h2>
+				          <div id="container1" style="height: 250px; width: 500px"></div>
+				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				        </div>
+				        <div class="span6">
+				          <h2>Memory % vS Time</h2>
+				          <div id="container2" style="height: 250px; width: 500px"></div>
+				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				       </div>
+				      </div>
+				      
+				       <div class="row">
+				        <div class="span6">
+				          <h2>CPU % vS Time</h2>
+				          <div id="container3" style="height: 250px; width: 500px"></div>
+				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				        </div>
+				        <div class="span6">
+				          <h2>Memory % vS Time</h2>
+				          <div id="container4" style="height: 250px; width: 500px"></div>
+				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				       </div>
+				      </div>
                 		
                 		
                 		
@@ -201,5 +226,81 @@
 	  	
 	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
+    	 <script src="http://code.highcharts.com/stock/highstock.js"></script>
+		 <script src="http://code.highcharts.com/highcharts.js"></script>
+		 <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    	<script>
+    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+	    	    // Create the chart
+	    	    $('#container1').highcharts('StockChart', {
+	    			rangeSelector : {
+	    			selected : 1
+			    		},
+						title : {
+			    			text : 'AAPL Stock Price'
+			    		},
+			    		series : [{
+				    		name : 'AAPL',
+				    		data : data,
+				    		tooltip: {
+				    			valueDecimals: 2}
+			    				}]
+				});
+    	    });
+    	
+    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+    	    // Create the chart
+    	    $('#container2').highcharts('StockChart', {
+    			rangeSelector : {
+    			selected : 1
+		    		},
+					title : {
+		    			text : 'AAPL Stock Price'
+		    		},
+		    		series : [{
+			    		name : 'AAPL',
+			    		data : data,
+			    		tooltip: {
+			    			valueDecimals: 2}
+		    				}]
+			});
+	    });
+    	
+    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+    	    // Create the chart
+    	    $('#container3').highcharts('StockChart', {
+    			rangeSelector : {
+    			selected : 1
+		    		},
+					title : {
+		    			text : 'AAPL Stock Price'
+		    		},
+		    		series : [{
+			    		name : 'AAPL',
+			    		data : data,
+			    		tooltip: {
+			    			valueDecimals: 2}
+		    				}]
+			});
+	    });
+    	
+    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
+    	    // Create the chart
+    	    $('#container4').highcharts('StockChart', {
+    			rangeSelector : {
+    			selected : 1
+		    		},
+					title : {
+		    			text : 'AAPL Stock Price'
+		    		},
+		    		series : [{
+			    		name : 'AAPL',
+			    		data : data,
+			    		tooltip: {
+			    			valueDecimals: 2}
+		    				}]
+			});
+	    });
+    	</script>
 	</body>
 </html>

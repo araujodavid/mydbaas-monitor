@@ -29,7 +29,8 @@
         		<div class="span3">
         			<div align="left">
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Machine</a>
-        			</div>          			
+        			</div>     
+        			<div id="container-pizza"></div>     			
         		</div><!--/span-->
         		
         		<div class="span9">
@@ -94,7 +95,61 @@
 
 		</div><!--/.fluid-container-->	 	
 	  	
-	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>	  	
+	  	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
+    	<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
+		<script>
+		$(function () {
+		    var chart;
+		    
+		    $(document).ready(function () {
+		    	
+		    	// Build the chart
+		        $('#container-pizza').highcharts({
+		            chart: {
+		                plotBackgroundColor: null,
+		                plotBorderWidth: null,
+		                plotShadow: false
+		            },
+		            title: {
+		                text: 'Sua VM'
+		            },
+		            tooltip: {
+		        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+		            	percentageDecimals: 1
+		            },
+		            plotOptions: {
+		                pie: {
+		                    allowPointSelect: true,
+		                    cursor: 'pointer',
+		                    dataLabels: {
+		                        enabled: false
+		                    },
+		                    showInLegend: true
+		                }
+		            },
+		            series: [{
+		                type: 'pie',
+		                name: 'Browser share',
+		                data: [
+		                    ['Firefox',   45.0],
+		                    ['IE',       26.8],
+		                    {
+		                        name: 'Chrome',
+		                        y: 12.8,
+		                        sliced: true,
+		                        selected: true
+		                    },
+		                    ['Safari',    8.5],
+		                    ['Opera',     6.2],
+		                    ['Others',   0.7]
+		                ]
+		            }]
+		        });
+		    });
+		    
+		});
+		</script>	  	
 	</body>
 </html>
