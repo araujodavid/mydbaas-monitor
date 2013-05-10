@@ -89,6 +89,7 @@ public class MyDBaaSMonitorClient {
 		}		
 		Gson gson = new Gson();
 		DBaaSPool pool = gson.fromJson(json, DBaaSPool.class);
+		pool.setClient(this);
 		return pool;
 	}
 	
@@ -111,6 +112,7 @@ public class MyDBaaSMonitorClient {
 		}		
 		Gson gson = new Gson();
 		VirtualMachinePool pool = gson.fromJson(json, VirtualMachinePool.class);
+		pool.setClient(this);
 		return pool;
 	}
 	
@@ -127,6 +129,7 @@ public class MyDBaaSMonitorClient {
 		}		
 		Gson gson = new Gson();
 		DBMSPool pool = gson.fromJson(json, DBMSPool.class);
+		pool.setClient(this);
 		return pool;
 	}
 	
