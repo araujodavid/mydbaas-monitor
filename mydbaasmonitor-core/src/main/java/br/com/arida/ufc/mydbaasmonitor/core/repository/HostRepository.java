@@ -49,13 +49,13 @@ public class HostRepository implements GenericRepository<Host> {
 		return hostList;
 	}//all()
 	
-	public List<Host> getDBaaSHosts(DBaaS dBaaS) {
+	public List<Host> getDBaaSHosts(int dbaasId) {
 		ArrayList<Host> hostList = new ArrayList<Host>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
 			preparedStatement = connection.prepareStatement("select * from virtual_machine where `dbaas` = ? order by `id`;");
 			
-			preparedStatement.setInt(1, dBaaS.getId());
+			preparedStatement.setInt(1, dbaasId);
 						
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){

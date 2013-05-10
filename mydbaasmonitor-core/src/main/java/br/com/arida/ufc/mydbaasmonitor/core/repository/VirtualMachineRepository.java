@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
@@ -52,13 +51,13 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		return virtualMachinesList;
 	}//all()
 	
-	public List<VirtualMachine> getDBaaSMachines(DBaaS dBaaS) {
+	public List<VirtualMachine> getDBaaSMachines(int dbaasId) {
 		ArrayList<VirtualMachine> virtualMachinesList = new ArrayList<VirtualMachine>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
 			preparedStatement = connection.prepareStatement("select * from virtual_machine where `dbaas` = ? order by `id`;");
 			
-			preparedStatement.setInt(1, dBaaS.getId());
+			preparedStatement.setInt(1, dbaasId);
 						
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
@@ -77,13 +76,13 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		return virtualMachinesList;
 	} //getDBaaSMachines()
 	
-	public List<VirtualMachine> getHostMachines(Host host) {
+	public List<VirtualMachine> getHostMachines(int hostId) {
 		ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
 			preparedStatement = connection.prepareStatement("select * from `virtual_machine` where `host` = ? order by `id`;");
 			
-			preparedStatement.setInt(1, host.getId());
+			preparedStatement.setInt(1, hostId);
 						
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
