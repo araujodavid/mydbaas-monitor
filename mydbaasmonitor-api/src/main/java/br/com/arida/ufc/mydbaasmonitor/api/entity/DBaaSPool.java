@@ -17,7 +17,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualM
 
 /**
  * @author Daivd Araújo
- * @version 1.0
+ * @version 2.0
  * @since April 1, 2013
  */
 public class DBaaSPool extends AbstractPool<DBaaS> {
@@ -34,6 +34,11 @@ public class DBaaSPool extends AbstractPool<DBaaS> {
 		return false;
 	}
 	
+	/**
+	 * Method to retrieve the hosts of a particular DBaaS
+	 * @param resource - DBaaS object owner
+	 * @return a list of hosts of the DBaaS
+	 */
 	public List<Host> getHosts(DBaaS resource) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("identifier", String.valueOf(resource.getId())));
@@ -52,6 +57,11 @@ public class DBaaSPool extends AbstractPool<DBaaS> {
 		return hosts;
 	}
 	
+	/**
+	 * Method to retrieve the virtual machines of a particular DBaaS
+	 * @param resource- DBaaS object owner
+	 * @return a list of virtual machines of the DBaaS
+	 */
 	public List<VirtualMachine> getMachines(DBaaS resource) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("identifier", String.valueOf(resource.getId())));
