@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.common.AbstractPool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.util.SendResquest;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
@@ -80,15 +79,6 @@ public class DBaaSPool extends AbstractPool<DBaaS> {
 		Gson gson = new Gson();
 		List<VirtualMachine> virtualMachines = gson.fromJson(json, new TypeToken<List<VirtualMachine>>(){}.getType());
 		return virtualMachines;
-	}
-	
-	/**
-	 * Method to retrieve the dbmss of a particular DBaaS
-	 * @param resource- DBaaS object owner
-	 * @return a list of dbmss of the DBaaS
-	 */
-	public List<DBMS> getDBMSs(DBaaS resource) {
-		return null;
 	}
 
 }
