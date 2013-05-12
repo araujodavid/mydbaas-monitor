@@ -42,7 +42,6 @@ public class VirtualMachinePool extends AbstractPool<VirtualMachine> {
 	public List<DBMS> getDBMSs(VirtualMachine resource) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("identifier", String.valueOf(resource.getId())));
-		params.add(new BasicNameValuePair("ownerType", resource.toString()));
 		HttpResponse response;
 		String json = null;
 		try {
