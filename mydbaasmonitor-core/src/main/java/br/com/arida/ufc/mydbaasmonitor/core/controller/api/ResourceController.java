@@ -1,8 +1,10 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
 import java.util.List;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import br.com.caelum.vraptor.Path;
@@ -24,11 +26,13 @@ public class ResourceController {
 	
 	private Result result;
 	private HostRepository hostRepository;
+	private DBMSRepository dbmsRepository;
 	private VirtualMachineRepository virtualMachineRepository;
-	
-	public ResourceController(Result result, HostRepository hostRepository, VirtualMachineRepository virtualMachineRepository) {
+		
+	public ResourceController(Result result, HostRepository hostRepository, DBMSRepository dbmsRepository, VirtualMachineRepository virtualMachineRepository) {
 		this.result = result;
 		this.hostRepository = hostRepository;
+		this.dbmsRepository = dbmsRepository;
 		this.virtualMachineRepository = virtualMachineRepository;
 	}
 
@@ -62,4 +66,17 @@ public class ResourceController {
 		.include("environment")
 		.serialize();
 	}
+	
+	@Post("/dbmss")
+	public void getDBMSs(int identifier, String ownerType) {
+		List<DBMS> dbmss = this.dbmsRepository.getMachineDBMSs(identifier);
+		result
+		.use(Results.json())
+		.withoutRoot()
+		.from(dbmss)
+		.include("machine")
+		.serialize();
+	}
+	
+	
 }
