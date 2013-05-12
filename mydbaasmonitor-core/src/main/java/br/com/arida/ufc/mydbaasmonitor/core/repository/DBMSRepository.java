@@ -50,13 +50,13 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 		return dbmsList;
 	}//all()
 	
-	public List<DBMS> getMachineDBMSs(VirtualMachine virtualMachine) {
+	public List<DBMS> getMachineDBMSs(int virtualMachineId) {
 		ArrayList<DBMS> dbmsList = new ArrayList<DBMS>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
 			preparedStatement = connection.prepareStatement("select * from `dbms` where `virtual_machine` = ? order by `id`;");
 			
-			this.preparedStatement.setInt(1, virtualMachine.getId());
+			this.preparedStatement.setInt(1, virtualMachineId);
 			
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){

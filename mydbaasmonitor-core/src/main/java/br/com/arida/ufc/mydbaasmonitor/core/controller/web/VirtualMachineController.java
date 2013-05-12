@@ -157,7 +157,7 @@ public class VirtualMachineController extends AbstractController {
 	public VirtualMachine view(VirtualMachine virtualMachine){		
 		virtualMachine = repository.find(virtualMachine.getId());
 		virtualMachine.setEnvironment(dBaaSRepository.find(virtualMachine.getEnvironment().getId()));
-		virtualMachine.setDbmsList(dbmsRepository.getMachineDBMSs(virtualMachine));
+		virtualMachine.setDbmsList(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
 		result.include("current_date", DataUtil.converteDateParaString(new Date()));
 		return virtualMachine;		
 	}

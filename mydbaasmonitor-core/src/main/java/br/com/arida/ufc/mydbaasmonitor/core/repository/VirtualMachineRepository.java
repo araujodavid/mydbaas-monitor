@@ -272,7 +272,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		machine.setMachineTotalCPUSockets(resultSet.getInt("cpu_sockets"));
 		machine.setMachineTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
 		environment.setId(resultSet.getInt("dbaas"));
-		virtualMachine.setSystem(machine);
+		virtualMachine.setInformation(machine);
 		virtualMachine.setEnvironment(environment);
 		
 		return virtualMachine;
