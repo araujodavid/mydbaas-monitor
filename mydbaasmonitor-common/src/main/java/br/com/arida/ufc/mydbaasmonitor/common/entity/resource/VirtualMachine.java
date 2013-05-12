@@ -16,7 +16,7 @@ public class VirtualMachine extends GenericResource {
 	//key file if necessary for access
 	private String key;
 	//information system and machine
-	private Machine machine;
+	private Machine information;
 	//enviroment
 	private DBaaS environment;
 	//host
@@ -30,16 +30,16 @@ public class VirtualMachine extends GenericResource {
 
 	public void setKey(String key) {
 		this.key = key;
-	}		
-	
-	public Machine getSystem() {
-		return machine;
 	}
 
-	public void setSystem(Machine machine) {
-		this.machine = machine;
+	public Machine getInformation() {
+		return information;
 	}
-	
+
+	public void setInformation(Machine information) {
+		this.information = information;
+	}
+
 	public DBaaS getEnvironment() {
 		return environment;
 	}
@@ -47,21 +47,13 @@ public class VirtualMachine extends GenericResource {
 	public void setEnvironment(DBaaS environment) {
 		this.environment = environment;
 	}
-		
+
 	public Host getHost() {
 		return host;
 	}
 
 	public void setHost(Host host) {
 		this.host = host;
-	}
-
-	public Machine getMachine() {
-		return machine;
-	}
-
-	public void setMachine(Machine machine) {
-		this.machine = machine;
 	}
 
 	public List<DBMS> getDbmsList() {
