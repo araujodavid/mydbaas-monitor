@@ -78,5 +78,9 @@ public class ResourceController {
 		.serialize();
 	}
 	
+	@Post("/find")
+	public void getResourceByID(int resourceId, String resourceType) {
+		//TODO
+	}
 	
 }
