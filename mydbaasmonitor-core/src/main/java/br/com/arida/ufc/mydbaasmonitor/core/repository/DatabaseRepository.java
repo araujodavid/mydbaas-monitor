@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
@@ -31,13 +30,13 @@ public class DatabaseRepository implements GenericRepository<Database> {
 		return null;
 	}
 	
-	public List<Database> getDBMSDatabases(DBMS dbms) {
+	public List<Database> getDBMSDatabases(int dbmsId) {
 		ArrayList<Database> databases = new ArrayList<Database>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
 			preparedStatement = connection.prepareStatement("select * from `database` where `dbms` = ? order by `id`;");
 			
-			preparedStatement.setInt(1, dbms.getId());
+			preparedStatement.setInt(1, dbmsId);
 						
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
