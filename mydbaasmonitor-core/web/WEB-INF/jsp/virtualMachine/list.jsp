@@ -55,7 +55,7 @@
 							    <tr>
 							    	<th><i class="icon-tags" style="margin-left:5px;" title="Unique identifier."></i></th>
 							      	<th>Alias</th>
-							      	<th>Host</th>
+							      	<th>Address</th>
 							      	<th><i class="icon-refresh"></i> Monitoring Status</th>
 							      	<th><i class="icon-calendar"></i> Record Date</th>
 							      	<th><i class="icon-wrench"></i> Informations</th>
@@ -68,7 +68,7 @@
 								      		<span class="badge badge-inverse">${virtualMachine.id}</span>
 								      	</td>
 								      	<td>${virtualMachine.alias}</td>
-								      	<td>${virtualMachine.host}</td>
+								      	<td>${virtualMachine.address}</td>
 								      	<td>
 								      		<c:choose>
         										<c:when test="${virtualMachine.status == true}">

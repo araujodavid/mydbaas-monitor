@@ -94,7 +94,7 @@
 		                    	
 		                    	<strong>Environment:</strong> <a href="<c:url value="/dbaas/view/${virtualMachine.environment.id}"/>" title="Link to view the machine environment.">${virtualMachine.environment.alias}</a><br>
 		  						<strong>Alias:</strong> <info class="muted">${virtualMachine.alias}</info><br>
-							  	<strong>Host:</strong> <info class="muted">${virtualMachine.host}</info><br>							  	
+							  	<strong>Address:</strong> <info class="muted">${virtualMachine.address}</info><br>							  	
 							  	<strong>SSH Port:</strong> <info class="muted">${virtualMachine.port}</info><br>
 							  	<strong>Username:</strong> <info class="muted">${virtualMachine.user}</info><br>
 							  	<strong>Record Date:</strong> <info class="muted">${virtualMachine.recordDate}</info><br>
@@ -115,19 +115,19 @@
 							  	<div class="tab-content">
 							    	<div class="tab-pane active" id="tab1">
 							      		<address>
-					  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.system.machineOperatingSystem}</info><br>
-					  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.system.machineArchitecture}</info><br>
-					  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.system.machineKernelName}</info><br>
-					  						<strong>Version:</strong> <info class="muted">${virtualMachine.system.machineKernelVersion}</info><br>
-					  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalMemory > 0}">${virtualMachine.system.machineTotalMemory} GB</c:if></info><br>
-					  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalSwap > 0}">${virtualMachine.system.machineTotalSwap} GB</c:if></info><br>											
+					  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.information.machineOperatingSystem}</info><br>
+					  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.information.machineArchitecture}</info><br>
+					  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.information.machineKernelName}</info><br>
+					  						<strong>Version:</strong> <info class="muted">${virtualMachine.information.machineKernelVersion}</info><br>
+					  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalMemory > 0}">${virtualMachine.information.machineTotalMemory} GB</c:if></info><br>
+					  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalSwap > 0}">${virtualMachine.information.machineTotalSwap} GB</c:if></info><br>											
 										</address> 
 							    	</div>
     								<div class="tab-pane" id="tab2">
       									<address>
-					  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalCPUCores > 0}">${virtualMachine.system.machineTotalCPUCores}</c:if></info><br>
-					  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalCPUSockets > 0}">${virtualMachine.system.machineTotalCPUSockets}</c:if></info><br>
-					  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.system.machineTotalCoresPerSocket > 0}">${virtualMachine.system.machineTotalCoresPerSocket}</c:if></info><br>									
+					  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUCores > 0}">${virtualMachine.information.machineTotalCPUCores}</c:if></info><br>
+					  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUSockets > 0}">${virtualMachine.information.machineTotalCPUSockets}</c:if></info><br>
+					  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCoresPerSocket > 0}">${virtualMachine.information.machineTotalCoresPerSocket}</c:if></info><br>									
 										</address> 
     								</div>
     								<div class="tab-pane" id="tab3">

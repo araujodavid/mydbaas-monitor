@@ -58,8 +58,8 @@
 						<input class="input-xlarge" name="virtualMachine.alias" id="alias" type="text" value="${virtualMachine.alias}" placeholder="To better identify the resource" />
 						<span class="help-block"><em><small>Example: VM Project X</small></em></span>
 									   
-				   		<label class="text-info" for="host">Host:</label>
-						<input class="input-xlarge" name="virtualMachine.host" id="host" type="text" value="${virtualMachine.host}" placeholder="Access address" />
+				   		<label class="text-info" for="address">Address:</label>
+						<input class="input-xlarge" name="virtualMachine.address" id="address" type="text" value="${virtualMachine.address}" placeholder="Access address" />
 						<span class="help-block"><em><small>Example: 127.0.0.1</small></em></span>
 						
 						<label class="text-info" for="user">Username:</label>
