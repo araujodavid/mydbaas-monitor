@@ -2,9 +2,11 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import br.com.caelum.vraptor.Path;
@@ -27,12 +29,14 @@ public class ResourceController {
 	private Result result;
 	private HostRepository hostRepository;
 	private DBMSRepository dbmsRepository;
+	private DatabaseRepository databaseRepository;
 	private VirtualMachineRepository virtualMachineRepository;
 		
-	public ResourceController(Result result, HostRepository hostRepository, DBMSRepository dbmsRepository, VirtualMachineRepository virtualMachineRepository) {
+	public ResourceController(Result result, HostRepository hostRepository, DBMSRepository dbmsRepository, DatabaseRepository databaseRepository, VirtualMachineRepository virtualMachineRepository) {
 		this.result = result;
 		this.hostRepository = hostRepository;
 		this.dbmsRepository = dbmsRepository;
+		this.databaseRepository = databaseRepository;
 		this.virtualMachineRepository = virtualMachineRepository;
 	}
 
@@ -75,6 +79,17 @@ public class ResourceController {
 		.withoutRoot()
 		.from(dbmss)
 		.include("machine")
+		.serialize();
+	}
+	
+	@Post("/databases")
+	public void getDatabases(int identifier) {
+		List<Database> databases = this.databaseRepository.getDBMSDatabases(identifier);
+		result
+		.use(Results.json())
+		.withoutRoot()
+		.from(databases)
+		.include("dbms")
 		.serialize();
 	}
 	
