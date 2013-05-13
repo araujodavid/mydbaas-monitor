@@ -119,8 +119,7 @@ public class HostRepository implements GenericRepository<Host> {
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getUser());
 			this.preparedStatement.setString(6, resource.getPassword());
-			this.preparedStatement.setBoolean(7, resource.getStatus());
-			this.preparedStatement.setInt(8, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
 			
 			this.preparedStatement.executeUpdate();
 		} 
