@@ -102,7 +102,9 @@ public class VirtualMachineController extends AbstractController {
 	@Path("/vms/edit/{virtualMachine.id}")
 	public VirtualMachine edit(VirtualMachine virtualMachine){
 		//List available DBaaS
-		this.result.include("availableDBaaS", dBaaSRepository.all());
+		this.result
+		.include("availableDBaaS", dBaaSRepository.all())
+		.include("availableHosts", hostRepository.all());
 		return repository.find(virtualMachine.getId());		
 	}
 	
