@@ -38,6 +38,17 @@
 		  					<span class="help-block"><em><small>There is no registered environments. Create a new <a href="<c:url value="/dbaas/new" />">here</a>.</small></em></span>
 		  				</c:if>
 		  				
+		  				<label class="text-info" for="hosts">Host:</label>
+		  				<select id="hosts" name="virtualMachine.host.id" style="width:284px;">
+		  					<option value="0" selected="selected">Select one</option>
+		  					<c:forEach var="host" items="${availableHosts}">
+								<option value="${host.id}">${host.alias}</option>
+			  				</c:forEach>
+		  				</select>
+		  				<c:if test="${availableHosts == null}">
+		  					<span class="help-block"><em><small>There is no registered hosts. Create a new <a href="<c:url value="/host/new" />">here</a>.</small></em></span>
+		  				</c:if>
+		  				
 		  				<label class="text-info" for="alias">Alias:</label>
 						<input class="input-xlarge" name="virtualMachine.alias" id="alias" type="text" value="${virtualMachine.alias}" placeholder="To better identify the resource" />
 						<span class="help-block"><em><small>Example: VM Project X</small></em></span>
