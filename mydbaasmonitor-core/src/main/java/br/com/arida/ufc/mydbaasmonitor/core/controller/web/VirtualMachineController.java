@@ -7,6 +7,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.Abst
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.Path;
@@ -29,12 +30,14 @@ public class VirtualMachineController extends AbstractController {
 
 	private VirtualMachineRepository repository;
 	private DBaaSRepository dBaaSRepository;
+	private HostRepository hostRepository;
 	private DBMSRepository dbmsRepository;
 	
-	public VirtualMachineController(Result result, Validator validator, VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, DBMSRepository dbmsRepository) {
+	public VirtualMachineController(Result result, Validator validator, VirtualMachineRepository repository, DBaaSRepository dBaaSRepository, HostRepository hostRepository, DBMSRepository dbmsRepository) {
 		super(result, validator);
 		this.repository = repository;
 		this.dBaaSRepository = dBaaSRepository;
+		this.hostRepository = hostRepository;
 		this.dbmsRepository = dbmsRepository;
 	}
 	
@@ -60,7 +63,8 @@ public class VirtualMachineController extends AbstractController {
 		//List available DBaaS
 		this.result
 		.include("current_date", DataUtil.converteDateParaString(new Date()))
-		.include("availableDBaaS", dBaaSRepository.all());
+		.include("availableDBaaS", dBaaSRepository.all())
+		.include("availableHosts", hostRepository.all());
 	}
 	
 	/**
