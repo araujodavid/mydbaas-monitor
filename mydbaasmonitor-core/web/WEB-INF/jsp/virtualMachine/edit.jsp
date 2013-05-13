@@ -45,6 +45,15 @@
 			  				</c:forEach>
 		  				</select>
 		  				
+		  				<label class="text-info" for="host">Host:</label>
+		  				<select id="host" name="virtualMachine.host.id" style="width:284px;">
+		  					<c:forEach var="host" items="${availableHosts}">
+								<option value="${host.id}" <c:if test="${virtualMachine.host.id == host.id}">selected="selected"</c:if> >
+									${host.alias}
+								</option>
+			  				</c:forEach>
+		  				</select>
+		  				
 		  				<label class="text-info" for="alias">Alias:</label>
 						<input class="input-xlarge" name="virtualMachine.alias" id="alias" type="text" value="${virtualMachine.alias}" placeholder="To better identify the resource" />
 						<span class="help-block"><em><small>Example: VM Project X</small></em></span>
