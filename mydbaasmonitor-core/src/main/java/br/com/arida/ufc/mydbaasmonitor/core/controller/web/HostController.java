@@ -1,13 +1,13 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web;
 
 import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
-
 import java.util.Date;
 import java.util.List;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
+import br.com.caelum.vraptor.validator.ValidationMessage;
 import br.com.caelum.vraptor.validator.Validations;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
@@ -83,14 +83,51 @@ public class HostController extends AbstractController implements GenericControl
 	@Path("/hosts/edit/{entity.id}")
 	@Override
 	public Host edit(Host entity) {
-		// TODO Auto-generated method stub
-		return null;
+		this.result
+		.include("availableDBaaS", dBaaSRepository.all());
+		return hostRepository.find(entity.getId());
 	}
 
 	@Path("/hosts/update")
 	@Override
-	public void update(Host entity) {
-		// TODO Auto-generated method stub		
+	public void update(final Host host) {
+		if (host.getStatus() == null) { 
+			host.setStatus(false); 
+		}
+		//Validations by vRaptor
+		validator.checking(new Validations() { {
+			that(!(host.getAlias() == null), "Alias", "host.alias.empty");
+	        that(!(host.getAddress() == null), "Address", "host.host.empty");
+	        that(!(host.getUser() == null), "Username", "host.username.empty");
+	        that(!(host.getPort() == null), "Port", "host.port.empty");	        
+	    } });
+		//If some validation is triggered are sent error messages to page
+		validator.onErrorForwardTo(HostController.class).edit(host);
+		
+		hostRepository.update(host);
+		result
+		.include("notice", i18n("host.update.ok"))
+		.redirectTo(this).view(host);
+	} //update()
+	
+	@Path("/hosts/password")
+	public void passwordUpdate(final Host host, final String confirmPassword){
+		//Validations by vRaptor
+			validator.checking(new Validations() { {
+				if (host.getPassword() != null || confirmPassword != null) {
+		        	that(host.getPassword().equals(confirmPassword), "Password", "host.password.not.checked");
+				} else {
+					validator.add(new ValidationMessage("Please enter a password. It can't be empty.", "Password"));
+				}    
+		    } });
+		//If some validation is triggered are sent error messages to page
+		validator.onErrorForwardTo(HostController.class).edit(host);
+		
+		//If everything is ok the object is sent to the ResourceManager and the user is redirected to the page that lists the registered resources
+		hostRepository.updatePassword(host);
+		result
+		.include("notice", i18n("host.update.password.ok"))
+		.redirectTo(this).view(host);
 	}
 
 	@Path("/hosts/view/{entity.id}")
@@ -101,7 +138,7 @@ public class HostController extends AbstractController implements GenericControl
 	}
 	
 	/**
-	 * 
+	 * Override methods
 	 */
 
 	@Override
