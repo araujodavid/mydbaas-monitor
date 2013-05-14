@@ -80,6 +80,39 @@ $(document).ready(function() {
 		
 });
 
+function getURL(id){
+	if(id == "cpu_time"){
+		return "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?";
+	}
+	else if(id == "cpu_time"){
+		return "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?";
+	}
+}
+
+function setModalValues(identifier){
+	
+	$.getJSON(getURL(identifier), function(data) {
+		// Create the chart
+		$('#modal_body').highcharts('StockChart', {
+			rangeSelector : {
+				selected : 1
+			},
+
+			title : {
+				text : 'AAPL Stock Price'
+			},
+			
+			series : [{
+				name : 'AAPL',
+				data : data,
+				tooltip: {
+					valueDecimals: 2
+				}
+			}]
+		});
+	});
+}
+
             	
 
             

@@ -67,7 +67,7 @@
 								      	<td>
 								      		<span class="badge badge-inverse">${virtualMachine.id}</span>
 								      	</td>
-								      	<td>${virtualMachine.alias}</td>
+								      	<td><a href="${pageContext.servletContext.contextPath}/vms/view/${virtualMachine.id}" title="${virtualMachine.alias}">${virtualMachine.alias}</a></td>
 								      	<td>${virtualMachine.address}</td>
 								      	<td>
 								      		<c:choose>

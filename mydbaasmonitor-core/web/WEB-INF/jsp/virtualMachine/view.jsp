@@ -143,12 +143,12 @@
 				        <div class="span6">
 				          <h2>CPU % vS Time</h2>
 				          <div id="container1" style="height: 250px; width: 500px"></div>
-				          <p><a class="btn" href="#modalViewDetailsCPU" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        </div>
 				        <div class="span6">
 				          <h2>Memory % vS Time</h2>
 				          <div id="container2" style="height: 250px; width: 500px"></div>
-				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				          <p><a class="btn" href="#modalViewDetails" id="memory_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       </div>
 				      </div>
 				      
@@ -156,12 +156,12 @@
 				        <div class="span6">
 				          <h2>CPU % vS Time</h2>
 				          <div id="container3" style="height: 250px; width: 500px"></div>
-				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        </div>
 				        <div class="span6">
 				          <h2>Memory % vS Time</h2>
 				          <div id="container4" style="height: 250px; width: 500px"></div>
-				          <p><a class="btn" href="#">View details &raquo;</a></p>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       </div>
 				      </div>
                 		
@@ -174,13 +174,12 @@
 		</div><!--/.fluid-container-->	
 		
 		<!-- Modal -->
-		<div id="modalViewDetailsCPU" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="modalViewDetails" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   			<div class="modal-header">
     			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     			<h3 id="myModalLabel">Modal header</h3>
   			</div>
-  			<div class="modal-body">
-    			<p>One fine body…</p>
+  			<div class="modal-body" id="modal_body">
   			</div>
   			<div class="modal-footer">
     			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -234,7 +233,7 @@
   			</div>
  		</form>
  		
- 		<%@include file="/static/footer.jsp"%>	
+ 	<%@include file="/static/footer.jsp"%>	
 	  	
     <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     <script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
