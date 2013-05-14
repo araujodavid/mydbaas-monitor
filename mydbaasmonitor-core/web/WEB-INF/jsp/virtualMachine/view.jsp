@@ -5,7 +5,6 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Content-Language" content="pt-br" />
-		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet">
 		<style type="text/css">
       		body {
@@ -16,33 +15,31 @@
         		padding: 9px 0;
       		}
     	</style>
-    	
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 
 		<title>MyDBaaSMonitor - Machine: ${virtualMachine.alias}</title>
 	</head>
 	<body>
-		
 		<%@include file="/static/menu.jsp"%>
-		
+
 		<div class="container-fluid">
     		<div class="row-fluid">
-        		<div class="span3">        		
+        		<div class="span3">
         			<legend>
 						<div align="left" style="margin-bottom:10px;">
 							<a class="btn btn-inverse" href="#myModalNewDBMS" data-toggle="modal" title="To create a new DBMS."><i class="icon-plus icon-white"></i> DBMS</a>
 	        			</div>
         			</legend>
-        			
+
         			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Database Management Systems:</strong> 
-        		
+
 			            <div class="accordion" id="accordion2">
 			            	<c:forEach items="${virtualMachine.dbmsList}" var="dbms">
 	  							<div class="accordion-group">
 	    							<div class="accordion-heading">
 	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbms.id}">
 	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${dbms.alias}
-	     	 							</a>	     	 							
+	     	 							</a>
 	    							</div>
 	    							<div id="collapse${dbms.id}" class="accordion-body collapse">
     									<div class="accordion-inner">
@@ -67,9 +64,9 @@
 	    							</div>
 	  							</div>
   							</c:forEach>
-						</div>          			
+						</div>
         		</div><!--/span-->
-        		
+
         		<div class="span9">
         			<c:if test="${notice != null}">							
 						<div class="alert alert-success">
@@ -224,83 +221,11 @@
  		
  		<%@include file="/static/footer.jsp"%>	
 	  	
-	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
-    	 <script src="http://code.highcharts.com/stock/highstock.js"></script>
-		 <script src="http://code.highcharts.com/highcharts.js"></script>
-		 <script src="http://code.highcharts.com/modules/exporting.js"></script>
-    	<script>
-    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
-	    	    // Create the chart
-	    	    $('#container1').highcharts('StockChart', {
-	    			rangeSelector : {
-	    			selected : 1
-			    		},
-						title : {
-			    			text : 'AAPL Stock Price'
-			    		},
-			    		series : [{
-				    		name : 'AAPL',
-				    		data : data,
-				    		tooltip: {
-				    			valueDecimals: 2}
-			    				}]
-				});
-    	    });
-    	
-    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
-    	    // Create the chart
-    	    $('#container2').highcharts('StockChart', {
-    			rangeSelector : {
-    			selected : 1
-		    		},
-					title : {
-		    			text : 'AAPL Stock Price'
-		    		},
-		    		series : [{
-			    		name : 'AAPL',
-			    		data : data,
-			    		tooltip: {
-			    			valueDecimals: 2}
-		    				}]
-			});
-	    });
-    	
-    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
-    	    // Create the chart
-    	    $('#container3').highcharts('StockChart', {
-    			rangeSelector : {
-    			selected : 1
-		    		},
-					title : {
-		    			text : 'AAPL Stock Price'
-		    		},
-		    		series : [{
-			    		name : 'AAPL',
-			    		data : data,
-			    		tooltip: {
-			    			valueDecimals: 2}
-		    				}]
-			});
-	    });
-    	
-    	$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function(data) {
-    	    // Create the chart
-    	    $('#container4').highcharts('StockChart', {
-    			rangeSelector : {
-    			selected : 1
-		    		},
-					title : {
-		    			text : 'AAPL Stock Price'
-		    		},
-		    		series : [{
-			    		name : 'AAPL',
-			    		data : data,
-			    		tooltip: {
-			    			valueDecimals: 2}
-		    				}]
-			});
-	    });
-    	</script>
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
+    <script src="${pageContext.servletContext.contextPath}/js/vms_view.js" type="text/javascript"></script>
 	</body>
 </html>
