@@ -14,6 +14,7 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.Abst
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 
 /**
@@ -29,11 +30,13 @@ public class HostController extends AbstractController implements GenericControl
 
 	private HostRepository hostRepository;
 	private DBaaSRepository dBaaSRepository;
+	private VirtualMachineRepository virtualMachineRepository;
 	
-	public HostController(Result result, Validator validator, HostRepository hostRepository, DBaaSRepository dBaaSRepository) {
+	public HostController(Result result, Validator validator, HostRepository hostRepository, DBaaSRepository dBaaSRepository, VirtualMachineRepository virtualMachineRepository) {
 		super(result, validator);
 		this.hostRepository = hostRepository;
 		this.dBaaSRepository = dBaaSRepository;
+		this.virtualMachineRepository = virtualMachineRepository;
 	}
 
 	@Path("/hosts")
@@ -130,11 +133,14 @@ public class HostController extends AbstractController implements GenericControl
 		.redirectTo(this).view(host);
 	}
 
-	@Path("/hosts/view/{entity.id}")
+	@Path("/hosts/view/{host.id}")
 	@Override
-	public Host view(Host entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Host view(Host host) {
+		host = hostRepository.find(host.getId());
+		host.setEnvironment(dBaaSRepository.find(host.getEnvironment().getId()));
+		host.setMachines(virtualMachineRepository.getHostMachines(host.getId()));
+		result.include("current_date", DataUtil.converteDateParaString(new Date()));
+		return host;
 	}
 	
 	/**
