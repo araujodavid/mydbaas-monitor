@@ -14,6 +14,18 @@
       		.sidebar-nav {
         		padding: 9px 0;
       		}
+      		.dynamic_chart{
+      			height: 250px; 
+      			width: 500px
+      		}
+      		.centered{
+      			width:840px; 
+      			margin-left:-420px;
+      		}
+      		.centered_dynamic_chart{
+      			margin:20px; 
+      			width:800px;
+      		}
     	</style>
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -142,25 +154,25 @@
 				      <div class="row">
 				        <div class="span6">
 				          <h2>CPU % vS Time</h2>
-				          <div id="container1" style="height: 250px; width: 500px"></div>
+				          <div id="container1" class="dynamic_chart"></div>
 				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        </div>
 				        <div class="span6">
 				          <h2>Memory % vS Time</h2>
-				          <div id="container2" style="height: 250px; width: 500px"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="memory_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				          <div id="container2" class="dynamic_chart"></div>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       </div>
 				      </div>
 				      
 				       <div class="row">
 				        <div class="span6">
 				          <h2>CPU % vS Time</h2>
-				          <div id="container3" style="height: 250px; width: 500px"></div>
+				          <div id="container3" class="dynamic_chart"></div>
 				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        </div>
 				        <div class="span6">
 				          <h2>Memory % vS Time</h2>
-				          <div id="container4" style="height: 250px; width: 500px"></div>
+				          <div id="container4" class="dynamic_chart"></div>
 				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       </div>
 				      </div>
@@ -174,16 +186,16 @@
 		</div><!--/.fluid-container-->	
 		
 		<!-- Modal -->
-		<div id="modalViewDetails" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="modalViewDetails" class="modal centered hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   			<div class="modal-header">
+  				<div id="ajax_loading"></div>
     			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     			<h3 id="myModalLabel">Modal header</h3>
   			</div>
-  			<div class="modal-body" id="modal_body">
+  			<div class="modal-body centered_dynamic_chart" id="modal_body">
   			</div>
   			<div class="modal-footer">
     			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    			<button class="btn btn-primary">Save changes</button>
   			</div>
 		</div>
 		

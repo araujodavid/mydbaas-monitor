@@ -90,7 +90,7 @@ function getURL(id){
 }
 
 function setModalValues(identifier){
-	
+	$("#ajax_loading").html("Loading graphics...");
 	$.getJSON(getURL(identifier), function(data) {
 		// Create the chart
 		$('#modal_body').highcharts('StockChart', {
@@ -110,7 +110,10 @@ function setModalValues(identifier){
 				}
 			}]
 		});
+		$("#ajax_loading").html("");
 	});
+	
+
 }
 
             	
