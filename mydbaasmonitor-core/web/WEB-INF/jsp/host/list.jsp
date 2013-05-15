@@ -67,7 +67,9 @@
 								      	<td>
 								      		<span class="badge badge-inverse">${host.id}</span>
 								      	</td>
-								      	<td>${host.alias}</td>
+								      	<td>
+								      		<a href="${pageContext.servletContext.contextPath}/hosts/view/${host.id}" title="Click here to view more detail of the resource.">${host.alias}</a>
+								      	</td>
 								      	<td>${host.address}</td>
 								      	<td>
 								      		<c:choose>
