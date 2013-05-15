@@ -139,7 +139,9 @@ public class HostController extends AbstractController implements GenericControl
 		host = hostRepository.find(host.getId());
 		host.setEnvironment(dBaaSRepository.find(host.getEnvironment().getId()));
 		host.setMachines(virtualMachineRepository.getHostMachines(host.getId()));
-		result.include("current_date", DataUtil.converteDateParaString(new Date()));
+		result
+		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("availableDBaaS", dBaaSRepository.all());
 		return host;
 	}
 	
