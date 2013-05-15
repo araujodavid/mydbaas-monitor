@@ -1,6 +1,7 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource;
 
 import java.util.List;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host.HostInfo;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.GenericResource;
 
 /**
@@ -13,7 +14,9 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.common.G
 public class Host extends GenericResource {
 
 	//enviroment
-	private DBaaS environment;	
+	private DBaaS environment;
+	//information about host resources
+	private HostInfo information;
 	//list of virtual machines
 	private List<VirtualMachine> machines;
 	
@@ -25,6 +28,14 @@ public class Host extends GenericResource {
 		this.environment = environment;
 	}
 	
+	public HostInfo getInformation() {
+		return information;
+	}
+
+	public void setInformation(HostInfo information) {
+		this.information = information;
+	}
+
 	public List<VirtualMachine> getMachines() {
 		return machines;
 	}
