@@ -136,7 +136,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into virtual_machine " +
-					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`) " +
+					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`, `host`) " +
 					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?);");
 			
 			this.preparedStatement.setString(1, resource.getAddress());
@@ -147,6 +147,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setString(6, resource.getDescription());
 			this.preparedStatement.setString(7, resource.getAlias());
 			this.preparedStatement.setInt(8, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(9, resource.getHost().getId());
 			
 			this.preparedStatement.executeUpdate();
 		} 
@@ -165,7 +166,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update virtual_machine " +
-					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ? " +
+					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ?, `dbaas` = ?, `host` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
@@ -174,7 +175,9 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getDescription());
 			this.preparedStatement.setBoolean(6, resource.getStatus());
-			this.preparedStatement.setInt(7, resource.getId());
+			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(8, resource.getHost().getId());
+			this.preparedStatement.setInt(9, resource.getId());
 			
 			this.preparedStatement.executeUpdate();
 		}
