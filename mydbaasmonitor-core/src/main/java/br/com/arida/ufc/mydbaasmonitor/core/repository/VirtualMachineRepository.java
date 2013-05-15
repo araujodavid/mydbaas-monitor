@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
@@ -254,7 +255,8 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 	public VirtualMachine getEntity(ResultSet resultSet) throws SQLException {
 		VirtualMachine virtualMachine = new VirtualMachine();
 		Machine machine = new Machine();
-		DBaaS environment = new DBaaS();		
+		DBaaS environment = new DBaaS();
+		Host host = new Host();
 		virtualMachine.setId(resultSet.getInt("id"));
 		virtualMachine.setAddress(resultSet.getString("address"));
 		virtualMachine.setPort(resultSet.getInt("port"));
@@ -275,8 +277,10 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		machine.setMachineTotalCPUSockets(resultSet.getInt("cpu_sockets"));
 		machine.setMachineTotalCoresPerSocket(resultSet.getInt("cores_sockets"));
 		environment.setId(resultSet.getInt("dbaas"));
+		host.setId(resultSet.getInt("host"));
 		virtualMachine.setInformation(machine);
 		virtualMachine.setEnvironment(environment);
+		virtualMachine.setHost(host);
 		
 		return virtualMachine;
 	}//getEntity()
