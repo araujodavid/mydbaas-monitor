@@ -33,14 +33,14 @@ public class DBMSController extends AbstractController implements GenericControl
 		this.repository = repository;
 	}
 
-	@Path("/dbms")
+	@Path("/dbmss")
 	@Override
 	public void redirect() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Path("/dbms/list")
+	@Path("/dbmss/list")
 	@Override
 	public List<DBMS> list() {
 		// TODO Auto-generated method stub
@@ -59,7 +59,7 @@ public class DBMSController extends AbstractController implements GenericControl
 		
 	}
 	
-	@Path("/dbms/add")
+	@Path("/dbmss/add")
 	public void add(final DBMS entity, final String confirmPassword) {
 		//Validations by vRaptor
 		validator.checking(new Validations() {{
@@ -89,13 +89,13 @@ public class DBMSController extends AbstractController implements GenericControl
 		
 	}
 
-	@Path("/dbms/edit/{entity.id}")
+	@Path("/dbmss/edit/{entity.id}")
 	@Override
 	public DBMS edit(DBMS entity) {
 		return repository.find(entity.getId());
 	}
 	
-	@Path("/dbms/update")
+	@Path("/dbmss/update")
 	public void update(final DBMS dbms, final String confirmPassword) {
 		if (dbms.getStatus() == null) { 
 			dbms.setStatus(false); 
