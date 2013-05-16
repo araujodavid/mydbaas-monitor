@@ -15,12 +15,19 @@ CREATE TABLE `host` (
   `port` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(75) NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` tinyint(4) DEFAULT NULL,
   `dbaas` int(11) NOT NULL,
+  `host_name` varchar(75) DEFAULT NULL,
+  `host_hypervisor` varchar(75) DEFAULT NULL,
+  `host_cores` int(11) DEFAULT NULL,
+  `host_cpus` int(11) DEFAULT NULL,
+  `host_memory` double DEFAULT NULL,
+  `host_mhz` double DEFAULT NULL,
+  `host_model` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_host_dbaas_idx` (`dbaas`),
   CONSTRAINT `fk_host_dbaas` FOREIGN KEY (`dbaas`) REFERENCES `dbaas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
 
 CREATE TABLE `virtual_machine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -48,8 +55,8 @@ CREATE TABLE `virtual_machine` (
   UNIQUE KEY `host_UNIQUE` (`address`),
   KEY `fk_virtual_machine_1_idx` (`dbaas`),
   KEY `fk_virtual_machine_host_idx` (`host`),
-  CONSTRAINT `fk_virtual_machine_host` FOREIGN KEY (`host`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_virtual_machine_dbaas` FOREIGN KEY (`dbaas`) REFERENCES `dbaas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_virtual_machine_dbaas` FOREIGN KEY (`dbaas`) REFERENCES `dbaas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_virtual_machine_host` FOREIGN KEY (`host`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
 
 CREATE TABLE `dbms` (
@@ -67,4 +74,4 @@ CREATE TABLE `dbms` (
   PRIMARY KEY (`id`),
   KEY `fk_dbms_machine_idx` (`virtual_machine`),
   CONSTRAINT `fk_dbms_machine` FOREIGN KEY (`virtual_machine`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
