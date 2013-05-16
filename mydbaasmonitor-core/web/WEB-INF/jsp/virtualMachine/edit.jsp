@@ -47,11 +47,20 @@
 		  				
 		  				<label class="text-info" for="host">Host:</label>
 		  				<select id="host" name="virtualMachine.host.id" style="width:284px;">
-		  					<c:forEach var="host" items="${availableHosts}">
-								<option value="${host.id}" <c:if test="${virtualMachine.host.id == host.id}">selected="selected"</c:if> >
-									${host.alias}
-								</option>
-			  				</c:forEach>
+		  					<c:if test="${virtualMachine.host.id == 0}">
+			  					<option value="0" selected="selected">Without Host</option>
+			  					<c:forEach var="host" items="${availableHosts}">
+									<option value="${host.id}">${host.alias}</option>
+			  					</c:forEach>
+			  				</c:if>
+		  					<c:if test="${virtualMachine.host.id > 0}">
+			  					<option value="0">Without Host</option>
+			  					<c:forEach var="host" items="${availableHosts}">
+			  						<option value="${host.id}" <c:if test="${virtualMachine.host.id == host.id}">selected="selected"</c:if> >
+										${host.alias}
+									</option>
+			  					</c:forEach>
+			  				</c:if>	  				
 		  				</select>
 		  				
 		  				<label class="text-info" for="alias">Alias:</label>

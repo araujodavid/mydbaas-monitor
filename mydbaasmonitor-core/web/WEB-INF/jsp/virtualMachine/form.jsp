@@ -40,7 +40,7 @@
 		  				
 		  				<label class="text-info" for="hosts">Host:</label>
 		  				<select id="hosts" name="virtualMachine.host.id" style="width:284px;">
-		  					<option value="0" selected="selected">Select one</option>
+		  					<option value="0" selected="selected">Without Host</option>
 		  					<c:forEach var="host" items="${availableHosts}">
 								<option value="${host.id}">${host.alias}</option>
 			  				</c:forEach>
