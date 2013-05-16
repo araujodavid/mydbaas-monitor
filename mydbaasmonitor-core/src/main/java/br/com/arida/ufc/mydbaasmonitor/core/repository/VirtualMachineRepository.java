@@ -138,7 +138,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into virtual_machine " +
 					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`, `host`) " +
-					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?);");
+					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?, ?);");
 			
 			this.preparedStatement.setString(1, resource.getAddress());
 			this.preparedStatement.setString(2, resource.getUser());
@@ -160,6 +160,34 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
             try { connection.close(); } catch(Exception e) { }
         }
 	}//save()
+	
+	public void saveWithoutHost(VirtualMachine resource) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"insert into virtual_machine " +
+					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`) " +
+					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?);");
+			
+			this.preparedStatement.setString(1, resource.getAddress());
+			this.preparedStatement.setString(2, resource.getUser());
+			this.preparedStatement.setInt(3, resource.getPort());
+			this.preparedStatement.setString(4, resource.getPassword());
+			this.preparedStatement.setString(5, resource.getKey());
+			this.preparedStatement.setString(6, resource.getDescription());
+			this.preparedStatement.setString(7, resource.getAlias());
+			this.preparedStatement.setInt(8, resource.getEnvironment().getId());
+			
+			this.preparedStatement.executeUpdate();
+		} 
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+        }
+	}//saveWithoutHost()
 
 	@Override
 	public void update(VirtualMachine resource) {
@@ -279,7 +307,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		environment.setId(resultSet.getInt("dbaas"));
 		host.setId(resultSet.getInt("host"));
 		virtualMachine.setInformation(machine);
-		virtualMachine.setEnvironment(environment);
+		virtualMachine.setEnvironment(environment);		
 		virtualMachine.setHost(host);
 		
 		return virtualMachine;
