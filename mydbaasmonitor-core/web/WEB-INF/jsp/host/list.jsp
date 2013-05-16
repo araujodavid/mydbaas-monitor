@@ -26,11 +26,11 @@
 		
 		<div class="container-fluid">
     		<div class="row-fluid">
-        		<div class="span3">
+        		<div class="span3" style="margin-top:10px;">
         			<div align="left">
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/hosts/new" title=""><i class="icon-plus icon-white"></i> Host</a>
         			</div>     
-        			<div id="container-pizza"></div>     			
+        			<div id="container-pizza" style="margin-top:20px;"></div>     			
         		</div><!--/span-->
         		
         		<div class="span9">

@@ -26,11 +26,11 @@
 		
 		<div class="container-fluid">
     		<div class="row-fluid">
-        		<div class="span3">
+        		<div class="span3" style="margin-top:10px;">
         			<div align="left">
-        				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Machine</a>
+        				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Virtual Machine</a>
         			</div>     
-        			<div id="container-pizza"></div>     			
+        			<div id="container-pizza" style="margin-top:20px;"></div>     			
         		</div><!--/span-->
         		
         		<div class="span9">
@@ -113,7 +113,7 @@
 		                plotShadow: false
 		            },
 		            title: {
-		                text: 'Sua VM'
+		                text: 'Virtual Machines Status'
 		            },
 		            tooltip: {
 		        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
