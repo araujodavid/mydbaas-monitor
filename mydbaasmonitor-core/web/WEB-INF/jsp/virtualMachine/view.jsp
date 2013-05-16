@@ -102,6 +102,9 @@
      							</c:choose><br><br>	                    
 		                    	
 		                    	<strong>Environment:</strong> <a href="<c:url value="/dbaas/view/${virtualMachine.environment.id}"/>" title="Link to view the machine environment.">${virtualMachine.environment.alias}</a><br>
+		  						<c:if test="${virtualMachine.host.id > 0}">
+		  							<strong>Host:</strong> <a href="<c:url value="/hosts/view/${virtualMachine.host.id}"/>" title="Link to view the host.">${virtualMachine.host.alias}</a><br>
+		  						</c:if>
 		  						<strong>Alias:</strong> <info class="muted">${virtualMachine.alias}</info><br>
 							  	<strong>Address:</strong> <info class="muted">${virtualMachine.address}</info><br>							  	
 							  	<strong>SSH Port:</strong> <info class="muted">${virtualMachine.port}</info><br>
