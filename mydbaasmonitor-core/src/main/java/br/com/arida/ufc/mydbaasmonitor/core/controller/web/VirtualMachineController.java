@@ -130,8 +130,11 @@ public class VirtualMachineController extends AbstractController {
 	    } });
 		//If some validation is triggered are sent error messages to page
 		validator.onErrorForwardTo(VirtualMachineController.class).edit(virtualMachine);
-		
-		repository.update(virtualMachine);
+		if (virtualMachine.getHost().getId() == 0) {
+			repository.updateWithoutHost(virtualMachine);
+		} else {
+			repository.update(virtualMachine);
+		}
 		result
 		.include("notice", i18n("machine.update.ok"))
 		.redirectTo(this).view(virtualMachine);
