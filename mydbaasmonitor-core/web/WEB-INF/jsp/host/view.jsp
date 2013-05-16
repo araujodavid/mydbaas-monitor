@@ -99,10 +99,10 @@
 							      		<address>
 					  						<strong>Name:</strong> <info class="muted">${host.information.hostInfoName}</info><br>
 					  						<strong>Hypervisor:</strong> <info class="muted">${host.information.hostInfoHypervisor}</info><br>
-					  						<strong>Memory:</strong> <info class="muted">${host.information.hostInfoMemory}</info><br>
-					  						<strong>Cores:</strong> <info class="muted">${host.information.hostInfoCores}</info><br>
-					  						<strong>CPUs:</strong> <info class="muted">${host.information.hostInfoCpus}</info><br>
-					  						<strong>Frequency:</strong> <info class="muted">${host.information.hostInfoMhz}</info><br>
+					  						<strong>Memory:</strong> <info class="muted"><c:if test="${host.information.hostInfoMemory > 0}">${host.information.hostInfoMemory} GB</c:if></info><br>
+					  						<strong>Cores:</strong> <info class="muted"><c:if test="${host.information.hostInfoCores > 0}">${host.information.hostInfoCores}</c:if></info><br>
+					  						<strong>CPUs:</strong> <info class="muted"><c:if test="${host.information.hostInfoCpus > 0}">${host.information.hostInfoCpus}</c:if></info><br>
+					  						<strong>Frequency:</strong> <info class="muted"><c:if test="${host.information.hostInfoMhz > 0}">${host.information.hostInfoMhz} Mhz</c:if></info><br>
 					  						<strong>Model:</strong> <info class="muted">${host.information.hostInfoModel}</info><br>											
 										</address> 
 							    	</div>
