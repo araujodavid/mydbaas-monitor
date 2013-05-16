@@ -219,6 +219,34 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		}
 	}//update()
 	
+	public void updateWithoutHost(VirtualMachine resource) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update virtual_machine " +
+					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ?, `dbaas` = ?, `host` = null " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setString(1, resource.getAlias());
+			this.preparedStatement.setString(2, resource.getAddress());
+			this.preparedStatement.setString(3, resource.getUser());
+			this.preparedStatement.setInt(4, resource.getPort());
+			this.preparedStatement.setString(5, resource.getDescription());
+			this.preparedStatement.setBoolean(6, resource.getStatus());
+			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(8, resource.getId());
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updateWithoutHost()
+	
 	public boolean updateSystemInformation(Machine system, int machine) {
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
