@@ -87,8 +87,11 @@ public class VirtualMachineController extends AbstractController {
 	    } });
 		//If some validation is triggered are sent error messages to page
 		validator.onErrorForwardTo(VirtualMachineController.class).form();
-		
-		repository.save(virtualMachine);
+		if (virtualMachine.getHost().getId() == 0) {
+			repository.saveWithoutHost(virtualMachine);
+		} else {
+			repository.save(virtualMachine);
+		}		
 		result
 		.include("notice", i18n("machine.save.ok"))
 		.redirectTo(this).list();
@@ -163,6 +166,9 @@ public class VirtualMachineController extends AbstractController {
 	public VirtualMachine view(VirtualMachine virtualMachine){		
 		virtualMachine = repository.find(virtualMachine.getId());
 		virtualMachine.setEnvironment(dBaaSRepository.find(virtualMachine.getEnvironment().getId()));
+		if (virtualMachine.getHost().getId() > 0) {
+			virtualMachine.setHost(hostRepository.find(virtualMachine.getHost().getId()));
+		}
 		virtualMachine.setDbmsList(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
 		result.include("current_date", DataUtil.converteDateParaString(new Date()));
 		return virtualMachine;		
