@@ -134,9 +134,20 @@ public class MyDBaaSMonitorClient {
 	}
 	
 	public DatabasePool getMyDatabases() {
-		DatabasePool pool = new DatabasePool();
-		//TODO
-		return pool;		
+		HttpResponse response;
+		String json = null;
+		try {
+			response = SendResquest.postRequest(this.serverUrl+"/pool/databases", null);
+			json = SendResquest.getJsonResult(response);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		Gson gson = new Gson();
+		DatabasePool pool = gson.fromJson(json, DatabasePool.class);
+		pool.setClient(this);
+		return pool;	
 	}
 	
 	public Object resourceLookupByID(int id, String resourceType) {
