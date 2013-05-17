@@ -48,7 +48,35 @@ public class VirtualMachineController extends AbstractController {
 	
 	@Path("/vms/list")
 	public List<VirtualMachine> list(){
-		return repository.all();
+		List<VirtualMachine> virtualMachinesList = repository.all();
+		//Information for pie chart
+		int totalMachines = virtualMachinesList.size();
+		int amountActive = 0;
+		int amountNotActive = 0;
+		int amountWithHost = 0;
+		int amountWithoutHost = 0;
+		for (VirtualMachine virtualMachine : virtualMachinesList) {
+			if (virtualMachine.getStatus() == true) {
+				amountActive++;
+			} else {
+				amountNotActive++;
+			}
+			if (virtualMachine.getHost().getId() > 0) {
+				amountWithHost++;
+			} else {
+				amountWithoutHost++;
+			}
+		}
+		double activePercent = ((amountActive*100)/totalMachines);
+		double notActivePercent = ((amountNotActive*100)/totalMachines);
+		double withHostPercent = ((amountWithHost*100)/totalMachines);
+		double withoutHostPercent = ((amountWithoutHost*100)/totalMachines);
+		this.result
+		.include("activePercent", activePercent)
+		.include("notActivePercent", notActivePercent)
+		.include("withHostPercent", withHostPercent)
+		.include("withoutHostPercent", withoutHostPercent);
+		return virtualMachinesList;
 	}
 	
 	/**
