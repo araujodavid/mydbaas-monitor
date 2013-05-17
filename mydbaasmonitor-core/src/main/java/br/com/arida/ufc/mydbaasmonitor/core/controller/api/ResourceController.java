@@ -2,10 +2,12 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
 import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
@@ -18,7 +20,7 @@ import br.com.caelum.vraptor.view.Results;
 /**
  * Class that handles requests sent by the API module.
  * @author Daivd Araújo - @araujodavid
- * @version 1.0
+ * @version 2.0
  * @since May 9, 2013 
  */
 
@@ -26,16 +28,18 @@ import br.com.caelum.vraptor.view.Results;
 @Path("/resource")
 public class ResourceController {
 	
-	private Result result;
+	private Result result;	
 	private HostRepository hostRepository;
 	private DBMSRepository dbmsRepository;
+	private DBaaSRepository dBaaSRepository;
 	private DatabaseRepository databaseRepository;
 	private VirtualMachineRepository virtualMachineRepository;
 		
-	public ResourceController(Result result, HostRepository hostRepository, DBMSRepository dbmsRepository, DatabaseRepository databaseRepository, VirtualMachineRepository virtualMachineRepository) {
+	public ResourceController(Result result, HostRepository hostRepository, DBMSRepository dbmsRepository, DBaaSRepository dBaaSRepository, DatabaseRepository databaseRepository, VirtualMachineRepository virtualMachineRepository) {
 		this.result = result;
 		this.hostRepository = hostRepository;
 		this.dbmsRepository = dbmsRepository;
+		this.dBaaSRepository = dBaaSRepository;
 		this.databaseRepository = databaseRepository;
 		this.virtualMachineRepository = virtualMachineRepository;
 	}
@@ -95,7 +99,60 @@ public class ResourceController {
 	
 	@Post("/find")
 	public void getResourceByID(int resourceId, String resourceType) {
-		//TODO
+		switch (resourceType) {
+		case "dbaas":
+			DBaaS dBaaS = this.dBaaSRepository.find(resourceId);
+			dBaaS.setHosts(this.hostRepository.getDBaaSHosts(dBaaS.getId()));
+			dBaaS.setMachines(this.virtualMachineRepository.getDBaaSMachines(dBaaS.getId()));
+			result
+			.use(Results.json())
+			.from(dBaaS, "resource")
+			.include("hosts")
+			.include("machines")
+			.serialize();
+			break;
+		case "host":
+			Host host = this.hostRepository.find(resourceId);
+			host.setMachines(this.virtualMachineRepository.getHostMachines(host.getId()));
+			result
+			.use(Results.json())
+			.from(host, "resource")
+			.include("environment")
+			.include("information")
+			.include("machines")
+			.serialize();
+			break;
+		case "machine":
+			VirtualMachine virtualMachine = this.virtualMachineRepository.find(resourceId);
+			virtualMachine.setDbmsList(this.dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
+			result
+			.use(Results.json())
+			.from(virtualMachine, "resource")
+			.include("environment")
+			.include("host")
+			.include("information")
+			.include("dbmsList")
+			.serialize();
+			break;
+		case "dbms":
+			DBMS dbms = this.dbmsRepository.find(resourceId);
+			dbms.setDatabases(this.databaseRepository.getDBMSDatabases(dbms.getId()));
+			result
+			.use(Results.json())
+			.from(dbms, "resource")
+			.include("machine")
+			.include("databases")
+			.serialize();
+			break;
+		case "database":
+			Database database = this.databaseRepository.find(resourceId);
+			result
+			.use(Results.json())
+			.from(database, "resource")
+			.include("dbms")
+			.serialize();
+			break;
+		}
 	}
 	
 }
