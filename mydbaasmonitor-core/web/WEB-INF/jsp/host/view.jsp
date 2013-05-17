@@ -14,6 +14,18 @@
       		.sidebar-nav {
         		padding: 9px 0;
       		}
+      		.dynamic_chart{
+      			height: 250px; 
+      			width: 500px
+      		}
+      		.centered{
+      			width:840px; 
+      			margin-left:-420px;
+      		}
+      		.centered_dynamic_chart{
+      			margin:20px; 
+      			width:800px;
+      		}
     	</style>
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -113,12 +125,52 @@
 		            
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
+                		
+                		<!-- Example row of columns -->
+				      <div class="row">
+				        <div class="span6">
+				          <h2>CPU % vS Time</h2>
+				          <div id="container1" class="dynamic_chart"></div>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        </div>
+				        <div class="span6">
+				          <h2>Memory % vS Time</h2>
+				          <div id="container2" class="dynamic_chart"></div>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       </div>
+				      </div>
+				      
+				       <div class="row">
+				        <div class="span6">
+				          <h2>CPU % vS Time</h2>
+				          <div id="container3" class="dynamic_chart"></div>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        </div>
+				        <div class="span6">
+				          <h2>Memory % vS Time</h2>
+				          <div id="container4" class="dynamic_chart"></div>
+				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       </div>
+				      </div>
                 		              		
             		</div><!--/dashboard-->
             		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
 		</div><!--/.fluid-container-->
+		
+		<!-- Modal -->
+		<div id="modalViewDetails" class="modal centered hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  			<div class="modal-header">
+    			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    			<h3 id="myModalLabel">Modal header</h3>
+  			</div>
+  			<div class="modal-body centered_dynamic_chart" id="modal_body">
+  			</div>
+  			<div class="modal-footer">
+    			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  			</div>
+		</div>
 		
 		<!-- Modal New Virtual Machine -->
  		<form method="post" action="<c:url value="/vms/add"/>" id="myModalNewMachine" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -191,6 +243,6 @@
     <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-    <script src="${pageContext.servletContext.contextPath}/js/vms_view.js" type="text/javascript"></script>
+    <script src="${pageContext.servletContext.contextPath}/js/host_view.js" type="text/javascript"></script>
 	</body>
 </html>

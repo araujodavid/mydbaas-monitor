@@ -153,7 +153,7 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                		<!-- Example row of columns -->
+                	<!-- Example row of columns -->
 				      <div class="row">
 				        <div class="span6">
 				          <h2>CPU % vS Time</h2>
@@ -191,7 +191,6 @@
 		<!-- Modal -->
 		<div id="modalViewDetails" class="modal centered hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   			<div class="modal-header">
-  				<div id="ajax_loading"></div>
     			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     			<h3 id="myModalLabel">Modal header</h3>
   			</div>
