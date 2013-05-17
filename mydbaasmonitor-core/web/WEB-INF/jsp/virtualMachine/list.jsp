@@ -131,19 +131,17 @@
 		            },
 		            series: [{
 		                type: 'pie',
-		                name: 'Browser share',
+		                name: 'Value',
 		                data: [
-		                    ['Firefox',   45.0],
-		                    ['IE',       26.8],
+		                    ['Active',   ${activePercent}],
 		                    {
-		                        name: 'Chrome',
-		                        y: 12.8,
+		                        name: 'Not Active',
+		                        y: ${notActivePercent},
 		                        sliced: true,
 		                        selected: true
 		                    },
-		                    ['Safari',    8.5],
-		                    ['Opera',     6.2],
-		                    ['Others',   0.7]
+		                    ['With Host',  ${withHostPercent}],
+		                    ['Without Host',${withoutHostPercent}]
 		                ]
 		            }]
 		        });
