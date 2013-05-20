@@ -31,12 +31,12 @@
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Virtual Machine</a>
         			</div>     
         			<div id="container-summary" style="margin-top:20px;"></div>
-        			<table id="datatable">
+        			<table id="datatable" class="table table-bordered table-condensed">
 						<thead>
 							<tr>
 								<th></th>
 								<th>Active</th>
-								<th>No Active</th>
+								<th>Not Active</th>
 								<th>w/ Host</th>
 								<th>w/o Host</th>
 							</tr>
@@ -45,7 +45,7 @@
 							<tr>
 								<th>Amount</th>
 								<th>${amountActive}</th>
-								<th>${amountNoActive}</th>
+								<th>${amountNotActive}</th>
 								<th>${amountWithHost}</th>
 								<th>${amountWithoutHost}</th>
 							</tr>
