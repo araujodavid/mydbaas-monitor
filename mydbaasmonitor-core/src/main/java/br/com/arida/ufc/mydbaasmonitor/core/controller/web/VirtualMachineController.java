@@ -50,7 +50,6 @@ public class VirtualMachineController extends AbstractController {
 	public List<VirtualMachine> list(){
 		List<VirtualMachine> virtualMachinesList = repository.all();
 		//Information for pie chart
-		int totalMachines = virtualMachinesList.size();
 		int amountActive = 0;
 		int amountNotActive = 0;
 		int amountWithHost = 0;
@@ -67,15 +66,11 @@ public class VirtualMachineController extends AbstractController {
 				amountWithoutHost++;
 			}
 		}
-		double activePercent = ((amountActive*100)/totalMachines);
-		double notActivePercent = ((amountNotActive*100)/totalMachines);
-		double withHostPercent = ((amountWithHost*100)/totalMachines);
-		double withoutHostPercent = ((amountWithoutHost*100)/totalMachines);
 		this.result
-		.include("activePercent", activePercent)
-		.include("notActivePercent", notActivePercent)
-		.include("withHostPercent", withHostPercent)
-		.include("withoutHostPercent", withoutHostPercent);
+		.include("amountActive", amountActive)
+		.include("amountNotActive", amountNotActive)
+		.include("amountWithHost", amountWithHost)
+		.include("amountWithoutHost", amountWithoutHost);
 		return virtualMachinesList;
 	}
 	
