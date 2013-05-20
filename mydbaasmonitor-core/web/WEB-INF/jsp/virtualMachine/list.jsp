@@ -30,7 +30,27 @@
         			<div align="left">
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Virtual Machine</a>
         			</div>     
-        			<div id="container-pizza" style="margin-top:20px;"></div>     			
+        			<div id="container-summary" style="margin-top:20px;"></div>
+        			<table id="datatable">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Active</th>
+								<th>No Active</th>
+								<th>w/ Host</th>
+								<th>w/o Host</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>Amount</th>
+								<th>${amountActive}</th>
+								<th>${amountNoActive}</th>
+								<th>${amountWithHost}</th>
+								<th>${amountWithoutHost}</th>
+							</tr>
+						</tbody>
+					</table> 			
         		</div><!--/span-->
         		
         		<div class="span9">
@@ -118,45 +138,28 @@
 		    
 		    $(document).ready(function () {
 		    	
-		    	// Build the chart
-		        $('#container-pizza').highcharts({
+		    	$('#container-summary').highcharts({
+		            data: {
+		                table: document.getElementById('datatable')
+		            },
 		            chart: {
-		                plotBackgroundColor: null,
-		                plotBorderWidth: null,
-		                plotShadow: false
+		                type: 'column'
 		            },
 		            title: {
 		                text: 'Virtual Machines Status'
 		            },
-		            tooltip: {
-		        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-		            	percentageDecimals: 1
-		            },
-		            plotOptions: {
-		                pie: {
-		                    allowPointSelect: true,
-		                    cursor: 'pointer',
-		                    dataLabels: {
-		                        enabled: false
-		                    },
-		                    showInLegend: true
+		            yAxis: {
+		                allowDecimals: false,
+		                title: {
+		                    text: 'Units'
 		                }
 		            },
-		            series: [{
-		                type: 'pie',
-		                name: 'Value',
-		                data: [
-		                    ['Active',   ${activePercent}],
-		                    {
-		                        name: 'Not Active',
-		                        y: ${notActivePercent},
-		                        sliced: true,
-		                        selected: true
-		                    },
-		                    ['With Host',  ${withHostPercent}],
-		                    ['Without Host',${withoutHostPercent}]
-		                ]
-		            }]
+		            tooltip: {
+		                formatter: function() {
+		                    return '<b>'+ this.series.name +'</b><br/>'+
+		                        this.y +' '+ this.x.toLowerCase();
+		                }
+		            }
 		        });
 		    	
 		    	
@@ -282,6 +285,7 @@
 		</script>
 		
 		<script src="http://code.highcharts.com/stock/highstock.js"></script>
-<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+		<script src="http://code.highcharts.com/modules/data.js"></script>
+		<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
 	</body>
 </html>
