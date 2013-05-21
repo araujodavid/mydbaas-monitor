@@ -31,7 +31,8 @@
 	  				<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
 	  				
 	  				<label class="text-info" for="type">DBMS Type:</label>
-	  				<select id="type" name="entity.type" style="width:284px;">
+	  				<select id="type" name="entity.type" style="width:284px;">	  					
+	  					<option value="select" <c:if test="${entity.type.equals('select')}">selected="selected"</c:if>>Select one</option>
 						<option value="Mysql" <c:if test="${entity.type.equals('MySQL')}">selected="selected"</c:if>>MySQL</option>
 						<option value="PostgreSQL" <c:if test="${entity.type.equals('PostgreSQL')}">selected="selected"</c:if>>PostgreSQL</option>
 	  				</select>

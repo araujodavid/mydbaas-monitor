@@ -202,7 +202,7 @@
 		</div>
 		
 		<!-- Modal New DBMS -->
- 		<form method="post" action="<c:url value="/dbms/add"/>" id="myModalNewDBMS" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 		<form method="post" action="<c:url value="/dbmss/add"/>" id="myModalNewDBMS" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	 		<div class="modal-header">
     			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     			<h3 id="myModalLabel"><img src="/mydbaasmonitor/img/new_database.png"> New DBMS</h3>
@@ -210,7 +210,7 @@
   			<div class="modal-body">	  				
 				<fieldset>			
 	  				<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
-	  				<input name="entity.host" id="host" type="hidden" value="${virtualMachine.host}" />
+	  				<input name="entity.address" id="address" type="hidden" value="${virtualMachine.address}" />
 	  				
 	  				<label class="text-info" for="type">DBMS Type:</label>
 	  				<select id="type" name="entity.type" style="width:284px;">
