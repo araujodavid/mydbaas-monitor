@@ -39,7 +39,7 @@
         			 			
 		            <div class="accordion" id="accordion2">
 		            	<c:forEach items="${dBaaSList}" var="dbaas">
-		            		<c:if test="${!dbaas.machines.isEmpty()}">
+		            		<c:if test="${!dbaas.hosts.isEmpty() || !dbaas.machines.isEmpty()}">
 	  							<div class="accordion-group">
 	    							<div class="accordion-heading">
 	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbaas.id}">
@@ -47,11 +47,20 @@
 	     	 							</a>	     	 							
 	    							</div>
 	    							<div id="collapse${dbaas.id}" class="accordion-body collapse">
-	    								<c:forEach items="${dbaas.machines}" var="machine">
-		   									<div class="accordion-inner">
-		   										 <a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a>    									
-		     								</div>
-	     								</c:forEach>  								
+	    								<c:if test="${!dbaas.hosts.isEmpty()}">
+		    								<c:forEach items="${dbaas.hosts}" var="host">
+			   									<div class="accordion-inner">
+			   										 <a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a>    									
+			     								</div>
+		     								</c:forEach>
+	     								</c:if>
+	     								<c:if test="${!dbaas.machines.isEmpty()}">
+		    								<c:forEach items="${dbaas.machines}" var="machine">
+			   									<div class="accordion-inner">
+			   										 <a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a>    									
+			     								</div>
+		     								</c:forEach>
+	     								</c:if>							
 	    							</div>
 	  							</div>
 	  						</c:if>
@@ -76,11 +85,12 @@
 		            <div class="row-fluid">
 		            	
 		            	<c:forEach items="${highlightsDBaaS}" var="highlight">
-		            		<c:if test="${!highlight.machines.isEmpty()}">
+		            		<c:if test="${!highlight.hosts.isEmpty() || !highlight.machines.isEmpty()}">
 				                <div class="span4">
 				                    <h3 class="text-info">${highlight.alias}</h3>
 				                    <p>
-				                    	<strong>Amount of machines:</strong> ${highlight.machines.size()}
+				                    	<strong>Hosts:</strong> ${highlight.hosts.size()}<br>
+				                    	<strong>Virtual Machines:</strong> ${highlight.machines.size()}
 				                    </p>
 				                    <p><a class="btn" href="<c:url value="/dbaas/view/${highlight.id}"/>">About &raquo;</a></p>
 				                </div><!--/span-->
@@ -90,7 +100,7 @@
 		            
 		            <div class="hero" style="margin-top:50px;">
 		            	<legend>
-        					<img src="/mydbaasmonitor/img/table.png"> <strong>List of Database-as-a-Service</strong>
+        					<img src="/mydbaasmonitor/img/table.png"> <strong>Others Database-as-a-Service</strong>
         				</legend>
 		            	<table class="table table-striped">
   							<thead>
@@ -103,21 +113,29 @@
 							    </tr>
   							</thead>
   							<tbody>
-  								<c:forEach items="${allDBaaS}" var="dbaas">
+  								<c:forEach items="${restDBaaS}" var="dbaas">
     								<tr>    								
 								      	<td>
 								      		<span class="badge badge-inverse">${dbaas.id}</span>
 								      	</td>
-								      	<td>${dbaas.alias}</td>
+								      	<td>
+								      		<a href="<c:url value="/dbaas/view/${dbaas.id}"/>" title="Click here to view more detail of the DBaaS.">${dbaas.alias}</a>
+								      	</td>
 								      	<td>${dbaas.recordDate}</td>
 								      	<td>${dbaas.description}</td>								      	
 								      	<td>
 											<a href="<c:url value="/dbaas/view/${dbaas.id}"/>" title="Click here to view more detail of the DBaaS.">About</a>
 								      	</td>						
     								</tr>
-    							</c:forEach>
+    							</c:forEach>							
   							</tbody>
 						</table>
+						<c:if test="${restDBaaS.isEmpty()}">
+							<div class="alert">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There are no others <strong>DBaaS</strong>.
+							</div>
+						</c:if>
 		            </div>        
         		</div><!--/span-->
     		</div><!--/row-->
