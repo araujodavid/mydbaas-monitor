@@ -43,7 +43,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<th>Amount</th>
+								<th>VM</th>
 								<th>${amountActive}</th>
 								<th>${amountNotActive}</th>
 								<th>${amountWithHost}</th>
