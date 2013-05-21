@@ -54,7 +54,7 @@ public class HostRepository implements GenericRepository<Host> {
 		ArrayList<Host> hostList = new ArrayList<Host>();
 		try {
 			connection = Pool.getConnection(Pool.JDBC_MySQL);
-			preparedStatement = connection.prepareStatement("select * from virtual_machine where `dbaas` = ? order by `id`;");
+			preparedStatement = connection.prepareStatement("select * from `host` where `dbaas` = ? order by `id`;");
 			
 			preparedStatement.setInt(1, dbaasId);
 						
