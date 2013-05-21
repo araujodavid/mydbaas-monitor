@@ -30,7 +30,28 @@
         			<div align="left">
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/hosts/new" title=""><i class="icon-plus icon-white"></i> Host</a>
         			</div>     
-        			<div id="container-pizza" style="margin-top:20px;"></div>     			
+        			<div id="container-summary" style="margin-top:20px;"></div>
+        			<table id="datatable" class="table table-bordered table-condensed">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Active</th>
+								<th>Not Active</th>
+								<th>w/ Host</th>
+								<th>w/o Host</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>VM</th>
+								<th>${amountActive}</th>
+								<th>${amountNotActive}</th>
+								<th>${amountWithHost}</th>
+								<th>${amountWithoutHost}</th>
+							</tr>
+						</tbody>
+					</table> 			
+        		     			
         		</div><!--/span-->
         		
         		<div class="span9">
@@ -99,59 +120,36 @@
 	  	
 	  	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
-    	<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-		<script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-		<script>
-		$(function () {
-		    var chart;
-		    
+		<script type="text/javascript">
 		    $(document).ready(function () {
 		    	
-		    	// Build the chart
-		        $('#container-pizza').highcharts({
+		    	$('#container-summary').highcharts({
+		            data: {
+		                table: document.getElementById('datatable')
+		            },
 		            chart: {
-		                plotBackgroundColor: null,
-		                plotBorderWidth: null,
-		                plotShadow: false
+		                type: 'column'
 		            },
 		            title: {
-		                text: 'Hosts Status'
+		                text: 'Host Status'
 		            },
-		            tooltip: {
-		        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-		            	percentageDecimals: 1
-		            },
-		            plotOptions: {
-		                pie: {
-		                    allowPointSelect: true,
-		                    cursor: 'pointer',
-		                    dataLabels: {
-		                        enabled: false
-		                    },
-		                    showInLegend: true
+		            yAxis: {
+		                allowDecimals: false,
+		                title: {
+		                    text: 'Units'
 		                }
 		            },
-		            series: [{
-		                type: 'pie',
-		                name: 'Browser share',
-		                data: [
-		                    ['Firefox',   45.0],
-		                    ['IE',       26.8],
-		                    {
-		                        name: 'Chrome',
-		                        y: 12.8,
-		                        sliced: true,
-		                        selected: true
-		                    },
-		                    ['Safari',    8.5],
-		                    ['Opera',     6.2],
-		                    ['Others',   0.7]
-		                ]
-		            }]
+		            tooltip: {
+		                formatter: function() {
+		                    return '<b>'+ this.series.name +'</b><br/>'+
+		                        this.y +' '+ this.x.toLowerCase();
+		                }
+		            }
 		        });
 		    });
-		    
-		});
-		</script>	  	
+		</script>	      
+		<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    	<script src="http://code.highcharts.com/modules/data.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>	
 	</body>
 </html>

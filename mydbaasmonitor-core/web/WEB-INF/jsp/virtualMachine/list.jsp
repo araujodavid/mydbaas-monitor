@@ -131,11 +131,7 @@
 	  	
 	  	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
-		<script>
-		$(function () {
-			
-		    var chart;
-		    
+		<script type="text/javascript">
 		    $(document).ready(function () {
 		    	
 		    	$('#container-summary').highcharts({
@@ -162,130 +158,119 @@
 		            }
 		        });
 		    	
-		    	
-		    	
-		    	
-	    	var seriesOptions = [],
-			yAxisOptions = [],
-			seriesCounter = 0,
-			names = ['MSFT', 'AAPL', 'GOOG'],
-			colors = Highcharts.getOptions().colors;
 
-			$.each(names, function(i, name) {
-
-				$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename='+ name.toLowerCase() +'-c.json&callback=?',	function(data) {
-
-					seriesOptions[i] = {
-						name: name,
-						data: data
-					};
-
-					// As we're loading the data asynchronously, we don't know what order it will arrive. So
-					// we keep a counter and create the chart when all the data is loaded.
-					seriesCounter++;
-
-					if (seriesCounter == names.length) {
-						createChart();
-						createChart2();
-					}
+		    	var seriesOptions = [],
+				yAxisOptions = [],
+				seriesCounter = 0,
+				names = ['MSFT', 'AAPL', 'GOOG'],
+				colors = Highcharts.getOptions().colors;
+	
+				$.each(names, function(i, name) {
+	
+					$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename='+ name.toLowerCase() +'-c.json&callback=?',	function(data) {
+	
+						seriesOptions[i] = {
+							name: name,
+							data: data
+						};
+	
+						// As we're loading the data asynchronously, we don't know what order it will arrive. So
+						// we keep a counter and create the chart when all the data is loaded.
+						seriesCounter++;
+	
+						if (seriesCounter == names.length) {
+							createChart();
+							createChart2();
+						}
+					});
 				});
-			});
 
 
 
-			// create the chart when all data is loaded
-			function createChart() {
-
-				$('#memory_all').highcharts('StockChart', {
-				    chart: {
-				    },
-
-				    rangeSelector: {
-				        selected: 4
-				    },
-
-				    yAxis: {
-				    	labels: {
-				    		formatter: function() {
-				    			return (this.value > 0 ? '+' : '') + this.value + '%';
-				    		}
-				    	},
-				    	plotLines: [{
-				    		value: 0,
-				    		width: 2,
-				    		color: 'silver'
-				    	}]
-				    },
-				    
-				    plotOptions: {
-				    	series: {
-				    		compare: 'percent'
-				    	}
-				    },
-				    
-				    tooltip: {
-				    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-				    	valueDecimals: 2
-				    },
-				    
-				    series: seriesOptions
-				});
-			}
+				// create the chart when all data is loaded
+				function createChart() {
+	
+					$('#memory_all').highcharts('StockChart', {
+					    chart: {
+					    },
+	
+					    rangeSelector: {
+					        selected: 4
+					    },
+	
+					    yAxis: {
+					    	labels: {
+					    		formatter: function() {
+					    			return (this.value > 0 ? '+' : '') + this.value + '%';
+					    		}
+					    	},
+					    	plotLines: [{
+					    		value: 0,
+					    		width: 2,
+					    		color: 'silver'
+					    	}]
+					    },
+					    
+					    plotOptions: {
+					    	series: {
+					    		compare: 'percent'
+					    	}
+					    },
+					    
+					    tooltip: {
+					    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+					    	valueDecimals: 2
+					    },
+					    
+					    series: seriesOptions
+					});
+				}
 			
 			
 			
-			// create the chart when all data is loaded
-			function createChart2() {
-
-				$('#cpu_all').highcharts('StockChart', {
-				    chart: {
-				    },
-
-				    rangeSelector: {
-				        selected: 4
-				    },
-
-				    yAxis: {
-				    	labels: {
-				    		formatter: function() {
-				    			return (this.value > 0 ? '+' : '') + this.value + '%';
-				    		}
-				    	},
-				    	plotLines: [{
-				    		value: 0,
-				    		width: 2,
-				    		color: 'silver'
-				    	}]
-				    },
-				    
-				    plotOptions: {
-				    	series: {
-				    		compare: 'percent'
-				    	}
-				    },
-				    
-				    tooltip: {
-				    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-				    	valueDecimals: 2
-				    },
-				    
-				    series: seriesOptions
-				});
-			}
-		    	
-		    	
-	    	
-		    	
-		    	
-		    	
-		    	
+				// create the chart when all data is loaded
+				function createChart2() {
+	
+					$('#cpu_all').highcharts('StockChart', {
+					    chart: {
+					    },
+	
+					    rangeSelector: {
+					        selected: 4
+					    },
+	
+					    yAxis: {
+					    	labels: {
+					    		formatter: function() {
+					    			return (this.value > 0 ? '+' : '') + this.value + '%';
+					    		}
+					    	},
+					    	plotLines: [{
+					    		value: 0,
+					    		width: 2,
+					    		color: 'silver'
+					    	}]
+					    },
+					    
+					    plotOptions: {
+					    	series: {
+					    		compare: 'percent'
+					    	}
+					    },
+					    
+					    tooltip: {
+					    	pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+					    	valueDecimals: 2
+					    },
+					    
+					    series: seriesOptions
+					});
+				}	    	
 		    });
-		    
-		});
 		</script>
-		
-		<script src="http://code.highcharts.com/stock/highstock.js"></script>
-		<script src="http://code.highcharts.com/modules/data.js"></script>
-		<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+		<script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
+		<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+    	<script src="http://code.highcharts.com/modules/data.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>	
 	</body>
 </html>
