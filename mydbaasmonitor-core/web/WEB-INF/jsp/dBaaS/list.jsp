@@ -88,6 +88,7 @@
 		            		<c:if test="${!highlight.hosts.isEmpty() || !highlight.machines.isEmpty()}">
 				                <div class="span4">
 				                    <h3 class="text-info">${highlight.alias}</h3>
+				                    <div class="dbaas_div" id="${highlight.id}" style="width: 350px; height: 200px; margin: 0 auto"></div>
 				                    <p>
 				                    	<strong>Hosts:</strong> ${highlight.hosts.size()}<br>
 				                    	<strong>Virtual Machines:</strong> ${highlight.machines.size()}
@@ -172,5 +173,61 @@
 	  	<!-- JS -->
 	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/highcharts/highcharts.js"></script>
+    	<script src="${pageContext.servletContext.contextPath}/js/highcharts/modules/exporting.js"></script>
+    	<script type="text/javascript">
+    	$(function () {
+            $('.dbaas_div').highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'DBaaS Status'
+                },
+                xAxis: {
+                    categories: ['DBaaS'],
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Amount',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: 'units'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Host',
+                    data: [107]
+                }, {
+                    name: 'VM',
+                    data: [133]
+                },{
+                    name: 'DBMS',
+                    data: [933]
+                } ,{
+                    name: 'Database',
+                    data: [973]
+                }]
+            });
+        });
+    	</script>
 	</body>
 </html>
