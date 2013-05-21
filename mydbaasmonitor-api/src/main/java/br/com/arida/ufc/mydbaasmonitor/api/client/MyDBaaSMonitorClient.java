@@ -15,6 +15,11 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.DatabasePool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.HostPool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.VirtualMachinePool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.api.util.SendResquest;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 
 /**
  * Class that handles the access information to the server.
@@ -94,8 +99,19 @@ public class MyDBaaSMonitorClient {
 	}
 	
 	public HostPool getMyHosts() {
-		HostPool pool = new HostPool();
-		//TODO
+		HttpResponse response;
+		String json = null;
+		try {
+			response = SendResquest.postRequest(this.serverUrl+"/pool/hosts", null);
+			json = SendResquest.getJsonResult(response);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		Gson gson = new Gson();
+		HostPool pool = gson.fromJson(json, HostPool.class);
+		pool.setClient(this);
 		return pool;
 	}
 	
@@ -150,8 +166,38 @@ public class MyDBaaSMonitorClient {
 		return pool;	
 	}
 	
-	public Object resourceLookupByID(int id, String resourceType) {
-		//TODO
+	public Object resourceLookupByID(int resourceId, String resourceType) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("resourceId", String.valueOf(resourceId)));
+		params.add(new BasicNameValuePair("resourceType", resourceType));
+		HttpResponse response;
+		String json = null;
+		try {
+			response = SendResquest.postRequest(this.serverUrl+"/resource/find", params);
+			json = SendResquest.getJsonResult(response);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		switch (resourceType) {
+		case "dbaas":
+			DBaaS dBaaS = gson.fromJson(json, DBaaS.class);
+			return dBaaS;
+		case "host":
+			Host host = gson.fromJson(json, Host.class);
+			return host;
+		case "machine":
+			VirtualMachine virtualMachine = gson.fromJson(json, VirtualMachine.class);
+			return virtualMachine;
+		case "dbms":
+			DBMS dbms = gson.fromJson(json, DBMS.class);
+			return dbms;
+		case "database":
+			Database database = gson.fromJson(json, Database.class);
+			return database;
+		}
 		return null;
 	}
 
