@@ -9,6 +9,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DBaaSComparator;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.Path;
@@ -29,10 +31,14 @@ import br.com.caelum.vraptor.validator.Validations;
 public class DBaaSController extends AbstractController implements GenericController<DBaaS> {
 
 	private DBaaSRepository repository;
+	private HostRepository hostRepository;
+	private VirtualMachineRepository virtualMachineRepository;
 	
-	public DBaaSController(Result result, Validator validator, DBaaSRepository repository) {
+	public DBaaSController(Result result, Validator validator, DBaaSRepository repository, HostRepository hostRepository, VirtualMachineRepository virtualMachineRepository) {
 		super(result, validator);
 		this.repository = repository;
+		this.hostRepository = hostRepository;
+		this.virtualMachineRepository = virtualMachineRepository;
 	}	
 	
 	@Path("/dbaas")
@@ -45,31 +51,64 @@ public class DBaaSController extends AbstractController implements GenericContro
 	@Override
 	public List<DBaaS> list() {		
 		List<DBaaS> dBaaSList = repository.all();
-		List<DBaaS> highlightsDBaaS = new ArrayList<DBaaS>();
-		List<DBaaS> allDBaaS = new ArrayList<>(dBaaSList);
+		for (DBaaS dBaaS : dBaaSList) {
+			dBaaS.setHosts(hostRepository.getDBaaSHosts(dBaaS.getId()));
+			dBaaS.setMachines(virtualMachineRepository.getDBaaSMachines(dBaaS.getId()));
+		}
+		List<DBaaS> highlightsDBaaS = new ArrayList<DBaaS>();		
 		
 		//Sorts DBaaS by their amount of virtual machines registered
 		Collections.sort(dBaaSList, new DBaaSComparator());
 		Collections.reverse(dBaaSList);
 		
+		List<DBaaS> restDBaaS = new ArrayList<>(dBaaSList);
+		
 		//Get the three main DBaaS
 		if (!dBaaSList.isEmpty()) {
 			if (dBaaSList.size() >= 3) {
-				highlightsDBaaS.add(0, dBaaSList.get(0));
-				highlightsDBaaS.add(1, dBaaSList.get(1));
-				highlightsDBaaS.add(2, dBaaSList.get(2));
+				DBaaS dBaaS;
+				dBaaS = dBaaSList.get(0);
+				highlightsDBaaS.add(0, dBaaS);
+				if (!dBaaS.getHosts().isEmpty() || !dBaaS.getMachines().isEmpty()) {
+					restDBaaS.remove(dBaaS);
+				}
+				
+				dBaaS = dBaaSList.get(1);
+				highlightsDBaaS.add(1, dBaaS);
+				if (!dBaaS.getHosts().isEmpty() || !dBaaS.getMachines().isEmpty()) {
+					restDBaaS.remove(dBaaS);
+				}
+				
+				dBaaS = dBaaSList.get(2);
+				highlightsDBaaS.add(2, dBaaS);
+				if (!dBaaS.getHosts().isEmpty() || !dBaaS.getMachines().isEmpty()) {
+					restDBaaS.remove(dBaaS);
+				}
 			} else if (dBaaSList.size() == 2) {
-				highlightsDBaaS.add(0, dBaaSList.get(0));
-				highlightsDBaaS.add(1, dBaaSList.get(1));
+				DBaaS dBaaS;
+				dBaaS = dBaaSList.get(0);
+				highlightsDBaaS.add(0, dBaaS);
+				if (!dBaaS.getHosts().isEmpty() || !dBaaS.getMachines().isEmpty()) {
+					restDBaaS.remove(dBaaS);
+				}
+				
+				dBaaS = dBaaSList.get(1);
+				highlightsDBaaS.add(1, dBaaS);
+				if (!dBaaS.getHosts().isEmpty() || !dBaaS.getMachines().isEmpty()) {
+					restDBaaS.remove(dBaaS);
+				}
 			} else {
-				highlightsDBaaS.add(0, dBaaSList.get(0));
+				DBaaS dBaaS = dBaaSList.get(0);
+				highlightsDBaaS.add(0, dBaaS);
+				if (!dBaaS.getHosts().isEmpty() || !dBaaS.getMachines().isEmpty()) {
+					restDBaaS.remove(dBaaS);
+				}
 			}
 		}
 		
-		
 		result
 		.include("current_date", DataUtil.converteDateParaString(new Date()))
-		.include("allDBaaS", allDBaaS)
+		.include("restDBaaS", restDBaaS)
 		.include("highlightsDBaaS", highlightsDBaaS);
 		return dBaaSList;
 	}
