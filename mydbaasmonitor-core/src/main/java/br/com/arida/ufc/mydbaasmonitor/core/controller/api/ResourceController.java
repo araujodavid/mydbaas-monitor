@@ -106,7 +106,7 @@ public class ResourceController {
 			dBaaS.setMachines(this.virtualMachineRepository.getDBaaSMachines(dBaaS.getId()));
 			result
 			.use(Results.json())
-			.from(dBaaS, "resource")
+			.from(dBaaS, "dBaaS")
 			.include("hosts")
 			.include("machines")
 			.serialize();
@@ -116,7 +116,7 @@ public class ResourceController {
 			host.setMachines(this.virtualMachineRepository.getHostMachines(host.getId()));
 			result
 			.use(Results.json())
-			.from(host, "resource")
+			.from(host, "host")
 			.include("environment")
 			.include("information")
 			.include("machines")
@@ -127,7 +127,7 @@ public class ResourceController {
 			virtualMachine.setDbmsList(this.dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
 			result
 			.use(Results.json())
-			.from(virtualMachine, "resource")
+			.from(virtualMachine, "virtualMachine")
 			.include("environment")
 			.include("host")
 			.include("information")
@@ -139,7 +139,7 @@ public class ResourceController {
 			dbms.setDatabases(this.databaseRepository.getDBMSDatabases(dbms.getId()));
 			result
 			.use(Results.json())
-			.from(dbms, "resource")
+			.from(dbms, "dbms")
 			.include("machine")
 			.include("databases")
 			.serialize();
@@ -148,7 +148,7 @@ public class ResourceController {
 			Database database = this.databaseRepository.find(resourceId);
 			result
 			.use(Results.json())
-			.from(database, "resource")
+			.from(database, "database")
 			.include("dbms")
 			.serialize();
 			break;
