@@ -49,6 +49,10 @@
 		  					<span class="help-block"><em><small>There is no registered hosts. Create a new <a href="<c:url value="/host/new" />">here</a>.</small></em></span>
 		  				</c:if>
 		  				
+		  				<label class="text-info" for="alias">Identifier in Host:</label>
+						<input class="input-xlarge" name="virtualMachine.identifierHost" id="identifier_host" type="text" value="${virtualMachine.identifierHost}" placeholder="Identifier in the hypervisor" />
+						<span class="help-block"><em><small>If the host is using the KVM hypervisor you must inform the ID of the virtual machine.</small></em></span>
+		  				
 		  				<label class="text-info" for="alias">Alias:</label>
 						<input class="input-xlarge" name="virtualMachine.alias" id="alias" type="text" value="${virtualMachine.alias}" placeholder="To better identify the resource" />
 						<span class="help-block"><em><small>Example: VM Project X</small></em></span>
