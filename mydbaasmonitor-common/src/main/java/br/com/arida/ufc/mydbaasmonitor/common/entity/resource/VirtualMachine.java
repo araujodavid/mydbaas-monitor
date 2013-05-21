@@ -19,6 +19,8 @@ public class VirtualMachine extends GenericResource {
 	private Machine information;
 	//enviroment
 	private DBaaS environment;
+	//identifier in host
+	private String identifierHost;
 	//host
 	private Host host;
 	//DBMSs list
@@ -46,6 +48,14 @@ public class VirtualMachine extends GenericResource {
 
 	public void setEnvironment(DBaaS environment) {
 		this.environment = environment;
+	}
+		
+	public String getIdentifierHost() {
+		return identifierHost;
+	}
+
+	public void setIdentifierHost(String identifierHost) {
+		this.identifierHost = identifierHost;
 	}
 
 	public Host getHost() {
