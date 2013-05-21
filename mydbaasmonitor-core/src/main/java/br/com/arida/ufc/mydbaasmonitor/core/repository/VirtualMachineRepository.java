@@ -137,8 +137,8 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"insert into virtual_machine " +
-					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`, `host`) " +
-					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?, ?);");
+					"(`address`, `username`, `port`, `password`, `record_date`, `key`, `description`, `alias`, `status`, `dbaas`, `host`, `identifier_host`) " +
+					"values (?, ?, ?, ?, now(), ?, ?, ?, false, ?, ?, ?);");
 			
 			this.preparedStatement.setString(1, resource.getAddress());
 			this.preparedStatement.setString(2, resource.getUser());
@@ -149,6 +149,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setString(7, resource.getAlias());
 			this.preparedStatement.setInt(8, resource.getEnvironment().getId());
 			this.preparedStatement.setInt(9, resource.getHost().getId());
+			this.preparedStatement.setString(10, resource.getIdentifierHost());
 			
 			this.preparedStatement.executeUpdate();
 		} 
@@ -195,7 +196,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update virtual_machine " +
-					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ?, `dbaas` = ?, `host` = ? " +
+					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ?, `dbaas` = ?, `host` = ? , `identifier_host` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
@@ -206,7 +207,8 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setBoolean(6, resource.getStatus());
 			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
 			this.preparedStatement.setInt(8, resource.getHost().getId());
-			this.preparedStatement.setInt(9, resource.getId());
+			this.preparedStatement.setString(9, resource.getIdentifierHost());
+			this.preparedStatement.setInt(10, resource.getId());
 			
 			this.preparedStatement.executeUpdate();
 		}
@@ -323,6 +325,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		virtualMachine.setAlias(resultSet.getString("alias"));
 		virtualMachine.setStatus(resultSet.getBoolean("status"));
 		virtualMachine.setKey(resultSet.getString("key"));
+		virtualMachine.setIdentifierHost(resultSet.getString("identifier_host"));
 		machine.setMachineOperatingSystem(resultSet.getString("so"));
 		machine.setMachineKernelName(resultSet.getString("kernel_name"));
 		machine.setMachineKernelVersion(resultSet.getString("kernel_version"));
