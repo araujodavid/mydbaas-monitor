@@ -9,5 +9,8 @@ mydbaasmonitor-common/bin/
 mydbaasmonitor-common/build/
 mydbaasmonitor-jdbc/bin/
 mydbaasmonitor-jdbc/build/
+mydbaasframework/bin/
+mydbaasframework/build/
 .metadata/
 Servers/
+
