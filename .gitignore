@@ -1,5 +1,5 @@
-mydbaasmonitor-core/bin/
-mydbaasmonitor-core/build/
+mydbaasmonitor/bin/
+mydbaasmonitor/build/
 mydbaasmonitor-agent/bin/
 mydbaasmonitor-agent/build/
 mydbaasmonitor-agent/src/test/
