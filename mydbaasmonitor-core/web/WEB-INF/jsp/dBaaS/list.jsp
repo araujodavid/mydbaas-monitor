@@ -226,7 +226,7 @@
     	                    data: [host]
     	                }, {
     	                    name: 'VM',
-    	                    data: [machines]
+    	                    data: [machine]
     	                },{
     	                    name: 'DBMS',
     	                    data: [3]
