@@ -181,7 +181,7 @@
     		$(".dbaas_div").each(function(){
     			var host = parseInt($(".infos.hosts."+this.id).text());
     			var machine = parseInt($(".infos.machines."+this.id).text());
-
+				/*Add news parameters */
     			
     			var options = {
     	                chart: {
