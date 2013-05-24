@@ -179,11 +179,9 @@
     	$(function () {
     		$('.infos').hide();
     		$(".dbaas_div").each(function(){
-    			var id = this.id;
-    			var host = $(".infos.hosts."+id).text();
-    			var machine = $(".infos.machines."+id).text();
-    			
-    			console.log("ID: "+id+" HOST:"+host+"MACHINE:"+machine);
+    			var host = parseInt($(".infos.hosts."+this.id).text());
+    			var machine = parseInt($(".infos.machines."+this.id).text());
+
     			
     			var options = {
     	                chart: {
