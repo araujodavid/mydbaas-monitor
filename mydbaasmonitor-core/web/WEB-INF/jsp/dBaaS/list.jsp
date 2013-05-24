@@ -90,8 +90,8 @@
 				                    <h3 class="text-info">${highlight.alias}</h3>
 				                    <div class="dbaas_div" id="${highlight.id}" style="width: 350px; height: 200px; margin: 0 auto"></div>
 				                    <p>
-				                    	<strong>Hosts:</strong> ${highlight.hosts.size()}<br>
-				                    	<strong>Virtual Machines:</strong> ${highlight.machines.size()}
+				                    	<div class="infos hosts ${highlight.id}">${highlight.hosts.size()}</div>
+				                    	<div class="infos machines ${highlight.id}">${highlight.machines.size()}</div>
 				                    </p>
 				                    <p><a class="btn" href="<c:url value="/dbaas/view/${highlight.id}"/>">About &raquo;</a></p>
 				                </div><!--/span-->
@@ -177,56 +177,68 @@
     	<script src="${pageContext.servletContext.contextPath}/js/highcharts/modules/exporting.js"></script>
     	<script type="text/javascript">
     	$(function () {
-            $('.dbaas_div').highcharts({
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'DBaaS Status'
-                },
-                xAxis: {
-                    categories: ['DBaaS'],
-                    title: {
-                        text: null
-                    }
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Amount',
-                        align: 'high'
-                    },
-                    labels: {
-                        overflow: 'justify'
-                    }
-                },
-                tooltip: {
-                    valueSuffix: 'units'
-                },
-                plotOptions: {
-                    bar: {
-                        dataLabels: {
-                            enabled: false
-                        }
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Host',
-                    data: [107]
-                }, {
-                    name: 'VM',
-                    data: [133]
-                },{
-                    name: 'DBMS',
-                    data: [933]
-                } ,{
-                    name: 'Database',
-                    data: [973]
-                }]
-            });
+    		$('.infos').hide();
+    		$(".dbaas_div").each(function(){
+    			var id = this.id;
+    			var host = $(".infos.hosts."+id).text();
+    			var machine = $(".infos.machines."+id).text();
+    			
+    			console.log("ID: "+id+" HOST:"+host+"MACHINE:"+machine);
+    			
+    			var options = {
+    	                chart: {
+    	                    type: 'bar'
+    	                },
+    	                title: {
+    	                    text: 'DBaaS Status'
+    	                },
+    	                xAxis: {
+    	                    categories: ['DBaaS'],
+    	                    title: {
+    	                        text: null
+    	                    }
+    	                },
+    	                yAxis: {
+    	                    min: 0,
+    	                    title: {
+    	                        text: 'Amount',
+    	                        align: 'high'
+    	                    },
+    	                    labels: {
+    	                        overflow: 'justify'
+    	                    }
+    	                },
+    	                tooltip: {
+    	                    valueSuffix: 'units'
+    	                },
+    	                plotOptions: {
+    	                    bar: {
+    	                        dataLabels: {
+    	                            enabled: false
+    	                        }
+    	                    }
+    	                },
+    	                credits: {
+    	                    enabled: false
+    	                },
+    	                series: [{
+    	                    name: 'Host',
+    	                    data: [host]
+    	                }, {
+    	                    name: 'VM',
+    	                    data: [machines]
+    	                },{
+    	                    name: 'DBMS',
+    	                    data: [3]
+    	                } ,{
+    	                    name: 'Database',
+    	                    data: [1]
+    	                }]
+    	            };
+    			
+    			
+    			$("#"+this.id).highcharts(options);  
+    		});
         });
     	</script>
 	</body>
