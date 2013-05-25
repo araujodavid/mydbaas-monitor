@@ -228,7 +228,7 @@
     	                    }
     	                },
     	                tooltip: {
-    	                    valueSuffix: 'resource(s)'
+    	                    valueSuffix: ' resource(s)'
     	                },
     	                plotOptions: {
     	                    bar: {
@@ -241,17 +241,17 @@
     	                    enabled: false
     	                },
     	                series: [{
-    	                    name: 'Databases',
-    	                    data: [database]
-    	                }, {
-    	                    name: 'DBMSs',
-    	                    data: [dbms]
-    	                },{
-    	                    name: 'VMs',
-    	                    data: [machine]
-    	                } ,{
     	                    name: 'Hosts',
     	                    data: [host]
+    	                }, {
+    	                    name: 'VMs',
+    	                    data: [machine]
+    	                },{
+    	                    name: 'DBMSs',
+    	                    data: [dbms]
+    	                } ,{
+    	                    name: 'Databases',
+    	                    data: [database]
     	                }]
     	            };    			
     			$("#"+this.id).highcharts(options);  
