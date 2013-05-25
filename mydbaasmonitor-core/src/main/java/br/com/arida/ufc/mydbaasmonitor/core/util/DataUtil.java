@@ -30,7 +30,7 @@ public abstract class DataUtil {
 	           
 	        String date = null;   
 	        try {   
-	            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+	            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
 	            date = formatter.format(data);   
 	        } catch (Exception e) {               
 	            System.err.println(e.getMessage());
