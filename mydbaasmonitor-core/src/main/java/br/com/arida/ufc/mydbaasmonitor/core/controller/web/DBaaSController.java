@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBaaSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.HostRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DBaaSComparator;
@@ -33,12 +39,16 @@ public class DBaaSController extends AbstractController implements GenericContro
 	private DBaaSRepository repository;
 	private HostRepository hostRepository;
 	private VirtualMachineRepository virtualMachineRepository;
+	private DBMSRepository dbmsRepository;
+	private DatabaseRepository databaseRepository;
 	
-	public DBaaSController(Result result, Validator validator, DBaaSRepository repository, HostRepository hostRepository, VirtualMachineRepository virtualMachineRepository) {
+	public DBaaSController(Result result, Validator validator, DBaaSRepository repository, HostRepository hostRepository, VirtualMachineRepository virtualMachineRepository, DBMSRepository dbmsRepository, DatabaseRepository databaseRepository) {
 		super(result, validator);
 		this.repository = repository;
 		this.hostRepository = hostRepository;
 		this.virtualMachineRepository = virtualMachineRepository;
+		this.dbmsRepository = dbmsRepository;
+		this.databaseRepository = databaseRepository;
 	}	
 	
 	@Path("/dbaas")
@@ -104,6 +114,18 @@ public class DBaaSController extends AbstractController implements GenericContro
 					restDBaaS.remove(dBaaS);
 				}
 			}
+		}
+		
+		//Get the DBMSs and Databases of the main DBaaS
+		for (DBaaS dBaaS : dBaaSList) {
+			dBaaS.setDbmss(new ArrayList<DBMS>());
+			dBaaS.setDatabases(new ArrayList<Database>());
+			for (VirtualMachine virtualMachine : dBaaS.getMachines()) {
+				dBaaS.getDbmss().addAll(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
+				for (DBMS dbms : dBaaS.getDbmss()) {
+					dBaaS.getDatabases().addAll(databaseRepository.getDBMSDatabases(dbms.getId()));
+				}
+			}			
 		}
 		
 		result
