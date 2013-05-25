@@ -131,7 +131,7 @@ public class DBaaSRepository implements GenericRepository<DBaaS> {
 		dBaaS.setId(resultSet.getInt("id"));
 		dBaaS.setAlias(resultSet.getString("alias"));
 		dBaaS.setDescription(resultSet.getString("description"));
-		dBaaS.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
+		dBaaS.setRecordDate(DataUtil.converteDateParaString(resultSet.getTimestamp("record_date")));
 		return dBaaS;
 	}//getEntity()
 

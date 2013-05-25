@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.common.GenericRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import br.com.caelum.vraptor.ioc.Component;
 
 /**
@@ -81,8 +83,16 @@ public class DatabaseRepository implements GenericRepository<Database> {
 	
 	@Override
 	public Database getEntity(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Database database = new Database();
+		DBMS dbms = new DBMS();
+		database.setId(resultSet.getInt("id"));
+		database.setAlias(resultSet.getString("alias"));
+		database.setRecordDate(DataUtil.converteDateParaString(resultSet.getTimestamp("record_date")));
+		database.setDescription(resultSet.getString("description"));
+		database.setName(resultSet.getString("name"));
+		dbms.setId(resultSet.getInt("dbms"));
+		database.setDbms(dbms);
+		return database;
 	}
 	
 }

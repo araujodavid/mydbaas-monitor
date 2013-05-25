@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +24,9 @@ import br.com.caelum.vraptor.ioc.Component;
 
 @Component
 public class MetricRepository {
+	
+	public static final int ALL_COLLECTION = 0;
+	public static final int LAST_COLLECTION = 1;
 	
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
@@ -129,7 +133,7 @@ public class MetricRepository {
 	}//createMetricTable()
 	
 	/**
-	 * Method to recover the fields of a given metric
+	 * Method to recover the fields of a given metric object
 	 * @param metric - given metric object
 	 * @return the list of class fields
 	 */
@@ -141,6 +145,19 @@ public class MetricRepository {
 		fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
 		
 		return fields;
+	}//getMetricFields()
+	
+	/**
+	 * Method to recover the fields of a given metric class
+	 * @param metricClass - given metric class
+	 * @return the list of class fields
+	 */
+	public List<String> getMetricTableFields(Class<?> metricClass) {
+		List<String> tableFields = new ArrayList<String>();	
+		for (Field metricField : metricClass.getDeclaredFields()) {
+			tableFields.add(metricField.getName().toLowerCase().replaceAll(metricClass.getSimpleName().toLowerCase(), ""));
+		}		
+		return tableFields;
 	}//getMetricFields()
 	
 	/**
@@ -264,4 +281,154 @@ public class MetricRepository {
         }
 		return tables;		
 	}//getTables()
+	
+	/**
+	 * Method to perform queries that return only one tuple.
+	 * @param sql
+	 * @param metricClass
+	 * @return an filled object of a given metric
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 */
+	public Object queryMetric(String sql, Class<?> metricClass) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+		Object objectMetric = null;
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement(sql);
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				objectMetric = getMetricEntity(metricClass, resultSet);	
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return metricClass.cast(objectMetric);
+	}//findMetric()
+	
+	/**
+	 * Method to perform queries that return multiple tuples.
+	 * @param sql
+	 * @param metricClass
+	 * @return returns a list of filled objects of a given metric
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 */
+	public List<Object> queryMetrics(String sql, Class<?> metricClass) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+		ArrayList<Object> listMetrics = new ArrayList<Object>();
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement(sql);
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Object objectMetric = getMetricEntity(metricClass, resultSet);
+				listMetrics.add(metricClass.cast(objectMetric));
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return listMetrics;
+	}//listMetrics()
+	
+	public String makeQuerySQL(Class<?> metricClass, int resourceID, String resourceType, int queryType, String startDatetime, String endDatetime) throws ClassNotFoundException {
+		StringBuilder sql = new StringBuilder();
+		String metricTable = metricClass.getSimpleName().toLowerCase()+"_metric";
+		//Add the table name into query
+		sql.append("select * from `"+metricTable+"`\n");
+		//Add the owner of the metric
+		switch (resourceType) {
+		case "dbms":
+			sql.append("where dbms = "+resourceID+"\n");
+			break;
+		case "database":
+			sql.append("where database = "+resourceID+"\n");
+			break;
+		default:
+			sql.append("where identifier = "+resourceID+"\n");
+			break;
+		}		
+		//
+		switch (queryType) {
+		//All collection
+		case 0:
+			if ((startDatetime != null && !startDatetime.trim().isEmpty()) && (endDatetime != null && !endDatetime.trim().isEmpty())) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') between '"+startDatetime+"' and '"+endDatetime+"'\n");
+			} else if ((startDatetime != null && !startDatetime.trim().isEmpty()) && endDatetime == null) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') > '"+startDatetime+"'\n");
+			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
+			}
+			sql.append("order by id");
+			break;
+		//Last collection
+		case 1:
+			if ((startDatetime != null && !startDatetime.trim().isEmpty()) && (endDatetime != null && !endDatetime.trim().isEmpty())) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') between '"+startDatetime+"' and '"+endDatetime+"'\n");
+			} else if ((startDatetime != null && !startDatetime.trim().isEmpty()) && endDatetime == null) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') > '"+startDatetime+"'\n");
+			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
+			}
+			sql.append("order by id desc\n")
+			   .append("limit 1");
+			break;
+		}		
+		//Query end
+		sql.append(";");
+		return sql.toString();
+	}
+	
+	/**
+	 * Method that takes a class of metric and a resultset and returns an object of this metric with the fields filled in accordance with the resultset.
+	 * @param metricClass
+	 * @param resultSet
+	 * @return an filled object of a given metric
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
+	public Object getMetricEntity(Class<?> metricClass, ResultSet resultSet) throws SQLException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+		Object metric = metricClass.newInstance();
+		List<Field> fields = this.getMetricFields(metric);
+		for (Field field : fields) {
+			Method method;
+			if (field.getName().toLowerCase().contains(metricClass.getSimpleName().toLowerCase())) {
+				method = metricClass.getDeclaredMethod("set"+StringUtils.capitalize(field.getName()), field.getType());
+				method.invoke(metric, field.getType().cast(resultSet.getObject(field.getName().toLowerCase().replaceAll(metricClass.getSimpleName().toLowerCase(), ""))));
+			}			
+		}
+		Method methodSetRecordDate = metricClass.getDeclaredMethod("setRecordDate", Timestamp.class);
+		methodSetRecordDate.invoke(metric, resultSet.getTimestamp("record_date"));
+		return metric;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

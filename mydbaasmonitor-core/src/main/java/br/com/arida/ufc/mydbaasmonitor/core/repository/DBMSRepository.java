@@ -170,7 +170,7 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 		VirtualMachine virtualMachine = new VirtualMachine();
 		dbms.setId(resultSet.getInt("id"));
 		dbms.setAlias(resultSet.getString("alias"));
-		dbms.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
+		dbms.setRecordDate(DataUtil.converteDateParaString(resultSet.getTimestamp("record_date")));
 		dbms.setDescription(resultSet.getString("description"));
 		dbms.setAddress(resultSet.getString("address"));
 		dbms.setPort(resultSet.getInt("port"));

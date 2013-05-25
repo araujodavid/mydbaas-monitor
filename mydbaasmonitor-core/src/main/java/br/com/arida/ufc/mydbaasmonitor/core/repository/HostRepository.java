@@ -221,7 +221,7 @@ public class HostRepository implements GenericRepository<Host> {
 		HostInfo hostInfo = new HostInfo();
 		DBaaS dBaaS = new DBaaS();
 		host.setId(resultSet.getInt("id"));
-		host.setRecordDate(DataUtil.converteDateParaString(resultSet.getDate("record_date")));
+		host.setRecordDate(DataUtil.converteDateParaString(resultSet.getTimestamp("record_date")));
 		host.setAlias(resultSet.getString("alias"));
 		host.setDescription(resultSet.getString("description"));
 		host.setAddress(resultSet.getString("address"));
