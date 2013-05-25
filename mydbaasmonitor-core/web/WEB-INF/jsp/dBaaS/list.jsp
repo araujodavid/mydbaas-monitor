@@ -48,19 +48,37 @@
 	    							</div>
 	    							<div id="collapse${dbaas.id}" class="accordion-body collapse">
 	    								<c:if test="${!dbaas.hosts.isEmpty()}">
-		    								<c:forEach items="${dbaas.hosts}" var="host">
-			   									<div class="accordion-inner">
-			   										 <a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a>    									
-			     								</div>
-		     								</c:forEach>
+	    									<div class="accordion-inner">
+	    										<strong>Hosts:</strong><br>
+		    									<c:forEach items="${dbaas.hosts}" var="host">
+			   										<a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a>    									
+			     								</c:forEach>
+			     							</div>
 	     								</c:if>
 	     								<c:if test="${!dbaas.machines.isEmpty()}">
-		    								<c:forEach items="${dbaas.machines}" var="machine">
-			   									<div class="accordion-inner">
-			   										 <a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a>    									
-			     								</div>
-		     								</c:forEach>
-	     								</c:if>							
+	     									<div class="accordion-inner">
+	     										<strong>Virtual Machines:</strong><br>
+			    								<c:forEach items="${dbaas.machines}" var="machine">
+				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a><br>	     								
+			     								</c:forEach>
+		     								</div>
+	     								</c:if>	
+	     								<c:if test="${!dbaas.dbmss.isEmpty()}">
+	     									<div class="accordion-inner">
+	     										<strong>DBMSs:</strong><br>
+			    								<c:forEach items="${dbaas.dbmss}" var="dbms">
+				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/dbmss/view/${dbms.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${dbms.alias}</a><br>	     								
+			     								</c:forEach>
+		     								</div>
+	     								</c:if>
+	     								<c:if test="${!dbaas.databases.isEmpty()}">
+	     									<div class="accordion-inner">
+	     										<strong>Databases:</strong><br>
+			    								<c:forEach items="${dbaas.databases}" var="database">
+				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/databases/view/${database.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${database.alias}</a><br>	     								
+			     								</c:forEach>
+		     								</div>
+	     								</c:if>						
 	    							</div>
 	  							</div>
 	  						</c:if>
@@ -92,6 +110,8 @@
 				                    <p>
 				                    	<div class="infos hosts ${highlight.id}">${highlight.hosts.size()}</div>
 				                    	<div class="infos machines ${highlight.id}">${highlight.machines.size()}</div>
+				                    	<div class="infos dbmss ${highlight.id}">${highlight.dbmss.size()}</div>
+				                    	<div class="infos databases ${highlight.id}">${highlight.databases.size()}</div>
 				                    </p>
 				                    <p><a class="btn" href="<c:url value="/dbaas/view/${highlight.id}"/>">About &raquo;</a></p>
 				                </div><!--/span-->
@@ -181,8 +201,9 @@
     		$(".dbaas_div").each(function(){
     			var host = parseInt($(".infos.hosts."+this.id).text());
     			var machine = parseInt($(".infos.machines."+this.id).text());
-				/*Add news parameters */
-    			
+    			var dbms = parseInt($(".infos.dbmss."+this.id).text());
+    			var database = parseInt($(".infos.databases."+this.id).text());
+				/*Add news parameters */    			
     			var options = {
     	                chart: {
     	                    type: 'bar'
@@ -207,7 +228,7 @@
     	                    }
     	                },
     	                tooltip: {
-    	                    valueSuffix: 'units'
+    	                    valueSuffix: 'resource(s)'
     	                },
     	                plotOptions: {
     	                    bar: {
@@ -220,21 +241,19 @@
     	                    enabled: false
     	                },
     	                series: [{
-    	                    name: 'Host',
-    	                    data: [host]
+    	                    name: 'Databases',
+    	                    data: [database]
     	                }, {
-    	                    name: 'VM',
-    	                    data: [machine]
+    	                    name: 'DBMSs',
+    	                    data: [dbms]
     	                },{
-    	                    name: 'DBMS',
-    	                    data: [3]
+    	                    name: 'VMs',
+    	                    data: [machine]
     	                } ,{
-    	                    name: 'Database',
-    	                    data: [1]
+    	                    name: 'Hosts',
+    	                    data: [host]
     	                }]
-    	            };
-    			
-    			
+    	            };    			
     			$("#"+this.id).highcharts(options);  
     		});
         });
