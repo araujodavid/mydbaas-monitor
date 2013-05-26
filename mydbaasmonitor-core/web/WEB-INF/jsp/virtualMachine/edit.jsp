@@ -147,7 +147,8 @@
 	 	
 	 	<script src="http://code.jquery.com/jquery-latest.js"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
-    	    	<script type="text/javascript">
+    	
+    	<script type="text/javascript">
     		function verifyHost(){
     			if( $("#hosts option:selected").text() == "Without Host"){
     				$('#div_identifier_host').hide();
