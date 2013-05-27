@@ -46,7 +46,7 @@
 		  				</select>
 		  				
 		  				<label class="text-info" for="host">Host:</label>
-		  				<select id="host" name="virtualMachine.host.id" style="width:284px;">
+		  				<select id="hosts" name="virtualMachine.host.id" style="width:284px;">
 		  					<c:if test="${virtualMachine.host.id == 0}">
 			  					<option value="0" selected="selected">Without Host</option>
 			  					<c:forEach var="host" items="${availableHosts}">
@@ -152,6 +152,7 @@
     		function verifyHost(){
     			if( $("#hosts option:selected").text() == "Without Host"){
     				$('#div_identifier_host').hide();
+    				$("#identifier_host").val("")
     			}else{
     				$('#div_identifier_host').show();
     			}

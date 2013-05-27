@@ -105,6 +105,7 @@
     		function verifyHost(){
     			if( $("#hosts option:selected").text() == "Without Host"){
     				$('#div_identifier_host').hide();
+    				$("#identifier_host").val("")
     			}else{
     				$('#div_identifier_host').show();
     			}
