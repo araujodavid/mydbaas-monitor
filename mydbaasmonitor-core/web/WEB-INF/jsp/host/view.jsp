@@ -237,9 +237,8 @@
  		</form>
  		
  	<%@include file="/static/footer.jsp"%>	
-	  	
-    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    <script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
+	<%@include file="/static/javascript_footer.jsp"%>
+	
     <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
     <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>

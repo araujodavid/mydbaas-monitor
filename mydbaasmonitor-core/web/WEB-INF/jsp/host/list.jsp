@@ -117,9 +117,7 @@
     		<%@include file="/static/footer.jsp"%>
 
 		</div><!--/.fluid-container-->	 	
-	  	
-	  	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
+		<%@include file="/static/javascript_footer.jsp"%>
 		<script type="text/javascript">
 		    $(document).ready(function () {
 		    	

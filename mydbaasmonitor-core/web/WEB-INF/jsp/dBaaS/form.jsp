@@ -51,6 +51,7 @@
 		</div> <!-- /container -->
 		
 		<%@include file="/static/footer.jsp"%>
+		<%@include file="/static/javascript_footer.jsp"%>
 	 	
 	</body>
 </html>
