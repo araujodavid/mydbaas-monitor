@@ -65,6 +65,19 @@ public class DBaaSController extends AbstractController implements GenericContro
 			dBaaS.setHosts(hostRepository.getDBaaSHosts(dBaaS.getId()));
 			dBaaS.setMachines(virtualMachineRepository.getDBaaSMachines(dBaaS.getId()));
 		}
+		
+		//Get the DBMSs and Databases of the main DBaaS
+		for (DBaaS dBaaS : dBaaSList) {
+			dBaaS.setDbmss(new ArrayList<DBMS>());
+			dBaaS.setDatabases(new ArrayList<Database>());
+			for (VirtualMachine virtualMachine : dBaaS.getMachines()) {
+				dBaaS.getDbmss().addAll(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
+				for (DBMS dbms : dBaaS.getDbmss()) {
+					dBaaS.getDatabases().addAll(databaseRepository.getDBMSDatabases(dbms.getId()));
+				}
+			}			
+		}
+		
 		List<DBaaS> highlightsDBaaS = new ArrayList<DBaaS>();		
 		
 		//Sorts DBaaS by their amount of virtual machines registered
@@ -114,19 +127,7 @@ public class DBaaSController extends AbstractController implements GenericContro
 					restDBaaS.remove(dBaaS);
 				}
 			}
-		}
-		
-		//Get the DBMSs and Databases of the main DBaaS
-		for (DBaaS dBaaS : dBaaSList) {
-			dBaaS.setDbmss(new ArrayList<DBMS>());
-			dBaaS.setDatabases(new ArrayList<Database>());
-			for (VirtualMachine virtualMachine : dBaaS.getMachines()) {
-				dBaaS.getDbmss().addAll(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
-				for (DBMS dbms : dBaaS.getDbmss()) {
-					dBaaS.getDatabases().addAll(databaseRepository.getDBMSDatabases(dbms.getId()));
-				}
-			}			
-		}
+		}		
 		
 		result
 		.include("current_date", DataUtil.converteDateParaString(new Date()))
