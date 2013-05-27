@@ -49,7 +49,7 @@
 	    							<div id="collapse${dbaas.id}" class="accordion-body collapse">
 	    								<c:if test="${!dbaas.hosts.isEmpty()}">
 	    									<div class="accordion-inner">
-	    										<strong>Hosts:</strong><br>
+	    										<strong>Host:</strong><br>
 		    									<c:forEach items="${dbaas.hosts}" var="host">
 			   										<a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a>    									
 			     								</c:forEach>
@@ -57,7 +57,7 @@
 	     								</c:if>
 	     								<c:if test="${!dbaas.machines.isEmpty()}">
 	     									<div class="accordion-inner">
-	     										<strong>Virtual Machines:</strong><br>
+	     										<strong>Virtual Machine:</strong><br>
 			    								<c:forEach items="${dbaas.machines}" var="machine">
 				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a><br>	     								
 			     								</c:forEach>
@@ -65,7 +65,7 @@
 	     								</c:if>	
 	     								<c:if test="${!dbaas.dbmss.isEmpty()}">
 	     									<div class="accordion-inner">
-	     										<strong>DBMSs:</strong><br>
+	     										<strong>DBMS:</strong><br>
 			    								<c:forEach items="${dbaas.dbmss}" var="dbms">
 				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/dbmss/view/${dbms.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${dbms.alias}</a><br>	     								
 			     								</c:forEach>
@@ -73,7 +73,7 @@
 	     								</c:if>
 	     								<c:if test="${!dbaas.databases.isEmpty()}">
 	     									<div class="accordion-inner">
-	     										<strong>Databases:</strong><br>
+	     										<strong>Database:</strong><br>
 			    								<c:forEach items="${dbaas.databases}" var="database">
 				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/databases/view/${database.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${database.alias}</a><br>	     								
 			     								</c:forEach>
