@@ -18,7 +18,7 @@
     	
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">		
 
-		<title>MyDBaaSMonitor - List of Machines</title>
+		<title>MyDBaaSMonitor - List of Virtual Machines</title>
 	</head>
 	<body>
 		
@@ -144,6 +144,9 @@
 		            title: {
 		                text: 'Virtual Machines Status'
 		            },
+		            credits: {
+	                    enabled: false
+	                },
 		            yAxis: {
 		                allowDecimals: false,
 		                title: {
@@ -197,7 +200,9 @@
 					    rangeSelector: {
 					        selected: 4
 					    },
-	
+					    credits: {
+    	                    enabled: false
+    	                },
 					    yAxis: {
 					    	labels: {
 					    		formatter: function() {
@@ -238,7 +243,9 @@
 					    rangeSelector: {
 					        selected: 4
 					    },
-	
+					    credits: {
+    	                    enabled: false
+    	                },
 					    yAxis: {
 					    	labels: {
 					    		formatter: function() {

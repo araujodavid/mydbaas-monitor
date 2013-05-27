@@ -8,7 +8,7 @@
 		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">
 
-		<title>MyDBaaSMonitor - New Machine</title>
+		<title>MyDBaaSMonitor - New Virtual Machine</title>
 	</head>
 	<body>		
 		<%@include file="/static/menu.jsp"%>
@@ -16,7 +16,7 @@
 		<div class="container" style="margin-top:70px;">		
 			<form method="post" action="${pageContext.servletContext.contextPath}/vms/add">
 				<fieldset>
-						<legend><strong>New Machine</strong></legend>
+						<legend><strong>New Virtual Machine</strong></legend>
 						
 						<c:if test="${errors != null}">							
 							<c:forEach var="error" items="${errors}">

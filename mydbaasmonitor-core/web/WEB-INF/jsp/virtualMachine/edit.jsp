@@ -8,7 +8,7 @@
 		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">		
 
-		<title>MyDBaaSMonitor - Edit Machine</title>
+		<title>MyDBaaSMonitor - Edit Virtual Machine</title>
 	</head>
 	<body>
 		
@@ -18,7 +18,7 @@
 			<form method="post" action="${pageContext.servletContext.contextPath}/vms/update">
 				<fieldset>
 						<legend>
-							<strong>Editing Machine</strong>							
+							<strong>Editing Virtual Machine</strong>							
 						</legend>
 						
 						<c:if test="${errors != null}">							
