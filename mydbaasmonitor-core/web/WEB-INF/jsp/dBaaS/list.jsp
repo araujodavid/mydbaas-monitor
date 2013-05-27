@@ -51,7 +51,7 @@
 	    									<div class="accordion-inner">
 	    										<strong>Host:</strong><br>
 		    									<c:forEach items="${dbaas.hosts}" var="host">
-			   										<a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a>    									
+			   										<a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a><br>    									
 			     								</c:forEach>
 			     							</div>
 	     								</c:if>
