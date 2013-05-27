@@ -15,7 +15,7 @@
 		<%@include file="/static/menu.jsp"%>
 
 		<div class="container" style="margin-top:70px;">		
-			<form method="post" action="<c:url value="/dbms/add"/>">
+			<form method="post" action="<c:url value="/dbmss/add"/>">
 				<fieldset>
 					<legend><strong>New DBMS</strong></legend>
 					
@@ -28,7 +28,22 @@
 		  				</c:forEach>			  				
 	  				</c:if>
 	  				
-	  				<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  				<c:choose>
+	  					<c:when test="${availableVMs.isEmpty()}">
+	  						<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
+	  					</c:when>
+	  					<c:otherwise>
+	  						<label class="text-info" for="machine">Virtual Machines:</label>
+			  				<select id="machine" name="entity.machine.id" style="width:284px;">
+			  					<option value="0" selected="selected">Select one</option>
+			  					<c:forEach var="machine" items="${availableVMs}">
+									<option value="${machine.id}" <c:if test="${machine.id == entity.machine.id}">selected="selected"</c:if> >
+										${machine.alias}
+									</option>
+				  				</c:forEach>
+			  				</select>
+	  					</c:otherwise>
+	  				</c:choose>	  				
 	  				
 	  				<label class="text-info" for="type">DBMS Type:</label>
 	  				<select id="type" name="entity.type" style="width:284px;">	  					
@@ -60,7 +75,7 @@
 					
 					<div class="form-actions">
 						<button type="submit" class="btn btn-success">Save</button>
-						<a class="btn btn-danger" href="<c:url value="/dbms"/>" onclick="return confirm('Are you sure want to cancel the registration?');">Cancel</a>
+						<a class="btn btn-danger" href="<c:url value="/dbmss"/>" onclick="return confirm('Are you sure want to cancel the registration?');">Cancel</a>
 					</div>					  	
 	  			</fieldset>
 		 	</form>
