@@ -127,16 +127,17 @@
     		
     		<%@include file="/static/footer.jsp"%>
 
-		</div><!--/.fluid-container-->	 	
-	  	
-	  	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js" type="text/javascript"></script>
+		</div><!--/.fluid-container-->
+		<%@include file="/static/javascript_footer.jsp"%>
 		<script type="text/javascript">
 		    $(document).ready(function () {
 		    	
 		    	$('#container-summary').highcharts({
 		            data: {
 		                table: document.getElementById('datatable')
+		            },
+		            credits: {
+		                enabled: false
 		            },
 		            chart: {
 		                type: 'column'
@@ -164,9 +165,10 @@
 				seriesCounter = 0,
 				names = ['MSFT', 'AAPL', 'GOOG'],
 				colors = Highcharts.getOptions().colors;
-	
+		    	$("#memory_all").html("<div align='center'><img style='margin-top:250px;' src='/mydbaasmonitor/img/ajax-loader.gif' /></div>");
+		    	$("#cpu_all").html("<div align='center'><img style='margin-top:250px;' src='/mydbaasmonitor/img/ajax-loader.gif' /></div>");
 				$.each(names, function(i, name) {
-	
+					
 					$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename='+ name.toLowerCase() +'-c.json&callback=?',	function(data) {
 	
 						seriesOptions[i] = {
@@ -197,7 +199,9 @@
 					    rangeSelector: {
 					        selected: 4
 					    },
-	
+					    credits: {
+			                enabled: false
+			            },
 					    yAxis: {
 					    	labels: {
 					    		formatter: function() {
@@ -234,7 +238,9 @@
 					$('#cpu_all').highcharts('StockChart', {
 					    chart: {
 					    },
-	
+					    credits: {
+			                enabled: false
+			            },
 					    rangeSelector: {
 					        selected: 4
 					    },
@@ -268,6 +274,7 @@
 				}	    	
 		    });
 		</script>
+		
 		<script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
 		<script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
     	<script src="http://code.highcharts.com/modules/data.js"></script>

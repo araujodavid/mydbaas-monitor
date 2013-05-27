@@ -26,6 +26,9 @@ $(document).ready(function() {
             title: {
                 text: 'Live random data'
             },
+            credits: {
+                enabled: false
+            },
             xAxis: {
                 type: 'datetime',
                 tickPixelInterval: 150
@@ -110,7 +113,9 @@ function setModalValues(identifier){
 			title : {
 				text : 'AAPL Stock Price'
 			},
-			
+			credits: {
+	            enabled: false
+	         },
 			series : [{
 				name : 'AAPL',
 				data : data,

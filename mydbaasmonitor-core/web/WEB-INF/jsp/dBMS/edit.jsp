@@ -66,8 +66,7 @@
 	 	</div> <!-- /container -->
 		
 		<%@include file="/static/footer.jsp"%>
+	 	<%@include file="/static/javascript_footer.jsp"%>
 	 	
-	 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
 	</body>
 </html>

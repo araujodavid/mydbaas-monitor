@@ -144,9 +144,7 @@
  		</form>
 	 	
 	 	<%@include file="/static/footer.jsp"%>
-	 	
-	 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
+	 	<%@include file="/static/javascript_footer.jsp"%>
     	
     	<script type="text/javascript">
     		function verifyHost(){

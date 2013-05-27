@@ -190,9 +190,7 @@
   			</div>
  		</form> 	
 	  	
-	  	<!-- JS -->
-	  	<script src="http://code.jquery.com/jquery-latest.js"></script>
-    	<script src="${pageContext.servletContext.contextPath}/js/bootstrap.js"></script>
+	  	<%@include file="/static/javascript_footer.jsp"%>
     	<script src="${pageContext.servletContext.contextPath}/js/highcharts/highcharts.js"></script>
     	<script src="${pageContext.servletContext.contextPath}/js/highcharts/modules/exporting.js"></script>
     	<script type="text/javascript">
