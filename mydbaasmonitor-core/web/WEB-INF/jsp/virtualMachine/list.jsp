@@ -203,13 +203,8 @@
 					        selected: 4
 					    },
 					    credits: {
-<<<<<<< HEAD
 			                enabled: false
 			            },
-=======
-    	                    enabled: false
-    	                },
->>>>>>> origin
 					    yAxis: {
 					    	labels: {
 					    		formatter: function() {
@@ -242,7 +237,6 @@
 			
 				// create the chart when all data is loaded
 				function createChart2() {
-	
 					$('#cpu_all').highcharts('StockChart', {
 					    chart: {
 					    },
