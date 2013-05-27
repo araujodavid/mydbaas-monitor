@@ -48,7 +48,31 @@ public class HostController extends AbstractController implements GenericControl
 	@Path("/hosts/list")
 	@Override
 	public List<Host> list() {
-		return hostRepository.all();
+		List<Host> hostList = hostRepository.all();
+		//Information for pie chart
+		int amountActive = 0;
+		int amountNotActive = 0;
+		int amountWithVM = 0;
+		int amountWithoutVM = 0;
+		for (Host host : hostList) {
+			if (host.getStatus() == true) {
+				amountActive++;
+			} else {
+				amountNotActive++;
+			}
+			host.setMachines(virtualMachineRepository.getHostMachines(host.getId()));
+			if (host.getMachines().isEmpty()) {
+				amountWithoutVM++;
+			} else {
+				amountWithVM++;
+			}
+		}
+		this.result
+		.include("amountActive", amountActive)
+		.include("amountNotActive", amountNotActive)
+		.include("amountWithVM", amountWithVM)
+		.include("amountWithoutVM", amountWithoutVM);
+		return hostList;
 	}
 
 	@Path("/hosts/new")
