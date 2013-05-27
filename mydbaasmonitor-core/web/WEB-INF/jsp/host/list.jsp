@@ -37,8 +37,8 @@
 								<th></th>
 								<th>Active</th>
 								<th>Not Active</th>
-								<th>w/ Host</th>
-								<th>w/o Host</th>
+								<th>w/ VMs</th>
+								<th>w/o VMs</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -46,8 +46,8 @@
 								<th>VM</th>
 								<th>${amountActive}</th>
 								<th>${amountNotActive}</th>
-								<th>${amountWithHost}</th>
-								<th>${amountWithoutHost}</th>
+								<th>${amountWithVM}</th>
+								<th>${amountWithoutVM}</th>
 							</tr>
 						</tbody>
 					</table> 			
