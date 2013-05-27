@@ -29,7 +29,7 @@
     	</style>
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 
-		<title>MyDBaaSMonitor - Machine: ${virtualMachine.alias}</title>
+		<title>MyDBaaSMonitor - Virtual Machine: ${virtualMachine.alias}</title>
 	</head>
 	<body>
 		<%@include file="/static/menu.jsp"%>
@@ -70,7 +70,7 @@
 				      									<span class="label label-important">Inactive</span><br><br>
 				      								</c:otherwise>
 				     							</c:choose>
-				     							<a class="muted" href="<c:url value="/dbms/edit/${dbms.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>Edit</a>
+				     							<a class="muted" href="<c:url value="/dbmss/edit/${dbms.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>Edit</a>
     										 </address>       									
       									</div>   								
 	    							</div>
