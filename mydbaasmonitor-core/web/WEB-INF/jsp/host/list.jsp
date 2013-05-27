@@ -133,6 +133,9 @@
 		            title: {
 		                text: 'Host Status'
 		            },
+		            credits: {
+	                    enabled: false
+	                },
 		            yAxis: {
 		                allowDecimals: false,
 		                title: {
