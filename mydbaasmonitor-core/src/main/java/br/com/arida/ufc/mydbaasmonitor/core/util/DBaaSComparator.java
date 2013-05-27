@@ -15,13 +15,30 @@ public class DBaaSComparator implements Comparator<DBaaS> {
 
 	@Override
 	public int compare(DBaaS firstDBaaS, DBaaS secondDBaaS) {
-		if (firstDBaaS.getMachines().size() == secondDBaaS.getMachines().size()) {
-			return 0;
-		} else if (firstDBaaS.getMachines().size() > secondDBaaS.getMachines().size()) {
+		if (firstDBaaS.getHosts().size() == secondDBaaS.getHosts().size()) {
+			if (firstDBaaS.getMachines().size() > secondDBaaS.getMachines().size()) {
+				return 1;
+			} else if (firstDBaaS.getMachines().size() < secondDBaaS.getMachines().size()) {
+				return -1;
+			} else {
+				if (firstDBaaS.getDbmss().size() > secondDBaaS.getDbmss().size()) {
+					return 1;
+				} else if (firstDBaaS.getDbmss().size() < secondDBaaS.getDbmss().size()) {
+					return -1;
+				} else {
+					if (firstDBaaS.getDatabases().size() > secondDBaaS.getDatabases().size()) {
+						return 1;
+					} else if (firstDBaaS.getDatabases().size() < secondDBaaS.getDatabases().size()) {
+						return -1;
+					} else {
+						return 0;
+					}
+				}
+			}			
+		} else if (firstDBaaS.getHosts().size() > secondDBaaS.getHosts().size()) {
 			return 1;
 		} else {
 			return -1;
-		}		
+		}	
 	}
-
 }
