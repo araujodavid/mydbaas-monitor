@@ -44,13 +44,18 @@
         			</legend>
 
         			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Database Management Systems:</strong> 
-
+						<c:if test="${virtualMachine.dbmsList.isEmpty()}">
+							<div class="alert" style="margin-top:5px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There are no <strong>database management systems</strong>.
+							</div>
+						</c:if>
 			            <div class="accordion" id="accordion2">
 			            	<c:forEach items="${virtualMachine.dbmsList}" var="dbms">
 	  							<div class="accordion-group">
 	    							<div class="accordion-heading">
 	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbms.id}">
-	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${dbms.alias}
+	        								<i class="icon-folder-close" style="margin-right:6px;"></i>${dbms.alias}
 	     	 							</a>
 	    							</div>
 	    							<div id="collapse${dbms.id}" class="accordion-body collapse">
@@ -70,7 +75,7 @@
 				      									<span class="label label-important">Inactive</span><br><br>
 				      								</c:otherwise>
 				     							</c:choose>
-				     							<a class="muted" href="<c:url value="/dbmss/edit/${dbms.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>Edit</a>
+				     							<a class="muted" href="<c:url value="/dbmss/view/${dbms.id}"/>"><i class="icon-wrench" style="margin-right:3px;"></i>About</a>
     										 </address>       									
       									</div>   								
 	    							</div>
@@ -109,6 +114,9 @@
 							  	<strong>Address:</strong> <info class="muted">${virtualMachine.address}</info><br>							  	
 							  	<strong>SSH Port:</strong> <info class="muted">${virtualMachine.port}</info><br>
 							  	<strong>Username:</strong> <info class="muted">${virtualMachine.user}</info><br>
+							  	<c:if test="${machine.identifierHost != null}">
+							 		<strong>Identificer in Host:</strong> <info class="muted">${machine.identifierHost}</info><br>
+							 	</c:if>
 							  	<strong>Record Date:</strong> <info class="muted">${virtualMachine.recordDate}</info><br>
 							  	<strong>Description:</strong> <info class="muted">${virtualMachine.description}</info><br><br>
 							  	<a class="btn btn-success" href="<c:url value="/vms/edit/${virtualMachine.id}"/>" title="This button updates the information to access the machine."><i class="icon-pencil"></i> Edit</a>
@@ -220,19 +228,19 @@
 	  				</select>
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
-					<input class="input-xlarge" name="entity.alias" id="alias" type="text" placeholder="To better identify the resource" />
+					<input class="input-xlarge" name="entity.alias" id="alias" type="text" placeholder="To better identify the resource" required />
 					<span class="help-block"><em><small>Example: DBMS Project X</small></em></span>
 					
 					<label class="text-info" for="user">User:</label>
-					<input name="entity.user" id="user" type="text" placeholder="Database username" />
+					<input name="entity.user" id="user" type="text" placeholder="Database username" required />
 					
 					<label class="text-info" for="port">Port:</label>
-					<input class="input-small" name="entity.port" id="port" type="text" placeholder="e.g. 3604" />							
+					<input class="input-small" name="entity.port" id="port" type="text" placeholder="e.g. 3604" required />							
 					<span class="help-block"><em><small>Enter the DBMS port.</small></em></span>
 					
 					<label class="text-info" for="password">Password:</label>
-					<input name="entity.password" id="password" type="password" /> <br>
-					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" />
+					<input name="entity.password" id="password" type="password" required /> <br>
+					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" required />
 					
 					<label class="text-info" for="description">Description:</label>	  							
  					<textarea name="entity.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;"></textarea>

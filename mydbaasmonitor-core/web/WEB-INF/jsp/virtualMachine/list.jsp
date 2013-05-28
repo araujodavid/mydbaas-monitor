@@ -29,64 +29,69 @@
         		<div class="span3" style="margin-top:10px;">
         			<div align="left">
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/vms/new" title=""><i class="icon-plus icon-white"></i> Virtual Machine</a>
-        			</div>     
-        			<div id="container-summary" style="margin-top:20px;"></div>
-        			<table id="datatable" class="table table-bordered table-condensed">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Active</th>
-								<th>Not Active</th>
-								<th>w/ Host</th>
-								<th>w/o Host</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>VM</th>
-								<th>${amountActive}</th>
-								<th>${amountNotActive}</th>
-								<th>${amountWithHost}</th>
-								<th>${amountWithoutHost}</th>
-							</tr>
-						</tbody>
-					</table> 			
+        			</div>
+        			<c:choose>
+        				<c:when test="${virtualMachineList.isEmpty()}">
+        					<div class="alert" style="margin-top:30px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								Virtual Machines status graphs <strong>offline</strong>.
+							</div>
+        				</c:when>
+        				<c:otherwise>     
+		        			<div id="container-summary" style="margin-top:20px;"></div>
+		        			<table id="datatable" class="table table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Active</th>
+										<th>Not Active</th>
+										<th>w/ Host</th>
+										<th>w/o Host</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>VM</th>
+										<th>${amountActive}</th>
+										<th>${amountNotActive}</th>
+										<th>${amountWithHost}</th>
+										<th>${amountWithoutHost}</th>
+									</tr>
+								</tbody>
+							</table>
+						</c:otherwise>
+        			</c:choose>   			
         		</div><!--/span-->
         		
-        		<div class="span9">
-        		
-        		<!-- Example row of columns -->
-		      <div class="row-fluid">
-		        <div class="span6">
-		          <h2>CPU (all vms)</h2>
-		          <div id="cpu_all" style="height: 500px;"></div>
-		        </div>
-		        <div class="span6">
-		          <h2>Memory (all vms)</h2>
-		          <div id="memory_all" style="height: 500px;"></div>
-		       </div>
-		      </div>
+        		<div class="span9">        		
+	        		<div class="row-fluid">
+	        			<c:if test="${!virtualMachineList.isEmpty()}">
+				        	<div class="span6">
+				          		<h2>CPU (all vms)</h2>
+				          		<div id="cpu_all" style="height: 500px;"></div>
+				        	</div>
+				        	<div class="span6">
+				          		<h2>Memory (all vms)</h2>
+				          		<div id="memory_all" style="height: 500px;"></div>
+				       		</div>
+			       		</c:if>
+			    	</div>
 		      
-        		
-        		
-        			<c:if test="${notice != null}">							
+	        		<c:if test="${notice != null}">							
 						<div class="alert alert-success">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
 							${notice}
 						</div>		  				
-	  				</c:if>
+		  			</c:if>
         		
-        			<legend>
-        				<img src="/mydbaasmonitor/img/table.png"> <strong>List of Virtual Machines</strong>
-        			</legend>
-        			
+	        		<legend>
+	        			<img src="/mydbaasmonitor/img/table.png"> <strong>List of Virtual Machines</strong>
+	        		</legend>
+	        			
         			<div class="row-fluid">
 		            	<table class="table table-striped">
-							<caption>
-								
-							</caption>
-  							<thead>
-							    <tr>
+							<thead>
+						    	<tr>
 							    	<th><i class="icon-tags" style="margin-left:5px;" title="Unique identifier."></i></th>
 							      	<th>Alias</th>
 							      	<th>Address</th>
@@ -95,35 +100,41 @@
 							      	<th><i class="icon-wrench"></i> Informations</th>
 							    </tr>
   							</thead>
-  							<tbody>
-  								<c:forEach items="${virtualMachineList}" var="virtualMachine">
-    								<tr>    								
-								      	<td>
-								      		<span class="badge badge-inverse">${virtualMachine.id}</span>
-								      	</td>
-								      	<td><a href="${pageContext.servletContext.contextPath}/vms/view/${virtualMachine.id}" title="${virtualMachine.alias}">${virtualMachine.alias}</a></td>
-								      	<td>${virtualMachine.address}</td>
-								      	<td>
-								      		<c:choose>
-        										<c:when test="${virtualMachine.status == true}">
-        											<i class="status-monitor-active"></i>
-				        						</c:when>
-				        						<c:otherwise>
-        											<i class="status-monitor-inactive"></i>
-        										</c:otherwise>
-       										</c:choose>								      	
-								      	</td>
-								      	<td>${virtualMachine.recordDate}</td>
-								      	<td>
-											<a href="${pageContext.servletContext.contextPath}/vms/view/${virtualMachine.id}" title="Click here to view more detail of the resource.">About</a>
-								      	</td>						
-    								</tr>
-    							</c:forEach>
-  							</tbody>
-						</table>                
-		            </div><!--/row-->            		            		       
-        		</div><!--/span-->       		
-    		</div><!--/row-->
+	  							<tbody>
+	  								<c:forEach items="${virtualMachineList}" var="virtualMachine">
+	    								<tr>    								
+									      	<td>
+									      		<span class="badge badge-inverse">${virtualMachine.id}</span>
+									      	</td>
+									      	<td><a href="${pageContext.servletContext.contextPath}/vms/view/${virtualMachine.id}" title="${virtualMachine.alias}">${virtualMachine.alias}</a></td>
+									      	<td>${virtualMachine.address}</td>
+									      	<td>
+									      		<c:choose>
+	        										<c:when test="${virtualMachine.status == true}">
+	        											<i class="status-monitor-active"></i>
+					        						</c:when>
+					        						<c:otherwise>
+	        											<i class="status-monitor-inactive"></i>
+	        										</c:otherwise>
+	       										</c:choose>								      	
+									      	</td>
+									      	<td>${virtualMachine.recordDate}</td>
+									      	<td>
+												<a href="${pageContext.servletContext.contextPath}/vms/view/${virtualMachine.id}" title="Click here to view more detail of the resource.">About</a>
+									      	</td>						
+	    								</tr>
+	    							</c:forEach>
+	  							</tbody>
+							</table>
+							<c:if test="${virtualMachineList.isEmpty()}">
+								<div class="alert">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									There are no <strong>Virtual Machines</strong>.
+								</div>
+							</c:if>             
+		            	</div><!--/row-->            		            		       
+        			</div><!--/span-->       		
+    			</div><!--/row-->
     		
     		<%@include file="/static/footer.jsp"%>
 
