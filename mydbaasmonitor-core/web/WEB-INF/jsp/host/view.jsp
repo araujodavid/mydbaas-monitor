@@ -44,20 +44,41 @@
         			</legend>
 
         			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Virtual Machines:</strong> 
-
+						<c:if test="${host.machines.isEmpty()}">
+							<div class="alert" style="margin-top:5px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There are no <strong>virtual machines</strong>.
+							</div>
+						</c:if>
 			            <div class="accordion" id="accordion2">
 			            	<c:forEach items="${host.machines}" var="machine">
 	  							<div class="accordion-group">
 	    							<div class="accordion-heading">
 	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${machine.id}">
-	        								<i class="icon-list-alt" style="margin-right:6px;"></i>${machine.alias}
+	        								<i class="icon-hdd" style="margin-right:6px;"></i>${machine.alias}
 	     	 							</a>
 	    							</div>
 	    							<div id="collapse${machine.id}" class="accordion-body collapse">
     									<div class="accordion-inner">
     										 <address style="margin-bottom:5px;">
-    										 	<strong>Username:</strong> ${machine.address}<br>
-				     							<a class="muted" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-pencil" style="margin-right:3px;"></i>About</a>
+    										 	<strong>Username:</strong> ${machine.user}<br>
+    										 	<strong>Address:</strong> ${machine.address}<br>
+    										 	<strong>Port:</strong> ${machine.port}<br>
+    										 	<c:if test="${machine.identifierHost != null}">
+    										 		<strong>Identificer in Host:</strong> ${machine.identifierHost}<br>
+    										 	</c:if>
+    										 	<strong>Record Date:</strong> ${machine.recordDate}<br>
+							  					<strong>Description:</strong> ${machine.description}<br>
+    										 	<strong>Monitoring Status:</strong><br> 
+						                    	<c:choose>
+				     								<c:when test="${machine.status == true}">
+				      									<span class="label label-success">Active</span><br><br>
+						        					</c:when>
+						        					<c:otherwise>
+				      									<span class="label label-important">Inactive</span><br><br>
+				      								</c:otherwise>
+				     							</c:choose>
+				     							<a class="muted" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-wrench" style="margin-right:3px;"></i>About</a>
     										 </address>       									
       									</div>   								
 	    							</div>

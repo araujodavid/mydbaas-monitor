@@ -29,29 +29,38 @@
         		<div class="span3" style="margin-top:10px;">
         			<div align="left">
         				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/hosts/new" title=""><i class="icon-plus icon-white"></i> Host</a>
-        			</div>     
-        			<div id="container-summary" style="margin-top:20px;"></div>
-        			<table id="datatable" class="table table-bordered table-condensed">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Active</th>
-								<th>Not Active</th>
-								<th>w/ VMs</th>
-								<th>w/o VMs</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th>Host</th>
-								<th>${amountActive}</th>
-								<th>${amountNotActive}</th>
-								<th>${amountWithVM}</th>
-								<th>${amountWithoutVM}</th>
-							</tr>
-						</tbody>
-					</table> 			
-        		     			
+        			</div>        			
+        			<c:choose>
+        				<c:when test="${hostList.isEmpty()}">
+        					<div class="alert" style="margin-top:30px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								Hosts status graphs <strong>offline</strong>.
+							</div>
+        				</c:when>
+        				<c:otherwise>
+        					<div id="container-summary" style="margin-top:20px;"></div>
+		        			<table id="datatable" class="table table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Active</th>
+										<th>Not Active</th>
+										<th>w/ VMs</th>
+										<th>w/o VMs</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>Host</th>
+										<th>${amountActive}</th>
+										<th>${amountNotActive}</th>
+										<th>${amountWithVM}</th>
+										<th>${amountWithoutVM}</th>
+									</tr>
+								</tbody>
+							</table>
+        				</c:otherwise>
+        			</c:choose>       		     			
         		</div><!--/span-->
         		
         		<div class="span9">
@@ -109,7 +118,14 @@
     								</tr>
     							</c:forEach>
   							</tbody>
-						</table>                
+						</table>
+						
+						<c:if test="${hostList.isEmpty()}">
+							<div class="alert">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There are no <strong>Hosts</strong>.
+							</div>
+						</c:if>              
 		            </div><!--/row-->            		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
