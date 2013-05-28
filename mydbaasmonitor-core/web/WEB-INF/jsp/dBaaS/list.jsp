@@ -36,8 +36,14 @@
         			</legend>
         			
         			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>Environments:</strong>   
-        			 			
+        			
 		            <div class="accordion" id="accordion2">
+		            	<c:if test="${dBaaSList.isEmpty()}">
+							<div class="alert" style="margin-top:30px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There are no <strong>environments</strong>.
+							</div>
+						</c:if>
 		            	<c:forEach items="${dBaaSList}" var="dbaas">
 		            		<c:if test="${!dbaas.hosts.isEmpty() || !dbaas.machines.isEmpty()}">
 	  							<div class="accordion-group">
@@ -101,7 +107,12 @@
         			</legend>
 	  				        		
 		            <div class="row-fluid">
-		            	
+		            	<c:if test="${highlightsDBaaS.isEmpty()}">
+							<div class="alert">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There are no <strong>hot</strong> environments.
+							</div>
+						</c:if>		            	
 		            	<c:forEach items="${highlightsDBaaS}" var="highlight">
 		            		<c:if test="${!highlight.hosts.isEmpty() || !highlight.machines.isEmpty()}">
 				                <div class="span4">
@@ -207,7 +218,7 @@
     	                    type: 'bar'
     	                },
     	                title: {
-    	                    text: 'DBaaS Status'
+    	                    text: 'Status'
     	                },
     	                xAxis: {
     	                    categories: ['DBaaS'],

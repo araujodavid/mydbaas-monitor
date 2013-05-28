@@ -19,7 +19,7 @@
     	
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 
-		<title>MyDBaaSMonitor - Machine: ${virtualMachine.alias}</title>
+		<title>MyDBaaSMonitor - DBaaS: ${dBaaS.alias}</title>
 	</head>
 	<body>
 		
@@ -30,28 +30,168 @@
         		<div class="span3">        		
         			<legend>
 						<div align="left" style="margin-bottom:10px;">
-							<a class="btn btn-inverse" href="#myModalNewDatabase" data-toggle="modal" title="To create a new database."><i class="icon-plus icon-white"></i> Machine</a>
+							<a class="btn btn-inverse" href="#myModalNewHost" data-toggle="modal" title="To create a new host."><i class="icon-plus icon-white"></i> Host</a>
+							<a class="btn btn-inverse" href="#myModalNewVM" data-toggle="modal" title="To create a new virtual machine."><i class="icon-plus icon-white"></i> Virtual Machine</a>
 	        			</div>
         			</legend>
         			
-        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Virtual Machines:</strong> 
-        		
-			            <div class="accordion" id="accordion2">
-							<div class="accordion-group">
+        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Hosts:</strong>        		
+		            <c:if test="${dBaaS.hosts.isEmpty() || dBaaS.hosts == null}">
+						<div class="alert" style="margin-top:5px;">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							There are no <strong>hosts</strong>.
+						</div>
+					</c:if>
+		            <div class="accordion" id="accordion2">
+		            	<c:forEach items="${dBaaS.hosts}" var="host">
+  							<div class="accordion-group">
     							<div class="accordion-heading">
-      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
-        								<i class="icon-list-alt" style="margin-right:6px;"></i>Machine 01
-     	 							</a>	     	 							
+      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseHost${host.id}">
+        								<i class="icon-home" style="margin-right:6px;"></i>${host.alias}
+     	 							</a>
     							</div>
-    							<div id="collapse1" class="accordion-body collapse">
+    							<div id="collapseHost${host.id}" class="accordion-body collapse">
    									<div class="accordion-inner">
    										 <address style="margin-bottom:5px;">
-   										 	<strong>Username:</strong>
+   										 	<strong>Username:</strong> ${host.user}<br>
+   										 	<strong>Address:</strong> ${host.address}<br>
+   										 	<strong>Port:</strong> ${host.port}<br>
+   										 	<strong>Record Date:</strong> ${host.recordDate}<br>
+						  					<strong>Description:</strong> ${host.description}<br>
+						  					<strong>Monitoring Status:</strong><br> 
+					                    	<c:choose>
+			     								<c:when test="${host.status == true}">
+			      									<span class="label label-success">Active</span><br><br>
+					        					</c:when>
+					        					<c:otherwise>
+			      									<span class="label label-important">Inactive</span><br><br>
+			      								</c:otherwise>
+			     							</c:choose>
+			     							<a class="muted" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-wrench" style="margin-right:3px;"></i>About</a>
    										 </address>       									
      								</div>   								
     							</div>
   							</div>
-						</div>          			
+ 						</c:forEach>
+					</div>
+					
+        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Virtual Machines:</strong>        		
+		            <c:if test="${dBaaS.machines.isEmpty() || dBaaS.machines == null}">
+						<div class="alert" style="margin-top:5px;">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							There are no <strong>virtual machines</strong>.
+						</div>
+					</c:if>
+		            <div class="accordion" id="accordion2">
+		            	<c:forEach items="${dBaaS.machines}" var="machine">
+  							<div class="accordion-group">
+    							<div class="accordion-heading">
+      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseVM${machine.id}">
+        								<i class="icon-hdd" style="margin-right:6px;"></i>${machine.alias}
+     	 							</a>
+    							</div>
+    							<div id="collapseVM${machine.id}" class="accordion-body collapse">
+   									<div class="accordion-inner">
+   										 <address style="margin-bottom:5px;">
+   										 	<strong>Username:</strong> ${machine.user}<br>
+   										 	<strong>Address:</strong> ${machine.address}<br>
+   										 	<strong>Port:</strong> ${machine.port}<br>
+   										 	<strong>Record Date:</strong> ${machine.recordDate}<br>
+						  					<strong>Description:</strong> ${machine.description}<br>
+						  					<strong>Monitoring Status:</strong><br> 
+					                    	<c:choose>
+			     								<c:when test="${machine.status == true}">
+			      									<span class="label label-success">Active</span><br><br>
+					        					</c:when>
+					        					<c:otherwise>
+			      									<span class="label label-important">Inactive</span><br><br>
+			      								</c:otherwise>
+			     							</c:choose>
+			     							<a class="muted" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-wrench" style="margin-right:3px;"></i>About</a>
+   										 </address>       									
+     								</div>   								
+    							</div>
+  							</div>
+ 						</c:forEach>
+					</div>					
+					
+					<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Database Management Systems:</strong>        		
+		            <c:if test="${dBaaS.dbmss.isEmpty() || dBaaS.dbmss == null}">
+						<div class="alert" style="margin-top:5px;">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							There are no <strong>database management systems</strong>.
+						</div>
+					</c:if>
+		            <div class="accordion" id="accordion2">
+		            	<c:forEach items="${dBaaS.dbmss}" var="dbms">
+  							<div class="accordion-group">
+    							<div class="accordion-heading">
+      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseDBMS${dbms.id}">
+        								<i class="icon-folder-close" style="margin-right:6px;"></i>${dbms.alias}
+     	 							</a>
+    							</div>
+    							<div id="collapseDBMS${dbms.id}" class="accordion-body collapse">
+   									<div class="accordion-inner">
+   										 <address style="margin-bottom:5px;">
+   										 	<strong>Username:</strong> ${dbms.user}<br>
+   										 	<strong>Port:</strong> ${dbms.port}<br>
+   										 	<strong>Type:</strong> ${dbms.type}<br>
+   										 	<strong>Record Date:</strong> ${dbms.recordDate}<br>
+						  					<strong>Description:</strong> ${dbms.description}<br>
+						  					<strong>Monitoring Status:</strong><br> 
+					                    	<c:choose>
+			     								<c:when test="${dbms.status == true}">
+			      									<span class="label label-success">Active</span><br><br>
+					        					</c:when>
+					        					<c:otherwise>
+			      									<span class="label label-important">Inactive</span><br><br>
+			      								</c:otherwise>
+			     							</c:choose>
+			     							<a class="muted" href="<c:url value="/dbmss/view/${dbms.id}"/>"><i class="icon-wrench" style="margin-right:3px;"></i>About</a>
+   										 </address>       									
+     								</div>   								
+    							</div>
+  							</div>
+ 						</c:forEach>
+					</div>
+					
+					<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>List of Databases:</strong>        		
+		            <c:if test="${dBaaS.databases.isEmpty() || dBaaS.databases == null}">
+						<div class="alert" style="margin-top:5px;">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							There are no <strong>databases</strong>.
+						</div>
+					</c:if>
+		            <div class="accordion" id="accordion2">
+		            	<c:forEach items="${dBaaS.databases}" var="database">
+  							<div class="accordion-group">
+    							<div class="accordion-heading">
+      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseDB${database.id}">
+        								<i class="icon-list-alt" style="margin-right:6px;"></i>${database.alias}
+     	 							</a>
+    							</div>
+    							<div id="collapseDB${database.id}" class="accordion-body collapse">
+   									<div class="accordion-inner">
+   										 <address style="margin-bottom:5px;">
+   										 	<strong>Schema:</strong> ${database.name}<br>
+   										 	<strong>Record Date:</strong> ${database.recordDate}<br>
+						  					<strong>Description:</strong> ${database.description}<br>
+						  					<strong>Monitoring Status:</strong><br> 
+					                    	<c:choose>
+			     								<c:when test="${database.status == true}">
+			      									<span class="label label-success">Active</span><br><br>
+					        					</c:when>
+					        					<c:otherwise>
+			      									<span class="label label-important">Inactive</span><br><br>
+			      								</c:otherwise>
+			     							</c:choose>
+			     							<a class="muted" href="<c:url value="/databases/view/${database.id}"/>"><i class="icon-wrench" style="margin-right:3px;"></i>About</a>
+   										 </address>       									
+     								</div>   								
+    							</div>
+  							</div>
+ 						</c:forEach>
+					</div>        			
         		</div><!--/span-->
         		
         		<div class="span9">
@@ -62,33 +202,18 @@
 						</div>		  				
 	  				</c:if>
         		
-        			<legend><img src="/mydbaasmonitor/img/display.png"> Database-as-a-Service Information</legend>
+        			<legend><img src="/mydbaasmonitor/img/cloud.png"> Database-as-a-Service Information</legend>
         			<div class="row-fluid">
 		                <div class="span4">
 		                    <address>		                    	
-		                    	<strong>Monitoring Status:</strong><br>		                    	
+		                    	<h3>Alias:</h3> <h4 class="muted">${dBaaS.alias}</h4>
+							  	<h3>Record Date:</h3> <h4 class="muted">${dBaaS.recordDate}</h4>
+							  	<h3>Description:</h3> <h4 class="muted">${dBaaS.description}</h4>                    	
 							</address> 
 		                </div><!--/informationAccess-->
                 
 		                <div class="span4">
-		                	<div class="tabbable">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
-							    	<li><a href="#tab2" data-toggle="tab">CPU</a></li>
-							    	<li><a href="#tab3" data-toggle="tab">Disk</a></li>
-							  	</ul>
-							  	<div class="tab-content">
-							    	<div class="tab-pane active" id="tab1">
-							      		
-							    	</div>
-    								<div class="tab-pane" id="tab2">
-      									 
-    								</div>
-    								<div class="tab-pane" id="tab3">
-      									
-    								</div>
-  								</div>
-							</div>
+		                	
 		                </div><!--/informationTab-->		                
 		            </div><!--/row-->
 		            
