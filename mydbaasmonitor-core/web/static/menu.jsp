@@ -12,6 +12,7 @@
               		Fork on <a href="https://github.com/araujodavid/mydbaasmonitor" class="navbar-link" target="_blank">GitHub</a>
             	</p>
             	<ul class="nav">
+            		<li><a href="${pageContext.servletContext.contextPath}/starter">Startup</a></li>
               		<li><a href="${pageContext.servletContext.contextPath}/dbaas">DBaaS</a></li>
               		<li><a href="${pageContext.servletContext.contextPath}/hosts">Host</a></li>
               		<li><a href="${pageContext.servletContext.contextPath}/vms">Virtual Machine</a></li>
