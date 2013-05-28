@@ -14,7 +14,8 @@ public class Database extends AbstractEntity {
 	//DBMS
 	private DBMS dbms;
 	//schema name
-	private String name;	
+	private String name;
+	private Boolean status;
 
 	public DBMS getDbms() {
 		return dbms;
@@ -30,6 +31,14 @@ public class Database extends AbstractEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	@Override
