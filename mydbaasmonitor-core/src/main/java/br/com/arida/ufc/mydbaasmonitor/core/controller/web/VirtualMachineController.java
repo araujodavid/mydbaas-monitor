@@ -101,7 +101,7 @@ public class VirtualMachineController extends AbstractController {
 		validator.checking(new Validations() {{
 			that(!(virtualMachine.getEnvironment().getId() == 0), "Environment", "machine.environment.empty");
 			that(!(virtualMachine.getAlias() == null), "Alias", "machine.alias.empty");
-	        that(!(virtualMachine.getAddress() == null), "Host", "machine.host.empty");
+	        that(!(virtualMachine.getAddress() == null), "Address", "machine.address.empty");
 	        that(!(virtualMachine.getUser() == null), "Username", "machine.username.empty");
 	        that(!(virtualMachine.getPort() == null), "Port", "machine.port.empty");
 	        if (virtualMachine.getPassword() != null || confirmPassword != null) {
