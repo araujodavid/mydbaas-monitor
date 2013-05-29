@@ -8,7 +8,7 @@
 		
 		<link href="${pageContext.servletContext.contextPath}/css/bootstrap.css" rel="stylesheet" media="screen">
 		
-		<title>MyDBaaSMonitor - New Database</title>
+		<title>MyDBaaSMonitor - New DBMS</title>
 	</head>
 	<body>
 		
