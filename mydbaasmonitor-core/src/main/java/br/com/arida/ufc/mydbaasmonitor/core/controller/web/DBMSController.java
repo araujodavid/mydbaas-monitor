@@ -12,6 +12,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualM
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.AbstractController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.web.common.GenericController;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DBMSRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.DatabaseRepository;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
 
@@ -20,45 +22,76 @@ import static main.java.br.com.arida.ufc.mydbaasmonitor.core.util.Utils.i18n;
  * @author David Araújo - @araujodavid
  * @version 3.0
  * @since March 20, 2013
- * Front-end: web/WEB-INF/jsp/dbms
+ * Front-end: web/WEB-INF/jsp/dBMS
  */
 
 @Resource
 public class DBMSController extends AbstractController implements GenericController<DBMS> {
 
 	private DBMSRepository repository;
+	private DatabaseRepository databaseRepository;
+	private VirtualMachineRepository virtualMachineRepository;
 	
-	public DBMSController(Result result, Validator validator, DBMSRepository repository) {
+	public DBMSController(Result result, Validator validator, DBMSRepository repository, DatabaseRepository databaseRepository, VirtualMachineRepository virtualMachineRepository) {
 		super(result, validator);
 		this.repository = repository;
+		this.databaseRepository = databaseRepository;
+		this.virtualMachineRepository = virtualMachineRepository;
 	}
 
 	@Path("/dbmss")
 	@Override
 	public void redirect() {
-		// TODO Auto-generated method stub
-		
+		this.result.redirectTo(this).list();		
 	}
 
 	@Path("/dbmss/list")
 	@Override
 	public List<DBMS> list() {
-		// TODO Auto-generated method stub
-		return null;
+		List<DBMS> dbmsList = repository.all();
+		//Information for pie chart
+		int amountActive = 0;
+		int amountNotActive = 0;
+		int amountWithDB = 0;
+		int amountWithoutDB = 0;
+		for (DBMS dbms : dbmsList) {
+			if (dbms.getStatus() == true) {
+				amountActive++;
+			} else {
+				amountNotActive++;
+			}
+			dbms.setDatabases(databaseRepository.getDBMSDatabases(dbms.getId()));
+			if (dbms.getDatabases().isEmpty()) {
+				amountWithoutDB++;
+			} else {
+				amountWithDB++;
+			}
+		}
+		this.result
+		.include("amountActive", amountActive)
+		.include("amountNotActive", amountNotActive)
+		.include("amountWithDB", amountWithDB)
+		.include("amountWithoutDB", amountWithoutDB);
+		return dbmsList;
 	}
 	
 	public void form(VirtualMachine virtualMachine) {
 		this.result
 		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("availableVMs", virtualMachineRepository.all())
 		.include("virtualMachine", virtualMachine);		
 	}
-
+	
+	@Path("/dbmss/new")
 	@Override
 	public void form() {
-		// TODO Auto-generated method stub
-		
+		//Includes the current date
+		//List available Virtual Machines
+		this.result
+		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("availableVMs", virtualMachineRepository.all());	
 	}
-	
+
 	@Path("/dbmss/add")
 	public void add(final DBMS entity, final String confirmPassword) {
 		//Validations by vRaptor
@@ -83,15 +116,12 @@ public class DBMSController extends AbstractController implements GenericControl
 		.redirectTo(VirtualMachineController.class).view(entity.getMachine());
 	}//add()
 
-	@Override
-	public void add(DBMS entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Path("/dbmss/edit/{entity.id}")
 	@Override
 	public DBMS edit(DBMS entity) {
+		//List available Virtual Machines
+		this.result
+		.include("availableVMs", virtualMachineRepository.all());	
 		return repository.find(entity.getId());
 	}
 	
@@ -119,25 +149,35 @@ public class DBMSController extends AbstractController implements GenericControl
 		repository.update(dbms);
 		result
 		.include("notice", i18n("dbms.update.ok"))
-		.redirectTo(VirtualMachineController.class).view(dbms.getMachine());
+		.redirectTo(DBMSController.class).view(dbms);
 	} //update()
+
+	@Path("/dbmss/view/{entity.id}")
+	@Override
+	public DBMS view(DBMS entity) {
+		entity = repository.find(entity.getId());
+		entity.setMachine(virtualMachineRepository.find(entity.getMachine().getId()));
+		entity.setDatabases(databaseRepository.getDBMSDatabases(entity.getId()));
+		result.include("current_date", DataUtil.converteDateParaString(new Date()));
+		return entity;
+	}
+
+	/**
+	 * Override methods
+	 */
+	
+	@Override
+	public void delete(DBMS entity) {
+		// TODO Auto-generated method stub		
+	}
+	
+	@Override
+	public void add(DBMS entity) {
+		// TODO Auto-generated method stub		
+	}
 
 	@Override
 	public void update(DBMS entity) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
-
-	@Override
-	public DBMS view(DBMS entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(DBMS entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
