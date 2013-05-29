@@ -161,71 +161,66 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                	<!-- Example row of columns -->
-				      <div class="row">
-				        <div class="span6">
-				          <h2>CPU Usage</h2>
-				          <div id="container1" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				        <div class="span6">
-				          <h2>Load Percentage</h2>
-				          <div id="container2" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       </div>
-				      </div>
+                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>CPU Usage</h5>
+				         		<div id="container1" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Load Percentage</h5>
+				          		<div id="container2" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				      		</div>
+				      	</div>				      
+				        <div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Physical Memory</h5>
+				          		<div id="container3" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Network I/O (Kb/s)</h5>
+				          		<div id="container4" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       		</div>
+				      	</div>
 				      
-				       <div class="row">
-				        <div class="span6">
-				          <h2>Physical Memory</h2>
-				          <div id="container3" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				        <div class="span6">
-				          <h2>Network I/O (Kb/s)</h2>
-				          <div id="container4" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       </div>
-				      </div>
+				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Network I/O (Packets)</h5>
+				          		<div id="container5" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Disk Percentage</h5>
+				          		<div id="container6" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       		</div>
+				      	</div>
 				      
-				      <div class="row">
-				        <div class="span6">
-				          <h2>Network I/O (Packets)</h2>
-				          <div id="container5" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				        <div class="span6">
-				          <h2>Disk Percentage</h2>
-				          <div id="container6" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       </div>
-				      </div>
+				       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Disk I/O Utilization</h5>
+				          		<div id="container7" class="dynamic_chart"></div>
+				         		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Disk I/O Utilization (Bytes)</h5>
+				          		<div id="container8" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       		</div>
+				      	</div>
 				      
-				       <div class="row">
-				        <div class="span6">
-				          <h2>Disk I/O Utilization</h2>
-				          <div id="container7" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				        <div class="span6">
-				          <h2>Disk I/O Utilization (Bytes)</h2>
-				          <div id="container8" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       </div>
-				      </div>
-				      
-				      <div class="row">
-				        <div class="span6">
-				          <h2>Disk Status</h2>
-				          <div id="container9" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				      </div>
+				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Disk Status</h5>
+				          		<div id="container9" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				      	</div>   		
                 		
-                		
-                		
-            		</div><!--/dashboard-->
-            		            		       
+            		</div><!--/dashboard-->            		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
 		</div><!--/.fluid-container-->	
