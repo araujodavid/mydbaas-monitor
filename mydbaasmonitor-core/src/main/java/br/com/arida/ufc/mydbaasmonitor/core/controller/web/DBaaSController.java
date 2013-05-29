@@ -66,7 +66,7 @@ public class DBaaSController extends AbstractController implements GenericContro
 			dBaaS.setMachines(virtualMachineRepository.getDBaaSMachines(dBaaS.getId()));
 		}
 		
-		//Get the DBMSs and Databases of the main DBaaS
+		//Get the DBMSs and Databases of the mains DBaaS
 		for (DBaaS dBaaS : dBaaSList) {
 			dBaaS.setDbmss(new ArrayList<DBMS>());
 			dBaaS.setDatabases(new ArrayList<Database>());
@@ -183,11 +183,24 @@ public class DBaaSController extends AbstractController implements GenericContro
 		.redirectTo(this).view(entity);
 	} //update()
 
-	@Path("/dbaas/view/{dbaas.id}")
+	@Path("/dbaas/view/{entity.id}")
 	@Override
 	public DBaaS view(DBaaS entity) {
-		// TODO Auto-generated method stub
-		return null;
+		entity = repository.find(entity.getId());
+		entity.setHosts(hostRepository.getDBaaSHosts(entity.getId()));
+		entity.setMachines(virtualMachineRepository.getDBaaSMachines(entity.getId()));
+		//Get the DBMSs and Databases of the DBaaS
+		entity.setDbmss(new ArrayList<DBMS>());
+		entity.setDatabases(new ArrayList<Database>());
+		for (VirtualMachine virtualMachine : entity.getMachines()) {
+			entity.getDbmss().addAll(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
+			for (DBMS dbms : entity.getDbmss()) {
+				entity.getDatabases().addAll(databaseRepository.getDBMSDatabases(dbms.getId()));
+			}
+		}			
+		result
+		.include("current_date", DataUtil.converteDateParaString(new Date()));		
+		return entity;
 	}
 
 	@Path("/dbaas/delete/{dbaas.id}")
