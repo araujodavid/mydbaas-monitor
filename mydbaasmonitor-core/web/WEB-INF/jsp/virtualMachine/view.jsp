@@ -39,7 +39,7 @@
         		<div class="span3">
         			<legend>
 						<div align="left" style="margin-bottom:10px;">
-							<a class="btn btn-inverse" href="#myModalNewDBMS" data-toggle="modal" title="To create a new DBMS."><i class="icon-plus icon-white"></i> DBMS</a>
+							<a class="btn btn-inverse" href="#myModalNewDBMS" data-toggle="modal" title="To create a new DBMS."><i class="icon-plus icon-white"></i> Database Management System</a>
 	        			</div>
         			</legend>
 
