@@ -126,35 +126,37 @@
 		                </div><!--/informationAccess-->
                 
 		                <div class="span4">
-		                	<div class="tabbable">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
-							    	<li><a href="#tab2" data-toggle="tab">CPU</a></li>
-							    	<li><a href="#tab3" data-toggle="tab">Disk</a></li>
-							  	</ul>
-							  	<div class="tab-content">
-							    	<div class="tab-pane active" id="tab1">
-							      		<address>
-					  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.information.machineOperatingSystem}</info><br>
-					  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.information.machineArchitecture}</info><br>
-					  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.information.machineKernelName}</info><br>
-					  						<strong>Version:</strong> <info class="muted">${virtualMachine.information.machineKernelVersion}</info><br>
-					  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalMemory > 0}">${virtualMachine.information.machineTotalMemory} GB</c:if></info><br>
-					  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalSwap > 0}">${virtualMachine.information.machineTotalSwap} GB</c:if></info><br>											
-										</address> 
-							    	</div>
-    								<div class="tab-pane" id="tab2">
-      									<address>
-					  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUCores > 0}">${virtualMachine.information.machineTotalCPUCores}</c:if></info><br>
-					  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUSockets > 0}">${virtualMachine.information.machineTotalCPUSockets}</c:if></info><br>
-					  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCoresPerSocket > 0}">${virtualMachine.information.machineTotalCoresPerSocket}</c:if></info><br>									
-										</address> 
-    								</div>
-    								<div class="tab-pane" id="tab3">
-      									
-    								</div>
-  								</div>
-							</div>
+		                	<c:if test="${virtualMachine.information.machineOperatingSystem != null && virtualMachine.information.machineTotalMemory > 0}">
+			                	<div class="tabbable">
+									<ul class="nav nav-tabs">
+										<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
+								    	<li><a href="#tab2" data-toggle="tab">CPU</a></li>
+								    	<li><a href="#tab3" data-toggle="tab">Disk</a></li>
+								  	</ul>
+								  	<div class="tab-content">
+								    	<div class="tab-pane active" id="tab1">
+								      		<address>
+						  						<strong>Operating System:</strong> <info class="muted">${virtualMachine.information.machineOperatingSystem}</info><br>
+						  						<strong>Architecture:</strong> <info class="muted">${virtualMachine.information.machineArchitecture}</info><br>
+						  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.information.machineKernelName}</info><br>
+						  						<strong>Version:</strong> <info class="muted">${virtualMachine.information.machineKernelVersion}</info><br>
+						  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalMemory > 0}">${virtualMachine.information.machineTotalMemory} GB</c:if></info><br>
+						  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalSwap > 0}">${virtualMachine.information.machineTotalSwap} GB</c:if></info><br>											
+											</address> 
+								    	</div>
+	    								<div class="tab-pane" id="tab2">
+	      									<address>
+						  						<strong>Total CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUCores > 0}">${virtualMachine.information.machineTotalCPUCores}</c:if></info><br>
+						  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUSockets > 0}">${virtualMachine.information.machineTotalCPUSockets}</c:if></info><br>
+						  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCoresPerSocket > 0}">${virtualMachine.information.machineTotalCoresPerSocket}</c:if></info><br>									
+											</address> 
+	    								</div>
+	    								<div class="tab-pane" id="tab3">
+	      									
+	    								</div>
+	  								</div>
+								</div>
+							</c:if>
 		                </div><!--/informationTab-->		                
 		            </div><!--/row-->
 		            

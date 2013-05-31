@@ -78,7 +78,7 @@
 	  							</div>
   							</c:forEach>
 						</div>
-        		</div><!--/span-->
+        		</div><!--/span3-->
 
         		<div class="span9">
         			<c:if test="${notice != null}">							

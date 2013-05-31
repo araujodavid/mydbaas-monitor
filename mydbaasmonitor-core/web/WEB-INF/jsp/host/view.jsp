@@ -123,24 +123,26 @@
 		                </div><!--/informationAccess-->
                 
 		                <div class="span4">
-		                	<div class="tabbable">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
-							  	</ul>
-							  	<div class="tab-content">
-							    	<div class="tab-pane active" id="tab1">
-							      		<address>
-					  						<strong>Name:</strong> <info class="muted">${host.information.hostInfoName}</info><br>
-					  						<strong>Hypervisor:</strong> <info class="muted">${host.information.hostInfoHypervisor}</info><br>
-					  						<strong>Memory:</strong> <info class="muted"><c:if test="${host.information.hostInfoMemory > 0}">${host.information.hostInfoMemory} GB</c:if></info><br>
-					  						<strong>Cores:</strong> <info class="muted"><c:if test="${host.information.hostInfoCores > 0}">${host.information.hostInfoCores}</c:if></info><br>
-					  						<strong>CPUs:</strong> <info class="muted"><c:if test="${host.information.hostInfoCpus > 0}">${host.information.hostInfoCpus}</c:if></info><br>
-					  						<strong>Frequency:</strong> <info class="muted"><c:if test="${host.information.hostInfoMhz > 0}">${host.information.hostInfoMhz} Mhz</c:if></info><br>
-					  						<strong>Model:</strong> <info class="muted">${host.information.hostInfoModel}</info><br>											
-										</address> 
-							    	</div>
-  								</div>
-							</div>
+		                	<c:if test="${host.information.hostInfoName != null && host.information.hostInfoMemory > 0}">
+			                	<div class="tabbable">
+									<ul class="nav nav-tabs">
+										<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
+								  	</ul>
+								  	<div class="tab-content">
+								    	<div class="tab-pane active" id="tab1">
+								      		<address>
+						  						<strong>Name:</strong> <info class="muted">${host.information.hostInfoName}</info><br>
+						  						<strong>Hypervisor:</strong> <info class="muted">${host.information.hostInfoHypervisor}</info><br>
+						  						<strong>Memory:</strong> <info class="muted"><c:if test="${host.information.hostInfoMemory > 0}">${host.information.hostInfoMemory} GB</c:if></info><br>
+						  						<strong>Cores:</strong> <info class="muted"><c:if test="${host.information.hostInfoCores > 0}">${host.information.hostInfoCores}</c:if></info><br>
+						  						<strong>CPUs:</strong> <info class="muted"><c:if test="${host.information.hostInfoCpus > 0}">${host.information.hostInfoCpus}</c:if></info><br>
+						  						<strong>Frequency:</strong> <info class="muted"><c:if test="${host.information.hostInfoMhz > 0}">${host.information.hostInfoMhz} Mhz</c:if></info><br>
+						  						<strong>Model:</strong> <info class="muted">${host.information.hostInfoModel}</info><br>											
+											</address> 
+								    	</div>
+	  								</div>
+								</div>
+							</c:if>
 		                </div><!--/informationTab-->		                
 		            </div><!--/row-->
 		            
