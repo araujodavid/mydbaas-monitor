@@ -28,22 +28,18 @@
 		  				</c:forEach>			  				
 	  				</c:if>
 	  				
-	  				<c:choose>
-	  					<c:when test="${availableDBMSs.isEmpty()}">
-	  						<input name="entity.dbms.id" id="id" type="hidden" value="${entity.dbms.id}" />
-	  					</c:when>
-	  					<c:otherwise>
-	  						<label class="text-info" for="dbms">Database Management System:</label>
-			  				<select id="dbms" name="entity.dbms.id" style="width:284px;">
-			  					<option value="0" selected="selected">Select one</option>
-			  					<c:forEach var="dbms1" items="${availableDBMSs}">
-									<option value="${dbms1.id}" <c:if test="${dbms1.id == entity.dbms.id}">selected="selected"</c:if> >
-										${dbms1.alias}
-									</option>
-				  				</c:forEach>
-			  				</select>
-	  					</c:otherwise>
-	  				</c:choose>
+ 					<label class="text-info" for="dbms">Database Management System:</label>
+	  				<select id="dbms" name="entity.dbms.id" style="width:284px;">
+	  					<option value="0" selected="selected">Select one</option>
+	  					<c:forEach var="dbms1" items="${availableDBMSs}">
+							<option value="${dbms1.id}" <c:if test="${dbms1.id == entity.dbms.id}">selected="selected"</c:if> >
+								${dbms1.alias}
+							</option>
+		  				</c:forEach>
+	  				</select>
+	  				<c:if test="${availableDBMSs == null || availableDBMSs.isEmpty()}">
+	  					<span class="help-block"><em><small class="text-error">There is no registered DBMSs. Create a new <a href="<c:url value="/dbmss/new" />">here</a>.</small></em></span>
+	  				</c:if>
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
 					<input class="input-xlarge" name="entity.alias" id="alias" type="text" value="${entity.alias}" placeholder="To better identify the resource" />
