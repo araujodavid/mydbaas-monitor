@@ -114,8 +114,8 @@
 							  	<strong>Address:</strong> <info class="muted">${virtualMachine.address}</info><br>							  	
 							  	<strong>SSH Port:</strong> <info class="muted">${virtualMachine.port}</info><br>
 							  	<strong>Username:</strong> <info class="muted">${virtualMachine.user}</info><br>
-							  	<c:if test="${machine.identifierHost != null}">
-							 		<strong>Identificer in Host:</strong> <info class="muted">${machine.identifierHost}</info><br>
+							  	<c:if test="${!virtualMachine.identifierHost.isEmpty()}">
+							 		<strong>Identificer in Host:</strong> <info class="muted">${virtualMachine.identifierHost}</info><br>
 							 	</c:if>
 							  	<strong>Record Date:</strong> <info class="muted">${virtualMachine.recordDate}</info><br>
 							  	<strong>Description:</strong> <info class="muted">${virtualMachine.description}</info><br><br>
@@ -284,15 +284,13 @@
   				<button type="submit" class="btn btn-success">Save changes</button>
   				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>    			
   			</div>
- 		</form>
+ 		</form> 		
  		
- 	<%@include file="/static/footer.jsp"%>	
-	<%@include file="/static/javascript_footer.jsp"%>
-	
-	<script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
-    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-    <script src="${pageContext.servletContext.contextPath}/js/vms_view.js" type="text/javascript"></script>
-    
+		<%@include file="/static/javascript_footer.jsp"%>	
+		<script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
+	    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+	    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
+	    <script src="${pageContext.servletContext.contextPath}/js/vms_view.js" type="text/javascript"></script>
+	    <%@include file="/static/footer.jsp"%>
 	</body>
 </html>
