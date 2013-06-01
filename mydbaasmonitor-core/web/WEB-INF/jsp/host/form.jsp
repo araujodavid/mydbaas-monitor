@@ -34,8 +34,8 @@
 								<option value="${dbaas.id}">${dbaas.alias}</option>
 			  				</c:forEach>
 		  				</select>
-		  				<c:if test="${availableDBaaS == null}">
-		  					<span class="help-block"><em><small>There is no registered environments. Create a new <a href="<c:url value="/dbaas/new" />">here</a>.</small></em></span>
+		  				<c:if test="${availableDBaaS == null || availableDBaaS.isEmpty()}">
+		  					<span class="help-block"><em><small class="text-error">There is no registered environments. Create a new <a href="<c:url value="/dbaas/new" />">here</a>.</small></em></span>
 		  				</c:if>
 		  				
 		  				<label class="text-info" for="alias">Alias:</label>

@@ -149,34 +149,65 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                		<!-- Example row of columns -->
-				      <div class="row">
-				        <div class="span6">
-				          <h2>CPU % vS Time</h2>
-				          <div id="container1" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				        <div class="span6">
-				          <h2>Memory % vS Time</h2>
-				          <div id="container2" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       </div>
-				      </div>
+                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>CPU Usage</h5>
+				         		<div id="container1" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Load Percentage</h5>
+				          		<div id="container2" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				      		</div>
+				      	</div>				      
+				        <div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Physical Memory</h5>
+				          		<div id="container3" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Network I/O (Kb/s)</h5>
+				          		<div id="container4" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       		</div>
+				      	</div>
 				      
-				       <div class="row">
-				        <div class="span6">
-				          <h2>CPU % vS Time</h2>
-				          <div id="container3" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        </div>
-				        <div class="span6">
-				          <h2>Memory % vS Time</h2>
-				          <div id="container4" class="dynamic_chart"></div>
-				          <p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       </div>
-				      </div>
-                		              		
-            		</div><!--/dashboard-->
+				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Network I/O (Packets)</h5>
+				          		<div id="container5" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Disk Percentage</h5>
+				          		<div id="container6" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       		</div>
+				      	</div>
+				      
+				       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Disk I/O Utilization</h5>
+				          		<div id="container7" class="dynamic_chart"></div>
+				         		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				        	<div class="span5" style="margin-left:80px;">
+				          		<h5>Disk I/O Utilization (Bytes)</h5>
+				          		<div id="container8" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				       		</div>
+				      	</div>
+				      
+				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+				        	<div class="span5">
+				          		<h5>Disk Status</h5>
+				          		<div id="container9" class="dynamic_chart"></div>
+				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
+				        	</div>
+				      	</div>                		
+            		</div><!--/dashboard--> 
             		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
@@ -257,14 +288,13 @@
   				<button type="submit" class="btn btn-success">Save changes</button>
   				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>    			
   			</div>
- 		</form>
- 		
- 	<%@include file="/static/footer.jsp"%>	
-	<%@include file="/static/javascript_footer.jsp"%>
-	
-    <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
-    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-    <script src="${pageContext.servletContext.contextPath}/js/host_view.js" type="text/javascript"></script>
+ 		</form> 		
+		
+		<%@include file="/static/javascript_footer.jsp"%>		
+		<script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
+	    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+	    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
+	    <script src="${pageContext.servletContext.contextPath}/js/vms_view.js" type="text/javascript"></script>
+	    <%@include file="/static/footer.jsp"%>	
 	</body>
 </html>
