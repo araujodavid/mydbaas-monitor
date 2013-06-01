@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -22,7 +24,7 @@ public class StarterRepository {
 											 "`id` int(11) NOT NULL AUTO_INCREMENT,\n" +
 											 "`description` text,\n" +
 											 "`record_date` datetime NOT NULL,\n" +
-											 "`alias` varchar(45) NOT NULL,\n +" +
+											 "`alias` varchar(45) NOT NULL,\n" +
 											 "PRIMARY KEY (`id`)" +
 											 ") ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 	
@@ -106,6 +108,7 @@ public class StarterRepository {
 												"`record_date` datetime NOT NULL,\n" +
 												"`alias` varchar(45) NOT NULL,\n" +
 												"`name` varchar(100) NOT NULL,\n" +
+												"`status` tinyint(4) NOT NULL,\n" +
 												"`dbms` int(11) NOT NULL,\n" +
 												"PRIMARY KEY (`id`),\n" +
 												"KEY `fk_database_dbms_idx` (`dbms`),\n" +
@@ -138,4 +141,37 @@ public class StarterRepository {
         }
 		return false;
 	}//createResourceTable()
+	
+	/**
+	 * Method to check the tables were created.
+	 * @return a list of tables and their status
+	 */
+	public Map<String, Boolean> verifyTables() {
+		Map<String, Boolean> tables = new HashMap<String, Boolean>();
+		tables.put("dbaas", false);
+		tables.put("host", false);
+		tables.put("virtual_machine", false);
+		tables.put("dbms", false);
+		tables.put("database", false);
+		try {
+			connection = Pool.getConnection(Pool.JDBC_MySQL);
+			preparedStatement = connection.prepareStatement("select table_name from information_schema.tables where table_schema = database() and table_name not like '%_metric%';");
+						
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				String key = resultSet.getString("table_name");
+				if (tables.containsKey(key)) {
+					tables.put(key, true);
+				}
+			}
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+            try { resultSet.close(); } catch(Exception e) {}
+            try { preparedStatement.close(); } catch(Exception e) {}
+            try { connection.close(); } catch(Exception e) {}
+        }
+		return tables;
+	}//verifyTables()
 }
