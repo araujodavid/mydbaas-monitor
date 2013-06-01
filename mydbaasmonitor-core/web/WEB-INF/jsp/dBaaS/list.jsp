@@ -33,61 +33,68 @@
 						<div align="left" style="margin-bottom:10px;">
 							<a class="btn btn-inverse" href="#myNewDBaaS" data-toggle="modal" title="To create a new DBaaS."><i class="icon-plus icon-white"></i> Database-as-a-Service</a>
 	        			</div>
-        			</legend>
+        			</legend>       			   
         			
-        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>Environments:</strong>   
-        			
+        			<i class="icon-list" style="margin-right:5px; margin-bottom:10px;"></i><strong>Environments:</strong>
 		            <div class="accordion" id="accordion2">
 		            	<c:if test="${dBaaSList.isEmpty()}">
 							<div class="alert" style="margin-top:30px;">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								There are no <strong>environments</strong>.
+								There are no <strong>environments</strong> with resources.
 							</div>
 						</c:if>
 		            	<c:forEach items="${dBaaSList}" var="dbaas">
-		            		<c:if test="${!dbaas.hosts.isEmpty() || !dbaas.machines.isEmpty()}">
-	  							<div class="accordion-group">
-	    							<div class="accordion-heading">
-	      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbaas.id}">
-	        								<i class="icon-globe" style="margin-right:6px;"></i>${dbaas.alias}
-	     	 							</a>	     	 							
-	    							</div>
-	    							<div id="collapse${dbaas.id}" class="accordion-body collapse">
-	    								<c:if test="${!dbaas.hosts.isEmpty()}">
-	    									<div class="accordion-inner">
-	    										<strong>Host:</strong><br>
-		    									<c:forEach items="${dbaas.hosts}" var="host">
-			   										<a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a><br>    									
-			     								</c:forEach>
-			     							</div>
-	     								</c:if>
-	     								<c:if test="${!dbaas.machines.isEmpty()}">
-	     									<div class="accordion-inner">
-	     										<strong>Virtual Machine:</strong><br>
-			    								<c:forEach items="${dbaas.machines}" var="machine">
-				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a><br>	     								
-			     								</c:forEach>
-		     								</div>
-	     								</c:if>	
-	     								<c:if test="${!dbaas.dbmss.isEmpty()}">
-	     									<div class="accordion-inner">
-	     										<strong>DBMS:</strong><br>
-			    								<c:forEach items="${dbaas.dbmss}" var="dbms">
-				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/dbmss/view/${dbms.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${dbms.alias}</a><br>	     								
-			     								</c:forEach>
-		     								</div>
-	     								</c:if>
-	     								<c:if test="${!dbaas.databases.isEmpty()}">
-	     									<div class="accordion-inner">
-	     										<strong>Database:</strong><br>
-			    								<c:forEach items="${dbaas.databases}" var="database">
-				   									<a class="muted" style="margin-left:15px;" href="<c:url value="/databases/view/${database.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${database.alias}</a><br>	     								
-			     								</c:forEach>
-		     								</div>
-	     								</c:if>						
-	    							</div>
-	  							</div>
-	  						</c:if>
+		            		<c:choose>
+			            		<c:when test="${!dbaas.hosts.isEmpty() || !dbaas.machines.isEmpty()}">
+		  							<div class="accordion-group">
+		    							<div class="accordion-heading">
+		      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbaas.id}">
+		        								<i class="icon-globe" style="margin-right:6px;"></i>${dbaas.alias}
+		     	 							</a>	     	 							
+		    							</div>
+		    							<div id="collapse${dbaas.id}" class="accordion-body collapse">
+		    								<c:if test="${!dbaas.hosts.isEmpty()}">
+		    									<div class="accordion-inner">
+		    										<strong>Host:</strong><br>
+			    									<c:forEach items="${dbaas.hosts}" var="host">
+				   										<a class="muted" style="margin-left:15px;" href="<c:url value="/hosts/view/${host.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${host.alias}</a><br>    									
+				     								</c:forEach>
+				     							</div>
+		     								</c:if>
+		     								<c:if test="${!dbaas.machines.isEmpty()}">
+		     									<div class="accordion-inner">
+		     										<strong>Virtual Machine:</strong><br>
+				    								<c:forEach items="${dbaas.machines}" var="machine">
+					   									<a class="muted" style="margin-left:15px;" href="<c:url value="/vms/view/${machine.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${machine.alias}</a><br>	     								
+				     								</c:forEach>
+			     								</div>
+		     								</c:if>	
+		     								<c:if test="${!dbaas.dbmss.isEmpty()}">
+		     									<div class="accordion-inner">
+		     										<strong>DBMS:</strong><br>
+				    								<c:forEach items="${dbaas.dbmss}" var="dbms">
+					   									<a class="muted" style="margin-left:15px;" href="<c:url value="/dbmss/view/${dbms.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${dbms.alias}</a><br>	     								
+				     								</c:forEach>
+			     								</div>
+		     								</c:if>
+		     								<c:if test="${!dbaas.databases.isEmpty()}">
+		     									<div class="accordion-inner">
+		     										<strong>Database:</strong><br>
+				    								<c:forEach items="${dbaas.databases}" var="database">
+					   									<a class="muted" style="margin-left:15px;" href="<c:url value="/databases/view/${database.id}"/>"><i class="icon-tag" style="margin-right:4px;"></i>${database.alias}</a><br>	     								
+				     								</c:forEach>
+			     								</div>
+		     								</c:if>						
+		    							</div>
+		  							</div>
+		  						</c:when>
+			            		<c:otherwise>
+			            			<div class="alert">
+										<button type="button" class="close" data-dismiss="alert">&times;</button>
+										The <strong>${dbaas.alias}</strong> doesn't have resources.
+									</div>
+			            		</c:otherwise>
+			            	</c:choose>
  						</c:forEach>						
 					</div>
 					          			
@@ -114,19 +121,27 @@
 							</div>
 						</c:if>		            	
 		            	<c:forEach items="${highlightsDBaaS}" var="highlight">
-		            		<c:if test="${!highlight.hosts.isEmpty() || !highlight.machines.isEmpty()}">
-				                <div class="span4">
-				                    <h3 class="text-info">${highlight.alias}</h3>
-				                    <div class="dbaas_div" id="${highlight.id}" style="width: 350px; height: 200px; margin: 0 auto"></div>
-				                    <p>
-				                    	<div class="infos hosts ${highlight.id}">${highlight.hosts.size()}</div>
-				                    	<div class="infos machines ${highlight.id}">${highlight.machines.size()}</div>
-				                    	<div class="infos dbmss ${highlight.id}">${highlight.dbmss.size()}</div>
-				                    	<div class="infos databases ${highlight.id}">${highlight.databases.size()}</div>
-				                    </p>
-				                    <p><a class="btn" href="<c:url value="/dbaas/view/${highlight.id}"/>">About &raquo;</a></p>
-				                </div><!--/span-->
-				        	</c:if>
+		            		<div class="span4">
+			            		<c:choose>
+			            			<c:when test="${!highlight.hosts.isEmpty() || !highlight.machines.isEmpty()}">			            				
+					                    <h3 class="text-info">${highlight.alias}</h3>
+					                    <div class="dbaas_div" id="${highlight.id}" style="width: 350px; height: 200px; margin: 0 auto"></div>
+					                    <p>
+					                    	<div class="infos hosts ${highlight.id}">${highlight.hosts.size()}</div>
+					                    	<div class="infos machines ${highlight.id}">${highlight.machines.size()}</div>
+					                    	<div class="infos dbmss ${highlight.id}">${highlight.dbmss.size()}</div>
+					                    	<div class="infos databases ${highlight.id}">${highlight.databases.size()}</div>
+					                    </p>
+					                    <p><a class="btn" href="<c:url value="/dbaas/view/${highlight.id}"/>">About &raquo;</a></p>					                	
+			            			</c:when>
+			            			<c:otherwise>
+			            				<div class="alert">
+											<button type="button" class="close" data-dismiss="alert">&times;</button>
+											There is no <strong>hot</strong> environment.
+										</div>
+			            			</c:otherwise>
+			            		</c:choose>
+		            		</div><!--/spanHighlight-->
 		                </c:forEach>
 		            </div><!--/row-->		            
 		            
@@ -162,7 +177,7 @@
     							</c:forEach>							
   							</tbody>
 						</table>
-						<c:if test="${restDBaaS.isEmpty()}">
+						<c:if test="${restDBaaS == null || restDBaaS.isEmpty()}">
 							<div class="alert">
 								<button type="button" class="close" data-dismiss="alert">&times;</button>
 								There are no others <strong>DBaaS</strong>.
@@ -185,11 +200,11 @@
   			<div class="modal-body">	  				
 				<fieldset>	  				
 	  				<label class="text-info" for="alias">Alias:</label>
-					<input class="input-xlarge" name="entity.alias" id="alias" type="text" value="${entity.alias}" placeholder="To better identify the DBaaS environment." />
+					<input class="input-xlarge" name="entity.alias" id="alias" type="text" value="${entity.alias}" placeholder="To better identify the DBaaS environment." required />
 					<span class="help-block"><em><small>Example: DBaaS Project Alpha</small></em></span>
 					
 					<label class="text-info" for="description">Description:</label>	  							
- 					<textarea name="entity.description" id="description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;" >${entity.description}</textarea>
+ 					<textarea name="entity.description" id="description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;" required>${entity.description}</textarea>
 						
 					<label class="text-info" for="recordDate">Record Date:</label>
 					<input class="input-small" name="entity.recordDate" id="recordDate" type="text" readonly="readonly" value="${current_date}" />			  	
