@@ -28,22 +28,18 @@
 		  				</c:forEach>			  				
 	  				</c:if>
 	  				
-	  				<c:choose>
-	  					<c:when test="${availableVMs.isEmpty()}">
-	  						<input name="entity.machine.id" id="id" type="hidden" value="${virtualMachine.id}" />
-	  					</c:when>
-	  					<c:otherwise>
-	  						<label class="text-info" for="machine">Virtual Machines:</label>
-			  				<select id="machine" name="entity.machine.id" style="width:284px;">
-			  					<option value="0" selected="selected">Select one</option>
-			  					<c:forEach var="machine" items="${availableVMs}">
-									<option value="${machine.id}" <c:if test="${machine.id == entity.machine.id}">selected="selected"</c:if> >
-										${machine.alias}
-									</option>
-				  				</c:forEach>
-			  				</select>
-	  					</c:otherwise>
-	  				</c:choose>	  				
+	  				<label class="text-info" for="machine">Virtual Machines:</label>
+	  				<select id="machine" name="entity.machine.id" style="width:284px;">
+	  					<option value="0" selected="selected">Select one</option>
+	  					<c:forEach var="machine" items="${availableVMs}">
+							<option value="${machine.id}" <c:if test="${machine.id == entity.machine.id}">selected="selected"</c:if> >
+								${machine.alias}
+							</option>
+		  				</c:forEach>
+	  				</select>
+	  				<c:if test="${availableVMs == null || availableVMs.isEmpty()}">
+	  					<span class="help-block"><em><small class="text-error">There is no registered Virtual Machines. Create a new <a href="<c:url value="/vms/new" />">here</a>.</small></em></span>
+	  				</c:if>  				
 	  				
 	  				<label class="text-info" for="type">DBMS Type:</label>
 	  				<select id="type" name="entity.type" style="width:284px;">	  					

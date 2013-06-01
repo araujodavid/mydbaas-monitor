@@ -28,7 +28,7 @@
     		<div class="row-fluid">
         		<div class="span3" style="margin-top:10px;">
         			<div align="left">
-        				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/databases/new" title=""><i class="icon-plus icon-white"></i> Database</a>
+        				<a class="btn btn-inverse" href="${pageContext.servletContext.contextPath}/dbmss/new" title=""><i class="icon-plus icon-white"></i> Database Management System</a>
         			</div>
         			<c:choose>
         				<c:when test="${dbmsList.isEmpty()}">
