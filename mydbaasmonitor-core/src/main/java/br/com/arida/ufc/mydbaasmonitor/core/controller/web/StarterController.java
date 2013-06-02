@@ -61,8 +61,7 @@ public class StarterController {
 			if (port != null && !isDigit(port)) {
 				validator.add(new ValidationMessage("The value reported for port is not numeric.", "Port"));
 			}
-			that(!(username == null), "Username", "pool.username.empty");
-			that(!(password == null), "Password", "pool.password.empty");	        
+			that(!(username == null), "Username", "pool.username.empty");       
 	    } });
 		//If some validation is triggered are sent error messages to page
 		validator.onErrorForwardTo(this).starter();
