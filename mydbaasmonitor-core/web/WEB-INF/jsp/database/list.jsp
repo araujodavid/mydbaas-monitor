@@ -39,22 +39,6 @@
         				</c:when>
         				<c:otherwise>     
 		        			<div id="container-summary" style="margin-top:20px;"></div>
-		        			<table id="datatable" class="table table-bordered table-condensed">
-								<thead>
-									<tr>
-										<th></th>
-										<th>Active</th>
-										<th>Not Active</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th>Database</th>
-										<th>${amountActive}</th>
-										<th>${amountNotActive}</th>
-									</tr>
-								</tbody>
-							</table>
 						</c:otherwise>
         			</c:choose>      		     			
         		</div><!--/span-->
@@ -133,30 +117,41 @@
 		    $(document).ready(function () {
 		    	
 		    	$('#container-summary').highcharts({
-		            data: {
-		                table: document.getElementById('datatable')
-		            },
-		            chart: {
-		                type: 'column'
-		            },
-		            title: {
-		                text: 'Database Status'
-		            },
-		            credits: {
-	                    enabled: false
-	                },
-		            yAxis: {
-		                allowDecimals: false,
-		                title: {
-		                    text: 'Units'
-		                }
-		            },
-		            tooltip: {
-		                formatter: function() {
-		                    return '<b>'+ this.series.name +'</b><br/>'+
-		                        this.y +' '+ this.x.toLowerCase();
-		                }
-		            }
+		    		 chart: {
+		                 plotBackgroundColor: null,
+		                 plotBorderWidth: null,
+		                 plotShadow: false
+		             },
+		             title: {
+		                 text: 'Database Status'
+		             },
+		             tooltip: {
+		         	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+		             	percentageDecimals: 1
+		             },
+		             plotOptions: {
+		                 pie: {
+		                     allowPointSelect: true,
+		                     cursor: 'pointer',
+		                     dataLabels: {
+		                         enabled: false
+		                     },
+		                     showInLegend: true
+		                 }
+		             },
+		             series: [{
+		                 type: 'pie',
+		                 name: 'Database',
+		                 data: [
+		                     ['Not Active',       ${amountNotActive}],
+		                     {
+		                         name: 'Active',
+		                         y: ${amountActive},
+		                         sliced: true,
+		                         selected: true
+		                     }
+		                 ]
+		             }]
 		        });
 		    });
 		</script>	      
