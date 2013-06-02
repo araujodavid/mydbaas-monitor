@@ -151,62 +151,35 @@
                 		
                 	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
-				          		<h5>CPU Usage</h5>
+				          		<h5>Active Domains</h5>
 				         		<div id="container1" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Load Percentage</h5>
+				          		<h5>Inactive Domains</h5>
 				          		<div id="container2" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				      		</div>
 				      	</div>				      
 				        <div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
-				          		<h5>Physical Memory</h5>
+				          		<h5>CPU Average</h5>
 				          		<div id="container3" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Network I/O (Kb/s)</h5>
+				          		<h5>Memory Utilization</h5>
 				          		<div id="container4" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       		</div>
 				      	</div>
-				      
 				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
-				          		<h5>Network I/O (Packets)</h5>
+				          		<h5>Swap Utilization</h5>
 				          		<div id="container5" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Disk Percentage</h5>
-				          		<div id="container6" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       		</div>
-				      	</div>
-				      
-				       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>Disk I/O Utilization</h5>
-				          		<div id="container7" class="dynamic_chart"></div>
-				         		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Disk I/O Utilization (Bytes)</h5>
-				          		<div id="container8" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       		</div>
-				      	</div>
-				      
-				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>Disk Status</h5>
-				          		<div id="container9" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				      	</div>                		
+				      	</div>                    		
             		</div><!--/dashboard--> 
             		            		       
         		</div><!--/span-->       		
