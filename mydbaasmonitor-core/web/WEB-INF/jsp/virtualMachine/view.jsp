@@ -165,12 +165,12 @@
                 		
                 	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
-				          		<h5>CPU Usage</h5>
+				          		<h5>CPU Utilization</h5>
 				         		<div id="container1" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Load Percentage</h5>
+				          		<h5>CPU Average</h5>
 				          		<div id="container2" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				      		</div>
