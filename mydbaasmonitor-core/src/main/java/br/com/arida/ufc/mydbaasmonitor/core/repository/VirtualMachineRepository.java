@@ -320,7 +320,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		virtualMachine.setPort(resultSet.getInt("port"));
 		virtualMachine.setUser(resultSet.getString("username"));
 		virtualMachine.setPassword(resultSet.getString("password"));
-		virtualMachine.setRecordDate(DataUtil.converteDateParaString(resultSet.getTimestamp("record_date")));
+		virtualMachine.setRecordDate(DataUtil.convertDateToString(resultSet.getTimestamp("record_date")));
 		virtualMachine.setDescription(resultSet.getString("description"));
 		virtualMachine.setAlias(resultSet.getString("alias"));
 		virtualMachine.setStatus(resultSet.getBoolean("status"));

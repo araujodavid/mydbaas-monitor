@@ -162,7 +162,7 @@ public class DatabaseRepository implements GenericRepository<Database> {
 		DBMS dbms = new DBMS();
 		database.setId(resultSet.getInt("id"));
 		database.setAlias(resultSet.getString("alias"));
-		database.setRecordDate(DataUtil.converteDateParaString(resultSet.getTimestamp("record_date")));
+		database.setRecordDate(DataUtil.convertDateToString(resultSet.getTimestamp("record_date")));
 		database.setDescription(resultSet.getString("description"));
 		database.setName(resultSet.getString("name"));
 		database.setStatus(resultSet.getBoolean("status"));
