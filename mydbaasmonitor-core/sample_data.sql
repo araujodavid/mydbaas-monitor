@@ -1,0 +1,10 @@
+
+INSERT INTO `dbms` VALUES (1,'DBMS 1','2013-06-02 00:07:24',NULL,NULL,3604,'root','root',0,'PostgreSQL',1),(2,'DBMS 1','2013-06-02 00:24:50',NULL,NULL,3604,'root','root',0,'PostgreSQL',3),(3,'DBMS 2','2013-06-02 00:25:07',NULL,'127.0.5',3604,'root','root',0,'PostgreSQL',3);
+
+INSERT INTO `virtual_machine` VALUES (1,'127.0.0.1','root',22,'root','2013-06-02 00:06:58','VM 0',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL),(2,'127.0.0.1','root',22,'root','2013-06-02 00:23:43','VM 1',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'identifier1',1,1),(3,'127.0.5','root',22,'root','2013-06-02 00:24:32','VM 2',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'VM 2',2,3);
+
+INSERT INTO `host` VALUES (1,'2013-06-02 00:22:09','Host 1',NULL,'127.0.0.1',22,'root','root',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(2,'2013-06-02 00:22:26','Host 2',NULL,'127.0.0.2',22,'root','root',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(3,'2013-06-02 00:22:43','Host 3',NULL,'127.0.0.3',22,'root','root',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2),(4,'2013-06-02 00:23:03','Host 4',NULL,'127.0.0.4',22,'root','root',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(5,'2013-06-02 00:23:19','Host 5',NULL,'127.0.0.5',22,'root','root',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3);
+
+INSERT INTO `dbaas` VALUES (1,'DBaaS Example','2013-06-02 00:05:49','DBaaS 1'),(2,'DBaaS 2','2013-06-02 00:21:32','DBaaS 2'),(3,'DBaaS 3','2013-06-02 00:21:43','DBaaS 3'),(4,'Description','2013-06-02 00:28:22','DBaaS 4'),(5,'DBaaS 5','2013-06-02 00:28:35','DBaaS 5'),(6,'DBaaS 6','2013-06-02 00:28:51','DBaaS 6');
+
+INSERT INTO `database` VALUES (1,NULL,'2013-06-02 00:07:40','Database 1','schema identifier',0,1),(2,NULL,'2013-06-02 00:16:27','Database 2','schmea identifier 2',0,1),(3,NULL,'2013-06-02 00:25:23','Database 3','schema identifier 3',0,2);
