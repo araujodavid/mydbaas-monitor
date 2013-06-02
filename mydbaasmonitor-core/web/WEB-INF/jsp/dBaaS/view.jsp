@@ -223,10 +223,124 @@
             		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
-		</div><!--/.fluid-container-->	
+		</div><!--/.fluid-container-->
 		
-		<%@include file="/static/footer.jsp"%>	
+		<!-- Modal New Virtual Machine -->
+ 		<form method="post" action="<c:url value="/vms/add"/>" id="myModalNewVM" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 		<div class="modal-header">
+    			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    			<h3 id="myModalLabel"><img src="/mydbaasmonitor/img/new.png"> New Virtual Machine</h3>
+  			</div>
+  			<div class="modal-body">	  				
+				<fieldset>			
+	  				<input name="virtualMachine.environment.id" id="dbaas" type="hidden" value="${dBaaS.id}" />
+	  				<label class="text-info" for="hosts">Environment DBaaS:</label>
+	  				<input class="input-xlarge" type="text" readonly="readonly" value="${dBaaS.alias}" />
+	  				
+	  				<label class="text-info" for="hosts">Host:</label>
+	  				<select id="hosts" name="virtualMachine.host.id" style="width:284px;">
+	  					<option value="0" selected="selected">Without Host</option>
+	  					<c:forEach var="host" items="${availableHosts}">
+							<option value="${host.id}">${host.alias}</option>
+		  				</c:forEach>
+	  				</select>
+	  				<c:if test="${availableHosts == null || availableHosts.isEmpty()}">
+	  					<span class="help-block"><em><small class="text-error">There is no registered hosts. Create a new <a href="<c:url value="/hosts/new" />">here</a>.</small></em></span>
+	  				</c:if>
+	  				
+	  				<div id="div_identifier_host">
+		  				<label class="text-info" for="alias">Identifier in Host:</label>
+						<input class="input-xlarge" name="virtualMachine.identifierHost" id="identifier_host" type="text" placeholder="Identifier in the hypervisor" />
+						<span class="help-block"><em><small>Enter only if a Host was selected.</small></em></span>
+						<span class="help-block"><em><small>If the host is using the KVM hypervisor you must inform the ID of the virtual machine.</small></em></span>
+	  				</div>
+	  				
+	  				<label class="text-info" for="alias">Alias:</label>
+					<input class="input-xlarge" name="virtualMachine.alias" id="alias" type="text" placeholder="To better identify the resource" required />
+					<span class="help-block"><em><small>Example: VM Project X</small></em></span>
+								   
+			   		<label class="text-info" for="address">Address:</label>
+					<input class="input-xlarge" name="virtualMachine.address" id="address" type="text" placeholder="Access address" required />
+					<span class="help-block"><em><small>Example: 127.0.0.1</small></em></span>
+					
+					<label class="text-info" for="user">Username:</label>
+					<input name="virtualMachine.user" id="user" type="text" required />				
+				  	<span class="help-block"><em><small>Make sure that the user is <strong>root</strong>.</small></em></span>
+					
+					<label class="text-info" for="port">Port:</label>
+					<input class="input-small" name="virtualMachine.port" id="port" type="text" placeholder="e.g. 22" required />							
+					<span class="help-block"><em><small>Enter the <strong>SSH</strong> port.</small></em></span>
+					
+					<label class="text-info" for="password">Password:</label>
+					<input name="virtualMachine.password" id="password" type="password" placeholder="Root password" required /> <br>
+					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" required />					    
+			
+					<label class="text-info" for="key">Key:</label>
+					<div class="input-append">
+ 							<input class="input-medium" name="virtualMachine.key" id="key" type="text" readonly="readonly" />
+ 							<button class="btn btn-primary" type="button">Send</button>
+					</div>
+					<span class="help-block"><em><small>If you need an access <strong>key</strong>, upload the file instead of entering the password.</small></em></span>
+					
+					<label class="text-info" for="description">Description:</label>	  							
+					<textarea name="virtualMachine.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;" ></textarea>
+					
+					<label class="text-info" for="recordDate">Record Date:</label>
+					<input class="input-small" name="virtualMachine.recordDate" id="recordDate" type="text" readonly="readonly" value="${current_date}" />
+  				</fieldset>		 		
+  			</div>
+  			<div class="modal-footer">
+  				<button type="submit" class="btn btn-success">Save changes</button>
+  				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>    			
+  			</div>
+ 		</form>
+ 		
+ 		<!-- Modal New Host -->
+ 		<form method="post" action="<c:url value="/hosts/add"/>" id="myModalNewHost" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 		<div class="modal-header">
+    			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    			<h3 id="myModalLabel"><img src="/mydbaasmonitor/img/new.png"> New Host</h3>
+  			</div>
+  			<div class="modal-body">	  				
+				<fieldset>			
+	  				<input name="host.environment.id" id="dbaas" type="hidden" value="${dBaaS.id}" />
+	  				<label class="text-info" for="hosts">Environment DBaaS:</label>
+	  				<input class="input-xlarge" type="text" readonly="readonly" value="${dBaaS.alias}" />
+	  				
+	  				<label class="text-info" for="alias">Alias:</label>
+					<input class="input-xlarge" name="host.alias" id="alias" type="text" placeholder="To better identify the resource" required />
+					<span class="help-block"><em><small>Example: Cluster Project X</small></em></span>
+								   
+			   		<label class="text-info" for="address">Address:</label>
+					<input class="input-xlarge" name="host.address" id="address" type="text" placeholder="Access address" required />
+					<span class="help-block"><em><small>Example: 127.0.0.1</small></em></span>
+					
+					<label class="text-info" for="user">Username:</label>
+					<input name="host.user" id="user" type="text" required />				
+				  	<span class="help-block"><em><small>Make sure that the user is <strong>root</strong>.</small></em></span>
+					
+					<label class="text-info" for="port">Port:</label>
+					<input class="input-small" name="host.port" id="port" type="text" placeholder="e.g. 22" required />							
+					<span class="help-block"><em><small>Enter the <strong>SSH</strong> port.</small></em></span>
+					
+					<label class="text-info" for="password">Password:</label>
+					<input name="host.password" id="password" type="password" placeholder="Root password" required /> <br>
+					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" required />
+					
+					<label class="text-info" for="description">Description:</label>	  							
+					<textarea name="host.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;"></textarea>
+					
+					<label class="text-info" for="recordDate">Record Date:</label>
+					<input class="input-small" name="host.recordDate" id="recordDate" type="text" readonly="readonly" value="${current_date}" />
+  				</fieldset>		 		
+  			</div>
+  			<div class="modal-footer">
+  				<button type="submit" class="btn btn-success">Save changes</button>
+  				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>    			
+  			</div>
+ 		</form> 		
+			
 	  	<%@include file="/static/javascript_footer.jsp"%>
-	  	
+	  	<%@include file="/static/footer.jsp"%>
 	</body>
 </html>
