@@ -85,7 +85,7 @@ public class VirtualMachineController extends AbstractController {
 		//Includes the current date
 		//List available DBaaS
 		this.result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableDBaaS", dBaaSRepository.all())
 		.include("availableHosts", hostRepository.all());
 	}
@@ -196,7 +196,7 @@ public class VirtualMachineController extends AbstractController {
 			virtualMachine.setHost(hostRepository.find(virtualMachine.getHost().getId()));
 		}
 		virtualMachine.setDbmsList(dbmsRepository.getMachineDBMSs(virtualMachine.getId()));
-		result.include("current_date", DataUtil.converteDateParaString(new Date()));
+		result.include("current_date", DataUtil.convertDateToStringUI(new Date()));
 		return virtualMachine;		
 	}
 	

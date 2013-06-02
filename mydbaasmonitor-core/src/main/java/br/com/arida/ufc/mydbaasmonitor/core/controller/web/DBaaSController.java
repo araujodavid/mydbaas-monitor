@@ -129,7 +129,7 @@ public class DBaaSController extends AbstractController implements GenericContro
 		}		
 		
 		result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("restDBaaS", restDBaaS)
 		.include("highlightsDBaaS", highlightsDBaaS);
 		return dBaaSList;
@@ -139,7 +139,7 @@ public class DBaaSController extends AbstractController implements GenericContro
 	@Override
 	public void form() {
 		//Includes the current date
-		this.result.include("current_date", DataUtil.converteDateParaString(new Date()));		
+		this.result.include("current_date", DataUtil.convertDateToStringUI(new Date()));		
 	}
 
 	@Path("/dbaas/add")
@@ -198,7 +198,8 @@ public class DBaaSController extends AbstractController implements GenericContro
 			}
 		}			
 		result
-		.include("current_date", DataUtil.converteDateParaString(new Date()));		
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
+		.include("availableHosts", hostRepository.all());
 		return entity;
 	}
 

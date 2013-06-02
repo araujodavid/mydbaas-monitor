@@ -77,7 +77,7 @@ public class DBMSController extends AbstractController implements GenericControl
 	
 	public void form(VirtualMachine virtualMachine) {
 		this.result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableVMs", virtualMachineRepository.all())
 		.include("virtualMachine", virtualMachine);		
 	}
@@ -88,7 +88,7 @@ public class DBMSController extends AbstractController implements GenericControl
 		//Includes the current date
 		//List available Virtual Machines
 		this.result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableVMs", virtualMachineRepository.all());	
 	}
 
@@ -158,7 +158,7 @@ public class DBMSController extends AbstractController implements GenericControl
 		entity = repository.find(entity.getId());
 		entity.setMachine(virtualMachineRepository.find(entity.getMachine().getId()));
 		entity.setDatabases(databaseRepository.getDBMSDatabases(entity.getId()));
-		result.include("current_date", DataUtil.converteDateParaString(new Date()));
+		result.include("current_date", DataUtil.convertDateToStringUI(new Date()));
 		return entity;
 	}
 

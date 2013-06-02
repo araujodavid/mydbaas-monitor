@@ -81,7 +81,7 @@ public class HostController extends AbstractController implements GenericControl
 		//Includes the current date
 		//List available DBaaS
 		this.result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableDBaaS", dBaaSRepository.all());
 	}
 
@@ -164,7 +164,7 @@ public class HostController extends AbstractController implements GenericControl
 		host.setEnvironment(dBaaSRepository.find(host.getEnvironment().getId()));
 		host.setMachines(virtualMachineRepository.getHostMachines(host.getId()));
 		result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableDBaaS", dBaaSRepository.all());
 		return host;
 	}

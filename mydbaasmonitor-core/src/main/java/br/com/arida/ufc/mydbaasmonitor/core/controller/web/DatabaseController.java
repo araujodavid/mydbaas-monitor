@@ -68,13 +68,13 @@ public class DatabaseController extends AbstractController implements GenericCon
 		//Includes the current date
 		//List available Virtual Machines
 		this.result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableDBMSs", dbmsRepository.all());		
 	}
 	
 	public void form(DBMS dbms) {
 		this.result
-		.include("current_date", DataUtil.converteDateParaString(new Date()))
+		.include("current_date", DataUtil.convertDateToStringUI(new Date()))
 		.include("availableDBMSs", dbmsRepository.all())
 		.include("dbms", dbms);		
 	}
