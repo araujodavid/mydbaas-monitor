@@ -1,11 +1,14 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Disk;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Memory;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Network;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Partition;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver.common.AbstractReceiver;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.VirtualMachineRepository;
@@ -63,21 +66,23 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param recordDate - date when it was collected
 	 */
 	@Post("/cpu")
-	public void cpu(Cpu metric, int identifier, String recordDate) {
-		try {
-			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
-				status.accepted();
+	public void cpu(List<Cpu> metric, int identifier, String recordDate) {
+		for (Cpu cpu : metric) {
+			try {
+				if (repository.saveMetric(cpu, identifier, recordDate, 0, 0)) {
+					status.accepted();
+				}
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		}				
 	}
 	
 	/**
@@ -126,6 +131,32 @@ public class MachineReceiverController extends AbstractReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Method that receives the collection of Partitions.
+	 * @param metric - object relative to a metric
+	 * @param machine - machine identifier where the metric was collected
+	 * @param recordDate - date when it was collected
+	 */
+	@Post("/partition")
+	public void partition(List<Partition> metric, int identifier, String recordDate) {
+		for (Partition partition : metric) {
+			try {
+				if (repository.saveMetric(partition, identifier, recordDate, 0, 0)) {
+					status.accepted();
+				}
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}				
 	}
 	
 	/**
