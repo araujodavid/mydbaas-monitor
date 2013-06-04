@@ -2,62 +2,36 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
-/**
- * 
+/** 
  * @author Daivd Araújo
  * @version 1.0
- * @since March 13, 2013
- * 
+ * @since March 13, 2013 
  */
-
 public class Disk extends AbstractMetric {
 
-	private long diskUsed;
-	private long diskFree;
-	private long diskTotal;	
-	private long diskReadBytes;
-	private long diskWriteBytes;
+	private long diskBytesRead;
+	private long diskBytesWritten;
 	private long diskReads;
 	private long diskWrites;
-	
-	public long getDiskUsed() {
-		return diskUsed;
+	private long diskFreeBytes;
+	private long diskUsedBytes;
+	private long diskTotalBytes;
+	private double diskPercent;
+		
+	public long getDiskBytesRead() {
+		return diskBytesRead;
 	}
 
-	public void setDiskUsed(long diskUsed) {
-		this.diskUsed = diskUsed;
+	public void setDiskBytesRead(long diskBytesRead) {
+		this.diskBytesRead = diskBytesRead;
 	}
 
-	public long getDiskFree() {
-		return diskFree;
+	public long getDiskBytesWritten() {
+		return diskBytesWritten;
 	}
 
-	public void setDiskFree(long diskFree) {
-		this.diskFree = diskFree;
-	}
-	
-	public long getDiskTotal() {
-		return diskTotal;
-	}
-
-	public void setDiskTotal(long diskTotal) {
-		this.diskTotal = diskTotal;
-	}
-	
-	public long getDiskReadBytes() {
-		return diskReadBytes;
-	}
-
-	public void setDiskReadBytes(long diskReadBytes) {
-		this.diskReadBytes = diskReadBytes;
-	}
-
-	public long getDiskWriteBytes() {
-		return diskWriteBytes;
-	}
-
-	public void setDiskWriteBytes(long diskWriteBytes) {
-		this.diskWriteBytes = diskWriteBytes;
+	public void setDiskBytesWritten(long diskBytesWritten) {
+		this.diskBytesWritten = diskBytesWritten;
 	}
 
 	public long getDiskReads() {
@@ -74,6 +48,38 @@ public class Disk extends AbstractMetric {
 
 	public void setDiskWrites(long diskWrites) {
 		this.diskWrites = diskWrites;
+	}
+
+	public long getDiskFreeBytes() {
+		return diskFreeBytes;
+	}
+
+	public void setDiskFreeBytes(long diskFreeBytes) {
+		this.diskFreeBytes = diskFreeBytes;
+	}
+
+	public long getDiskUsedBytes() {
+		return diskUsedBytes;
+	}
+
+	public void setDiskUsedBytes(long diskUsedBytes) {
+		this.diskUsedBytes = diskUsedBytes;
+	}
+
+	public long getDiskTotalBytes() {
+		return diskTotalBytes;
+	}
+
+	public void setDiskTotalBytes(long diskTotalBytes) {
+		this.diskTotalBytes = diskTotalBytes;
+	}
+
+	public double getDiskPercent() {
+		return diskPercent;
+	}
+
+	public void setDiskPercent(double diskPercent) {
+		this.diskPercent = diskPercent;
 	}
 
 	@Override

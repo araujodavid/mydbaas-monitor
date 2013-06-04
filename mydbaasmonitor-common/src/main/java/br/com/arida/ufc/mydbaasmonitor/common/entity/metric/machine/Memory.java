@@ -14,6 +14,8 @@ public class Memory extends AbstractMetric {
 
 	private long memorySwapUsed;
 	private long memorySwapFree;
+	private double memorySwapUsedPercent;
+	private double memorySwapFreePercent;
 	private long memoryUsed;
 	private long memoryFree;
 	private double memoryUsedPercent;
@@ -83,6 +85,22 @@ public class Memory extends AbstractMetric {
 	
 	public void setMemoryBuffersCacheFree(long memoryBuffersCacheFree) {
 		this.memoryBuffersCacheFree = memoryBuffersCacheFree;
+	}
+	
+	public double getMemorySwapUsedPercent() {
+		return memorySwapUsedPercent;
+	}
+
+	public void setMemorySwapUsedPercent(double memorySwapUsedPercent) {
+		this.memorySwapUsedPercent = memorySwapUsedPercent;
+	}
+
+	public double getMemorySwapFreePercent() {
+		return memorySwapFreePercent;
+	}
+
+	public void setMemorySwapFreePercent(double memorySwapFreePercent) {
+		this.memorySwapFreePercent = memorySwapFreePercent;
 	}
 
 	@Override
