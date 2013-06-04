@@ -15,33 +15,47 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.view.DefaultStatus;
 import br.com.caelum.vraptor.view.Results;
 
 /**
  * Class that handles requests sent by the API module.
  * @author Daivd Araújo - @araujodavid
- * @version 2.0
+ * @version 3.0
  * @since May 9, 2013 
  */
-
 @Resource
 @Path("/resource")
 public class ResourceController {
 	
-	private Result result;	
+	private Result result;
+	private DefaultStatus status;
 	private HostRepository hostRepository;
 	private DBMSRepository dbmsRepository;
 	private DBaaSRepository dBaaSRepository;
 	private DatabaseRepository databaseRepository;
 	private VirtualMachineRepository virtualMachineRepository;
 		
-	public ResourceController(Result result, HostRepository hostRepository, DBMSRepository dbmsRepository, DBaaSRepository dBaaSRepository, DatabaseRepository databaseRepository, VirtualMachineRepository virtualMachineRepository) {
+	public ResourceController(Result result, DefaultStatus status, HostRepository hostRepository, DBMSRepository dbmsRepository, DBaaSRepository dBaaSRepository, DatabaseRepository databaseRepository, VirtualMachineRepository virtualMachineRepository) {
 		this.result = result;
+		this.status = status;
 		this.hostRepository = hostRepository;
 		this.dbmsRepository = dbmsRepository;
 		this.dBaaSRepository = dBaaSRepository;
 		this.databaseRepository = databaseRepository;
 		this.virtualMachineRepository = virtualMachineRepository;
+	}
+	
+	@Post("/dbaas/add")
+	public void addDBaaS(DBaaS resource) {
+		dBaaSRepository.save(resource);
+		status.accepted();
+	}
+	
+	@Post("/dbaas/update")
+	public void updateDBaaS(DBaaS resource) {
+		dBaaSRepository.update(resource);
+		status.accepted();
 	}
 
 	@Post("/hosts")
@@ -53,6 +67,18 @@ public class ResourceController {
 		.from(hosts)
 		.include("environment")
 		.serialize();
+	}
+	
+	@Post("/hosts/add")
+	public void addHost(Host resource) {
+		hostRepository.save(resource);
+		status.accepted();
+	}
+	
+	@Post("/hosts/update")
+	public void updateHost(Host resource) {
+		hostRepository.update(resource);
+		status.accepted();
 	}
 	
 	@Post("/machines")
@@ -75,6 +101,28 @@ public class ResourceController {
 		.serialize();
 	}
 	
+	@Post("/machines/add")
+	public void addMachine(VirtualMachine resource) {
+		if (resource.getHost().getId() == 0 || resource.getHost() == null) {
+			virtualMachineRepository.saveWithoutHost(resource);
+			status.accepted();
+		} else {
+			virtualMachineRepository.save(resource);
+			status.accepted();
+		}		
+	}
+	
+	@Post("/machines/update")
+	public void updateMachine(VirtualMachine resource) {
+		if (resource.getHost().getId() == 0 || resource.getHost() == null) {
+			virtualMachineRepository.updateWithoutHost(resource);
+			status.accepted();
+		} else {
+			virtualMachineRepository.update(resource);
+			status.accepted();
+		}
+	}
+	
 	@Post("/dbmss")
 	public void getDBMSs(int identifier, String ownerType) {
 		List<DBMS> dbmss = this.dbmsRepository.getMachineDBMSs(identifier);
@@ -86,6 +134,18 @@ public class ResourceController {
 		.serialize();
 	}
 	
+	@Post("/dbmss/add")
+	public void addDBMS(DBMS resource) {
+		dbmsRepository.save(resource);
+		status.accepted();
+	}
+	
+	@Post("/dbmss/update")
+	public void updateDBMS(DBMS resource) {
+		dbmsRepository.update(resource);
+		status.accepted();
+	}
+	
 	@Post("/databases")
 	public void getDatabases(int identifier) {
 		List<Database> databases = this.databaseRepository.getDBMSDatabases(identifier);
@@ -95,6 +155,18 @@ public class ResourceController {
 		.from(databases)
 		.include("dbms")
 		.serialize();
+	}
+	
+	@Post("/databases/add")
+	public void addDatabase(Database resource) {
+		databaseRepository.save(resource);
+		status.accepted();
+	}
+	
+	@Post("/databases/update")
+	public void updateDatabase(Database resource) {
+		databaseRepository.update(resource);
+		status.accepted();
 	}
 	
 	@Post("/find")
