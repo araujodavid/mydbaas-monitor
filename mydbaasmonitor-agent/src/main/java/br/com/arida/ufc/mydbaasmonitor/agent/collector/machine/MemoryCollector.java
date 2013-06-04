@@ -16,13 +16,10 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
 
 /**
- * 
- * @author Daivd Araújo
+ * @author Daivd Araújo - @araujodavid
  * @version 3.0
- * @since March 5, 2013
- * 
+ * @since March 5, 2013 
  */
-
 public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 	
 	public MemoryCollector(int identifier) {
@@ -38,9 +35,11 @@ public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 		Sigar sigar = (Sigar) args[0];
 		this.metric = MemoryMetric.getInstance();
 		Mem mem = sigar.getMem();
-		Swap swap = sigar.getSwap();		
+		Swap swap = sigar.getSwap();
 		this.metric.setMemorySwapUsed(format(swap.getUsed()));
 		this.metric.setMemorySwapFree(format(swap.getFree()));
+		this.metric.setMemorySwapUsedPercent(Math.round((swap.getUsed()*100)/swap.getTotal()*100.0)/100.0);
+		this.metric.setMemorySwapFreePercent(Math.round((swap.getFree()*100)/swap.getTotal()*100.0)/100.0);
 		this.metric.setMemoryUsed(format(mem.getUsed()));
 		this.metric.setMemoryFree(format(mem.getFree()));
 		this.metric.setMemoryUsedPercent(mem.getUsedPercent());
@@ -81,8 +80,7 @@ public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 			e1.printStackTrace();
 		}
 		
-		HttpResponse response;
-		
+		HttpResponse response;		
 		try {
 			response = this.sendMetric(params);
 			System.out.println(response.getStatusLine());

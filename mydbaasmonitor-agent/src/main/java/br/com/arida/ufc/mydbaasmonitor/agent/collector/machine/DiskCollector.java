@@ -16,13 +16,10 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.DiskMetric;
 
 /**
- * 
- * @author Daivd Araújo
+ * @author Daivd Araújo - @araujodavid
  * @version 3.0
  * @since March 13, 2013
- * 
  */
-
 public class DiskCollector extends AbstractCollector<DiskMetric> {
 
 	public DiskCollector(int identifier) {
@@ -33,34 +30,34 @@ public class DiskCollector extends AbstractCollector<DiskMetric> {
 	public void loadMetric(Object[] args) throws SigarException {
 		Sigar sigar = (Sigar) args[0];
 		this.metric = DiskMetric.getInstance();
-		long diskTotal = 0;
-		long diskUsed = 0;
-		long diskFree = 0;
-		long diskReadBytes = 0;
-		long diskWriteBytes = 0;
+		long diskBytesRead = 0;
+		long diskBytesWritten = 0;
 		long diskReads = 0;
 		long diskWrites = 0;
+		long diskFreeBytes = 0;
+		long diskUsedBytes = 0;
+		long diskTotalBytes = 0;
 		FileSystem[] fileSystemList = sigar.getFileSystemList();
 		FileSystemUsage fileSystemUsage;
 
 		for (FileSystem fileSystem : fileSystemList) {
 			fileSystemUsage = sigar.getFileSystemUsage(fileSystem.getDirName());
-			diskTotal = diskTotal + fileSystemUsage.getTotal();
-			diskUsed = diskUsed + fileSystemUsage.getUsed();
-			diskFree = diskFree + fileSystemUsage.getFree();
-			diskReadBytes = diskReadBytes + fileSystemUsage.getDiskReadBytes();
-			diskWriteBytes = diskWriteBytes + fileSystemUsage.getDiskWriteBytes();
+			diskBytesRead = diskBytesRead + fileSystemUsage.getDiskReadBytes();
+			diskBytesWritten = diskBytesWritten + fileSystemUsage.getDiskWriteBytes();
 			diskReads = diskReads + fileSystemUsage.getDiskReads();
 			diskWrites = diskWrites + fileSystemUsage.getDiskWrites();
+			diskFreeBytes = diskFreeBytes + fileSystemUsage.getAvail();
+			diskUsedBytes = diskUsedBytes + fileSystemUsage.getUsed();
+			diskTotalBytes = diskTotalBytes + fileSystemUsage.getTotal();
 		}
-
-		this.metric.setDiskFree(diskFree);
-		this.metric.setDiskUsed(diskUsed);
-		this.metric.setDiskTotal(diskTotal);
-		this.metric.setDiskReadBytes(diskReadBytes);
-		this.metric.setDiskWriteBytes(diskWriteBytes);
 		this.metric.setDiskReads(diskReads);
 		this.metric.setDiskWrites(diskWrites);
+		this.metric.setDiskBytesRead(diskBytesRead);
+		this.metric.setDiskBytesWritten(diskBytesWritten);
+		this.metric.setDiskFreeBytes(diskFreeBytes);
+		this.metric.setDiskUsedBytes(diskUsedBytes);
+		this.metric.setDiskTotalBytes(diskTotalBytes);
+		this.metric.setDiskPercent(Math.round(((diskUsedBytes*100)/diskTotalBytes)*100.0)/100.0);
 	}
 
 	@Override
@@ -95,8 +92,7 @@ public class DiskCollector extends AbstractCollector<DiskMetric> {
 			e1.printStackTrace();
 		}
 		
-		HttpResponse response;
-		
+		HttpResponse response;		
 		try {
 			response = this.sendMetric(params);
 			System.out.println(response.getStatusLine());
