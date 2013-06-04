@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
 import java.lang.reflect.InvocationTargetException;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -27,7 +26,7 @@ public class MetricController {
 		this.metricRepository = metricRepository;
 	}
 	
-	@Path("/single/{metricName}/{resourceType}/{resourceID}/{queryType}/{startDatetime}/{endDatetime}")
+	@Path("/single")
 	public void getMetricSingle(String metricName, String resourceType, int resourceID, int queryType, String startDatetime, String endDatetime) {
 		Class<?> metricClass = null;
 		String sql = null;
@@ -63,19 +62,7 @@ public class MetricController {
 	
 	@Path("/multi")
 	public void getMetricMulti(String metricName, int resourceID, String resourceType, int queryType, String startDatetime, String endDatetime) {
-		Class<?> metricClass;
-		try {
-			if (resourceType.equals("dbms") || resourceType.equals("database")) {
-				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database."+metricName);			
-			} else {
-				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric."+resourceType+"."+metricName);
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		
-		
+		//TODO		
 	}
 	
 }
