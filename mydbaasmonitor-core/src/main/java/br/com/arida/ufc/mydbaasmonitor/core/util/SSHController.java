@@ -1,7 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.util;
 
 import java.io.*;
-
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
