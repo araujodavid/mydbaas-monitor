@@ -2,6 +2,8 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.agent.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -26,18 +28,37 @@ public class ShellCommand {
             Process p = process.start();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
             //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String string = stdInput.readLine();
+            return Long.parseLong(string);
+        } catch (Exception ex) {
+            return result;
+        }
+    }
+    
+	/**
+	 * Method given a param is returned a list of active domains pid
+	 * @param param
+	 * @return a list with all active domains pid
+	 */
+    public static List<Integer> getAllDomainsPid(String param) {
+    	List<Integer> allDomainsPid = new ArrayList<Integer>();
+        ProcessBuilder process = new ProcessBuilder(new String[]{"bash", "-c", "ps aux | awk '/kvm/ && /"+param+"/ && !/awk/ {print $2}'"});
+        try {
+            Process p = process.start();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            //BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
             String string = "";
             int l = 0;
             while ((string = stdInput.readLine()) != null) {
                 if (l == 0 && string != null) {
-                    return Long.parseLong(string);
+                    allDomainsPid.add(Integer.parseInt(string.trim()));
                 }
                 l++;
             }
         } catch (Exception ex) {
-            return result;
+            return allDomainsPid;
         }
-        return result;
+        return allDomainsPid;
     }
     
     /**

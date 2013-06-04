@@ -1,11 +1,12 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.api.util;
 
-import java.io.IOException;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import main.java.br.com.arida.ufc.mydbaasmonitor.api.client.MyDBaaSMonitorClient;
-import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.DBaaSPool;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+import org.apache.http.NameValuePair;
+import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.VirtualMachinePool;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 
 public class Test {
@@ -14,27 +15,88 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MyDBaaSMonitorClient client = new MyDBaaSMonitorClient("http://localhost:8080/mydbaasmonitor");
-		DBaaSPool pool = client.getMyDBaaSs();
-		for (DBaaS dBaaS : pool.getPool()) {
-			System.out.println(dBaaS.getAlias());
-			System.out.println(dBaaS.getRecordDate());
-			System.out.println(dBaaS.getId());
-			System.out.println(dBaaS.getDescription());
-			for (VirtualMachine machine : dBaaS.getMachines()) {
-				System.out.println(machine.getHost());
-				System.out.println(machine.getAlias());
-			}
-		}
+//		MyDBaaSMonitorClient client = new MyDBaaSMonitorClient("http://localhost:8080/mydbaasmonitor");
+//		DBaaSPool pool = client.getMyDBaaSs();
+//		for (DBaaS dBaaS : pool.getPool()) {
+//			System.out.println(dBaaS.getAlias());
+//			System.out.println(dBaaS.getRecordDate());
+//			System.out.println(dBaaS.getId());
+//			System.out.println(dBaaS.getDescription());
+//			for (VirtualMachine machine : dBaaS.getMachines()) {
+//				System.out.println(machine.getHost());
+//				System.out.println(machine.getAlias());
+//			}
+//		}
+//		
+//		try {
+//			HttpResponse response = SendResquest.postRequest("http://localhost:8080/mydbaasmonitor/pool/machines", null);
+//			String string = SendResquest.getJsonResult(response);
+//			System.out.println(string);
+//		} catch (ClientProtocolException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
+		
+//		for (Method method : VirtualMachine.class.getDeclaredMethods()) {
+//			if (method.getName().startsWith("get") && !method.getReturnType().getName().equals("java.util.List")) {
+//				System.out.println(method.getName());
+//				System.out.println(method.getReturnType().getSuperclass().getSimpleName());
+//			}
+//		}
+		
+		DBaaS dBaaS = new DBaaS();
+		dBaaS.setId(1);
+		dBaaS.setAlias("DBaaS 1");
+		dBaaS.setRecordDate(String.valueOf(new Date()));
+		dBaaS.setDescription("DBaaS Teste");
+		
+		Host host = new Host();
+		host.setId(2);
+		
+		Machine machineInfo = new Machine();
+		machineInfo.setMachineTotalSwap(200);
+		machineInfo.setMachineArchitecture("64");
+		machineInfo.setMachineTotalCPUCores(16);
+		machineInfo.setMachineTotalCPUSockets(4);
+		machineInfo.setMachineTotalMemory(5000);
+		
+		VirtualMachine machine = new VirtualMachine();
+		machine.setEnvironment(dBaaS);
+		machine.setHost(host);
+		machine.setAddress("127.0.0.1");
+		machine.setAlias("VM 1");
+		machine.setDescription("VM Teste");
+		machine.setIdentifierHost("one-120");
+		machine.setPassword("root");
+		machine.setPort(22);
+		machine.setRecordDate(String.valueOf(new Date()));
+		machine.setStatus(false);
+		machine.setUser("david");
+		machine.setInformation(machineInfo);
+		
+		
+		VirtualMachinePool pool = new VirtualMachinePool();
 		try {
-			HttpResponse response = SendResquest.postRequest("http://localhost:8080/mydbaasmonitor/pool/machines", null);
-			String string = SendResquest.getJsonResult(response);
-			System.out.println(string);
-		} catch (ClientProtocolException e) {
+			for (NameValuePair pair : pool.loadRequestParams(machine)) {
+				System.out.println(pair.getName()+" - "+pair.getValue());
+			}
+		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
