@@ -3,58 +3,38 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
- * 
  * @author Daivd Araújo - @araujodavid
- * @version 2.0
+ * @version 3.0
  * @since April 28, 2013
- * 
  */
 public class HostStatus extends AbstractMetric {
 
-	private double hostStatusUsedCpu;
-	private double hostStatusUsedMemory;
-	private double hostStatusFreeMemory;	
-	private int hostStatusInactiveDomains;
-	private int hostStatusActiveDomains;
-	
-	public double getHostStatusUsedCpu() {
-		return hostStatusUsedCpu;
+	private double hostStatusCpuPercent;
+	private double hostStatusMemoryPercent;
+	private double hostStatusSwapPercent;
+		
+	public double getHostStatusCpuPercent() {
+		return hostStatusCpuPercent;
 	}
 
-	public void setHostStatusUsedCpu(double hostStatusUsedCpu) {
-		this.hostStatusUsedCpu = hostStatusUsedCpu;
+	public void setHostStatusCpuPercent(double hostStatusCpuPercent) {
+		this.hostStatusCpuPercent = hostStatusCpuPercent;
 	}
 
-	public double getHostStatusUsedMemory() {
-		return hostStatusUsedMemory;
+	public double getHostStatusMemoryPercent() {
+		return hostStatusMemoryPercent;
 	}
 
-	public void setHostStatusUsedMemory(double hostStatusUsedMemory) {
-		this.hostStatusUsedMemory = hostStatusUsedMemory;
+	public void setHostStatusMemoryPercent(double hostStatusMemoryPercent) {
+		this.hostStatusMemoryPercent = hostStatusMemoryPercent;
 	}
 
-	public double getHostStatusFreeMemory() {
-		return hostStatusFreeMemory;
+	public double getHostStatusSwapPercent() {
+		return hostStatusSwapPercent;
 	}
 
-	public void setHostStatusFreeMemory(double hostStatusFreeMemory) {
-		this.hostStatusFreeMemory = hostStatusFreeMemory;
-	}
-
-	public int getHostStatusInactiveDomains() {
-		return hostStatusInactiveDomains;
-	}
-
-	public void setHostStatusInactiveDomains(int hostStatusInactiveDomains) {
-		this.hostStatusInactiveDomains = hostStatusInactiveDomains;
-	}
-
-	public int getHostStatusActiveDomains() {
-		return hostStatusActiveDomains;
-	}
-
-	public void setHostStatusActiveDomains(int hostStatusActiveDomains) {
-		this.hostStatusActiveDomains = hostStatusActiveDomains;
+	public void setHostStatusSwapPercent(double hostStatusSwapPercent) {
+		this.hostStatusSwapPercent = hostStatusSwapPercent;
 	}
 
 	@Override
