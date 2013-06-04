@@ -31,6 +31,7 @@ public class TypeTranslater {
 				sqlType = "integer";
 				break;
 			case "long":
+			case "Long":
 				sqlType = "bigint";
 				break;
 		}
