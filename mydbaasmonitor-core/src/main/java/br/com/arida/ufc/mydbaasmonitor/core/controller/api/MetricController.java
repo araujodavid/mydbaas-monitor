@@ -29,7 +29,7 @@ public class MetricController {
 	}
 	
 	@Path("/single")
-	public void getMetricSingle(String metricName, String resourceType, int metricType, int resourceID, int queryType, String startDatetime, String endDatetime) {
+	public void getMetricSingle(String metricName, String resourceType, int metricType, int resourceID, String startDatetime, String endDatetime) {
 		Class<?> metricClass = null;
 		String sql = null;
 		
@@ -45,7 +45,7 @@ public class MetricController {
 		
 		if (metricType == MetricRepository.METRIC_MULTI_TYPE) {
 			try {			
-				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, queryType, startDatetime, endDatetime);
+				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				List<Object> metric = this.metricRepository.queryMetrics(sql, metricClass);
 				
 				result
@@ -63,7 +63,7 @@ public class MetricController {
 			}
 		} else if (metricType == MetricRepository.METRIC_SINGLE_TYPE) {
 			try {			
-				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, queryType, startDatetime, endDatetime);
+				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				Object metric = this.metricRepository.queryMetric(sql, metricClass);
 				
 				result
