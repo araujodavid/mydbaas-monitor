@@ -9,13 +9,11 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
 /**
- * 
- * @author David Araújo
- * 
  * Class to handle FTP and SSH commands. Using JSch lib.
- * 
+ * @author David Araújo - @araujodavid
+ * @version 1.0
+ * @since June 3, 2013
  */
-
 public class SSHController {
 	
 	private static SSHController sshController;

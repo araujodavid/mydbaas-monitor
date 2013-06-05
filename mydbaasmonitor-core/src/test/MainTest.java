@@ -1,5 +1,8 @@
 package test;
 
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
+
 public class MainTest {
 	
 	
@@ -26,6 +29,10 @@ public class MainTest {
 //	    for (Class<? extends AbstractDatabaseMetric> class1 : subTypes) {
 //			System.out.println(class1.getSimpleName());
 //		}
+		
+		MetricRepository repository = new MetricRepository();
+		//System.out.println(repository.makeQuerySQL(Cpu.class, MetricRepository.METRIC_SINGLE_TYPE, 3, MetricRepository.LAST_COLLECTION, null, null));
+		System.out.println(repository.makeQuerySQL(Cpu.class, MetricRepository.METRIC_MULTI_TYPE, 3, MetricRepository.LAST_COLLECTION, null, null));
 	}
 
 }
