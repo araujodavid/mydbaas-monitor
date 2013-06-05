@@ -28,6 +28,9 @@ public class MetricRepository {
 	public static final int ALL_COLLECTION = 0;
 	public static final int LAST_COLLECTION = 1;
 	
+	public static final int METRIC_SINGLE_TYPE = 0;
+	public static final int METRIC_MULTI_TYPE = 1;
+	
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
@@ -185,18 +188,23 @@ public class MetricRepository {
 			sql.append("`identifier` int(11) NOT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
 			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
+			   .append("KEY `idx_date_"+clazzName+"_metric` (`record_date`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else if (metric.toString().equals("host")) {
 			//Add the identifier of the resource and primary key
 			sql.append("`identifier` int(11) NOT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
 			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
+			   .append("KEY `idx_date_"+clazzName+"_metric` (`record_date`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_host` FOREIGN KEY (`identifier`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
 			//Add the identifier of the resource and primary key
 			sql.append("`dbms` int(11) DEFAULT NULL,\n")
 			   .append("`database` int(11) DEFAULT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
+			   .append("KEY `fk_"+clazzName+"_dbms_idx` (`dbms`),\n")			   
+			   .append("KEY `fk_"+clazzName+"_database_idx` (`identifier`),\n")
+			   .append("KEY `idx_date_"+clazzName+"_metric` (`database`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_dbms` FOREIGN KEY (`dbms`) REFERENCES `dbms` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		}
@@ -345,27 +353,43 @@ public class MetricRepository {
 		return listMetrics;
 	}//listMetrics()
 	
-	public String makeQuerySQL(Class<?> metricClass, int resourceID, String resourceType, int queryType, String startDatetime, String endDatetime) throws ClassNotFoundException {
+	public String makeQuerySQL(Class<?> metricClass, int metricType, int resourceID, int queryType, String startDatetime, String endDatetime) {
 		StringBuilder sql = new StringBuilder();
 		String metricTable = metricClass.getSimpleName().toLowerCase()+"_metric";
+		Object metricObject = null;
+		try {
+			metricObject = metricClass.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		
 		//Add the table name into query
 		sql.append("select * from `"+metricTable+"`\n");
+		
 		//Add the owner of the metric
-		switch (resourceType) {
+		String owner;
+		switch (metricObject.toString()) {
 		case "dbms":
+			owner = "dbms";
 			sql.append("where dbms = "+resourceID+"\n");
 			break;
 		case "database":
+			owner = "database";
 			sql.append("where database = "+resourceID+"\n");
 			break;
 		default:
+			owner = "identifier";
 			sql.append("where identifier = "+resourceID+"\n");
 			break;
-		}		
-		//
+		}
+		
+		//Checks the query type
 		switch (queryType) {
 		//All collection
 		case 0:
+			//Adds part of the query based on the combination of start and end dates
 			if ((startDatetime != null && !startDatetime.trim().isEmpty()) && (endDatetime != null && !endDatetime.trim().isEmpty())) {
 				sql.append("and date_format(record_date, '%d-%m-%Y %T') between '"+startDatetime+"' and '"+endDatetime+"'\n");
 			} else if ((startDatetime != null && !startDatetime.trim().isEmpty()) && endDatetime == null) {
@@ -373,23 +397,18 @@ public class MetricRepository {
 			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
 				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
 			}
-			sql.append("order by id");
+			sql.append("order by id;");
 			break;
 		//Last collection
 		case 1:
-			if ((startDatetime != null && !startDatetime.trim().isEmpty()) && (endDatetime != null && !endDatetime.trim().isEmpty())) {
-				sql.append("and date_format(record_date, '%d-%m-%Y %T') between '"+startDatetime+"' and '"+endDatetime+"'\n");
-			} else if ((startDatetime != null && !startDatetime.trim().isEmpty()) && endDatetime == null) {
-				sql.append("and date_format(record_date, '%d-%m-%Y %T') > '"+startDatetime+"'\n");
-			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
-				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
-			}
-			sql.append("order by id desc\n")
-			   .append("limit 1");
+			if (metricType == 1) {
+				sql.append("and record_date = (select max(record_date) from  where "+owner+" = "+resourceID+");");
+			} else {
+				sql.append("order by id desc\n")
+				   .append("limit 1;");
+			}			
 			break;
-		}		
-		//Query end
-		sql.append(";");
+		}
 		return sql.toString();
 	}
 	
