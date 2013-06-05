@@ -42,8 +42,8 @@ public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 		this.metric.setMemorySwapFreePercent(Math.round((swap.getFree()*100)/swap.getTotal()*100.0)/100.0);
 		this.metric.setMemoryUsed(format(mem.getUsed()));
 		this.metric.setMemoryFree(format(mem.getFree()));
-		this.metric.setMemoryUsedPercent(mem.getUsedPercent());
-		this.metric.setMemoryFreePercent(mem.getFreePercent());
+		this.metric.setMemoryUsedPercent(Math.round(mem.getUsedPercent()*100.0)/100.0);
+		this.metric.setMemoryFreePercent(Math.round(mem.getFreePercent()*100.0)/100.0);
 		this.metric.setMemoryBuffersCacheUsed(format(mem.getActualUsed()));
 		this.metric.setMemoryBuffersCacheFree(format(mem.getActualFree()));
 	}

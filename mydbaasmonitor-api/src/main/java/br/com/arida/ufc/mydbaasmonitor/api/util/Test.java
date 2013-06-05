@@ -1,21 +1,12 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.api.util;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
-
-import main.java.br.com.arida.ufc.mydbaasmonitor.api.entity.VirtualMachinePool;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBaaS;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Host;
-import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.VirtualMachine;
 
 public class Test {
 
@@ -37,13 +28,13 @@ public class Test {
 //		}
 //		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		parameters.add(new BasicNameValuePair("metricName", "Cpu"));
+		parameters.add(new BasicNameValuePair("metricName", "Memory"));
 		parameters.add(new BasicNameValuePair("resourceType", "machine"));
 		parameters.add(new BasicNameValuePair("metricType", "1"));
 		parameters.add(new BasicNameValuePair("resourceID", "3"));
 		
 		try {
-			HttpResponse response = SendResquest.postRequest("http://localhost:8080/mydbaasmonitor/metric/single", parameters);
+			HttpResponse response = SendResquest.postRequest("http://10.41.18.148:8080/mydbaasmonitor/metric/single", parameters);
 			String string = SendResquest.getJsonResult(response);
 			System.out.println(string);
 		} catch (ClientProtocolException e) {
