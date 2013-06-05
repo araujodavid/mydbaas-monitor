@@ -1,6 +1,8 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -27,37 +29,57 @@ public class MetricController {
 	}
 	
 	@Path("/single")
-	public void getMetricSingle(String metricName, String resourceType, int resourceID, int queryType, String startDatetime, String endDatetime) {
+	public void getMetricSingle(String metricName, String resourceType, int metricType, int resourceID, int queryType, String startDatetime, String endDatetime) {
 		Class<?> metricClass = null;
 		String sql = null;
-		Object metric = null;
-
+		
 		try {
-			if (resourceType.equals("dbms") || resourceType.equals("database")) {
-				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database."+metricName);			
+			if (resourceType.equals("dbms") || resourceType.equals("database")) {			
+				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database."+metricName);						
 			} else {
 				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric."+resourceType+"."+metricName);
 			}
-			
-			sql = this.metricRepository.makeQuerySQL(metricClass, resourceID, resourceType, queryType, startDatetime, endDatetime);
-			
-			metric = this.metricRepository.queryMetric(sql, metricClass);
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		result
-		.use(Results.json())
-		.from(metric, "metric")
-		.serialize();
+		if (metricType == MetricRepository.METRIC_MULTI_TYPE) {
+			try {			
+				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, queryType, startDatetime, endDatetime);
+				List<Object> metric = this.metricRepository.queryMetrics(sql, metricClass);
+				
+				result
+				.use(Results.json())
+				.from(metric, "metric")
+				.serialize();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		} else if (metricType == MetricRepository.METRIC_SINGLE_TYPE) {
+			try {			
+				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, queryType, startDatetime, endDatetime);
+				Object metric = this.metricRepository.queryMetric(sql, metricClass);
+				
+				result
+				.use(Results.json())
+				.from(metric, "metric")
+				.serialize();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}			
+		}		
 	}
 	
 	@Path("/multi")
