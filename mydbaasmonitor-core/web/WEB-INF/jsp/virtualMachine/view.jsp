@@ -95,7 +95,8 @@
         			<legend><img src="/mydbaasmonitor/img/display.png"> Virtual Machine Information</legend>
         			<div class="row-fluid">
 		                <div class="span4">
-		                    <address>		                    	
+		                    <address>
+		                    	<input id="resource_id_chart" type="hidden" value="${virtualMachine.id}" />		                    	
 		                    	<strong>Monitoring Status:</strong><br> 
 		                    	<c:choose>
      								<c:when test="${virtualMachine.status == true}">
