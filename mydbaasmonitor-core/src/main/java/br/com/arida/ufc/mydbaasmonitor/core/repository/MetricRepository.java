@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.sun.xml.internal.ws.util.StringUtils;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
@@ -402,7 +404,7 @@ public class MetricRepository {
 		//Last collection
 		case 1:
 			if (metricType == 1) {
-				sql.append("and record_date = (select max(record_date) from  where "+owner+" = "+resourceID+");");
+				sql.append("and record_date = (select max(record_date) from "+metricTable+" where "+owner+" = "+resourceID+");");
 			} else {
 				sql.append("order by id desc\n")
 				   .append("limit 1;");
@@ -432,10 +434,10 @@ public class MetricRepository {
 			Method method;
 			if (field.getName().toLowerCase().contains(metricClass.getSimpleName().toLowerCase())) {
 				method = metricClass.getDeclaredMethod("set"+StringUtils.capitalize(field.getName()), field.getType());
-				method.invoke(metric, field.getType().cast(resultSet.getObject(field.getName().toLowerCase().replaceAll(metricClass.getSimpleName().toLowerCase(), ""))));
+				method.invoke(metric, resultSet.getObject(field.getName().toLowerCase().replaceAll(metricClass.getSimpleName().toLowerCase(), "")));
 			}			
 		}
-		Method methodSetRecordDate = metricClass.getDeclaredMethod("setRecordDate", Timestamp.class);
+		Method methodSetRecordDate = AbstractMetric.class.getDeclaredMethod("setRecordDate", Timestamp.class);
 		methodSetRecordDate.invoke(metric, resultSet.getTimestamp("record_date"));
 		return metric;
 	}
