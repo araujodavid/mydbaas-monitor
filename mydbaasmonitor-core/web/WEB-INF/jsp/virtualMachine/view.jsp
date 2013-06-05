@@ -96,7 +96,8 @@
         			<div class="row-fluid">
 		                <div class="span4">
 		                    <address>
-		                    	<input id="resource_id_chart" type="hidden" value="${virtualMachine.id}" />		                    	
+		                    	<input id="resource_id_chart" type="hidden" value="${virtualMachine.id}" />	
+		                    		                    	
 		                    	<strong>Monitoring Status:</strong><br> 
 		                    	<c:choose>
      								<c:when test="${virtualMachine.status == true}">
