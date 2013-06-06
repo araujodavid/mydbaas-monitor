@@ -1,3 +1,8 @@
+/* Network */
+var lastNetworkBytesSent = 0.0;
+var lastNetworkBytesReceived = 0.0;
+
+
 $(document).ready(function() {
 	Highcharts.setOptions({
         global: {
@@ -170,9 +175,6 @@ $(document).ready(function() {
 	                            
 	                          	y1 = parseFloat(data[0].memoryUsedPercent);
 	                          	y2 = parseFloat(data[0].memorySwapUsedPercent);
-
-	                          	console.log("current_time"+current_time);
-	                          	console.log("memorySwapUsedPercent"+y1);
 		                        
 		                        series.addPoint([y1], true, true);
 		                        series2.addPoint([y2], true, true);
@@ -239,35 +241,57 @@ $(document).ready(function() {
 	
 	var defaultOptions4 = {
             chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
+                type: 'area',
+                animation: Highcharts.svg,
                 marginRight: 10,
                 events: {
                     load: function() {
-    
-                        // set up the updating of the chart each second
                         var series = this.series[0];
+                        var series2 = this.series[1];
+
+                        
                         setInterval(function() {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                            var networkBytesSent = 0.0;
+                            var networkBytesReceived = 0.0;
+
+                            var resource_id = parseInt($("#resource_id_chart").val());
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Network", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+                            	networkBytesSent = data[0].networkBytesSent;
+                            	networkBytesReceived = data[0].networkBytesReceived;
+                            	
+                            	networkBytesSent = parseFloat(networkBytesSent);
+                            	networkBytesReceived = parseFloat(networkBytesReceived);
+                            	
+                            	console.log("networkBytesSent"+ networkBytesSent);
+	                          	console.log("lastNetworkBytesSent"+ lastNetworkBytesSent);
+	                          	console.log("networkByteReceived"+ networkBytesReceived);
+	                          	console.log("lastNetworkBytesReceived"+ lastNetworkBytesReceived);
+	                          	
+		                        
+		                        series.addPoint([networkBytesSent-lastNetworkBytesSent], true, true);
+		                        lastNetworkBytesSent = networkBytesSent;
+		                        series2.addPoint([networkBytesReceived-lastNetworkBytesReceived], true, true);
+		                        lastNetworkByteReceived = networkBytesReceived; 
+                          	});
+                            
+                        }, 5000);
                     }
                 }
             },
             title: {
-                text: 'Live random data'
+                text: ''
             },
             credits: {
                 enabled: false
             },
             xAxis: {
                 type: 'datetime',
-                tickPixelInterval: 150
+                pointStart: Date.now()
             },
             yAxis: {
                 title: {
-                    text: 'Value'
+                    text: 'Bytes',
                 },
                 plotLines: [{
                     value: 0,
@@ -278,8 +302,7 @@ $(document).ready(function() {
             tooltip: {
                 formatter: function() {
                         return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
+                        this.y + "bytes";
                 }
             },
             legend: {
@@ -288,22 +311,23 @@ $(document).ready(function() {
             exporting: {
                 enabled: false
             },
-            series: [{
-                name: 'Random data',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
+            plotOptions: {
+                area: {
+                    marker: {
+                        enabled: false
                     }
-                    return data;
-                })()
+                }
+            },
+            series: [{
+                name: 'NetworkBytesSent',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
+            },{
+                name: 'NetworkBytesReceived',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
             }]
         };
 	

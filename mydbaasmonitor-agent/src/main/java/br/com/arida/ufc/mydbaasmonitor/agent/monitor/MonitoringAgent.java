@@ -98,7 +98,7 @@ public class MonitoringAgent {
 	public static void main(String[] args) {
 		MonitorInfoParser parser = MonitorInfoParser.getInstance();
 		try {
-			parser.loadContextFile("/Users/franzejr/programming/mydbaas/mydbaasmonitor-agent/src/resources/test.conf");
+			parser.loadContextFile("/home/franzejr/programming/mydbaasmonitor/mydbaasmonitor-agent/src/resources/test.conf");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
