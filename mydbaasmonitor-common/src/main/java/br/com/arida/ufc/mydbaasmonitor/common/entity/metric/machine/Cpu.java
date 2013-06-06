@@ -1,15 +1,15 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
- * 
- * @author Daivd Araújo
- * @version 1.0
- * @since March 13, 2013
- * 
+ * @author Daivd Araújo - @araujodavid
+ * @version 2.0
+ * @since March 13, 2013 
  */
-
 public class Cpu extends AbstractMetric {
 
 	private double cpuUser;
@@ -59,5 +59,12 @@ public class Cpu extends AbstractMetric {
 	@Override
 	public String toString() {
 		return "machine";
+	}
+	
+	@Override
+	public List<Cpu> jsonToList(String json) {
+		Gson gson = new Gson();
+		List<Cpu> cpuList = gson.fromJson(json, new TypeToken<List<Cpu>>(){}.getType());
+		return cpuList;
 	}
 }

@@ -1,23 +1,21 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
+import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
- * 
- * @author Daivd Araújo
+ * @author Daivd Araújo - @araujodavid
  * @version 2.0
  * @since March 13, 2013
- * 
  */
-
 public class Machine extends AbstractMetric {
 
 	private String machineOperatingSystem;
 	private String machineKernelName;
 	private String machineKernelVersion;
 	private String machineArchitecture;
-	private long machineTotalMemory;
-	private long machineTotalSwap;
+	private double machineTotalMemory;
+	private double machineTotalSwap;
 	private int machineTotalCPUCores;
 	private int machineTotalCPUSockets;
 	private int machineTotalCoresPerSocket;
@@ -54,19 +52,19 @@ public class Machine extends AbstractMetric {
 		this.machineArchitecture = machineArchitecture;
 	}
 	
-	public long getMachineTotalMemory() {
+	public double getMachineTotalMemory() {
 		return machineTotalMemory;
 	}
 	
-	public void setMachineTotalMemory(long machineTotalMemory) {
+	public void setMachineTotalMemory(double machineTotalMemory) {
 		this.machineTotalMemory = machineTotalMemory;
 	}
 	
-	public long getMachineTotalSwap() {
+	public double getMachineTotalSwap() {
 		return machineTotalSwap;
 	}
 	
-	public void setMachineTotalSwap(long machineTotalSwap) {
+	public void setMachineTotalSwap(double machineTotalSwap) {
 		this.machineTotalSwap = machineTotalSwap;
 	}
 	
@@ -97,5 +95,11 @@ public class Machine extends AbstractMetric {
 	@Override
 	public String toString() {
 		return "machine";
+	}
+
+	@Override
+	public List<?> jsonToList(String json) {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

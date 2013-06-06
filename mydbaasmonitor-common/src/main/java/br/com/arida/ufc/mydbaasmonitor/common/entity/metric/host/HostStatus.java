@@ -1,10 +1,13 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host;
 
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
  * @author Daivd Araújo - @araujodavid
- * @version 3.0
+ * @version 4.0
  * @since April 28, 2013
  */
 public class HostStatus extends AbstractMetric {
@@ -40,6 +43,13 @@ public class HostStatus extends AbstractMetric {
 	@Override
 	public String toString() {
 		return "host";
+	}
+
+	@Override
+	public List<HostStatus> jsonToList(String json) {
+		Gson gson = new Gson();
+		List<HostStatus> hostStatusList = gson.fromJson(json, new TypeToken<List<HostStatus>>(){}.getType());
+		return hostStatusList;
 	}
 
 }

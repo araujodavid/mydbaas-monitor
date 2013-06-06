@@ -1,13 +1,12 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host;
 
+import java.util.List;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
- * 
  * @author Daivd Araújo - @araujodavid
  * @version 2.0
  * @since April 28, 2013
- * 
  */
 public class HostInfo extends AbstractMetric {
 
@@ -78,6 +77,12 @@ public class HostInfo extends AbstractMetric {
 	@Override
 	public String toString() {
 		return "host";
+	}
+
+	@Override
+	public List<?> jsonToList(String json) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

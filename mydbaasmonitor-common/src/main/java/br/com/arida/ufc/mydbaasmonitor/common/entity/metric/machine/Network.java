@@ -1,15 +1,15 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
- * 
- * @author Daivd Araújo
+ * @author Daivd Araújo - @araujodavid
  * @version 2.0
  * @since March 13, 2013
- * 
  */
-
 public class Network extends AbstractMetric {
 
 	private long networkBytesSent;
@@ -52,5 +52,12 @@ public class Network extends AbstractMetric {
 	@Override
 	public String toString() {
 		return "machine";
+	}
+
+	@Override
+	public List<Network> jsonToList(String json) {
+		Gson gson = new Gson();
+		List<Network> networkList = gson.fromJson(json, new TypeToken<List<Network>>(){}.getType());
+		return networkList;
 	}	
 }

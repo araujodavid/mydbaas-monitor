@@ -1,10 +1,13 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /** 
- * @author Daivd Araújo
- * @version 1.0
+ * @author Daivd Araújo - @araujodavid
+ * @version 2.0
  * @since June 1, 2013 
  */
 public class Partition extends AbstractMetric {
@@ -103,5 +106,12 @@ public class Partition extends AbstractMetric {
 	@Override
 	public String toString() {
 		return "machine";
+	}
+
+	@Override
+	public List<Partition> jsonToList(String json) {
+		Gson gson = new Gson();
+		List<Partition> partitionList = gson.fromJson(json, new TypeToken<List<Partition>>(){}.getType());
+		return partitionList;
 	}
 }
