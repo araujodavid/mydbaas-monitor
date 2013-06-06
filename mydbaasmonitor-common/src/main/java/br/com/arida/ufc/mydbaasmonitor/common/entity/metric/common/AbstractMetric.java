@@ -1,6 +1,6 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 
@@ -14,7 +14,7 @@ public abstract class AbstractMetric {
 
 	private int cyclo;
 	private String url;
-	private Timestamp recordDate;
+	private String recordDate;
 
 	public int getCyclo() {
 		return cyclo;
@@ -32,15 +32,17 @@ public abstract class AbstractMetric {
 		this.url = url;
 	}	
 	
-	public Timestamp getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
 
-	public void setRecordDate(Timestamp recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 
 	@Override
 	public abstract String toString();
+	
+	public abstract List<?> jsonToList(String json);
 	
 }
