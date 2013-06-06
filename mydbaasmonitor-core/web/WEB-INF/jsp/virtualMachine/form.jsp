@@ -96,11 +96,13 @@
 		 	</form>
 	 	</div> <!-- /container -->
 	 	
-    	<script type="text/javascript">
+    	<%@include file="/static/javascript_footer.jsp"%>
+    	<%@include file="/static/footer.jsp"%>
+    	    	<script type="text/javascript">
     		function verifyHost(){
     			if( $("#hosts option:selected").text() == "Without Host"){
     				$('#div_identifier_host').hide();
-    				$("#identifier_host").val("")
+    				$("#identifier_host").val("");
     			}else{
     				$('#div_identifier_host').show();
     			}
@@ -112,8 +114,6 @@
 	        		verifyHost();  
 	    		});    		
 	    	});
-    	</script>
-    	<%@include file="/static/javascript_footer.jsp"%>
-    	<%@include file="/static/footer.jsp"%>		
+    	</script>	
 	</body>
 </html>

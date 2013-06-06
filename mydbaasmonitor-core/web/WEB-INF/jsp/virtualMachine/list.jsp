@@ -67,11 +67,11 @@
 	        		<div class="row-fluid">
 	        			<c:if test="${!virtualMachineList.isEmpty()}">
 				        	<div class="span6">
-				          		<h2>CPU (all vms)</h2>
+				          		<h2>CPU (Historical)</h2>
 				          		<div id="cpu_all" style="height: 500px;"></div>
 				        	</div>
 				        	<div class="span6">
-				          		<h2>Memory (all vms)</h2>
+				          		<h2>Memory (Historical)</h2>
 				          		<div id="memory_all" style="height: 500px;"></div>
 				       		</div>
 			       		</c:if>

@@ -46,7 +46,7 @@
 		            	<c:forEach items="${dBaaSList}" var="dbaas">
 		            		<c:choose>
 			            		<c:when test="${!dbaas.hosts.isEmpty() || !dbaas.machines.isEmpty()}">
-		  							<div class="accordion-group">
+		  							<div class="accordion-group" style="margin-bottom:10px;">
 		    							<div class="accordion-heading">
 		      								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse${dbaas.id}">
 		        								<i class="icon-globe" style="margin-right:6px;"></i>${dbaas.alias}
@@ -89,7 +89,7 @@
 		  							</div>
 		  						</c:when>
 			            		<c:otherwise>
-			            			<div class="alert">
+			            			<div class="alert" style="margin-top:20px;">
 										<button type="button" class="close" data-dismiss="alert">&times;</button>
 										The <strong>${dbaas.alias}</strong> doesn't have resources.
 									</div>

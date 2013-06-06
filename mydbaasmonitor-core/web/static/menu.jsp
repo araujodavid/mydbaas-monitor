@@ -18,7 +18,7 @@
               		<li><a href="${pageContext.servletContext.contextPath}/vms">Virtual Machine</a></li>
               		<li><a href="${pageContext.servletContext.contextPath}/dbmss">DBMS</a></li>
               		<li><a href="${pageContext.servletContext.contextPath}/databases">Database</a></li>
-              		<li><a href="">Export Metrics</a></li>
+              		<!--<li><a href="">Export Metrics</a></li>-->
             	</ul>
         	</div><!--/.nav-collapse -->
     	</div>
