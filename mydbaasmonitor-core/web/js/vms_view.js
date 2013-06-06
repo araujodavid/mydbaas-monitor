@@ -1,5 +1,5 @@
 /* Network */
-var lastNetworkByteSent = 0.0;
+var lastNetworkBytesSent = 0.0;
 var lastNetworkBytesReceived = 0.0;
 
 
@@ -263,19 +263,16 @@ $(document).ready(function() {
                             	networkBytesSent = parseFloat(networkBytesSent);
                             	networkBytesReceived = parseFloat(networkBytesReceived);
                             	
-	                          	lastNetworkByteSent = networkBytesSent; 
-	                          	networkByteSent  =  networkBytesSent - lastNetworkByteSent;
-	                          	
-	                          	lastNetworkBytesReceived = networkBytesReceived; 
-	                          	networkBytesReceived  =  networkBytesReceived - lastNetworkByteSent;
-
-	                          	console.log("networkBytesSent"+networkBytesSent);
-	                          	console.log("networkBytesSent"+networkBytesReceived);
-	                          	console.log("lastNetworkBytesSent"+lastNetworkBytesReceived);
+                            	console.log("networkBytesSent"+ networkBytesSent);
+	                          	console.log("lastNetworkBytesSent"+ lastNetworkBytesSent);
+	                          	console.log("networkByteReceived"+ networkBytesReceived);
+	                          	console.log("lastNetworkBytesReceived"+ lastNetworkBytesReceived);
 	                          	
 		                        
-		                        series.addPoint([networkByteSent], true, true);
-		                        series2.addPoint([networkBytesReceived], true, true);
+		                        series.addPoint([networkBytesSent-lastNetworkBytesSent], true, true);
+		                        lastNetworkBytesSent = networkBytesSent;
+		                        series2.addPoint([networkBytesReceived-lastNetworkBytesReceived], true, true);
+		                        lastNetworkByteReceived = networkBytesReceived; 
                           	});
                             
                         }, 5000);
