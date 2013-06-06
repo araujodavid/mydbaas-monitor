@@ -33,6 +33,7 @@ public class MetricRepository {
 	
 	public static final int METRIC_SINGLE_TYPE = 0;
 	public static final int METRIC_MULTI_TYPE = 1;
+	public static final int METRIC_NO_TYPE = 2;
 	
 	private Connection connection = null;
     private PreparedStatement preparedStatement = null;
@@ -396,14 +397,22 @@ public class MetricRepository {
 			if ((startDatetime != null && !startDatetime.trim().isEmpty()) && (endDatetime != null && !endDatetime.trim().isEmpty())) {
 				sql.append("and date_format(record_date, '%d-%m-%Y %T') between '"+startDatetime+"' and '"+endDatetime+"'\n");
 			} else if ((startDatetime != null && !startDatetime.trim().isEmpty()) && endDatetime == null) {
-				sql.append("and date_format(record_date, '%d-%m-%Y %T') > '"+startDatetime+"'\n");
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') >= '"+startDatetime+"'\n");
 			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
-				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') <= '"+endDatetime+"'\n");
 			}
 			sql.append("order by id;");
 			break;
 		//Last collection
 		case 1:
+			//Adds part of the query based on the combination of start and end dates
+			if ((startDatetime != null && !startDatetime.trim().isEmpty()) && (endDatetime != null && !endDatetime.trim().isEmpty())) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') between '"+startDatetime+"' and '"+endDatetime+"'\n");
+			} else if ((startDatetime != null && !startDatetime.trim().isEmpty()) && endDatetime == null) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') > '"+startDatetime+"'\n");
+			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
+				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
+			}
 			if (metricType == 1) {
 				sql.append("and record_date = (select max(record_date) from "+metricTable+" where "+owner+" = "+resourceID+");");
 			} else {
