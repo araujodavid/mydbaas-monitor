@@ -262,8 +262,8 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setString(2, system.getMachineKernelName());
 			this.preparedStatement.setString(3, system.getMachineKernelVersion());
 			this.preparedStatement.setString(4, system.getMachineArchitecture());
-			this.preparedStatement.setLong(5, system.getMachineTotalMemory());
-			this.preparedStatement.setLong(6, system.getMachineTotalSwap());
+			this.preparedStatement.setDouble(5, system.getMachineTotalMemory());
+			this.preparedStatement.setDouble(6, system.getMachineTotalSwap());
 			this.preparedStatement.setInt(7, system.getMachineTotalCPUCores());
 			this.preparedStatement.setInt(8, system.getMachineTotalCPUSockets());
 			this.preparedStatement.setInt(9, system.getMachineTotalCoresPerSocket());

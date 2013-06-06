@@ -67,8 +67,8 @@ public class StarterRepository {
 													  "`kernel_name` varchar(60) DEFAULT NULL,\n" +
 													  "`kernel_version` varchar(50) DEFAULT NULL,\n" +
 													  "`architecture` varchar(10) DEFAULT NULL,\n" +
-													  "`memory` float DEFAULT NULL,\n" +
-													  "`swap` float DEFAULT NULL,\n" +
+													  "`memory` double DEFAULT NULL,\n" +
+													  "`swap` double DEFAULT NULL,\n" +
 													  "`cpu_cores` int(11) DEFAULT NULL,\n" +
 													  "`cpu_sockets` int(11) DEFAULT NULL,\n" +
 													  "`cores_sockets` int(11) DEFAULT NULL,\n" +
