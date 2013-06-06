@@ -1,3 +1,8 @@
+/* Network */
+var lastNetworkByteSent = 0.0;
+var lastNetworkBytesReceived = 0.0;
+
+
 $(document).ready(function() {
 	Highcharts.setOptions({
         global: {
@@ -246,8 +251,8 @@ $(document).ready(function() {
 
                         
                         setInterval(function() {
-                            var y1 = undefined;
-                            var y2 = undefined;
+                            var networkBytesSent = 0.0;
+                            var networkBytesReceived = 0.0;
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
@@ -255,16 +260,22 @@ $(document).ready(function() {
                             	networkBytesSent = data[0].networkBytesSent;
                             	networkBytesReceived = data[0].networkBytesReceived;
                             	
-	                          	y1 = parseFloat(networkBytesSent);
-	                          	y2 = parseFloat(networkBytesReceived);
+                            	networkBytesSent = parseFloat(networkBytesSent);
+                            	networkBytesReceived = parseFloat(networkBytesReceived);
+                            	
+	                          	lastNetworkByteSent = networkBytesSent; 
+	                          	networkByteSent  =  networkBytesSent - lastNetworkByteSent;
+	                          	
+	                          	lastNetworkBytesReceived = networkBytesReceived; 
+	                          	networkBytesReceived  =  networkBytesReceived - lastNetworkByteSent;
 
 	                          	console.log("networkBytesSent"+networkBytesSent);
 	                          	console.log("networkBytesSent"+networkBytesReceived);
-	                          	console.log("TAMANHO: "+series.length);
+	                          	console.log("lastNetworkBytesSent"+lastNetworkBytesReceived);
 	                          	
 		                        
-		                        series.addPoint([y1], true, true);
-		                        series2.addPoint([y2], true, true);
+		                        series.addPoint([networkByteSent], true, true);
+		                        series2.addPoint([networkBytesReceived], true, true);
                           	});
                             
                         }, 5000);
@@ -283,10 +294,8 @@ $(document).ready(function() {
             },
             yAxis: {
                 title: {
-                    text: 'Percentage',
+                    text: 'Bytes',
                 },
-                min: 0, 
-                max: 100,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -296,7 +305,7 @@ $(document).ready(function() {
             tooltip: {
                 formatter: function() {
                         return '<b>'+ this.series.name +'</b><br/>'+
-                        this.y + "%";
+                        this.y + "bytes";
                 }
             },
             legend: {
@@ -313,12 +322,12 @@ $(document).ready(function() {
                 }
             },
             series: [{
-                name: 'Memory Percent',
+                name: 'NetworkBytesSent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0]
             },{
-                name: 'Swap Percent',
+                name: 'NetworkBytesReceived',
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0]
