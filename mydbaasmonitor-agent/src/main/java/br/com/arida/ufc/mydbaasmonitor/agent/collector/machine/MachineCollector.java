@@ -43,8 +43,8 @@ public class MachineCollector extends AbstractCollector<MachineMetric>  {
 		this.metric.setMachineKernelName(sys.getName());
 		this.metric.setMachineKernelVersion(sys.getVersion());
 		this.metric.setMachineArchitecture(sys.getArch());
-		this.metric.setMachineTotalMemory(mem.getTotal());
-		this.metric.setMachineTotalSwap(swap.getTotal());
+		this.metric.setMachineTotalMemory(Math.round((((mem.getTotal()/1024)/1024)/1024)*100.0)/100.0);
+		this.metric.setMachineTotalSwap(Math.round((((swap.getTotal()/1024)/1024)/1024)*100.0)/100.0);
 		this.metric.setMachineTotalCPUCores(cpuInfo.getTotalCores());
 		this.metric.setMachineTotalCPUSockets(cpuInfo.getTotalSockets());
 		this.metric.setMachineTotalCoresPerSocket(cpuInfo.getCoresPerSocket());
