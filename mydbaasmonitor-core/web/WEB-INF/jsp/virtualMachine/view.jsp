@@ -179,12 +179,12 @@
 				      	</div>				      
 				        <div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
-				          		<h5>Physical Memory</h5>
+				          		<h5>Memory Utilization</h5>
 				          		<div id="container3" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Network I/O (Kb/s)</h5>
+				          		<h5>Network I/O (Bytes)</h5>
 				          		<div id="container4" class="dynamic_chart"></div>
 				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       		</div>
@@ -205,7 +205,7 @@
 				      
 				       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
-				          		<h5>Disk I/O Utilization</h5>
+				          		<h5>Disk I/O Utilization (Requests)</h5>
 				          		<div id="container7" class="dynamic_chart"></div>
 				         		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
