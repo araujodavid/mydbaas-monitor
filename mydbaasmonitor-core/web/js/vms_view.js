@@ -149,36 +149,55 @@ $(document).ready(function() {
 	
 	var defaultOptions3 = {
             chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
+                type: 'area',
+                animation: Highcharts.svg,
                 marginRight: 10,
                 events: {
                     load: function() {
-    
-                        // set up the updating of the chart each second
                         var series = this.series[0];
+                        var series2 = this.series[1];
+
+                        
                         setInterval(function() {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                            var current_time = undefined;
+                            var y1 = undefined;
+                            var y2 = undefined;
+
+                            var resource_id = parseInt($("#resource_id_chart").val());
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Memory", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+	                            current_time = data[0].recordDate;
+	                            
+	                          	y1 = parseFloat(data[0].memoryUsedPercent);
+	                          	y2 = parseFloat(data[0].memorySwapUsedPercent);
+
+	                          	console.log("current_time"+current_time);
+	                          	console.log("memorySwapUsedPercent"+y1);
+		                        
+		                        series.addPoint([y1], true, true);
+		                        series2.addPoint([y2], true, true);
+                          	});
+                            
+                        }, 5000);
                     }
                 }
             },
             title: {
-                text: 'Live random data'
+                text: ''
             },
             credits: {
                 enabled: false
             },
             xAxis: {
                 type: 'datetime',
-                tickPixelInterval: 150
+                pointStart: Date.now()
             },
             yAxis: {
                 title: {
-                    text: 'Value'
+                    text: 'Percentage',
                 },
+                min: 0, 
+                max: 100,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -188,8 +207,7 @@ $(document).ready(function() {
             tooltip: {
                 formatter: function() {
                         return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
+                        this.y + "%";
                 }
             },
             legend: {
@@ -198,22 +216,23 @@ $(document).ready(function() {
             exporting: {
                 enabled: false
             },
-            series: [{
-                name: 'Random data',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
+            plotOptions: {
+                area: {
+                    marker: {
+                        enabled: false
                     }
-                    return data;
-                })()
+                }
+            },
+            series: [{
+                name: 'Memory Percent',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
+            },{
+                name: 'Swap Percent',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
             }]
         };
 	
@@ -643,7 +662,7 @@ $(document).ready(function() {
             }]
         };
 	
-	
+
 	
 	
 	
