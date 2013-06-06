@@ -50,7 +50,8 @@ public class MetricController {
 				
 				result
 				.use(Results.json())
-				.from(metric, "metric")
+				.withoutRoot()
+				.from(metric)
 				.serialize();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
@@ -68,7 +69,8 @@ public class MetricController {
 				
 				result
 				.use(Results.json())
-				.from(metric, "metric")
+				.withoutRoot()
+				.from(metric)
 				.serialize();
 			} catch (InstantiationException e) {
 				e.printStackTrace();

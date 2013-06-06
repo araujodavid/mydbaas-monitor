@@ -35,6 +35,20 @@ public abstract class DataUtil {
 	        return date;   
 	}
 	
+	public static String convertDateToStringAPI(Date data) {   
+        if (data == null)   
+            return null;   
+           
+        String date = null;   
+        try {   
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+            date = formatter.format(data);   
+        } catch (Exception e) {               
+            System.err.println(e.getMessage());
+        }   
+        return date;   
+}
+	
 	public static String convertDateToStringUI(Date data) {   
         if (data == null)   
             return null;   

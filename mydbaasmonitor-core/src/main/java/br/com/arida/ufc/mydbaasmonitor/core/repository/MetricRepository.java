@@ -15,6 +15,7 @@ import com.sun.xml.internal.ws.util.StringUtils;
 
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
+import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.TypeTranslater;
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -437,8 +438,8 @@ public class MetricRepository {
 				method.invoke(metric, resultSet.getObject(field.getName().toLowerCase().replaceAll(metricClass.getSimpleName().toLowerCase(), "")));
 			}			
 		}
-		Method methodSetRecordDate = AbstractMetric.class.getDeclaredMethod("setRecordDate", Timestamp.class);
-		methodSetRecordDate.invoke(metric, resultSet.getTimestamp("record_date"));
+		Method methodSetRecordDate = AbstractMetric.class.getDeclaredMethod("setRecordDate", String.class);
+		methodSetRecordDate.invoke(metric, DataUtil.convertDateToStringAPI(resultSet.getTimestamp("record_date")));
 		return metric;
 	}
 }
