@@ -47,7 +47,7 @@ public class SizeCollector extends AbstractCollector<SizeMetric> {
 				resultSet = databaseConnection.executeSQL(connection, "select (sum(pg_database_size(pg_database.datname))/1024/1024) as size from pg_database;", null);
 			}
 			while (resultSet != null && resultSet.next()) {
-				this.metric.setSizeUsed(resultSet.getDouble("size"));
+				this.metric.setSizeUsed(Math.round(resultSet.getDouble("size")*100.0)/100.0);
             }
 			resultSet.close();
 			connection.close();
@@ -62,7 +62,7 @@ public class SizeCollector extends AbstractCollector<SizeMetric> {
 				resultSet = databaseConnection.executeSQL(connection, "select (pg_database_size('"+params[2]+"')/1024/1024) as size;", null);
 			}
 			while (resultSet != null && resultSet.next()) {
-				this.metric.setSizeUsed(resultSet.getDouble("size"));
+				this.metric.setSizeUsed(Math.round(resultSet.getDouble("size")*100.0)/100.0);
             }
 			resultSet.close();
 			connection.close();
