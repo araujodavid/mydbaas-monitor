@@ -267,7 +267,7 @@
 		<script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-	    <script src="${pageContext.servletContext.contextPath}/js/vms_view.js" type="text/javascript"></script>
+	    <script src="${pageContext.servletContext.contextPath}/js/host_view.js" type="text/javascript"></script>
 	    <%@include file="/static/footer.jsp"%>	
 	</body>
 </html>

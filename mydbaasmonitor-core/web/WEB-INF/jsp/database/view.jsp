@@ -77,12 +77,10 @@
 				        	<div class="span5">
 				          		<h5>Active Connection</h5>
 				         		<div id="container1" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
 				          		<h5>Size Usage</h5>
 				          		<div id="container2" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				      		</div>
 				      	</div>				      	                 		
             		</div><!--/dashboard-->         		            		       
@@ -94,7 +92,7 @@
 	    <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-	    <script src="${pageContext.servletContext.contextPath}/js/host_view.js" type="text/javascript"></script>
+	    <script src="${pageContext.servletContext.contextPath}/js/database_view.js" type="text/javascript"></script>
 	    <%@include file="/static/footer.jsp"%>
 	</body>
 </html>

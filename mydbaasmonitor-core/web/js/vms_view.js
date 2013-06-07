@@ -323,13 +323,14 @@ $(document).ready(function() {
                 name: 'Bytes Sent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0]
+                data: [0,0,0,0,0,0,0],
+            	color: '#EE1D00'
             },{
                 name: 'Bytes Received',
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0],
-            	color: '#BB2A3C'
+            	color: '#2D7DB3'
             }]
         };
 	
@@ -408,13 +409,14 @@ $(document).ready(function() {
                 name: 'Packets Sent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0]
+                data: [0,0,0,0,0,0,0],
+            	color: '#EE1D00'
             },{
                 name: 'Packets Received',
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0],
-            	color: '#BB2A3C'
+            	color: '#2D7DB3'
             }]
         };
 	
