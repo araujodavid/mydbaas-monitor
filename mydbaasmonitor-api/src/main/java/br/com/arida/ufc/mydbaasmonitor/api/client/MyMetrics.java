@@ -21,6 +21,11 @@ import com.google.gson.Gson;
  */
 public class MyMetrics {
 	
+	public final static String RESOURCE_TYPE_HOST = "host";
+	public final static String RESOURCE_TYPE_VM = "machine";
+	public final static String RESOURCE_TYPE_DBMS = "dbms";
+	public final static String RESOURCE_TYPE_DATABASE = "database";
+	
 	private MyDBaaSMonitorClient client;
 	
 	/**
