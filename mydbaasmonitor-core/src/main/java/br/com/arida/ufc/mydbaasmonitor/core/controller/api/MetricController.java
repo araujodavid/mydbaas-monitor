@@ -54,7 +54,7 @@ public class MetricController {
 		
 		if (metricType == MetricRepository.METRIC_MULTI_TYPE) {
 			try {			
-				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
+				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				List<Object> metric = this.metricRepository.queryMetrics(sql, metricClass);
 				result
 				.use(Results.json())
@@ -72,7 +72,7 @@ public class MetricController {
 			}
 		} else if (metricType == MetricRepository.METRIC_SINGLE_TYPE) {
 			try {			
-				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
+				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				Object metric = this.metricRepository.queryMetric(sql, metricClass);
 				
 				result
@@ -118,7 +118,7 @@ public class MetricController {
 		}
 		
 		try {			
-			sql = this.metricRepository.makeQuerySQL(metricClass, MetricRepository.METRIC_NO_TYPE, resourceID, MetricRepository.ALL_COLLECTION, startDatetime, endDatetime);
+			sql = this.metricRepository.makeQuerySQL(metricClass, MetricRepository.METRIC_NO_TYPE, resourceType, resourceID, MetricRepository.ALL_COLLECTION, startDatetime, endDatetime);
 			List<Object> metric = this.metricRepository.queryMetrics(sql, metricClass);
 			result
 			.use(Results.json())
