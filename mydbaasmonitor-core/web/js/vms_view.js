@@ -91,77 +91,6 @@ $(document).ready(function() {
 	
 	var defaultOptions2 = {
             chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
-                events: {
-                    load: function() {
-    
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
-                        setInterval(function() {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
-                    }
-                }
-            },
-            title: {
-                text: 'Live random data'
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
-            yAxis: {
-                title: {
-                    text: 'Value'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: 'Random data',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                })()
-            }]
-        };
-	
-	
-	var defaultOptions3 = {
-            chart: {
                 type: 'area',
                 animation: Highcharts.svg,
                 marginRight: 10,
@@ -249,7 +178,7 @@ $(document).ready(function() {
         };
 	
 	
-	var defaultOptions4 = {
+	var defaultOptions3 = {
             chart: {
                 type: 'area',
                 animation: Highcharts.svg,
@@ -335,7 +264,7 @@ $(document).ready(function() {
         };
 	
 	
-	var defaultOptions5 = {
+	var defaultOptions4 = {
             chart: {
                 type: 'area',
                 animation: Highcharts.svg,
@@ -421,78 +350,7 @@ $(document).ready(function() {
         };
 	
 	
-	var defaultOptions6 = {
-            chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                marginRight: 10,
-                events: {
-                    load: function() {
-    
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
-                        setInterval(function() {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
-                    }
-                }
-            },
-            title: {
-                text: ''
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
-            yAxis: {
-                title: {
-                    text: 'Value'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: 'Random data',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                })()
-            }]
-        };
-	
-	
-	var defaultOptions7 = {
+	var defaultOptions5 = {
             chart: {
                 type: 'area',
                 animation: Highcharts.svg,
@@ -576,7 +434,7 @@ $(document).ready(function() {
         };
 	
 	
-	var defaultOptions8 = {
+	var defaultOptions6 = {
             chart: {
                 type: 'area',
                 animation: Highcharts.svg,
@@ -660,7 +518,76 @@ $(document).ready(function() {
         };
 	
 	
-	var defaultOptions9 = {
+	var defaultOptions7 = {
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function() {
+                    	var series = this.series[0];
+                        
+                        setInterval(function() {
+                            var current_time = undefined;
+                            var y1 = undefined;
+
+                            var resource_id = parseInt($("#resource_id_chart").val());
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+	                            current_time = data[0].recordDate;
+	                            
+	                          	y1 = parseFloat(data[0].diskPercent);
+		                        
+		                        series.addPoint([y1], true, true);
+                          	});
+                            
+                        }, 5000);
+                    }
+                }
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                type: 'datetime',
+                pointStart: Date.now()
+            },
+            yAxis: {
+                title: {
+                    text: 'Percentage'
+                },
+                min: 0, 
+                max: 100,
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+            	formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.y + "%";
+            	}
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Percentage Used',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
+            }]
+        };
+	
+	var defaultOptions8 = {
             chart: {
                 type: 'spline',
                 animation: Highcharts.svg, // don't animate in old IE

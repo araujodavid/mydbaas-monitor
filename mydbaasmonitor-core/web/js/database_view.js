@@ -92,10 +92,10 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Memory", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Size", resourceType:"database", metricType: 1, resourceID: resource_id },function(data) {
 	                            current_time = data[0].recordDate;
 	                            
-	                          	y1 = parseFloat(data[0].memoryUsedPercent);
+	                          	y1 = parseFloat(data[0].sizeUsed);
 		                        
 		                        series.addPoint([y1], true, true);
                           	});
@@ -155,47 +155,3 @@ $(document).ready(function() {
 		$('#container1').highcharts(defaultOptions1);
 		$('#container2').highcharts(defaultOptions2);		
 });
-
-function getLabel(id){
-	var labels = {};
-	labels.cpu_time = "CPU Time";
-	labels.memory_time = "Memory Time";
-	
-	return labels[id];
-}
-
-function getURL(id){
-	if(id == "cpu_time"){
-		return "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?";
-	}
-	else if(id == "memory_time"){
-		return "http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?";
-	}
-}
-
-function setModalValues(identifier){
-	$("#myModalLabel").html(getLabel(identifier));
-	$("#modal_body").html("<div align='center'><img src='/mydbaasmonitor/img/ajax-loader.gif' /></div>");
-	$.getJSON(getURL(identifier), function(data) {
-		// Create the chart
-		$('#modal_body').highcharts('StockChart', {
-			rangeSelector : {
-				selected : 1
-			},
-
-			title : {
-				text : 'AAPL Stock Price'
-			},
-			credits: {
-	            enabled: false
-	         },
-			series : [{
-				name : 'AAPL',
-				data : data,
-				tooltip: {
-					valueDecimals: 2
-				}
-			}]
-		});
-	});
-}
