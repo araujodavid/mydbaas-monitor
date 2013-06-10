@@ -357,24 +357,16 @@ public class MetricRepository {
 		return listMetrics;
 	}//listMetrics()
 	
-	public String makeQuerySQL(Class<?> metricClass, int metricType, int resourceID, int queryType, String startDatetime, String endDatetime) {
+	public String makeQuerySQL(Class<?> metricClass, int metricType, String resourceType, int resourceID, int queryType, String startDatetime, String endDatetime) {
 		StringBuilder sql = new StringBuilder();
 		String metricTable = metricClass.getSimpleName().toLowerCase()+"_metric";
-		Object metricObject = null;
-		try {
-			metricObject = metricClass.newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
 		
 		//Add the table name into query
 		sql.append("select * from `"+metricTable+"`\n");
 		
 		//Add the owner of the metric
 		String owner;
-		switch (metricObject.toString()) {
+		switch (resourceType) {
 		case "dbms":
 			owner = "dbms";
 			sql.append("where dbms = "+resourceID+"\n");
