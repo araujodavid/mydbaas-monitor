@@ -40,7 +40,9 @@
         			<legend>
 						<img src="/mydbaasmonitor/img/table.png"> Database Information:
         			</legend>
-					<address>		                    	
+					<address>
+						<input id="resource_id_chart" type="hidden" value="${database.id}" />	
+						            	
                     	<strong>Monitoring Status:</strong><br> 
                     	<c:choose>
    							<c:when test="${database.status == true}">
@@ -79,7 +81,7 @@
 				         		<div id="container1" class="dynamic_chart"></div>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Size Usage</h5>
+				          		<h5>Size Usage (MB)</h5>
 				          		<div id="container2" class="dynamic_chart"></div>
 				      		</div>
 				      	</div>				      	                 		

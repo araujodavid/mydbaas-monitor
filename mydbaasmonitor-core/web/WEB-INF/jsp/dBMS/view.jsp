@@ -93,7 +93,9 @@
         			<legend><img src="/mydbaasmonitor/img/dbms.png"> Database Management System Information</legend>
         			<div class="row-fluid">
 		                <div class="span4">
-		                    <address>		                    	
+		                    <address>
+		                    	<input id="resource_id_chart" type="hidden" value="${dbms.id}" />	
+		                                        	
 		                    	<strong>Monitoring Status:</strong><br> 
 		                    	<c:choose>
      								<c:when test="${dbms.status == true}">
@@ -139,24 +141,20 @@
 				        	<div class="span5">
 				          		<h5>CPU Utilization</h5>
 				         		<div id="container1" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
 				          		<h5>Memory Utilization</h5>
 				          		<div id="container2" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				      		</div>
 				      	</div>				      
 				        <div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
 				          		<h5>Active Connection</h5>
 				          		<div id="container3" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
 				          		<h5>Size Usage</h5>
 				          		<div id="container4" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
 				       		</div>
 				      	</div>				      	                 		
             		</div><!--/dashboard-->
@@ -212,7 +210,7 @@
 	    <script src="http://code.highcharts.com/stock/highstock.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
-	    <script src="${pageContext.servletContext.contextPath}/js/host_view.js" type="text/javascript"></script>
+	    <script src="${pageContext.servletContext.contextPath}/js/dbms_view.js" type="text/javascript"></script>
 	    <%@include file="/static/footer.jsp"%>	
 	</body>
 </html>
