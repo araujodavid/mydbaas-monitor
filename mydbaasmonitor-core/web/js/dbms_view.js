@@ -184,6 +184,8 @@ $(document).ready(function() {
                 title: {
                     text: 'Amount',
                 },
+                min: 0, 
+                max: 50,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -205,7 +207,7 @@ $(document).ready(function() {
             plotOptions: {
                 area: {
                     marker: {
-                        enabled: false
+                        enabled: true
                     }
                 }
             },
@@ -214,13 +216,13 @@ $(document).ready(function() {
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0],
-                color: '#5E2D79'
+                color: '#3CB371'
             }]
         };
 	
 	
 	var defaultOptions4 = {
-            chart: {
+			chart: {
                 type: 'area',
                 animation: Highcharts.svg,
                 marginRight: 10,
@@ -281,7 +283,7 @@ $(document).ready(function() {
             plotOptions: {
                 area: {
                     marker: {
-                        enabled: false
+                        enabled: true
                     }
                 }
             },
@@ -290,7 +292,7 @@ $(document).ready(function() {
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0],
-                color: '#5E2D79'
+                color: '#4682B4'
             }]
         };
 	
