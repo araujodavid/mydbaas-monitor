@@ -75,16 +75,16 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
+                	     <div class="row" style="padding-left:30px; margin-bottom:30px;">
 				        	<div class="span5">
 				          		<h5>Active Connection</h5>
-				         		<div id="container1" class="dynamic_chart"></div>
+				          		<div id="container1" class="dynamic_chart"></div>
 				        	</div>
 				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Size Usage (MB)</h5>
+				          		<h5>Size Usage</h5>
 				          		<div id="container2" class="dynamic_chart"></div>
-				      		</div>
-				      	</div>				      	                 		
+				       		</div>
+				      	</div>					      	                 		
             		</div><!--/dashboard-->         		            		       
         		</div><!--/span9-->            		            		       
         	</div><!--/span-->       		
