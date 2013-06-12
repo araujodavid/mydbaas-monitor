@@ -16,14 +16,11 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DatabaseConnection;
 
 /**
- * 
  * Class that will initialize the monitoring processes.
  * @author Daivd Araújo - @araujodavid
- * @version 4.0
+ * @version 5.0
  * @since March 6, 2013
- * 
  */
-
 public class MonitoringAgent {
 	
 	private List<Timer> timers;
@@ -68,7 +65,7 @@ public class MonitoringAgent {
 	 * @throws ClassNotFoundException
 	 * @throws InstantiationException
 	 */
-	public void startCollectors(List<Object> enabledMetrics, int identifier) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException {
+	public void startCollectors(List<Object> enabledMetrics, int identifier, String type) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException {
 		this.timers = new ArrayList<Timer>();
 		this.collectors = new ArrayList<Object>();
 		for (Object object : enabledMetrics) {
@@ -84,7 +81,7 @@ public class MonitoringAgent {
 			String collectorName = StringUtils.capitalize(object.getClass().getSimpleName().replace("Metric", "")).concat("Collector");
 			Class<?> collectorClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector."+object.toString()+"."+collectorName);
 			Constructor constructor = collectorClass.getConstructors()[0];
-			Object objectCollector = constructor.newInstance(new Object[] {identifier});
+			Object objectCollector = constructor.newInstance(new Object[] {identifier, type});
 			//The collector is scheduled and initiated
 			Timer timer = new Timer();			
 			timer.scheduleAtFixedRate((TimerTask) objectCollector, 0, 1*cyclo*1000);
@@ -98,7 +95,7 @@ public class MonitoringAgent {
 	public static void main(String[] args) {
 		MonitorInfoParser parser = MonitorInfoParser.getInstance();
 		try {
-			parser.loadContextFile("/home/franzejr/programming/mydbaasmonitor/mydbaasmonitor-agent/src/resources/test.conf");
+			parser.loadContextFile("/home/david/Workspace MyDBaaSMonitor/mydbaasmonitor-agent/src/resources/test.conf");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,14 +116,14 @@ public class MonitoringAgent {
 		//Collects information about the system and physical resources
 		MachineMetric machineMetric = MachineMetric.getInstance();
 		machineMetric.loadMetricProperties(parser.getProperties());		
-		MachineCollector machineCollector = new MachineCollector(parser.getIdentifier());
+		MachineCollector machineCollector = new MachineCollector(parser.getIdentifier(), parser.getType());
 		machineCollector.run();
 		
 		try {
 			//Get enabled metric in the conf file
 			List<Object>  enabledMetrics = agent.getEnabledMetrics(parser.getProperties());
 			//Create the collectos
-			agent.startCollectors(enabledMetrics, parser.getIdentifier());
+			agent.startCollectors(enabledMetrics, parser.getIdentifier(), parser.getType());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
