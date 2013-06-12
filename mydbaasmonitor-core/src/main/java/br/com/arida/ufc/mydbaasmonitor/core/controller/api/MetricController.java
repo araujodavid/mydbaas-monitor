@@ -74,7 +74,6 @@ public class MetricController {
 			try {			
 				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				Object metric = this.metricRepository.queryMetric(sql, metricClass);
-				
 				result
 				.use(Results.json())
 				.withoutRoot()
