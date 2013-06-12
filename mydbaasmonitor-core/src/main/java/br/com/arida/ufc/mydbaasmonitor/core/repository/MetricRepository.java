@@ -7,12 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.sun.xml.internal.ws.util.StringUtils;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.connection.Pool;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.util.DataUtil;
@@ -21,7 +19,7 @@ import br.com.caelum.vraptor.ioc.Component;
 
 /**
  * @author David Araújo
- * @version 4.0
+ * @version 5.0
  * @since April 1, 2013 
  */
 
@@ -54,12 +52,12 @@ public class MetricRepository {
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-	public boolean saveMetric(Object metric, int identifier, String recordDate, int dbms, int database) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	public boolean saveMetric(Object metric, String recordDate, int machine, int host, int dbms, int database) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		if (this.checkTable(metric)) {
-			return this.insertMetric(metric, identifier, recordDate, dbms, database);			
+			return this.insertMetric(metric, recordDate, machine, host, dbms, database);			
 		} else {
 			if (this.createMetricTable(metric)) {
-				return this.insertMetric(metric, identifier, recordDate, dbms, database);
+				return this.insertMetric(metric, recordDate, machine, host, dbms, database);
 			}			
 		}
 		return false;
@@ -72,13 +70,13 @@ public class MetricRepository {
 	 * @param recordDate
 	 * @return true if the metric is saved
 	 */
-	private boolean insertMetric(Object metric, int identifier, String recordDate, int dbms, int database) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	private boolean insertMetric(Object metric, String recordDate, int machine, int host, int dbms, int database) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		List<Field> fields = this.getMetricFields(metric);
 		Class<?> clazz = metric.getClass();	
 		
 		try {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
-			this.preparedStatement = this.connection.prepareStatement(this.makeInsertSQL(metric, fields, dbms, database));
+			this.preparedStatement = this.connection.prepareStatement(this.makeInsertSQL(metric, fields, machine, host, dbms, database));
 			
 			//Gets the metric values ​​and configures the SQL query
 			int count = 1;
@@ -91,13 +89,16 @@ public class MetricRepository {
 				count++;
 			}			
 			//Setting the identifier and record date
-			if (dbms != 0) {
+			if (machine != 0) {
+				this.preparedStatement.setObject(count, machine);
+			} else if (host != 0) {
+				this.preparedStatement.setObject(count, host);
+			} else if (dbms != 0) {
 				this.preparedStatement.setObject(count, dbms);
-			} else if (database != 0) {
-				this.preparedStatement.setObject(count, database);
 			} else {
-				this.preparedStatement.setObject(count, identifier);
-			}			
+				this.preparedStatement.setObject(count, database);
+			}
+			
 			this.preparedStatement.setObject(count+1, recordDate);
 			
 			this.preparedStatement.executeUpdate();
@@ -189,26 +190,29 @@ public class MetricRepository {
 		//Identifies the metric is tied to a machine or database or host
 		if (metric.toString().equals("machine")) {
 			//Add the identifier of the resource and primary key
-			sql.append("`identifier` int(11) NOT NULL,\n")
+			sql.append("`machine` int(11) DEFAULT NULL,\n")
+			   .append("`host` int(11) DEFAULT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
-			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
+			   .append("KEY `fk_"+clazzName+"_machine_idx` (`machine`),\n")			   
+			   .append("KEY `fk_"+clazzName+"_host_idx` (`host`),\n")
 			   .append("KEY `idx_date_"+clazzName+"_metric` (`record_date`),\n")
-			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`identifier`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_machine` FOREIGN KEY (`machine`) REFERENCES `virtual_machine` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n")
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_host` FOREIGN KEY (`host`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else if (metric.toString().equals("host")) {
 			//Add the identifier of the resource and primary key
-			sql.append("`identifier` int(11) NOT NULL,\n")
+			sql.append("`host` int(11) NOT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
-			   .append("KEY `fk_"+clazzName+"_metric_idx` (`identifier`),\n")
+			   .append("KEY `fk_"+clazzName+"_metric_idx` (`host`),\n")
 			   .append("KEY `idx_date_"+clazzName+"_metric` (`record_date`),\n")
-			   .append("CONSTRAINT `fk_"+clazzName+"_metric_host` FOREIGN KEY (`identifier`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
+			   .append("CONSTRAINT `fk_"+clazzName+"_metric_host` FOREIGN KEY (`host`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		} else {
 			//Add the identifier of the resource and primary key
 			sql.append("`dbms` int(11) DEFAULT NULL,\n")
 			   .append("`database` int(11) DEFAULT NULL,\n")
 			   .append("PRIMARY KEY (`id`),\n")
 			   .append("KEY `fk_"+clazzName+"_dbms_idx` (`dbms`),\n")			   
-			   .append("KEY `fk_"+clazzName+"_database_idx` (`identifier`),\n")
-			   .append("KEY `idx_date_"+clazzName+"_metric` (`database`),\n")
+			   .append("KEY `fk_"+clazzName+"_database_idx` (`database`),\n")
+			   .append("KEY `idx_date_"+clazzName+"_metric` (`record_date`),\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_dbms` FOREIGN KEY (`dbms`) REFERENCES `dbms` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,\n")
 			   .append("CONSTRAINT `fk_"+clazzName+"_metric_database` FOREIGN KEY (`database`) REFERENCES `database` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION\n");
 		}
@@ -222,7 +226,7 @@ public class MetricRepository {
 	 * @param fields
 	 * @return a insert SQL ready
 	 */
-	public String makeInsertSQL(Object metric, List<Field> fields, int dbms, int database) {
+	public String makeInsertSQL(Object metric, List<Field> fields, int machine, int host, int dbms, int database) {
 		String clazzName = metric.getClass().getSimpleName().toLowerCase();
 		//Create the first part of the query
 		StringBuilder insert = new StringBuilder();		
@@ -238,12 +242,14 @@ public class MetricRepository {
 			}
 		}
 		//Adds the end of the query
-		if (dbms != 0) {
+		if (machine != 0) {
+			insert.append("`machine`, ");
+		} else if (host != 0) {
+			insert.append("`host`, ");
+		} else if (dbms != 0) {
 			insert.append("`dbms`, ");
-		} else if (database != 0) {
-			insert.append("`database`, ");
 		} else {
-			insert.append("`identifier`, ");
+			insert.append("`database`, ");
 		}		
 		insert.append("`record_date`)\n");
 		values.append("?, ")
@@ -369,15 +375,19 @@ public class MetricRepository {
 		switch (resourceType) {
 		case "dbms":
 			owner = "dbms";
-			sql.append("where dbms = "+resourceID+"\n");
+			sql.append("where `dbms` = "+resourceID+"\n");
 			break;
 		case "database":
 			owner = "database";
-			sql.append("where database = "+resourceID+"\n");
+			sql.append("where `database` = "+resourceID+"\n");
 			break;
+		case "machine":
+			owner = "machine";
+			sql.append("where `machine` = "+resourceID+"\n");
+			break;	
 		default:
-			owner = "identifier";
-			sql.append("where identifier = "+resourceID+"\n");
+			owner = "host";
+			sql.append("where `host` = "+resourceID+"\n");
 			break;
 		}
 		
@@ -406,7 +416,7 @@ public class MetricRepository {
 				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
 			}
 			if (metricType == 1) {
-				sql.append("and record_date = (select max(record_date) from "+metricTable+" where "+owner+" = "+resourceID+");");
+				sql.append("and record_date = (select max(record_date) from "+metricTable+" where `"+owner+"` = "+resourceID+");");
 			} else {
 				sql.append("order by id desc\n")
 				   .append("limit 1;");
