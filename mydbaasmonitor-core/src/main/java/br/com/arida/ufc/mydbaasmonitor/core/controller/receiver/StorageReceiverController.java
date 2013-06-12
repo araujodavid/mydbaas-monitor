@@ -14,10 +14,9 @@ import br.com.caelum.vraptor.view.DefaultStatus;
 /**
  * Class that handles requests sent by the monitoring agents about DBMSs and Databases.
  * @author Daivd Araújo
- * @version 2.0
+ * @version 3.0
  * @since March 10, 2013
  */
-
 @Resource
 @Path("/storage")
 public class StorageReceiverController extends AbstractReceiver {
@@ -34,7 +33,7 @@ public class StorageReceiverController extends AbstractReceiver {
 	@Post("/activeconnections")
 	public void activeConnections(ActiveConnection metric, int dbms, int database, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, 0, recordDate, dbms, database)) {
+			if (repository.saveMetric(metric, recordDate, 0, 0, dbms, database)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -52,7 +51,7 @@ public class StorageReceiverController extends AbstractReceiver {
 	@Post("/size")
 	public void size(Size metric, int dbms, int database, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, 0, recordDate, dbms, database)) {
+			if (repository.saveMetric(metric, recordDate, 0, 0, dbms, database)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -70,7 +69,7 @@ public class StorageReceiverController extends AbstractReceiver {
 	@Post("/processstatus")
 	public void processStatus(ProcessStatus metric, int dbms, int database, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, 0, recordDate, dbms, database)) {
+			if (repository.saveMetric(metric, recordDate, 0, 0, dbms, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {

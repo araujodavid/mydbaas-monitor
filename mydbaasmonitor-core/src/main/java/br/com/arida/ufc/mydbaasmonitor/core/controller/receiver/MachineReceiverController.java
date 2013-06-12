@@ -2,7 +2,6 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.receiver;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Cpu;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Disk;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
@@ -20,10 +19,9 @@ import br.com.caelum.vraptor.view.DefaultStatus;
 /**
  * Class that handles requests sent by the monitoring agents about machine.
  * @author Daivd Araújo
- * @version 4.0
+ * @version 5.0
  * @since March 10, 2013 
  */
-
 @Resource
 @Path("/machine")
 public class MachineReceiverController extends AbstractReceiver {
@@ -47,8 +45,8 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param machine - machine identifier where the metric was collected
 	 */
 	@Post("/info")
-	public void information(Machine metric, int identifier) {
-		if (machineRepository.updateSystemInformation(metric, identifier)) {
+	public void information(Machine metric, int machine) {
+		if (machineRepository.updateSystemInformation(metric, machine)) {
 			status.accepted();
 		}
 	}
@@ -66,10 +64,10 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param recordDate - date when it was collected
 	 */
 	@Post("/cpu")
-	public void cpu(List<Cpu> metric, int identifier, String recordDate) {
+	public void cpu(List<Cpu> metric, int machine, String recordDate) {
 		for (Cpu cpu : metric) {
 			try {
-				if (repository.saveMetric(cpu, identifier, recordDate, 0, 0)) {
+				if (repository.saveMetric(cpu, recordDate, machine, 0, 0, 0)) {
 					status.accepted();
 				}
 			} catch (NoSuchMethodException e) {
@@ -92,9 +90,9 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param recordDate - date when it was collected
 	 */
 	@Post("/memory")
-	public void memory(Memory metric, int identifier, String recordDate) {
+	public void memory(Memory metric, int machine, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
+			if (repository.saveMetric(metric, recordDate, machine, 0, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -116,9 +114,9 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param recordDate - date when it was collected
 	 */
 	@Post("/disk")
-	public void disk(Disk metric, int identifier, String recordDate) {
+	public void disk(Disk metric, int machine, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
+			if (repository.saveMetric(metric, recordDate, machine, 0, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
@@ -140,10 +138,10 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param recordDate - date when it was collected
 	 */
 	@Post("/partition")
-	public void partition(List<Partition> metric, int identifier, String recordDate) {
+	public void partition(List<Partition> metric, int machine, String recordDate) {
 		for (Partition partition : metric) {
 			try {
-				if (repository.saveMetric(partition, identifier, recordDate, 0, 0)) {
+				if (repository.saveMetric(partition, recordDate, machine, 0, 0, 0)) {
 					status.accepted();
 				}
 			} catch (NoSuchMethodException e) {
@@ -166,9 +164,9 @@ public class MachineReceiverController extends AbstractReceiver {
 	 * @param recordDate - date when it was collected
 	 */
 	@Post("/network")
-	public void network(Network metric, int identifier, String recordDate) {
+	public void network(Network metric, int machine, String recordDate) {
 		try {
-			if (repository.saveMetric(metric, identifier, recordDate, 0, 0)) {
+			if (repository.saveMetric(metric, recordDate, machine, 0, 0, 0)) {
 				status.accepted();
 			}
 		} catch (NoSuchMethodException e) {
