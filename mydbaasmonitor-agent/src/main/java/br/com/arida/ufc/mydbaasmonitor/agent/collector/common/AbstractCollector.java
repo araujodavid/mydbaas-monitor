@@ -19,24 +19,24 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DateUtil;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
- * 
- * @author Daivd Araújo
- * @version 2.0
+ * @author Daivd Araújo - @araujodavid
+ * @version 3.0
  * @since March 25, 2013
- * 
  */
 public abstract class AbstractCollector<T extends AbstractMetric> extends TimerTask {
 
 	protected T metric;
 	protected int identifier;
+	protected String type;
 	
 	
 	/**
 	 * Default constructor for classes heiresses.
 	 * @param identifier - unique machine code
 	 */
-	public AbstractCollector(int identifier) {
+	public AbstractCollector(int identifier, String type) {
 		this.identifier = identifier;
+		this.type = type;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 	public abstract void loadMetric(Object[] args) throws Exception;
 	
 	/**
-	 * Method to load the HTTP request parameters of the metric.
+	 * Method to load the HTTP request parameters of a metric.
 	 * @param recordDate - datetime when the metric was collected
 	 * @return a list of parameters and values ​​for the HTTP request
 	 * @throws InvocationTargetException 
@@ -77,7 +77,11 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 		} else if (idDatabase != 0) {
 			parameters.add(new BasicNameValuePair("database", String.valueOf(idDatabase)));
 		} else {
-			parameters.add(new BasicNameValuePair("identifier", String.valueOf(this.identifier)));
+			if (this.type.equals("machine")) {
+				parameters.add(new BasicNameValuePair("machine", String.valueOf(this.identifier)));
+			} else {
+				parameters.add(new BasicNameValuePair("host", String.valueOf(this.identifier)));
+			}			
 		}
 		
 		//Adds the datetime when the metric was collected
@@ -117,5 +121,63 @@ public abstract class AbstractCollector<T extends AbstractMetric> extends TimerT
 		HttpResponse response;
 		response = SendResquest.postRequest(metric.getUrl(), parameters, "UTF-8");
 		return response;		
+	}
+	
+	/**
+	 * Method to load the HTTP request parameters of a metric list.
+	 * @param recordDate - datetime when the metric was collected
+	 * @return a list of parameters and values ​​for the HTTP request
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	public List<NameValuePair> loadRequestParams(Date recordDate, List<?> metrics, int idDBMS, int idDatabase) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		List<Field> fields = new ArrayList<Field>();
+		
+		//Gets the class of the metric
+		Class<? extends AbstractMetric> clazz = this.metric.getClass();
+		//Gets the super class of the metric
+		Class<?> extendedClazz = this.metric.getClass().getSuperclass();
+		
+		//Gets fields from the class
+		fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+		//Gets fields from the super class
+		fields.addAll(Arrays.asList(extendedClazz.getDeclaredFields()));
+		
+		//Adds the machine identifier that belongs to the metric
+		if (idDBMS != 0) {
+			parameters.add(new BasicNameValuePair("dbms", String.valueOf(idDBMS)));
+		} else if (idDatabase != 0) {
+			parameters.add(new BasicNameValuePair("database", String.valueOf(idDatabase)));
+		} else {
+			if (this.type.equals("machine")) {
+				parameters.add(new BasicNameValuePair("machine", String.valueOf(this.identifier)));
+			} else {
+				parameters.add(new BasicNameValuePair("host", String.valueOf(this.identifier)));
+			}			
+		}
+		
+		//Adds the datetime when the metric was collected
+		parameters.add(new BasicNameValuePair("recordDate", DateUtil.formatDate(recordDate)));		
+		
+		//Creates HTTP request parameters from the fields of the metric
+		int i = 0;
+		for (Object objectMetric : metrics) {			
+			for (Field field : fields) {
+				Method method;
+				//Checks if the field is identified as a measure
+				if (field.getName().toLowerCase().contains(extendedClazz.getSimpleName().toLowerCase())) {
+					//Gets the get method of the field
+					method = extendedClazz.getDeclaredMethod("get"+StringUtils.capitalize(field.getName()), null);
+					//Adds the field and its value in the parameter list
+					parameters.add(new BasicNameValuePair("metric["+i+"]."+field.getName(), String.valueOf(method.invoke(objectMetric, null))));
+				}			
+			}
+			i++;
+		}
+		return parameters;
 	}
 }
