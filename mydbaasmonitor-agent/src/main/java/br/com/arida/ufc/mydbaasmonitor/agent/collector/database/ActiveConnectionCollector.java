@@ -16,16 +16,14 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.ActiveConnectionMe
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DatabaseConnection;
 
 /**
- * 
  * @author David Araújo - @araujodavid
  * @version 2.0
  * @since April 17, 2013
- * 
  */
 public class ActiveConnectionCollector extends AbstractCollector<ActiveConnectionMetric> {
 
-	public ActiveConnectionCollector(int identifier) {
-		super(identifier);
+	public ActiveConnectionCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

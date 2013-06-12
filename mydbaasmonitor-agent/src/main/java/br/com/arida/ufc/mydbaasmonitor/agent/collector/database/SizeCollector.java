@@ -16,16 +16,14 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.SizeMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.DatabaseConnection;
 
 /**
- * 
  * @author David Araújo - @araujodavid
  * @version 2.0
  * @since April 26, 2013
- * 
  */
 public class SizeCollector extends AbstractCollector<SizeMetric> {
 
-	public SizeCollector(int identifier) {
-		super(identifier);
+	public SizeCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

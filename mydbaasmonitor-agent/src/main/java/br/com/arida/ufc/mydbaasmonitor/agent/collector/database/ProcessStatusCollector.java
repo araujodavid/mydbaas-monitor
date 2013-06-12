@@ -15,16 +15,14 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.util.ShellCommand;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 
 /**
- * 
  * @author David Araújo - @araujodavid
  * @version 1.0
  * @since May 2, 2013
- * 
  */
 public class ProcessStatusCollector extends AbstractCollector<ProcessStatusMetric> {
 
-	public ProcessStatusCollector(int identifier) {
-		super(identifier);
+	public ProcessStatusCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

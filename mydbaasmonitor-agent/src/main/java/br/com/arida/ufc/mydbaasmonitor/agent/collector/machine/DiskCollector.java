@@ -22,8 +22,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.DiskMetric;
  */
 public class DiskCollector extends AbstractCollector<DiskMetric> {
 
-	public DiskCollector(int identifier) {
-		super(identifier);
+	public DiskCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

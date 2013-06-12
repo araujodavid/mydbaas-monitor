@@ -20,8 +20,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.HostDomainsMetric;
  */
 public class HostDomainsCollector extends AbstractCollector<HostDomainsMetric> {
 
-	public HostDomainsCollector(int identifier) {
-		super(identifier);
+	public HostDomainsCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

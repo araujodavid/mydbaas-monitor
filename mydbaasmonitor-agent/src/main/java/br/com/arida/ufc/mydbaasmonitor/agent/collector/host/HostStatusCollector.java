@@ -23,8 +23,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.HostStatusMetric;
  */
 public class HostStatusCollector extends AbstractCollector<HostStatusMetric> {
 
-	public HostStatusCollector(int identifier) {
-		super(identifier);
+	public HostStatusCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

@@ -21,8 +21,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.HostInfoMetric;
  */
 public class HostInfoCollector extends AbstractCollector<HostInfoMetric> {
 
-	public HostInfoCollector(int identifier) {
-		super(identifier);
+	public HostInfoCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

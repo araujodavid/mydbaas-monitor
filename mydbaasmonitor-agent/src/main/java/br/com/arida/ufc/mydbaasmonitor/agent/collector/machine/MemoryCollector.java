@@ -22,8 +22,8 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MemoryMetric;
  */
 public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 	
-	public MemoryCollector(int identifier) {
-		super(identifier);
+	public MemoryCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	private static Long format(long value) {

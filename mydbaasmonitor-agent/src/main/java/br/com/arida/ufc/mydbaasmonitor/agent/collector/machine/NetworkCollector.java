@@ -15,17 +15,14 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.NetworkMetric;
 
 /**
- * 
- * @author Daivd Araújo
+ * @author Daivd Araújo - @araujodavid
  * @version 3.0
  * @since March 13, 2013
- * 
  */
-
 public class NetworkCollector extends AbstractCollector<NetworkMetric> {
 
-	public NetworkCollector(int identifier) {
-		super(identifier);
+	public NetworkCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override

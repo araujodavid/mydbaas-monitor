@@ -18,17 +18,14 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.collector.common.Abstract
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.MachineMetric;
 
 /**
- * 
- * @author Daivd Araújo
+ * @author Daivd Araújo - @araujodavid
  * @version 3.0
  * @since March 5, 2013
- * 
  */
-
 public class MachineCollector extends AbstractCollector<MachineMetric>  {
 
-	public MachineCollector(int identifier) {
-		super(identifier);
+	public MachineCollector(int identifier, String type) {
+		super(identifier, type);
 	}
 
 	@Override
