@@ -10,7 +10,6 @@ var lastDiskWrites = 0.0;
 var lastDiskBytesRead = 0.0;
 var lastDiskBytesWritten = 0.0;
 
-
 $(document).ready(function() {
 	Highcharts.setOptions({
         global: {
@@ -21,6 +20,7 @@ $(document).ready(function() {
 	var defaultOptions1 = {
             chart: {
                 type: 'spline',
+                animation: false,
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
                 events: {
@@ -590,6 +590,7 @@ $(document).ready(function() {
 	var defaultOptions8 = {
             chart: {
                 type: 'bar',
+                animation: false,
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
                 events: {
@@ -614,11 +615,11 @@ $(document).ready(function() {
 	                          	diskUsedBytes = parseFloat(data[0].diskUsedBytes);
 	                          	
 	                          	diskTotalBytes = parseFloat(data[0].diskTotalBytes);
-		                        
+
+	                          	series.addPoint([diskFreeBytes],true,true);
+	                          	series2.addPoint([diskUsedBytes],true,true);
+	                          	series3.addPoint([diskTotalBytes],true,true);
 	                          	
-		                        series.addPoint([diskFreeBytes], true, true);
-		                        series2.addPoint([diskUsedBytes], true, true);
-		                        series3.addPoint([diskTotalBytes], true, true);
                           	});
                             
                         }, 5000);
@@ -660,19 +661,19 @@ $(document).ready(function() {
             series: [{
                 name: 'diskFreeBytes',
                 pointStart: Date.now(),
-                pointInterval: 6000,
-                data: [0,0,0,0,0,0,0]
+                pointInterval: 5000,
+                data: [0]
             },
             {
                 name: 'diskUsedBytes',
                 pointStart: Date.now(),
-                pointInterval: 6000,
-                data: [0,0,0,0,0,0,0]
+                pointInterval: 5000,
+                data: [0]
             },{
                 name: 'diskTotalBytes',
                 pointStart: Date.now(),
-                pointInterval: 6000,
-                data: [0,0,0,0,0,0,0]
+                pointInterval: 5000,
+                data: [0]
             }]
         };	
 
