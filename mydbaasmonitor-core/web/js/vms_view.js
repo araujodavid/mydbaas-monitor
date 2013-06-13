@@ -505,7 +505,7 @@ $(document).ready(function() {
                 }
             },
             series: [{
-                name: 'Bystes Read',
+                name: 'Bytes Read',
                 pointStart: Date.now(),
                 pointInterval: 6000,
                 data: [0,0,0,0,0,0,0]
@@ -589,35 +589,55 @@ $(document).ready(function() {
 	
 	var defaultOptions8 = {
             chart: {
-                type: 'spline',
+                type: 'bar',
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
                 events: {
                     load: function() {
-    
-                        // set up the updating of the chart each second
-                        var series = this.series[0];
+                    	var series = this.series[0];
+                    	var series2 = this.series[1];
+                    	var series3 = this.series[2];
+                        
                         setInterval(function() {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                            var current_time = undefined;
+                            var diskFreeBytes = undefined;
+                            var  diskUsedBytes = undefined;     
+                            var diskTotalBytes = undefined;
+
+                            var resource_id = parseInt($("#resource_id_chart").val());
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+	                            current_time = data[0].recordDate;
+	                            
+	                          	diskFreeBytes = parseFloat(data[0].diskFreeBytes);
+	                          	
+	                          	diskUsedBytes = parseFloat(data[0].diskUsedBytes);
+	                          	
+	                          	diskTotalBytes = parseFloat(data[0].diskTotalBytes);
+		                        
+	                          	
+		                        series.addPoint([diskFreeBytes], true, true);
+		                        series2.addPoint([diskUsedBytes], true, true);
+		                        series3.addPoint([diskTotalBytes], true, true);
+                          	});
+                            
+                        }, 5000);
                     }
                 }
             },
             title: {
-                text: 'Live random data'
+                text: ''
             },
             credits: {
                 enabled: false
             },
             xAxis: {
                 type: 'datetime',
-                tickPixelInterval: 150
+                pointStart: Date.now()
             },
             yAxis: {
                 title: {
-                    text: 'Value'
+                    text: 'Bytes'
                 },
                 plotLines: [{
                     value: 0,
@@ -626,11 +646,10 @@ $(document).ready(function() {
                 }]
             },
             tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
-                }
+            	formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.y;
+            	}
             },
             legend: {
                 enabled: false
@@ -639,24 +658,23 @@ $(document).ready(function() {
                 enabled: false
             },
             series: [{
-                name: 'Random data',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
-                    }
-                    return data;
-                })()
+                name: 'diskFreeBytes',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
+            },
+            {
+                name: 'diskUsedBytes',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
+            },{
+                name: 'diskTotalBytes',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0]
             }]
-        };
-	
+        };	
 
 	
 	
