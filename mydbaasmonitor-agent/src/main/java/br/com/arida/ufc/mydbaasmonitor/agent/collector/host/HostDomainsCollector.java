@@ -28,8 +28,8 @@ public class HostDomainsCollector extends AbstractCollector<HostDomainsMetric> {
 	public void loadMetric(Object[] args) throws LibvirtException {
 		this.metric = HostDomainsMetric.getInstance();
 		Connect connect = (Connect) args[0];
-		this.metric.setHostDomainsActive(connect.numOfDefinedDomains());
-		this.metric.setHostDomainsInactive(connect.numOfDomains());
+		this.metric.setHostDomainsActive(connect.numOfDomains());
+		this.metric.setHostDomainsInactive(connect.numOfDefinedDomains());
 	}
 
 	@Override

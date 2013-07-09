@@ -94,11 +94,30 @@
 							${notice}
 						</div>		  				
 	  				</c:if>
+	  				
+	  				<c:if test="${agentNotice != null}">							
+						<c:choose>
+							<c:when test="${status == true}">
+								<div class="alert alert-success">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									${agentNotice}
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-error">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									${agentNotice}
+								</div>
+							</c:otherwise>
+						</c:choose>	  				
+	  				</c:if>
         		
         			<legend><img src="/mydbaasmonitor/img/display.png"> Host Information</legend>
         			<div class="row-fluid">
 		                <div class="span4">
-		                    <address>		                    	
+		                    <address>
+		                    	<input id="resource_id_chart" type="hidden" value="${host.id}" />	
+		                    		                    	
 		                    	<strong>Monitoring Status:</strong><br> 
 		                    	<c:choose>
      								<c:when test="${host.status == true}">
@@ -116,9 +135,11 @@
 							  	<strong>Username:</strong> <info class="muted">${host.user}</info><br>
 							  	<strong>Record Date:</strong> <info class="muted">${host.recordDate}</info><br>
 							  	<strong>Description:</strong> <info class="muted">${host.description}</info><br><br>
-							  	<a class="btn btn-success" href="<c:url value="/hosts/edit/${host.id}"/>" title="This button updates the information to access the host."><i class="icon-pencil"></i> Edit</a>
-							  	<a class="btn btn-warning" href="<c:url value="/hosts/list"/>" title="This button updates the information about the resources of the host." onclick="return confirm('Are you sure want to update the information about the resources?');"><i class="icon-wrench"></i> Update</a>
-							  	<a class="btn btn-danger" href="<c:url value="/hosts/list"/>" title="This button deletes the registry of the host." onclick="return confirm('Are you sure want to delete the record?');"><i class="icon-remove"></i> Delete</a>
+							  	<a class="btn btn-warning" href="<c:url value="/hosts/edit/${host.id}"/>" title="This button updates the information to access the host."><i class="icon-pencil"></i> Edit</a>
+							  	<a class="btn btn-success" href="<c:url value="/agent/host/${host.id}"/>" title="This button updates the information about the monitoring agent."><i class="icon-repeat"></i> Start Monitor</a>
+							  	<c:if test="${host.status == true}">
+							  		<a class="btn btn-danger" href="<c:url value="/agent/stop/host/${host.id}"/>" title="This button stops the monitoring agent." onclick="return confirm('Are you sure you want to stop the monitoring?');"><i class="icon-remove"></i> Stop Monitor</a>
+								</c:if>
 							</address> 
 		                </div><!--/informationAccess-->
                 
@@ -149,37 +170,64 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>Active Domains</h5>
-				         		<div id="container1" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Inactive Domains</h5>
-				          		<div id="container2" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				      		</div>
-				      	</div>				      
-				        <div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>CPU Average</h5>
-				          		<div id="container3" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Memory Utilization</h5>
-				          		<div id="container4" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       		</div>
-				      	</div>
-				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>Swap Utilization</h5>
-				          		<div id="container5" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				      	</div>                    		
+                		<c:if test="${host.status == true}">
+	                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Active Domains</h5>
+					         		<div id="container1" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Inactive Domains</h5>
+					          		<div id="container2" class="dynamic_chart"></div>
+					      		</div>
+					      	</div>				      
+					        <div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>CPU Utilization</h5>
+					         		<div id="container3" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Memory Utilization</h5>
+					          		<div id="container4" class="dynamic_chart"></div>
+					        	</div>
+					      	</div>				      
+					        <div class="row" style="padding-left:30px; margin-bottom:30px;">				        	
+					        	<div class="span5">
+					          		<h5>Network I/O (Bytes)</h5>
+					          		<div id="container5" class="dynamic_chart"></div>
+					       		</div>
+					       		<div class="span5" style="margin-left:80px;">
+					          		<h5>Network I/O (Packets)</h5>
+					          		<div id="container6" class="dynamic_chart"></div>
+					        	</div>
+					      	</div>				      
+					       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Disk I/O Utilization (Requests)</h5>
+					          		<div id="container7" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Disk I/O Utilization (Bytes)</h5>
+					          		<div id="container8" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>				      
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					      		<div class="span5">
+					          		<h5>Disk Percentage</h5>
+					          		<div id="container9" class="dynamic_chart"></div>
+					       		</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Disk Status</h5>
+					          		<div id="container10" class="dynamic_chart"></div>
+					        	</div>
+					      	</div>
+				      	</c:if>
+				      	<c:if test="${host.status == false}">
+				      		<div class="alert" style="margin-top:5px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There is no <strong>active</strong> monitoring agent for this host.
+							</div>
+				      	</c:if>                      		
             		</div><!--/dashboard--> 
             		            		       
         		</div><!--/span-->       		
@@ -221,7 +269,13 @@
 	  				</c:if>
 	  				
 	  				<label class="text-info" for="hosts">Host:</label>
-	  				<input class="input-small" type="text" readonly="readonly" value="${host.alias}" />
+	  				<input class="input-xlarge" type="text" readonly="readonly" value="${host.alias}" />
+	  				
+	  				<div id="div_identifier_host">
+		  				<label class="text-info" for="alias">Identifier in Host:</label>
+						<input class="input-xlarge" name="virtualMachine.identifierHost" id="identifier_host" type="text" placeholder="Identifier in the hypervisor" />
+						<span class="help-block"><em><small>If the host is using the KVM hypervisor you must inform the ID of the virtual machine.</small></em></span>
+	  				</div>
 	  				
 	  				<label class="text-info" for="alias">Alias:</label>
 					<input class="input-xlarge" name="virtualMachine.alias" id="alias" type="text" placeholder="To better identify the resource" required />
@@ -243,13 +297,15 @@
 					<input name="virtualMachine.password" id="password" type="password" placeholder="Root password" required /> <br>
 					<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" required />					    
 			
+				<!-- 
 					<label class="text-info" for="key">Key:</label>
 					<div class="input-append">
  							<input class="input-medium" name="virtualMachine.key" id="key" type="text" readonly="readonly" />
  							<button class="btn btn-primary" type="button">Send</button>
 					</div>
 					<span class="help-block"><em><small>If you need an access <strong>key</strong>, upload the file instead of entering the password.</small></em></span>
-					
+				 -->
+				 
 					<label class="text-info" for="description">Description:</label>	  							
 					<textarea name="virtualMachine.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;" ></textarea>
 					

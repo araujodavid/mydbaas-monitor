@@ -143,12 +143,13 @@
 		                 type: 'pie',
 		                 name: 'Database',
 		                 data: [
-		                     ['Not Active',       ${amountNotActive}],
+		                     ['Not Active', ${amountNotActive}],
 		                     {
 		                         name: 'Active',
 		                         y: ${amountActive},
 		                         sliced: true,
-		                         selected: true
+		                         selected: true,
+		                         color: '#1ec91e'
 		                     }
 		                 ]
 		             }]

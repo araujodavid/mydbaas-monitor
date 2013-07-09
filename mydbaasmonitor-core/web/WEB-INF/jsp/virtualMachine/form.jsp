@@ -74,14 +74,16 @@
 						<label class="text-info" for="password">Password:</label>
 						<input name="virtualMachine.password" id="password" type="password" value="${virtualMachine.password}" placeholder="Root password" /> <br>
 						<input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm the password" />					    
-				
+						
+					<!-- 
 						<label class="text-info" for="key">Key:</label>
 						<div class="input-append">
   							<input class="input-medium" name="virtualMachine.key" id="key" type="text" readonly="readonly" value="${virtualMachine.key}" />
   							<button class="btn btn-primary" type="button">Send</button>
 						</div>
 						<span class="help-block"><em><small>If you need an access <strong>key</strong>, upload the file instead of entering the password.</small></em></span>
-						
+					 -->
+					 
 						<label class="text-info" for="description">Description:</label>	  							
  						<textarea name="virtualMachine.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;" >${virtualMachine.description}</textarea>
 						

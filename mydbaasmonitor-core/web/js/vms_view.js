@@ -18,38 +18,54 @@ $(document).ready(function() {
 	});
 	
 	var defaultOptions1 = {
-            chart: {
+			chart: {
                 type: 'spline',
-                animation: false,
-                animation: Highcharts.svg, // don't animate in old IE
+                animation: Highcharts.svg,
                 marginRight: 10,
                 events: {
                     load: function() {
-    
-                        // set up the updating of the chart each second
                         var series = this.series[0];
+                        
                         setInterval(function() {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
+                            var current_time = undefined;
+                            var y1 = undefined;
+
+                            var resource_id = parseInt($("#resource_id_chart").val());
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Cpu", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id },function(data) {
+                            	var total = 0;
+                            	
+                            	for (var i = 0; i < data.length; i++) {
+                            		total = total + data[i].cpuCombined;
+                            	}
+                            	
+                            	current_time = data[0].recordDate;
+	                            
+	                          	y1 = parseFloat(Math.round(total/data.length*100)/100);
+		                        
+		                        series.addPoint([y1], true, true);
+                          	});
+                            
+                        }, 5000);
                     }
                 }
             },
             title: {
-                text: 'Live random data'
+                text: ''
             },
             credits: {
                 enabled: false
             },
             xAxis: {
                 type: 'datetime',
-                tickPixelInterval: 150
+                pointStart: Date.now()
             },
             yAxis: {
                 title: {
-                    text: 'Value'
+                    text: 'Percentage',
                 },
+                min: 0, 
+                max: 100,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -58,9 +74,8 @@ $(document).ready(function() {
             },
             tooltip: {
                 formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
+                	return '<b>'+ this.series.name +'</b><br/>'+
+                    this.y + "%";
                 }
             },
             legend: {
@@ -69,22 +84,19 @@ $(document).ready(function() {
             exporting: {
                 enabled: false
             },
-            series: [{
-                name: 'Random data',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -19; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 1000,
-                            y: Math.random()
-                        });
+            plotOptions: {
+                area: {
+                    marker: {
+                        enabled: false
                     }
-                    return data;
-                })()
+                }
+            },
+            series: [{
+                name: 'CPU Utilization',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [0,0,0,0,0,0,0],
+                color: '#3CB371'
             }]
         };
 	
@@ -107,7 +119,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Memory", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Memory", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id },function(data) {
 	                            current_time = data[0].recordDate;
 	                            
 	                          	y1 = parseFloat(data[0].memoryUsedPercent);
@@ -195,7 +207,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Network", resourceType:"machine", metricType: 1, resourceID: resource_id }, function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Network", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id }, function(data) {
                             	networkBytesSent = parseFloat(data[0].networkBytesSent);
                             	networkBytesReceived = parseFloat(data[0].networkBytesReceived);
 	                          	                        
@@ -281,7 +293,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Network", resourceType:"machine", metricType: 1, resourceID: resource_id }, function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Network", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id }, function(data) {
                             	networkPacketsSent = parseFloat(data[0].networkPacketsSent);
                             	networkPacketsReceived = parseFloat(data[0].networkPacketsReceived);
 	                          	                        
@@ -367,7 +379,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", resourceType:"machine", metricType: 1, resourceID: resource_id }, function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id }, function(data) {
                             	diskReads = parseFloat(data[0].diskReads);
                             	diskWrites = parseFloat(data[0].diskWrites);
 	                          	                        
@@ -451,7 +463,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", resourceType:"machine", metricType: 1, resourceID: resource_id }, function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id }, function(data) {
                             	diskBytesRead = parseFloat(data[0].diskBytesRead);
                             	diskBytesWritten = parseFloat(data[0].diskBytesWritten);
 	                          	                        
@@ -533,7 +545,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id },function(data) {
 	                            current_time = data[0].recordDate;
 	                            
 	                          	y1 = parseFloat(data[0].diskPercent);
@@ -570,7 +582,7 @@ $(document).ready(function() {
             tooltip: {
             	formatter: function() {
                     return '<b>'+ this.series.name +'</b><br/>'+
-                    this.y + "%";
+                    this.y + " %";
             	}
             },
             legend: {
@@ -583,7 +595,8 @@ $(document).ready(function() {
                 name: 'Percentage Used',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0]
+                data: [0,0,0,0,0,0,0],
+                color: '#F01125'
             }]
         };
 	
@@ -601,25 +614,105 @@ $(document).ready(function() {
                         
                         setInterval(function() {
                             var current_time = undefined;
-                            var diskFreeBytes = undefined;
-                            var  diskUsedBytes = undefined;     
-                            var diskTotalBytes = undefined;
+                            var diskFree = undefined;
+                            var diskUsed = undefined;     
+                            var diskTotal = undefined;
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", resourceType:"machine", metricType: 1, resourceID: resource_id },function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id },function(data) {
 	                            current_time = data[0].recordDate;
 	                            
-	                          	diskFreeBytes = parseFloat(data[0].diskFreeBytes);
+	                          	diskFree = parseFloat(data[0].diskFree);
 	                          	
-	                          	diskUsedBytes = parseFloat(data[0].diskUsedBytes);
+	                          	diskUsed = parseFloat(data[0].diskUsed);
 	                          	
-	                          	diskTotalBytes = parseFloat(data[0].diskTotalBytes);
+	                          	diskTotal = parseFloat(data[0].diskTotal);
 
-	                          	series.addPoint([diskFreeBytes],true,true);
-	                          	series2.addPoint([diskUsedBytes],true,true);
-	                          	series3.addPoint([diskTotalBytes],true,true);
+	                          	series.addPoint([diskFree],true,true);
+	                          	series2.addPoint([diskUsed],true,true);
+	                          	series3.addPoint([diskTotal],true,true);
 	                          	
+                          	});
+                            
+                        }, 15000);
+                    }
+                }
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+            	labels:
+                {
+                    enabled: false
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'GB'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+            	formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.y + " GB";
+            	}
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Disk Free',
+                pointStart: Date.now(),
+                pointInterval: 15000,
+                data: [0]
+            },
+            {
+                name: 'Disk Used',
+                pointStart: Date.now(),
+                pointInterval: 15000,
+                data: [0]
+            },{
+                name: 'Disk Total',
+                pointStart: Date.now(),
+                pointInterval: 15000,
+                data: [0]
+            }]
+        };
+	
+	var defaultOptions9 = {
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function() {
+                    	var series = this.series[0];
+                        
+                        setInterval(function() {
+                            var current_time = undefined;
+                            var y1 = undefined;
+
+                            var identifier = $("#resource_id_host").val();
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/domainstatus', {domainIdentifier : identifier },function(data) {
+	                            current_time = data[0].recordDate;
+	                            
+	                          	y1 = parseFloat(data[0].domainStatusCpuPercent);
+		                        
+		                        series.addPoint([y1], true, true);
                           	});
                             
                         }, 5000);
@@ -638,8 +731,10 @@ $(document).ready(function() {
             },
             yAxis: {
                 title: {
-                    text: 'Bytes'
+                    text: 'Percentage'
                 },
+                min: 0, 
+                max: 100,
                 plotLines: [{
                     value: 0,
                     width: 1,
@@ -649,7 +744,7 @@ $(document).ready(function() {
             tooltip: {
             	formatter: function() {
                     return '<b>'+ this.series.name +'</b><br/>'+
-                    this.y;
+                    this.y + " %";
             	}
             },
             legend: {
@@ -659,26 +754,83 @@ $(document).ready(function() {
                 enabled: false
             },
             series: [{
-                name: 'diskFreeBytes',
+                name: 'Host CPU Utilization',
                 pointStart: Date.now(),
-                pointInterval: 5000,
-                data: [0]
-            },
-            {
-                name: 'diskUsedBytes',
-                pointStart: Date.now(),
-                pointInterval: 5000,
-                data: [0]
-            },{
-                name: 'diskTotalBytes',
-                pointStart: Date.now(),
-                pointInterval: 5000,
-                data: [0]
+                pointInterval: 6000,
+                data: [20,14,15,10,30,8,5],
+                color: '#3CB371'
             }]
-        };	
-
+        };
 	
-	
+	var defaultOptions10 = {
+			chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function() {
+                    	var series = this.series[0];
+                        
+                        setInterval(function() {
+                            var current_time = undefined;
+                            var y1 = undefined;
+                            
+                            var identifier = $("#resource_id_host").val();
+                            
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/domainstatus', {domainIdentifier : identifier },function(data) {
+	                            current_time = data[0].recordDate;
+	                            
+	                          	y1 = parseFloat(data[0].domainStatusMemoryPercent);
+		                        
+		                        series.addPoint([y1], true, true);
+                          	});
+                            
+                        }, 5000);
+                    }
+                }
+            },
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                type: 'datetime',
+                pointStart: Date.now()
+            },
+            yAxis: {
+                title: {
+                    text: 'Percentage'
+                },
+                min: 0, 
+                max: 100,
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+            	formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.y + " %";
+            	}
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: 'Host Memory Utilization',
+                pointStart: Date.now(),
+                pointInterval: 6000,
+                data: [12,15,10,6,3,2,0],
+                color: '#5E2D79'
+            }]
+        };
 	
 		$('#container1').highcharts(defaultOptions1);
 		$('#container2').highcharts(defaultOptions2);
@@ -689,8 +841,7 @@ $(document).ready(function() {
 		$('#container7').highcharts(defaultOptions7);
 		$('#container8').highcharts(defaultOptions8);
 		$('#container9').highcharts(defaultOptions9);
-			
-		
+		$('#container10').highcharts(defaultOptions10);	
 });
 
 function getLabel(id){

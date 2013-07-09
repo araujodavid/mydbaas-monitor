@@ -30,7 +30,7 @@ public class StorageReceiverController extends AbstractReceiver {
 		super(status, repository);
 	}
 
-	@Post("/activeconnections")
+	@Post("/activeconnection")
 	public void activeConnections(ActiveConnection metric, int dbms, int database, String recordDate) {
 		try {
 			if (repository.saveMetric(metric, recordDate, 0, 0, dbms, database)) {

@@ -363,7 +363,7 @@ public class MetricRepository {
 		return listMetrics;
 	}//listMetrics()
 	
-	public String makeQuerySQL(Class<?> metricClass, int metricType, String resourceType, int resourceID, int queryType, String startDatetime, String endDatetime) {
+	public String makeQuerySQL(Class<?> metricClass, int queryType, String resourceType, int resourceID, int queryRange, String startDatetime, String endDatetime) {
 		StringBuilder sql = new StringBuilder();
 		String metricTable = metricClass.getSimpleName().toLowerCase()+"_metric";
 		
@@ -392,7 +392,7 @@ public class MetricRepository {
 		}
 		
 		//Checks the query type
-		switch (queryType) {
+		switch (queryRange) {
 		//All collection
 		case 0:
 			//Adds part of the query based on the combination of start and end dates
@@ -415,7 +415,7 @@ public class MetricRepository {
 			} else if (startDatetime == null && (endDatetime != null && !endDatetime.trim().isEmpty())) {
 				sql.append("and date_format(record_date, '%d-%m-%Y %T') < '"+endDatetime+"'\n");
 			}
-			if (metricType == 1) {
+			if (queryType == 1) {
 				sql.append("and record_date = (select max(record_date) from "+metricTable+" where `"+owner+"` = "+resourceID+");");
 			} else {
 				sql.append("order by id desc\n")

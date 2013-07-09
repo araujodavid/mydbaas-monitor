@@ -31,7 +31,7 @@
 		  				</c:if>	  				
 		  				
 		  				<div align="right">
-		  					<a href="#myModalPassword" data-toggle="modal"><i class="icon-lock"></i> Change password or key access</a>
+		  					<a href="#myModalPassword" data-toggle="modal"><i class="icon-lock"></i> Change password</a>
 		  				</div>
 		  						  				
 		  				<input name="virtualMachine.id" id="id" type="hidden" value="${virtualMachine.id}" />
@@ -84,10 +84,6 @@
 						<label class="text-info" for="port">Port:</label>
 						<input class="input-small" name="virtualMachine.port" id="port" type="text" value="${virtualMachine.port}" placeholder="e.g. 22" />							
 						<span class="help-block"><em><small>Enter the <strong>SSH</strong> port.</small></em></span>
-						
-						<label class="checkbox text-info">
-			  				<input name="virtualMachine.status" id="status" value=true type="checkbox" <c:if test="${virtualMachine.status == true}">checked="checked"</c:if>> Status
-			  			</label><br>
 						
 						<label class="text-info" for="description">Description:</label>	  							
  						<textarea name="virtualMachine.description" rows="3" style="margin-left:0px; margin-right:0px; width:399px;" >${virtualMachine.description}</textarea>						
@@ -149,8 +145,8 @@
     	<script type="text/javascript">
     		function verifyHost(){
     			if( $("#hosts option:selected").text() == "Without Host"){
-    				$('#div_identifier_host').hide();
-    				$("#identifier_host").val("")
+    				$("#identifier_host").val("");
+    				$('#div_identifier_host').hide();    				
     			}else{
     				$('#div_identifier_host').show();
     			}

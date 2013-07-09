@@ -139,7 +139,7 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update `dbms` " +
-					"set `alias` = ?, `description` = ?, `address` = ?, `port` = ?, `username` = ?, `password` = ?, `status` = ?, `type` = ?, `virtual_machine` = ? " +
+					"set `alias` = ?, `description` = ?, `address` = ?, `port` = ?, `username` = ?, `password` = ?, `type` = ?, `virtual_machine` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
@@ -148,10 +148,9 @@ public class DBMSRepository implements GenericRepository<DBMS> {
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getUser());
 			this.preparedStatement.setString(6, resource.getPassword());
-			this.preparedStatement.setBoolean(7, resource.getStatus());
-			this.preparedStatement.setString(8, resource.getType());
-			this.preparedStatement.setInt(9, resource.getMachine().getId());
-			this.preparedStatement.setInt(10, resource.getId());
+			this.preparedStatement.setString(7, resource.getType());
+			this.preparedStatement.setInt(8, resource.getMachine().getId());
+			this.preparedStatement.setInt(9, resource.getId());
 			
 			this.preparedStatement.executeUpdate();
 		}
@@ -162,7 +161,51 @@ public class DBMSRepository implements GenericRepository<DBMS> {
             try { preparedStatement.close(); } catch(Exception e) { }
             try { connection.close(); } catch(Exception e) { }
 		}
-	}//update()	
+	}//update()
+	
+	public void updateStatus(boolean status, int id) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update `dbms` " +
+					"set `status` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setBoolean(1, status);
+			this.preparedStatement.setInt(2, id);
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updateStatus()
+	
+	public void updateAllStatus(boolean status, int virtualMachineId) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update `dbms` " +
+					"set `status` = ? " +
+					"where `virtual_machine` = ?;");
+			
+			this.preparedStatement.setBoolean(1, status);
+			this.preparedStatement.setInt(2, virtualMachineId);
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updateStatus()
 
 	@Override
 	public DBMS getEntity(ResultSet resultSet) throws SQLException {

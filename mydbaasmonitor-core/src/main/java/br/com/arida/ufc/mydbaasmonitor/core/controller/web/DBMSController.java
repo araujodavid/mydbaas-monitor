@@ -127,9 +127,9 @@ public class DBMSController extends AbstractController implements GenericControl
 	
 	@Path("/dbmss/update")
 	public void update(final DBMS dbms, final String confirmPassword) {
-		if (dbms.getStatus() == null) { 
-			dbms.setStatus(false); 
-		}
+//		if (dbms.getStatus() == null) { 
+//			dbms.setStatus(false); 
+//		}
 		//Validations by vRaptor
 		validator.checking(new Validations() { {
 			that(!(dbms.getMachine().getId() == 0), "Virtual Machine", "dbms.machine.empty");

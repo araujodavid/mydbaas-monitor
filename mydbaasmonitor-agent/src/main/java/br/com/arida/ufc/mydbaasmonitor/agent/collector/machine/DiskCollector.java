@@ -54,9 +54,9 @@ public class DiskCollector extends AbstractCollector<DiskMetric> {
 		this.metric.setDiskWrites(diskWrites);
 		this.metric.setDiskBytesRead(diskBytesRead);
 		this.metric.setDiskBytesWritten(diskBytesWritten);
-		this.metric.setDiskFreeBytes(diskFreeBytes);
-		this.metric.setDiskUsedBytes(diskUsedBytes);
-		this.metric.setDiskTotalBytes(diskTotalBytes);
+		this.metric.setDiskFree(Math.round((diskFreeBytes/1024/1024)*100.0)/100.0);
+		this.metric.setDiskUsed(Math.round((diskUsedBytes/1024/1024)*100.0)/100.0);
+		this.metric.setDiskTotal(Math.round((diskTotalBytes/1024/1024)*100.0)/100.0);
 		this.metric.setDiskPercent(Math.round(((diskUsedBytes*100)/diskTotalBytes)*100.0)/100.0);
 	}
 

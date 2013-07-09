@@ -20,7 +20,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "ActiveConnection", resourceType:"database", metricType: 1, resourceID: resource_id },function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "ActiveConnection", metricType:"database", resourceType:"database", queryType: 1, resourceID: resource_id },function(data) {
 	                            current_time = data[0].recordDate;
 	                            
 	                          	y1 = parseFloat(data[0].activeConnectionAmount);
@@ -98,7 +98,7 @@ $(document).ready(function() {
 
                             var resource_id = parseInt($("#resource_id_chart").val());
                             
-                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Size", resourceType:"database", metricType: 1, resourceID: resource_id },function(data) {
+                            $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Size", metricType:"database", resourceType:"database", queryType: 1, resourceID: resource_id },function(data) {
 	                            current_time = data[0].recordDate;
 	                            
 	                          	y1 = parseFloat(data[0].sizeUsed);

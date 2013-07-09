@@ -38,9 +38,8 @@ public class ProcessStatusCollector extends AbstractCollector<ProcessStatusMetri
 					this.metric.setProcessStatusMemory(Double.valueOf(mysql[1]));
 					break;
 				case "PostgreSQL":
-					String[] postgres = ShellCommand.getPostgreSQLStatus();
-					this.metric.setProcessStatusCpu(Double.valueOf(postgres[0]));
-					this.metric.setProcessStatusMemory(Double.valueOf(postgres[1]));
+					this.metric.setProcessStatusCpu(ShellCommand.getPostgreSQLCpuPercentage());
+					this.metric.setProcessStatusMemory(ShellCommand.getPostgreSQLMemPercentage());
 					break;
 				}
 			}

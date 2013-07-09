@@ -141,9 +141,9 @@ public class VirtualMachineController extends AbstractController {
 	 */
 	@Path("/vms/update")
 	public void update(final VirtualMachine virtualMachine){
-		if (virtualMachine.getStatus() == null) { 
-			virtualMachine.setStatus(false); 
-		}
+//		if (virtualMachine.getStatus() == null) { 
+//			virtualMachine.setStatus(false); 
+//		}
 		//Validations by vRaptor
 		validator.checking(new Validations() { {
 			that(!(virtualMachine.getAlias() == null), "Alias", "machine.alias.empty");

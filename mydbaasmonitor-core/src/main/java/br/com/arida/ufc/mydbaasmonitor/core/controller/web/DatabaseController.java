@@ -109,9 +109,9 @@ public class DatabaseController extends AbstractController implements GenericCon
 	@Path("/databases/update")
 	@Override
 	public void update(final Database database) {
-		if (database.getStatus() == null) { 
-			database.setStatus(false); 
-		}
+//		if (database.getStatus() == null) { 
+//			database.setStatus(false); 
+//		}
 		//Validations by vRaptor
 		validator.checking(new Validations() { {
 			that(!(database.getDbms().getId() == 0), "DBMS", "database.dbms.empty");

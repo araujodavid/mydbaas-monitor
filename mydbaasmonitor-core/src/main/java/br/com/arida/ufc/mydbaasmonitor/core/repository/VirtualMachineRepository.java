@@ -196,7 +196,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update virtual_machine " +
-					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ?, `dbaas` = ?, `host` = ? , `identifier_host` = ? " +
+					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `dbaas` = ?, `host` = ? , `identifier_host` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
@@ -204,11 +204,10 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setString(3, resource.getUser());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getDescription());
-			this.preparedStatement.setBoolean(6, resource.getStatus());
-			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
-			this.preparedStatement.setInt(8, resource.getHost().getId());
-			this.preparedStatement.setString(9, resource.getIdentifierHost());
-			this.preparedStatement.setInt(10, resource.getId());
+			this.preparedStatement.setInt(6, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(7, resource.getHost().getId());
+			this.preparedStatement.setString(8, resource.getIdentifierHost());
+			this.preparedStatement.setInt(9, resource.getId());
 			
 			this.preparedStatement.executeUpdate();
 		}
@@ -226,7 +225,7 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update virtual_machine " +
-					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `status` = ?, `dbaas` = ?, `host` = null " +
+					"set `alias` = ?, `address` = ?, `username` = ?, `port` = ?, `description` = ?, `dbaas` = ?, `host` = null, `identifier_host` = null " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
@@ -234,9 +233,8 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 			this.preparedStatement.setString(3, resource.getUser());
 			this.preparedStatement.setInt(4, resource.getPort());
 			this.preparedStatement.setString(5, resource.getDescription());
-			this.preparedStatement.setBoolean(6, resource.getStatus());
-			this.preparedStatement.setInt(7, resource.getEnvironment().getId());
-			this.preparedStatement.setInt(8, resource.getId());
+			this.preparedStatement.setInt(6, resource.getEnvironment().getId());
+			this.preparedStatement.setInt(7, resource.getId());
 			
 			this.preparedStatement.executeUpdate();
 		}
@@ -281,6 +279,28 @@ public class VirtualMachineRepository implements GenericRepository<VirtualMachin
 		}
 		return false;
 	}//updateSystemInformation()
+	
+	public void updateStatus(VirtualMachine resource) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update virtual_machine " +
+					"set `status` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setBoolean(1, resource.getStatus());
+			this.preparedStatement.setInt(2, resource.getId());
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updateStatus()
 	
 	public void updatePassword(VirtualMachine resource) {
 		try {

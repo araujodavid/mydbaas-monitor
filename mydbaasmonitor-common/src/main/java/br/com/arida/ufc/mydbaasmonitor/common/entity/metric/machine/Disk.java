@@ -16,9 +16,9 @@ public class Disk extends AbstractMetric {
 	private long diskBytesWritten;
 	private long diskReads;
 	private long diskWrites;
-	private long diskFreeBytes;
-	private long diskUsedBytes;
-	private long diskTotalBytes;
+	private double diskFree;
+	private double diskUsed;
+	private double diskTotal;
 	private double diskPercent;
 		
 	public long getDiskBytesRead() {
@@ -52,29 +52,29 @@ public class Disk extends AbstractMetric {
 	public void setDiskWrites(long diskWrites) {
 		this.diskWrites = diskWrites;
 	}
-
-	public long getDiskFreeBytes() {
-		return diskFreeBytes;
+	
+	public double getDiskFree() {
+		return diskFree;
 	}
 
-	public void setDiskFreeBytes(long diskFreeBytes) {
-		this.diskFreeBytes = diskFreeBytes;
+	public void setDiskFree(double diskFree) {
+		this.diskFree = diskFree;
 	}
 
-	public long getDiskUsedBytes() {
-		return diskUsedBytes;
+	public double getDiskUsed() {
+		return diskUsed;
 	}
 
-	public void setDiskUsedBytes(long diskUsedBytes) {
-		this.diskUsedBytes = diskUsedBytes;
+	public void setDiskUsed(double diskUsed) {
+		this.diskUsed = diskUsed;
 	}
 
-	public long getDiskTotalBytes() {
-		return diskTotalBytes;
+	public double getDiskTotal() {
+		return diskTotal;
 	}
 
-	public void setDiskTotalBytes(long diskTotalBytes) {
-		this.diskTotalBytes = diskTotalBytes;
+	public void setDiskTotal(double diskTotal) {
+		this.diskTotal = diskTotal;
 	}
 
 	public double getDiskPercent() {

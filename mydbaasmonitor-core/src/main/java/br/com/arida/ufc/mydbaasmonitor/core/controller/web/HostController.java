@@ -118,9 +118,9 @@ public class HostController extends AbstractController implements GenericControl
 	@Path("/hosts/update")
 	@Override
 	public void update(final Host host) {
-		if (host.getStatus() == null) { 
-			host.setStatus(false); 
-		}
+//		if (host.getStatus() == null) { 
+//			host.setStatus(false); 
+//		}
 		//Validations by vRaptor
 		validator.checking(new Validations() { {
 			that(!(host.getAlias() == null), "Alias", "host.alias.empty");

@@ -38,8 +38,10 @@ public class MemoryCollector extends AbstractCollector<MemoryMetric>  {
 		Swap swap = sigar.getSwap();
 		this.metric.setMemorySwapUsed(format(swap.getUsed()));
 		this.metric.setMemorySwapFree(format(swap.getFree()));
-		this.metric.setMemorySwapUsedPercent(Math.round((swap.getUsed()*100)/swap.getTotal()*100.0)/100.0);
-		this.metric.setMemorySwapFreePercent(Math.round((swap.getFree()*100)/swap.getTotal()*100.0)/100.0);
+		if (swap.getTotal() > 0) {
+			this.metric.setMemorySwapUsedPercent(Math.round((swap.getUsed()*100)/swap.getTotal()*100.0)/100.0);
+			this.metric.setMemorySwapFreePercent(Math.round((swap.getFree()*100)/swap.getTotal()*100.0)/100.0);
+		}		
 		this.metric.setMemoryUsed(format(mem.getUsed()));
 		this.metric.setMemoryFree(format(mem.getFree()));
 		this.metric.setMemoryUsedPercent(Math.round(mem.getUsedPercent()*100.0)/100.0);

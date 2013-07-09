@@ -58,6 +58,7 @@ public class MetricProfile {
 			result = result+String.valueOf(integer)+", ";
 		}
 		result = result+String.valueOf(last);
+		list.add(last);
 		return result;
 	}	
 }

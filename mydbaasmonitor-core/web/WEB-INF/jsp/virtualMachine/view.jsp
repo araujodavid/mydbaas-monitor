@@ -91,12 +91,29 @@
 							${notice}
 						</div>		  				
 	  				</c:if>
+	  				
+	  				<c:if test="${agentNotice != null}">							
+						<c:choose>
+							<c:when test="${status == true}">
+								<div class="alert alert-success">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									${agentNotice}
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-error">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									${agentNotice}
+								</div>
+							</c:otherwise>
+						</c:choose>	  				
+	  				</c:if>
         		
         			<legend><img src="/mydbaasmonitor/img/display.png"> Virtual Machine Information</legend>
         			<div class="row-fluid">
 		                <div class="span4">
 		                    <address>
-		                    	<input id="resource_id_chart" type="hidden" value="${virtualMachine.id}" />	
+		                    	<input id="resource_id_chart" type="hidden" value="${virtualMachine.id}" />		                    	
 		                    		                    	
 		                    	<strong>Monitoring Status:</strong><br> 
 		                    	<c:choose>
@@ -116,14 +133,17 @@
 							  	<strong>Address:</strong> <info class="muted">${virtualMachine.address}</info><br>							  	
 							  	<strong>SSH Port:</strong> <info class="muted">${virtualMachine.port}</info><br>
 							  	<strong>Username:</strong> <info class="muted">${virtualMachine.user}</info><br>
-							  	<c:if test="${!virtualMachine.identifierHost.isEmpty()}">
+							  	<c:if test="${virtualMachine.identifierHost != null && !virtualMachine.identifierHost.isEmpty()}">
+							  		<input id="resource_id_host" type="hidden" value="${virtualMachine.identifierHost}" />
 							 		<strong>Identificer in Host:</strong> <info class="muted">${virtualMachine.identifierHost}</info><br>
 							 	</c:if>
 							  	<strong>Record Date:</strong> <info class="muted">${virtualMachine.recordDate}</info><br>
 							  	<strong>Description:</strong> <info class="muted">${virtualMachine.description}</info><br><br>
-							  	<a class="btn btn-success" href="<c:url value="/vms/edit/${virtualMachine.id}"/>" title="This button updates the information to access the machine."><i class="icon-pencil"></i> Edit</a>
-							  	<a class="btn btn-warning" href="<c:url value="/vms/list"/>" title="This button updates the information about the resources of the machine." onclick="return confirm('Are you sure want to update the information about the resources?');"><i class="icon-wrench"></i> Update</a>
-							  	<a class="btn btn-danger" href="<c:url value="/vms/list"/>" title="This button deletes the registry of the machine." onclick="return confirm('Are you sure want to delete the record?');"><i class="icon-remove"></i> Delete</a>
+							  	<a class="btn btn-warning" href="<c:url value="/vms/edit/${virtualMachine.id}"/>" title="This button updates the information to access the machine."><i class="icon-pencil"></i> Edit</a>
+							  	<a class="btn btn-success" href="<c:url value="/agent/machine/${virtualMachine.id}"/>" title="This button updates the information about the monitoring agent."><i class="icon-repeat"></i> Start Monitor</a>
+							  	<c:if test="${virtualMachine.status == true}">
+							  		<a class="btn btn-danger" href="<c:url value="/agent/stop/machine/${virtualMachine.id}"/>" title="This button stops the monitoring agent." onclick="return confirm('Are you sure you want to stop the monitoring?');"><i class="icon-remove"></i> Stop Monitor</a>
+								</c:if>
 							</address> 
 		                </div><!--/informationAccess-->
                 
@@ -133,7 +153,6 @@
 									<ul class="nav nav-tabs">
 										<li class="active"><a href="#tab1" data-toggle="tab">Geral</a></li>
 								    	<li><a href="#tab2" data-toggle="tab">CPU</a></li>
-								    	<li><a href="#tab3" data-toggle="tab">Disk</a></li>
 								  	</ul>
 								  	<div class="tab-content">
 								    	<div class="tab-pane active" id="tab1">
@@ -143,7 +162,9 @@
 						  						<strong>Kernel:</strong> <info class="muted">${virtualMachine.information.machineKernelName}</info><br>
 						  						<strong>Version:</strong> <info class="muted">${virtualMachine.information.machineKernelVersion}</info><br>
 						  						<strong>Memory:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalMemory > 0}">${virtualMachine.information.machineTotalMemory} GB</c:if></info><br>
-						  						<strong>Swap:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalSwap > 0}">${virtualMachine.information.machineTotalSwap} GB</c:if></info><br>											
+						  						<c:if test="${virtualMachine.information.machineTotalSwap > 0}">
+						  							<strong>Swap:</strong> <info class="muted">${virtualMachine.information.machineTotalSwap} GB</info><br>
+						  						</c:if>										
 											</address> 
 								    	</div>
 	    								<div class="tab-pane" id="tab2">
@@ -152,9 +173,6 @@
 						  						<strong>Physical CPUs:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCPUSockets > 0}">${virtualMachine.information.machineTotalCPUSockets}</c:if></info><br>
 						  						<strong>Cores per CPU:</strong> <info class="muted"><c:if test="${virtualMachine.information.machineTotalCoresPerSocket > 0}">${virtualMachine.information.machineTotalCoresPerSocket}</c:if></info><br>									
 											</address> 
-	    								</div>
-	    								<div class="tab-pane" id="tab3">
-	      									
 	    								</div>
 	  								</div>
 								</div>
@@ -165,54 +183,66 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>CPU Utilization</h5>
-				         		<div id="container1" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)"  data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Memory Utilization</h5>
-				          		<div id="container2" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				      	</div>				      
-				        <div class="row" style="padding-left:30px; margin-bottom:30px;">				        	
-				        	<div class="span5">
-				          		<h5>Network I/O (Bytes)</h5>
-				          		<div id="container3" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       		</div>
-				       		<div class="span5" style="margin-left:80px;">
-				          		<h5>Network I/O (Packets)</h5>
-				          		<div id="container4" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				      	</div>				      
-				       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>Disk I/O Utilization (Requests)</h5>
-				          		<div id="container5" class="dynamic_chart"></div>
-				         		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Disk I/O Utilization (Bytes)</h5>
-				          		<div id="container6" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       		</div>
-				      	</div>				      
-				      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
-				      		<div class="span5">
-				          		<h5>Disk Percentage</h5>
-				          		<div id="container7" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				       		</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Disk Status</h5>
-				          		<div id="container8" class="dynamic_chart"></div>
-				          		<p><a class="btn" href="#modalViewDetails" id="cpu_time" onclick="setModalValues(this.id)" data-toggle="modal" title="To create a new DBMS.">View details &raquo;</a></p>
-				        	</div>
-				      	</div>                		
+                		<c:if test="${virtualMachine.status == true}">                			               		
+	                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>CPU Utilization</h5>
+					         		<div id="container1" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Memory Utilization</h5>
+					          		<div id="container2" class="dynamic_chart"></div>
+					        	</div>
+					      	</div>
+					      	<c:if test="${virtualMachine.identifierHost != null && !virtualMachine.identifierHost.isEmpty()}">
+                				<div class="row" style="padding-left:30px; margin-bottom:30px;">
+						        	<div class="span5">
+						          		<h5>Host CPU Utilization</h5>
+						         		<div id="container9" class="dynamic_chart"></div>
+						        	</div>
+						        	<div class="span5" style="margin-left:80px;">
+						          		<h5>Host Memory Utilization</h5>
+						          		<div id="container10" class="dynamic_chart"></div>
+						        	</div>
+					      		</div>
+                			</c:if> 				      
+					        <div class="row" style="padding-left:30px; margin-bottom:30px;">				        	
+					        	<div class="span5">
+					          		<h5>Network I/O (Bytes)</h5>
+					          		<div id="container3" class="dynamic_chart"></div>
+					       		</div>
+					       		<div class="span5" style="margin-left:80px;">
+					          		<h5>Network I/O (Packets)</h5>
+					          		<div id="container4" class="dynamic_chart"></div>
+					        	</div>
+					      	</div>				      
+					       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Disk I/O Utilization (Requests)</h5>
+					          		<div id="container5" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Disk I/O Utilization (Bytes)</h5>
+					          		<div id="container6" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>				      
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					      		<div class="span5">
+					          		<h5>Disk Percentage</h5>
+					          		<div id="container7" class="dynamic_chart"></div>
+					       		</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Disk Status</h5>
+					          		<div id="container8" class="dynamic_chart"></div>
+					        	</div>
+					      	</div>
+				      	</c:if>
+				      	<c:if test="${virtualMachine.status == false}">
+				      		<div class="alert" style="margin-top:5px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There is no <strong>active</strong> monitoring agent for this virtual machine.
+							</div>
+				      	</c:if>                		
             		</div><!--/dashboard-->            		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->

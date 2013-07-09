@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.DBMS;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.resource.Database;
 
@@ -109,13 +109,8 @@ public class DatabaseConnection {
 	 * @param properties
 	 */
 	public void loadDBMSProperties(Properties properties) {
-		this.dbmsList = new ArrayList<DBMS>();
 		Gson gson = new Gson();
-		for (Object dbmsPropertie : properties.keySet()) {
-			if (dbmsPropertie.toString().contains("dbms.")) {				
-				this.dbmsList.add(gson.fromJson(properties.getProperty(dbmsPropertie.toString()), DBMS.class));
-			}
-		}
+		this.dbmsList = gson.fromJson(properties.getProperty("dbmss"), new TypeToken<List<DBMS>>(){}.getType());
 	}
 	
 	public ResultSet executeSQL(Connection connection, String sql, Map<Integer, Object> params) throws SQLException {

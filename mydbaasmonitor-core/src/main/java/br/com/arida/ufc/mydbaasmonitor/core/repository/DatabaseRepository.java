@@ -135,15 +135,14 @@ public class DatabaseRepository implements GenericRepository<Database> {
 			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
 			this.preparedStatement = this.connection.prepareStatement(
 					"update `database` " +
-					"set `alias` = ?, `description` = ?, `name` = ?, `status` = ?, `dbms` = ? " +
+					"set `alias` = ?, `description` = ?, `name` = ?, `dbms` = ? " +
 					"where `id` = ?;");
 			
 			this.preparedStatement.setString(1, resource.getAlias());
 			this.preparedStatement.setString(2, resource.getDescription());
 			this.preparedStatement.setString(3, resource.getName());
-			this.preparedStatement.setBoolean(4, resource.getStatus());
-			this.preparedStatement.setInt(5, resource.getDbms().getId());
-			this.preparedStatement.setInt(6, resource.getId());
+			this.preparedStatement.setInt(4, resource.getDbms().getId());
+			this.preparedStatement.setInt(5, resource.getId());
 			
 			this.preparedStatement.executeUpdate();
 		}
@@ -155,6 +154,50 @@ public class DatabaseRepository implements GenericRepository<Database> {
             try { connection.close(); } catch(Exception e) { }
 		}
 	}//update()
+	
+	public void updateStatus(boolean status, int id) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update `database` " +
+					"set `status` = ? " +
+					"where `id` = ?;");
+			
+			this.preparedStatement.setBoolean(1, status);
+			this.preparedStatement.setInt(2, id);
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updateStatus()
+	
+	public void updateAllStatus(boolean status, int dbmsId) {
+		try {
+			this.connection = Pool.getConnection(Pool.JDBC_MySQL);
+			this.preparedStatement = this.connection.prepareStatement(
+					"update `database` " +
+					"set `status` = ? " +
+					"where `dbms` = ?;");
+			
+			this.preparedStatement.setBoolean(1, status);
+			this.preparedStatement.setInt(2, dbmsId);
+			
+			this.preparedStatement.executeUpdate();
+		}
+		catch(SQLException se) {se.printStackTrace();}
+		catch (RuntimeException re) {re.printStackTrace();}
+		finally {
+			try { resultSet.close(); } catch(Exception e) { }
+            try { preparedStatement.close(); } catch(Exception e) { }
+            try { connection.close(); } catch(Exception e) { }
+		}
+	}//updateStatus()
 	
 	@Override
 	public Database getEntity(ResultSet resultSet) throws SQLException {

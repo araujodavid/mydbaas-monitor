@@ -59,8 +59,6 @@
 					  	<strong>Record Date:</strong> <info class="muted">${database.recordDate}</info><br>
 					  	<strong>Description:</strong> <info class="muted">${database.description}</info><br><br>
 					  	<a class="btn btn-success" href="<c:url value="/databases/edit/${database.id}"/>" title="This button updates the information about the database."><i class="icon-pencil"></i> Edit</a>
-					  	<a class="btn btn-warning" href="<c:url value="/databases/list"/>" title="This button updates the information about the resources of the database." onclick="return confirm('Are you sure want to update the information about the resources?');"><i class="icon-wrench"></i> Update</a>
-					  	<a class="btn btn-danger" href="<c:url value="/databases/list"/>" title="This button deletes the registry of the database." onclick="return confirm('Are you sure want to delete the record?');"><i class="icon-remove"></i> Delete</a>
 					</address>
         		</div><!--/span-->
 
@@ -75,16 +73,24 @@
 		            <div class="hero">
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
-                	     <div class="row" style="padding-left:30px; margin-bottom:30px;">
-				        	<div class="span5">
-				          		<h5>Active Connection</h5>
-				          		<div id="container1" class="dynamic_chart"></div>
-				        	</div>
-				        	<div class="span5" style="margin-left:80px;">
-				          		<h5>Size Usage</h5>
-				          		<div id="container2" class="dynamic_chart"></div>
-				       		</div>
-				      	</div>					      	                 		
+                		<c:if test="${database.status == true}">
+	                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Active Connection</h5>
+					          		<div id="container1" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Size Usage</h5>
+					          		<div id="container2" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+				      	</c:if>
+				      	<c:if test="${database.status == false}">
+				      		<div class="alert" style="margin-top:5px;">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								There is no <strong>active</strong> monitoring for this database.
+							</div>
+				      	</c:if>						      	                 		
             		</div><!--/dashboard-->         		            		       
         		</div><!--/span9-->            		            		       
         	</div><!--/span-->       		

@@ -211,19 +211,13 @@
 							  	<h3>Description:</h3> <h4 class="muted">${dBaaS.description}</h4>                    	
 							</address> 
 							<a class="btn btn-success" href="<c:url value="/dbaas/edit/${dBaaS.id}"/>" title="This button updates the information about the dbaas"><i class="icon-pencil"></i> Edit</a>
-					  		<a class="btn btn-warning" href="<c:url value="/dbaas/list"/>" title="This button updates the information about the resources of the dbaas" onclick="return confirm('Are you sure want to update the information about the resources?');"><i class="icon-wrench"></i> Update</a>
-					  		<a class="btn btn-danger" href="<c:url value="/dbaas/list"/>" title="This button deletes the registry of the dbaas" onclick="return confirm('Are you sure want to delete the record?');"><i class="icon-remove"></i> Delete</a>
 		                </div><!--/informationAccess-->
                 
 		                <div class="span4">
 		                	
 		                </div><!--/informationTab-->		                
-		            </div><!--/row-->
-		            
-		            <div class="hero">
-                		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
-            		</div><!--/dashboard-->
-            		            		       
+		            </div><!--/row-->	            
+       		            		       
         		</div><!--/span-->       		
     		</div><!--/row-->
 		</div><!--/.fluid-container-->

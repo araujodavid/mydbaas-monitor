@@ -31,7 +31,7 @@
 		  				</c:if>	  				
 		  				
 		  				<div align="right">
-		  					<a href="#myModalPassword" data-toggle="modal"><i class="icon-lock"></i> Change password or key access</a>
+		  					<a href="#myModalPassword" data-toggle="modal"><i class="icon-lock"></i> Change password</a>
 		  				</div>
 		  						  				
 		  				<input name="host.id" id="id" type="hidden" value="${host.id}" />
@@ -103,6 +103,6 @@
  		</form>
 	 	
 	 	<%@include file="/static/footer.jsp"%>
-		<%@include file="/static/javascript_footer.jsp"%>pt>
+		<%@include file="/static/javascript_footer.jsp"%>
 	</body>
 </html>

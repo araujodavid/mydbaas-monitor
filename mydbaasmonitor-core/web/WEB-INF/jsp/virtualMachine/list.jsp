@@ -63,7 +63,8 @@
         			</c:choose>   			
         		</div><!--/span-->
         		
-        		<div class="span9">        		
+        		<div class="span9">
+        		<!--         		
 	        		<div class="row-fluid">
 	        			<c:if test="${!virtualMachineList.isEmpty()}">
 				        	<div class="span6">
@@ -76,6 +77,7 @@
 				       		</div>
 			       		</c:if>
 			    	</div>
+			     -->
 		      
 	        		<c:if test="${notice != null}">							
 						<div class="alert alert-success">

@@ -2,6 +2,8 @@ package main.java.br.com.arida.ufc.mydbaasmonitor.core.controller.api;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host.DomainStatus;
 import main.java.br.com.arida.ufc.mydbaasmonitor.core.repository.MetricRepository;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -38,23 +40,25 @@ public class MetricController {
 	 * Return json of the metric
 	 */
 	@Path("/single")
-	public void getMetricSingle(String metricName, String resourceType, int metricType, int resourceID, String startDatetime, String endDatetime) {
+	public void getMetricSingle(String metricName, String resourceType, String metricType, int queryType, int resourceID, String startDatetime, String endDatetime) {
 		Class<?> metricClass = null;
 		String sql = null;
 		
 		try {
-			if (resourceType.equals("dbms") || resourceType.equals("database")) {			
+			if (metricType.equals("dbms") || metricType.equals("database")) {			
 				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database."+metricName);						
+			} else if (metricType.equals("machine")) {
+				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine."+metricName);
 			} else {
-				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric."+resourceType+"."+metricName);
+				metricClass = Class.forName("main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host."+metricName);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		if (metricType == MetricRepository.METRIC_MULTI_TYPE) {
+		if (queryType == MetricRepository.METRIC_MULTI_TYPE) {
 			try {			
-				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
+				sql = this.metricRepository.makeQuerySQL(metricClass, queryType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				List<Object> metric = this.metricRepository.queryMetrics(sql, metricClass);
 				result
 				.use(Results.json())
@@ -70,9 +74,9 @@ public class MetricController {
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			}
-		} else if (metricType == MetricRepository.METRIC_SINGLE_TYPE) {
+		} else if (queryType == MetricRepository.METRIC_SINGLE_TYPE) {
 			try {			
-				sql = this.metricRepository.makeQuerySQL(metricClass, metricType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
+				sql = this.metricRepository.makeQuerySQL(metricClass, queryType, resourceType, resourceID, MetricRepository.LAST_COLLECTION, startDatetime, endDatetime);
 				Object metric = this.metricRepository.queryMetric(sql, metricClass);
 				result
 				.use(Results.json())
@@ -133,6 +137,32 @@ public class MetricController {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Path("/domainstatus")
+	public void getMetricDomainStatus(String domainIdentifier) {
+		String sql = "select * from domainstatus_metric where `hostidentifier` = '"+domainIdentifier+"' order by id desc limit 1";
+		List<Object> metric = null;
+		try {
+			metric = this.metricRepository.queryMetrics(sql, DomainStatus.class);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		result
+		.use(Results.json())
+		.withoutRoot()
+		.from(metric)
+		.serialize();		
 	}
 	
 }
