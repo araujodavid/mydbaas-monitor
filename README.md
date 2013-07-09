@@ -1,7 +1,7 @@
 #[MyDBaaSMonitor](http://github.com/araujodavid/mydbaasmonitor)
 --------------
 
-A framework that provides an environment monitoring for database-as-a-service.
+A Web Environment for Database-as-a-Service Monitoring.
 
 ## Informations
 
