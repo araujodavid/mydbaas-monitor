@@ -5,11 +5,9 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.Size;
 
 /**
- * 
  * @author Daivd Araújo - @araujodavid
  * @version 2.0
  * @since April 26, 2013
- * 
  */
 public class SizeMetric extends Size implements LoadMetric {
 

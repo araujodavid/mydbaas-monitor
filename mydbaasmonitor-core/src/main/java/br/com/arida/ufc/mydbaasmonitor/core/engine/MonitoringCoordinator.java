@@ -65,7 +65,7 @@ public class MonitoringCoordinator {
 					.append("identifier = "+String.valueOf(identifier)+"\n")
 					.append("type = "+resourceType+"\n")	
 					.append("# Geral URL\n")
-					.append("server = http://10.101.10.198:8080/mydbaasmonitor/\n")
+					.append("server = http://10.101.10.199:8080/mydbaasmonitor/\n")
 					.append("\n");
 		
 		if (resourceType.equals("machine")) {

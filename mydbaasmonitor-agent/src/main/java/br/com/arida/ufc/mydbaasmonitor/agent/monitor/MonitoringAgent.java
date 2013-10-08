@@ -98,8 +98,8 @@ public class MonitoringAgent {
 	public static void main(String[] args) {
 		MonitorInfoParser parser = MonitorInfoParser.getInstance();
 		try {
-			//parser.loadContextFile("/home/david/Desktop/MyDBaaSMonitor/context.conf");
-			parser.loadContextFile(String.valueOf(args[0])+"/MyDBaaSMonitor/context.conf");
+			parser.loadContextFile("/home/david/Workspace MyDBaaSMonitor/mydbaasmonitor-agent/src/resources/host.conf");
+			//parser.loadContextFile(String.valueOf(args[0])+"/MyDBaaSMonitor/context.conf");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,11 +118,12 @@ public class MonitoringAgent {
 		databaseConnection.loadDBMSProperties(parser.getProperties());
 		
 		if (parser.getType().equals("host")) {
-			//Collects information about the system and physical resources
-			HostInfoMetric hostInfoMetric = HostInfoMetric.getInstance();
-			hostInfoMetric.loadMetricProperties(parser.getProperties());		
-			HostInfoCollector hostInfoCollector = new HostInfoCollector(parser.getIdentifier(), parser.getType());
-			hostInfoCollector.run();
+//			//Collects information about the system and physical resources
+//			HostInfoMetric hostInfoMetric = HostInfoMetric.getInstance();
+//			hostInfoMetric.loadMetricProperties(parser.getProperties());		
+//			HostInfoCollector hostInfoCollector = new HostInfoCollector(parser.getIdentifier(), parser.getType());
+//			hostInfoCollector.run();
+			System.out.println("Não coletou a info.");
 		} else if (parser.getType().equals("machine")) {
 			//Collects information about the system and physical resources
 			MachineMetric machineMetric = MachineMetric.getInstance();

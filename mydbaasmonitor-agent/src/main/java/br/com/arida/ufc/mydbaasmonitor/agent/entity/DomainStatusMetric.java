@@ -5,11 +5,9 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host.DomainStatus;
 
 /**
- * 
  * @author Daivd Araújo - @araujodavid
  * @version 1.0
  * @since May 2, 2013
- * 
  */
 public class DomainStatusMetric extends DomainStatus implements LoadMetric {
 

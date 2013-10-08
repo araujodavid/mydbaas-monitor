@@ -95,7 +95,7 @@ $(document).ready(function() {
                 name: 'CPU Utilization',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [0,0,0,0,0.0,0],
                 color: '#3CB371'
             }]
         };
@@ -382,7 +382,7 @@ $(document).ready(function() {
                             $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id }, function(data) {
                             	diskReads = parseFloat(data[0].diskReads);
                             	diskWrites = parseFloat(data[0].diskWrites);
-	                          	                        
+
 		                        series.addPoint([diskReads-lastDiskReads], true, true);
 		                        lastDiskReads = diskReads;
 		                        series2.addPoint([diskWrites-lastDiskWrites], true, true);
@@ -444,8 +444,8 @@ $(document).ready(function() {
                 data: [0,0,0,0,0,0,0]
             }]
         };
-	
-	
+
+
 	var defaultOptions6 = {
             chart: {
                 type: 'area',
@@ -466,7 +466,7 @@ $(document).ready(function() {
                             $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"machine", queryType: 1, resourceID: resource_id }, function(data) {
                             	diskBytesRead = parseFloat(data[0].diskBytesRead);
                             	diskBytesWritten = parseFloat(data[0].diskBytesWritten);
-	                          	                        
+
 		                        series.addPoint([diskBytesRead-lastDiskBytesRead], true, true);
 		                        lastDiskBytesRead = diskBytesRead;
 		                        series2.addPoint([diskBytesWritten-lastDiskBytesWritten], true, true);
@@ -757,7 +757,7 @@ $(document).ready(function() {
                 name: 'Host CPU Utilization',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [20,14,15,10,30,8,5],
+                data: [0,0,0,0,0,0,0],
                 color: '#3CB371'
             }]
         };
@@ -827,7 +827,7 @@ $(document).ready(function() {
                 name: 'Host Memory Utilization',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [12,15,10,6,3,2,0],
+                data: [0,0,0,0,0,0,0],
                 color: '#5E2D79'
             }]
         };

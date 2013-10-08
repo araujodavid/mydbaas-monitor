@@ -1,6 +1,10 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.host;
 
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
@@ -80,9 +84,10 @@ public class HostInfo extends AbstractMetric {
 	}
 
 	@Override
-	public List<?> jsonToList(String json) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<HostInfo> jsonToList(String json) {
+		Gson gson = new Gson();
+		List<HostInfo> hostInfoList = gson.fromJson(json, new TypeToken<List<HostInfo>>(){}.getType());
+		return hostInfoList;
 	}
 
 }

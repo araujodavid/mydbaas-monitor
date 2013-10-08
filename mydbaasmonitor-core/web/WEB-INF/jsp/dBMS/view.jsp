@@ -16,7 +16,11 @@
       		}
       		.dynamic_chart{
       			height: 250px; 
-      			width: 500px
+      			width: 500px;
+      		}
+      		.dynamic_chart2{
+      			height: 250px; 
+      			width: 100%;
       		}
       		.centered{
       			width:840px; 
@@ -28,7 +32,8 @@
       		}
     	</style>
     	<link href="${pageContext.servletContext.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
-
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
+		
 		<title>MyDBaaSMonitor - DBMS: ${dbms.alias}</title>
 	</head>
 	<body>
@@ -137,6 +142,34 @@
                 		<legend><img src="/mydbaasmonitor/img/charts.png"> Dashboard</legend>
                 		
                 		<c:if test="${dbms.status == true}">
+                			<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span10">
+					          		<h5>Information Data</h5>
+					          		<img id="load-information-data" style="display:none; margin-bottom:5px;" src="${pageContext.servletContext.contextPath}/img/carregando2.gif">
+					          		<table id="container15" class="table table-bordered">
+										<thead>
+											<tr>
+										      	<th>Databases</th>
+										    	<th>Tables</th>
+										    	<th>Indexs</th>
+										    	<th>Triggers</th>
+										    	<th>Views</th>
+										    	<th>Routines</th>
+										    </tr>
+										</thead>
+										<tbody>
+											<tr>
+										      	<td><center id="databases" class="muted" style="font-size: x-large; font-weight:bold;">0</center></td>
+										    	<td><center id="tables" class="muted" style="font-size: x-large; font-weight:bold;">0</center></td>
+										    	<td><center id="indexs" class="muted" style="font-size: x-large; font-weight:bold;">0</center></td>
+										    	<td><center id="triggers" class="muted" style="font-size: x-large; font-weight:bold;">0</center></td>
+										    	<td><center id="views" class="muted" style="font-size: x-large; font-weight:bold;">0</center></td>
+										    	<td><center id="routines" class="muted" style="font-size: x-large; font-weight:bold;">0</center></td>
+											</tr>
+										</tbody>
+									</table>
+					        	</div>
+					      	</div>
 	                	    <div class="row" style="padding-left:30px; margin-bottom:30px;">
 					        	<div class="span5">
 					          		<h5>CPU Utilization</h5>
@@ -156,6 +189,93 @@
 					          		<h5>Size Usage</h5>
 					          		<div id="container4" class="dynamic_chart"></div>
 					       		</div>
+					      	</div>					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Network Traffic (Bytes Received)</h5>
+					          		<div id="container5" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Network Traffic (Bytes Sent)</h5>
+					          		<div id="container6" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Disk Reads (Physical/Logical)</h5>
+					          		<div id="container16" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Disk I/O (Bytes)</h5>
+					          		<div id="container17" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Pages I/O</h5>
+					          		<div id="container18" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Key Block (Physical I/O)</h5>
+					          		<div id="container19" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+			      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Pending Reads</h5>
+					          		<div id="container20" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Pending Writes</h5>
+					          		<div id="container21" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Statements DML (Inserts/Updates)</h5>
+					          		<div id="container7" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Statements DML (Selects/Deletes)</h5>
+					          		<div id="container8" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Statements TCL (Commits/Rollbacks)</h5>
+					          		<div id="container9" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Statements TCL (Savepoints)</h5>
+					          		<div id="container10" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Statements DDL (Creates/Alters)</h5>
+					          		<div id="container11" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Statements DDL (Drops/Truncates)</h5>
+					          		<div id="container12" class="dynamic_chart"></div>
+					       		</div>
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					        	<div class="span5">
+					          		<h5>Statements DCL (Grants)</h5>
+					          		<div id="container13" class="dynamic_chart"></div>
+					        	</div>
+					        	<div class="span5" style="margin-left:80px;">
+					          		<h5>Statements DCL (Revokes)</h5>
+					          		<div id="container14" class="dynamic_chart"></div>
+					        	</div>
 					      	</div>
 						</c:if>
 				      	<c:if test="${dbms.status == false}">
@@ -218,6 +338,26 @@
 	    <script src="http://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	    <script src="http://code.highcharts.com/modules/exporting.js" type="text/javascript"></script>
 	    <script src="${pageContext.servletContext.contextPath}/js/dbms_view.js" type="text/javascript"></script>
+	    <script type="text/javascript">
+		    setInterval(function() {
+                var resource_id = parseInt($("#resource_id_chart").val());
+                
+                $("#load-information-data").css("display", "block");
+                
+                $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "InformationData", metricType:"dbms", resourceType:"dbms", queryType: 1, resourceID: resource_id },function(data) {
+          
+                    $("#databases").text(data[0].informationDataDatabases);
+                    $("#tables").text(data[0].informationDataTables);
+                    $("#indexs").text(data[0].informationDataIndexs);
+                    $("#triggers").text(data[0].informationDataTriggers);
+                    $("#views").text(data[0].informationDataViews);
+                    $("#routines").text(data[0].informationDataRoutines);
+              	});
+                
+                $("#load-information-data").css("display", "none");
+                
+            }, 15000);
+	    </script>
 	    <%@include file="/static/footer.jsp"%>	
 	</body>
 </html>

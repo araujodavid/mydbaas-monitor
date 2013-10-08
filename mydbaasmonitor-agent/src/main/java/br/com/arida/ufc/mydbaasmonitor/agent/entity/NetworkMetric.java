@@ -5,13 +5,10 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Network;
 
 /**
- * 
  * @author Daivd Araújo
  * @version 2.0
  * @since March 13, 2013
- * 
  */
-
 public class NetworkMetric extends Network implements LoadMetric {
 	
 	private static NetworkMetric uniqueInstance;

@@ -82,7 +82,7 @@ $(document).ready(function() {
                 name: 'Active Domains',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [0,0,1,1,1,1,1],
                 color: '#3CB371'
             }]
         };
@@ -152,7 +152,7 @@ $(document).ready(function() {
                 name: 'Inactive Domains',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [1,1,0,0,0,0,0],
                 color: '#f70217'
             }]
         };
@@ -235,7 +235,7 @@ $(document).ready(function() {
                 name: 'CPU Utilization',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [5,4.4,6,7,2,2,4],
                 color: '#fa9214'
             }]
         };
@@ -318,13 +318,13 @@ $(document).ready(function() {
                 name: 'Memory Percent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [30,23,5,0,6,0,11],
                 color: '#5E2D79'
             },{
                 name: 'Swap Percent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [1,0,3,0,0,0,0],
                 color: '#008000'
             }]
         };
@@ -404,13 +404,13 @@ $(document).ready(function() {
                 name: 'Bytes Sent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [24488,21458,19455,9455,23001,19455,15357],
             	color: '#EE1D00'
             },{
                 name: 'Bytes Received',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [13596,12001,18223,8595,13596,19332,11196],
             	color: '#2D7DB3'
             }]
         };
@@ -490,13 +490,13 @@ $(document).ready(function() {
                 name: 'Packets Sent',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [115,448,231,123,334,70,283],
             	color: '#EE1D00'
             },{
                 name: 'Packets Received',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [221,290,448,109,502,331,263],
             	color: '#2D7DB3'
             }]
         };
@@ -522,7 +522,7 @@ $(document).ready(function() {
                             $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"host", queryType: 1, resourceID: resource_id }, function(data) {
                             	diskReads = parseFloat(data[0].diskReads);
                             	diskWrites = parseFloat(data[0].diskWrites);
-	                          	                        
+
 		                        series.addPoint([diskReads-lastDiskReads], true, true);
 		                        lastDiskReads = diskReads;
 		                        series2.addPoint([diskWrites-lastDiskWrites], true, true);
@@ -584,8 +584,8 @@ $(document).ready(function() {
                 data: [0,0,0,0,0,0,0]
             }]
         };
-	
-	
+
+
 	var defaultOptions8 = {
             chart: {
                 type: 'area',
@@ -606,7 +606,7 @@ $(document).ready(function() {
                             $.post('http://localhost:8080/mydbaasmonitor/metric/single', {metricName : "Disk", metricType:"machine", resourceType:"host", queryType: 1, resourceID: resource_id }, function(data) {
                             	diskBytesRead = parseFloat(data[0].diskBytesRead);
                             	diskBytesWritten = parseFloat(data[0].diskBytesWritten);
-	                          	                        
+
 		                        series.addPoint([diskBytesRead-lastDiskBytesRead], true, true);
 		                        lastDiskBytesRead = diskBytesRead;
 		                        series2.addPoint([diskBytesWritten-lastDiskBytesWritten], true, true);

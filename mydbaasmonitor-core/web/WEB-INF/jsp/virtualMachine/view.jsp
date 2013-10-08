@@ -16,7 +16,11 @@
       		}
       		.dynamic_chart{
       			height: 250px; 
-      			width: 500px
+      			width: 500px;
+      		}
+      		.dynamic_chart2{
+      			height: 250px; 
+      			width: 100%;
       		}
       		.centered{
       			width:840px; 
@@ -215,17 +219,19 @@
 					          		<h5>Network I/O (Packets)</h5>
 					          		<div id="container4" class="dynamic_chart"></div>
 					        	</div>
-					      	</div>				      
-					       	<div class="row" style="padding-left:30px; margin-bottom:30px;">
+					      	</div>
+					      	
+					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">				        	
 					        	<div class="span5">
 					          		<h5>Disk I/O Utilization (Requests)</h5>
 					          		<div id="container5" class="dynamic_chart"></div>
-					        	</div>
-					        	<div class="span5" style="margin-left:80px;">
+					       		</div>
+					       		<div class="span5" style="margin-left:80px;">
 					          		<h5>Disk I/O Utilization (Bytes)</h5>
 					          		<div id="container6" class="dynamic_chart"></div>
-					       		</div>
-					      	</div>				      
+					        	</div>
+					      	</div>
+		      				      
 					      	<div class="row" style="padding-left:30px; margin-bottom:30px;">
 					      		<div class="span5">
 					          		<h5>Disk Percentage</h5>

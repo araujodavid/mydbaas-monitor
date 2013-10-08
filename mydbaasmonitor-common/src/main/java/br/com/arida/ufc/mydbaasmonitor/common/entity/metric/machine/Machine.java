@@ -1,6 +1,10 @@
 package main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine;
 
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.common.AbstractMetric;
 
 /**
@@ -98,8 +102,9 @@ public class Machine extends AbstractMetric {
 	}
 
 	@Override
-	public List<?> jsonToList(String json) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+	public List<Machine> jsonToList(String json) {
+		Gson gson = new Gson();
+		List<Machine> machineList = gson.fromJson(json, new TypeToken<List<Machine>>(){}.getType());
+		return machineList;
+	}
 }

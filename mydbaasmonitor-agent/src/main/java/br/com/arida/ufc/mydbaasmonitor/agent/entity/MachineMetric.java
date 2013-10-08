@@ -5,13 +5,10 @@ import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.machine.Machine;
 
 /**
- * 
  * @author Daivd Araújo
  * @version 3.0
  * @since March 6, 2013
- * 
  */
-
 public class MachineMetric extends Machine implements LoadMetric {
 
 	private static MachineMetric uniqueInstance;

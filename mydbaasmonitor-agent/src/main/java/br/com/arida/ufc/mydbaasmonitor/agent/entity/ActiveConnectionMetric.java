@@ -4,12 +4,11 @@ import java.util.Properties;
 import main.java.br.com.arida.ufc.mydbaasmonitor.agent.entity.common.LoadMetric;
 import main.java.br.com.arida.ufc.mydbaasmonitor.common.entity.metric.database.ActiveConnection;
 
+
 /**
- * 
  * @author Daivd Araújo - @araujodavid
  * @version 1.0
  * @since April 17, 2013
- * 
  */
 public class ActiveConnectionMetric extends ActiveConnection implements LoadMetric {
 

@@ -77,7 +77,7 @@ $(document).ready(function() {
                 name: 'Active Connection',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [1,1,1,1,2,2,2],
                 color: '#3CB371'
             }]
         };
@@ -153,7 +153,7 @@ $(document).ready(function() {
                 name: 'Size',
                 pointStart: Date.now(),
                 pointInterval: 6000,
-                data: [0,0,0,0,0,0,0],
+                data: [8.5,8.5,11.5,12,14.5,14.5,14.5],
                 color: '#4682B4'
             }]
         };
